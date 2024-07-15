@@ -14,7 +14,7 @@ COPY Gemfile* /src/.
 
 # Install the gems specified in Gemfile
 WORKDIR /src
-RUN bundle install
+RUN bundle config set path 'vendor/bundle' && bundle install
 
 # Copy the current directory contents into the container at /myapp
 
