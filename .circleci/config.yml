@@ -36,7 +36,7 @@ jobs:
             bundle exec rspec
   run-jest-tests: # New job for running Jest tests
     docker:
-      - image: cimg/node:22
+      - image: cimg/node:current
     steps:
       - checkout
       - run:
