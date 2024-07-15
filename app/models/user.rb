@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'devise'
 # backend/app/models/user.rb
 class User < ApplicationRecord

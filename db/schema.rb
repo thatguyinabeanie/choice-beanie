@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_15_180012) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_194910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_180012) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "phases", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.integer "number_of_rounds"
+    t.string "criteria"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.index ["tournament_id"], name: "index_phases_on_tournament_id"
   end
 
   create_table "pokemon_sets", force: :cascade do |t|
@@ -128,6 +138,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_180012) do
   add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organizer_staffs", "organizers"
   add_foreign_key "organizer_staffs", "users"
+  add_foreign_key "phases", "tournaments"
   add_foreign_key "pokemon_sets", "tournament_formats"
   add_foreign_key "pokemon_sets", "tournaments"
   add_foreign_key "pokemon_sets", "users", column: "player_id"

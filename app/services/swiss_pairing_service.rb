@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # app/services/swiss_pairing_service.rb
 class SwissPairingService
   def initialize(tournament)

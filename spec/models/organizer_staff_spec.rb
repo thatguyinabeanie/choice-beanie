@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-RSpec.describe OrganizerStaff, type: :model do
+RSpec.describe OrganizerStaff do
   pending "add some examples to (or delete) #{__FILE__}"
 end
