@@ -6,10 +6,11 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   dev:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && rails server -b '0.0.0.0'"
+    build: ./backend/.
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && rails server -b '0.0.0.0'"
+    # command: tail -f /dev/null
     volumes:
-      - .:/app
+      - ./backend:/app
     ports:
       - "3000:3000"
     depends_on:

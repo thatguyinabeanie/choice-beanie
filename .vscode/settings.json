@@ -1,0 +1,11 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "rotom_db",
+      "connectString": "postgres://postgres:password@db:5432/rotom_db"
+    }
+  ]
+}
