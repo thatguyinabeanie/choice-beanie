@@ -136,6 +136,7 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-arm64-darwin)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -184,6 +185,8 @@ GEM
     netrc (0.11.0)
     nio4r (2.7.3)
     nokogiri (1.16.6-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.6-arm64-darwin)
       racc (~> 1.4)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
@@ -336,6 +339,9 @@ GEM
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rspec (3.0.3)
       rubocop (~> 1.61)
+    rubocop-rspec_rails (2.30.0)
+      rubocop (~> 1.61)
+      rubocop-rspec (~> 3, >= 3.0.1)
     ruby-lsp (0.17.7)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
@@ -357,6 +363,7 @@ GEM
       sorbet-static (= 0.5.11481)
     sorbet-runtime (0.5.11481)
     sorbet-static (0.5.11481-aarch64-linux)
+    sorbet-static (0.5.11481-universal-darwin)
     sorbet-static-and-runtime (0.5.11481)
       sorbet (= 0.5.11481)
       sorbet-runtime (= 0.5.11481)
@@ -409,6 +416,7 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-23
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
@@ -439,6 +447,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubocop-rspec_rails
   ruby-lsp
   shoulda-matchers (~> 4.0)
   sidekiq
