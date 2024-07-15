@@ -1,5 +1,5 @@
 # Use the latest LTS version of Node.js as the base image
-FROM node:lts
+FROM node:22
 
 # Set the working directory inside the container
 WORKDIR /frontend
