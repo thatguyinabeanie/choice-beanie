@@ -17,16 +17,15 @@ jobs:
       - checkout
       - restore_cache: # Restore bundle cache
           keys:
-            - ruby-dependencies-{{ checksum "Gemfile.lock" }}
+            - bundler-v1-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Install dependencies"
           command: |
-            bundle install
+            bundle install --clean --path vendor/bundle
       - save_cache: # Cache bundle dependencies
           paths:
             - vendor/bundle
-            - ~/.bundle
-          key: ruby-dependencies-{{ checksum "Gemfile.lock" }}
+          key: bundler-v1-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Prepare database"
           command: |
