@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   backend:
-    build: ./backend/.
+    build: .
     command: bash -c  "
         rm -f tmp/pids/server.pid && \
         bundle install && \
@@ -25,16 +25,16 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-  frontend:
-    build: ./frontend/.
-    command: npm run dev
-    volumes:
-      - .:/src
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
-    profiles:
-      - frontend
+  # frontend:
+  #   build: ./frontend/.
+  #   command: npm run dev
+  #   volumes:
+  #     - .:/src
+  #   ports:
+  #     - "5173:5173"
+  #   depends_on:
+  #     - backend
+  #   profiles:
+  #     - frontend
 volumes:
   db-data:
