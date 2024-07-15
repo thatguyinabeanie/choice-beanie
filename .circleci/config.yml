@@ -24,7 +24,8 @@ jobs:
             bundle install
       - save_cache: # Cache bundle dependencies
           paths:
-            - backend/vendor/bundle
+            - vendor/bundle
+            - ~/.bundle
           key: ruby-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Prepare database"
