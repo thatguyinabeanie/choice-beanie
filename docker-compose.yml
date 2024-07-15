@@ -7,10 +7,11 @@ services:
       POSTGRES_PASSWORD: password
   backend:
     build: .
-    command: bash -c  "
-        rm -f tmp/pids/server.pid && \
-        bundle install && \
-        rails server -b '0.0.0.0'"
+    command: tail -f /dev/null
+    # command: bash -c  "
+        # rm -f tmp/pids/server.pid && \
+        # bundle install && \
+        # rails server -b '0.0.0.0'"
     volumes:
       - .:/src
     ports:
@@ -20,7 +21,7 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/rotom_db
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/v1/up"]
       interval: 30s
       timeout: 10s
       retries: 3

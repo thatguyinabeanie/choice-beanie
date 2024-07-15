@@ -26,7 +26,7 @@ gem 'versionist'
 # Background jobs
 gem 'sidekiq'
 
-gem 'devise', '~> 4.9'
+gem 'devise'
 
 # Use Redis for cache and sessions
 gem 'redis', '~> 4.0'

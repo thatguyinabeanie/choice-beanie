@@ -425,7 +425,7 @@ DEPENDENCIES
   bundler-audit
   database_cleaner
   debug
-  devise (~> 4.9)
+  devise
   devise_token_auth
   factory_bot_rails
   faker
