@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
-      resources :users, only: [:show, :update]
+      resources :users, only: [:index, :show, :update]
       resources :tournaments do
         resources :registrations, only: [:create, :destroy]
         resources :matches, only: [:index, :create, :update]
