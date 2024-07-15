@@ -56,3 +56,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - run-rspec-tests
+      - run-jest-tests
