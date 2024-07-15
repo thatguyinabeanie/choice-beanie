@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_15_194910) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,16 +45,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_194910) do
     t.index ["winner_id"], name: "index_matches_on_winner_id"
   end
 
-  create_table "organizer_staffs", force: :cascade do |t|
-    t.bigint "organizer_id", null: false
+  create_table "organization_staff", force: :cascade do |t|
+    t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organizer_id"], name: "index_organizer_staffs_on_organizer_id"
-    t.index ["user_id"], name: "index_organizer_staffs_on_user_id"
+    t.index ["organization_id"], name: "index_organization_staff_on_organization_id"
+    t.index ["user_id"], name: "index_organization_staff_on_user_id"
   end
 
-  create_table "organizers", force: :cascade do |t|
+  create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
@@ -136,8 +136,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_194910) do
   add_foreign_key "matches", "users", column: "player1_id"
   add_foreign_key "matches", "users", column: "player2_id"
   add_foreign_key "matches", "users", column: "winner_id"
-  add_foreign_key "organizer_staffs", "organizers"
-  add_foreign_key "organizer_staffs", "users"
+  add_foreign_key "organization_staff", "organizations"
+  add_foreign_key "organization_staff", "users"
   add_foreign_key "phases", "tournaments"
   add_foreign_key "pokemon_sets", "tournament_formats"
   add_foreign_key "pokemon_sets", "tournaments"

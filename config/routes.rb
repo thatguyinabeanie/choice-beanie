@@ -13,12 +13,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   #
-
+  get '/up' => 'rails/health#show', as: :rails_health_check
   namespace :api do
     namespace :v1 do
-      get '/up' => 'rails/health#show', as: :rails_health_check
       get '/auth/:provider/callback', to: 'sessions#create'
-      # resources :users, only: %i[index show update]
+      resources :users, only: %i[index show update]
       resources :tournaments do
         resources :registrations, only: %i[create destroy]
         resources :matches, only: %i[index create update]
