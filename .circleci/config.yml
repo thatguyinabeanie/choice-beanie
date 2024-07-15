@@ -15,11 +15,18 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache: # Restore bundle cache
+          keys:
+            - ruby-dependencies-{{ checksum "backend/Gemfile.lock" }}
       - run:
           name: "Install dependencies"
           command: |
             cd backend
             bundle install
+      - save_cache: # Cache bundle dependencies
+          paths:
+            - backend/vendor/bundle
+          key: ruby-dependencies-{{ checksum "backend/Gemfile.lock" }}
       - run:
           name: "Prepare database"
           command: |
@@ -35,11 +42,18 @@ jobs:
       - image: cimg/node:current
     steps:
       - checkout
+      - restore_cache: # Restore npm cache
+          keys:
+            - node-dependencies-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: "Install dependencies"
           command: |
             cd frontend
             npm install
+      - save_cache: # Cache npm dependencies
+          paths:
+            - frontend/node_modules
+          key: node-dependencies-{{ checksum "frontend/package-lock.json" }}
       - run:
           name: "Run Jest tests"
           command: |
