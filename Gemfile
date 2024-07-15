@@ -54,6 +54,13 @@ group :development, :test do
   gem 'rubocop-factory_bot'
   gem 'ruby-lsp'
   gem 'tapioca', require: false
+  gem 'bundler-audit'
+  gem 'brakeman'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'traceroute'
+
 end
 
 group :development do
@@ -62,9 +69,11 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 4.0', require: false
+
 end
