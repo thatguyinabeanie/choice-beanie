@@ -9,6 +9,14 @@ jobs:
   run-rspec-tests:
     docker:
       - image: cimg/ruby:3.3
+        environment:
+          DATABASE_URL: postgres://postgres:password@localhost:5432/rotom_db
+      - image: circleci/postgres:16 # Use PostgreSQL image
+        environment: # Set environment variables for PostgreSQL
+          POSTGRES_USER: postgres
+          POSTGRES_DB: rotom_db
+          POSTGRES_PASSWORD: password
+
     steps:
       - checkout
       - run:
