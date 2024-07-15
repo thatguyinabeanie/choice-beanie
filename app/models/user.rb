@@ -2,6 +2,18 @@
 
 # backend/app/models/user.rb
 class User < ApplicationRecord
+
+  # devise :database_authenticatable, :registerable,
+  #        :recoverable, :rememberable, :validatable,
+  #        :omniauthable, omniauth_providers: %i[discord]
+
+  # has_many :organizers
+  # has_many :organizer_staffs
+  # has_many :events, through: :organizers
+  # has_many :staffed_organizers, through: :organizer_staffs, source: :organizer
+
+  validates :email, presence: true
+  validates :username, presence
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,52 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_715_035_524) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_141840) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'matches', force: :cascade do |t|
-    t.bigint 'tournament_id', null: false
-    t.integer 'round'
-    t.bigint 'player1_id', null: false
-    t.bigint 'player2_id', null: false
-    t.bigint 'winner_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['player1_id'], name: 'index_matches_on_player1_id'
-    t.index ['player2_id'], name: 'index_matches_on_player2_id'
-    t.index ['tournament_id'], name: 'index_matches_on_tournament_id'
-    t.index ['winner_id'], name: 'index_matches_on_winner_id'
+  create_table "matches", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.integer "round"
+    t.bigint "player1_id", null: false
+    t.bigint "player2_id", null: false
+    t.bigint "winner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player1_id"], name: "index_matches_on_player1_id"
+    t.index ["player2_id"], name: "index_matches_on_player2_id"
+    t.index ["tournament_id"], name: "index_matches_on_tournament_id"
+    t.index ["winner_id"], name: "index_matches_on_winner_id"
   end
 
-  create_table 'registrations', force: :cascade do |t|
-    t.bigint 'user_id', null: false
-    t.bigint 'tournament_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['tournament_id'], name: 'index_registrations_on_tournament_id'
-    t.index ['user_id'], name: 'index_registrations_on_user_id'
+  create_table "organizer_staffs", force: :cascade do |t|
+    t.bigint "organizer_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organizer_id"], name: "index_organizer_staffs_on_organizer_id"
+    t.index ["user_id"], name: "index_organizer_staffs_on_user_id"
   end
 
-  create_table 'tournaments', force: :cascade do |t|
-    t.string 'name'
-    t.datetime 'start_date'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "organizers", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email'
-    t.string 'password_digest'
-    t.string 'username'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "registrations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_registrations_on_tournament_id"
+    t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
-  add_foreign_key 'matches', 'tournaments'
-  add_foreign_key 'matches', 'users', column: 'player1_id'
-  add_foreign_key 'matches', 'users', column: 'player2_id'
-  add_foreign_key 'matches', 'users', column: 'winner_id'
-  add_foreign_key 'registrations', 'tournaments'
-  add_foreign_key 'registrations', 'users'
+  create_table "tournaments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "start_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "matches", "tournaments"
+  add_foreign_key "matches", "users", column: "player1_id"
+  add_foreign_key "matches", "users", column: "player2_id"
+  add_foreign_key "matches", "users", column: "winner_id"
+  add_foreign_key "organizer_staffs", "organizers"
+  add_foreign_key "organizer_staffs", "users"
+  add_foreign_key "registrations", "tournaments"
+  add_foreign_key "registrations", "users"
 end
