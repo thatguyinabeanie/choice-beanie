@@ -30053,7 +30053,7 @@ class RuboCop::Cop::Registry
   # @raise [AmbiguousCopName] if a bare identifier with two possible namespaces is provided
   # @return [String] Qualified cop name
   #
-  # source://rubocop//lib/rubocop/cop/registry.rb#133
+  # source://rubocop-rspec_rails/2.30.0/lib/rubocop-rspec_rails.rb#23
   def qualified_cop_name(name, path, warn: T.unsafe(nil)); end
 
   # source://rubocop//lib/rubocop/cop/registry.rb#166
