@@ -53,5 +53,6 @@
       ]
     }
   ],
-  "sorbet.highlightUntyped": "everywhere"
+  "sorbet.highlightUntyped": "everywhere",
+  "rubyLsp.formatter": "rubocop"
 }

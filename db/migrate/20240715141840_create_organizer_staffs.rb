@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOrganizerStaffs < ActiveRecord::Migration[7.1]
   def change
     create_table :organizer_staffs do |t|
