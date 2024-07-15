@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class TournamentsController < ApplicationController
-      before_action :set_tournament, only: [:show, :update, :destroy]
+      before_action :set_tournament, only: %i[show update destroy]
 
       # GET /api/v1/tournaments
       def index

@@ -12,27 +12,51 @@
 
 	// The 'service' property is the name of the service fo the container that VS Code should
 	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-	"service": "dev",
+	"service": "backend",
 
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/app",
+	"workspaceFolder": "/src",
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {},
 		"ghcr.io/flexwie/devcontainer-features/op:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Shopify.ruby-extensions-pack",
+				"KoichiSasada.vscode-rdbg",
+				"sorbet.sorbet-vscode-extension",
+				"Shopify.ruby-lsp",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"GitHub.vscode-pull-request-github",
+				"CircleCI.circleci",
+				"ms-azuretools.vscode-docker",
+				"github.vscode-github-actions",
+				"ms-ossdata.vscode-postgresql",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-pg",
+				"redhat.vscode-yaml",
+				"waderyan.gitblame",
+				"Postman.postman-for-vscode",
+				"DavidAnson.vscode-markdownlint",
+				"GitHub.github-vscode-theme"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [3000],
 
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
+	"runServices": ["db", "backend", "frontend"],
 
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-	// "shutdownAction": "none",
+	"shutdownAction": "none",
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",

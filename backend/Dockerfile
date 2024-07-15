@@ -5,16 +5,16 @@ FROM ruby:3.3
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /src/backend
 
 # Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile* /app/
+COPY Gemfile* .
 
 # Install the gems specified in Gemfile
 RUN bundle install
 
 # Copy the current directory contents into the container at /myapp
-COPY . /app
+COPY . /src/backend
 
 # Set the command to start the puma server
 CMD ["rails", "server", "-b", "0.0.0.0"]
