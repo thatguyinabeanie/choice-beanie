@@ -32,6 +32,8 @@ gem 'redis', '~> 4.0'
 # For secure token authentication
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise_token_auth'
+gem 'omniauth-discord'
+gem 'omniauth-rails_csrf_protection'
 # For documentation and testing your API
 group :development, :test do
   gem 'factory_bot_rails'

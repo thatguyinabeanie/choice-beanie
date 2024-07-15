@@ -1,3 +1,4 @@
+# config/routes.rb
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -7,4 +8,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  #
+
+  namespace :api do
+    namespace :v1 do
+      get '/auth/:provider/callback', to: 'sessions#create'
+      resources :users, only: [:show, :update]
+      resources :tournaments do
+        resources :registrations, only: [:create, :destroy]
+        resources :matches, only: [:index, :create, :update]
+      end
+    end
+  end
 end
