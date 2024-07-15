@@ -14,8 +14,7 @@ COPY Gemfile* /app/
 RUN bundle install
 
 # Copy the current directory contents into the container at /myapp
-COPY ./backend /app
-COPY ./frontend /frontend
+COPY . /app
 
 # Set the command to start the puma server
 CMD ["rails", "server", "-b", "0.0.0.0"]

@@ -5,7 +5,7 @@ services:
       - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
-  dev:
+  backend:
     build: ./backend/.
     command: bash -c  "
         rm -f tmp/pids/server.pid && \
@@ -13,12 +13,28 @@ services:
         rails server -b '0.0.0.0'"
     volumes:
       - ./backend:/app
-      - ./frontend:/frontend
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/rotom_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  frontend:
+    build: ./frontend/.
+    command: npm run dev
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    profiles:
+      - frontend
 volumes:
   db-data:
