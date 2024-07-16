@@ -18,7 +18,7 @@ services:
     command: sleep infinity
     # network_mode: service:db
     volumes:
-      - .:/workspaces:battle-stadium:cached
+      - .:/workspaces:battle-stadium
     ports:
       - "3000:3000"
     depends_on:
@@ -35,7 +35,7 @@ services:
     build: ./frontend/.
     command: npm run dev
     volumes:
-      - .:/workspaces/battle-stadium:cached
+      - .:/workspaces/battle-stadium
     ports:
       - "5173:5173"
     depends_on:
