@@ -11,6 +11,6 @@ class PokemonSet < ApplicationRecord
   validates :move3, presence: true
   validates :move4, presence: true
 
-  validates :tournament_format, presence: true
+  validates :format, presence: true
   validates :tournament, presence: true
 end

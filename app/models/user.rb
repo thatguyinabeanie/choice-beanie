@@ -6,10 +6,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # has_many :organizers
-  # has_many :organizer_staffs
-  # has_many :events, through: :organizers
-  # has_many :staffed_organizers, through: :organizer_staffs, source: :organizer
+  has_many :organization_staff, class_name: 'Organization::Staff', dependent: :destroy
+  has_many :organizations, through: :organization_staff
 
   validates :email, presence: true, uniqueness: true
   validates :username, presence: true, uniqueness: true

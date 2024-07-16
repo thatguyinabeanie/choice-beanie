@@ -3,8 +3,9 @@ module Tournament
     belongs_to :organization, class_name: 'Organization::Organization'
     validates :name, presence: true
     has_one :game, class_name: 'Game', dependent: :nullify
-    has_one :format, class_name: 'Tournament::Format', through: :tourname
 
-    has_many :phases, class_name: 'Phase::Base', through: :tournament_phases
+    belongs_to :format, class_name: 'Tournament::Format', optional: true
+
+    has_many :tournament_phases, class_name: 'Tournament::Phase', dependent: :destroy
   end
 end
