@@ -36,7 +36,6 @@ gem 'omniauth-discord'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'openssl'
-gem 'sorbet-static-and-runtime'
 
 # For documentation and testing your API
 group :development, :test do
@@ -58,7 +57,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rubocop-factory_bot'
   gem 'ruby-lsp'
-  gem 'tapioca', require: false
   gem 'traceroute'
 end
 
