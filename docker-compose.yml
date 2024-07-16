@@ -13,7 +13,7 @@ services:
         bundle install && \
         rails server -b '0.0.0.0'"
     volumes:
-      - .:/src
+      - .:/workspaces/battle-stadium
     ports:
       - "3000:3000"
     depends_on:
@@ -30,7 +30,7 @@ services:
     build: ./frontend/.
     command: npm run dev
     volumes:
-      - .:/src
+      - .:/workspaces/battle-stadium/frontend
     ports:
       - "5173:5173"
     depends_on:
