@@ -18,7 +18,7 @@ services:
     command: sleep infinity
     # network_mode: service:db
     volumes:
-      - .:/workspaces:battle-stadium
+      - .:/workspaces/battle-stadium
     ports:
       - "3000:3000"
     depends_on:
