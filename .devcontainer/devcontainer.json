@@ -18,7 +18,9 @@
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspaces:cached",
 	"features": {
-		"ghcr.io/devcontainers/features/ruby:1": {},
+		"ghcr.io/devcontainers/features/ruby:1": {
+			"version": "3.3"
+		},
 		"ghcr.io/flexwie/devcontainer-features/op:1": {}
 	},
 	// Configure tool-specific properties.

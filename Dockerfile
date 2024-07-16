@@ -10,10 +10,10 @@ RUN \
 
 
 # Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile* /src/.
+COPY Gemfile* /workspaces/battle-stadium/.
 
 # Install the gems specified in Gemfile
-WORKDIR /src
+WORKDIR /workspaces/battle-stadium
 
 RUN \
   bundle update --bundler && \
@@ -22,17 +22,17 @@ RUN \
 
 # Copy the current directory contents into the container at /myapp
 
-COPY . /src
+COPY . /workspaces/battle-stadium/.
 
 
 
 FROM base_image AS production
 # Set the command to start the puma server
-WORKDIR /src
+WORKDIR /workspaces/battle-stadium
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
 
 FROM base_image AS  development
-WORKDIR /src
+WORKDIR /workspaces/battle-stadium
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
