@@ -7,11 +7,11 @@ services:
       POSTGRES_PASSWORD: password
   backend:
     build: .
-    command: tail -f /dev/null
-    # command: bash -c  "
-    #     rm -f tmp/pids/server.pid && \
-    #     bundle install && \
-    #     rails server -b '0.0.0.0'"
+    # command: tail -f /dev/null
+    command: bash -c  "
+        rm -f tmp/pids/server.pid && \
+        bundle install && \
+        rails server -b '0.0.0.0'"
     volumes:
       - .:/src
     ports:
@@ -26,16 +26,14 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-  # frontend:
-  #   build: ./frontend/.
-  #   command: npm run dev
-  #   volumes:
-  #     - .:/src
-  #   ports:
-  #     - "5173:5173"
-  #   depends_on:
-  #     - backend
-  #   profiles:
-  #     - frontend
+  frontend:
+    build: ./frontend/.
+    command: npm run dev
+    volumes:
+      - .:/src
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
 volumes:
   db-data:
