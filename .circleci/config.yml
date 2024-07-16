@@ -21,12 +21,12 @@ jobs:
       - run:
           name: "Install dependencies"
           command: |
-            mkdir -p /bundle
-            bundle config set path '/bundle'
+            mkdir -p ./vendor/bundle
+            bundle config set path ./vendor/bundle
             bundle install
       - save_cache: # Cache bundle dependencies
           paths:
-            - /bundle
+            - ./vendor/bundle
           key: bundler-v1-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Prepare database"
