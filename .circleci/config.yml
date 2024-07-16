@@ -5,7 +5,6 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-
   run-rspec-tests:
     docker:
       - image: cimg/ruby:3.3
@@ -22,11 +21,12 @@ jobs:
       - run:
           name: "Install dependencies"
           command: |
-            bundle config set path 'vendor/bundle'
+            mkdir -p /bundle
+            bundle config set path '/bundle'
             bundle install
       - save_cache: # Cache bundle dependencies
           paths:
-            - vendor/bundle
+            - /bundle
           key: bundler-v1-{{ checksum "Gemfile.lock" }}
       - run:
           name: "Prepare database"
