@@ -1,6 +1,6 @@
 module API
   module V1
-    class RegistrationsController < Devise::RegistrationsController
+    class UsersRegistrationsController < Devise::RegistrationsController
       # GET /resource/sign_up
       # def new
       #   super
