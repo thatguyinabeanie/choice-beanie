@@ -19,17 +19,12 @@
 	"workspaceFolder": "/workspaces/battle-stadium",
 
 	"features": {
-		"ghcr.io/devcontainers/features/ruby:1": {
-			"version": "3.3"
-		},
-		"ghcr.io/flexwie/devcontainer-features/op:1": {}
 	},
 
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"Shopify.ruby-extensions-pack",
 				"KoichiSasada.vscode-rdbg",
 				"sorbet.sorbet-vscode-extension",
 				"Shopify.ruby-lsp",
