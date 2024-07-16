@@ -44,7 +44,7 @@ WORKDIR /workspaces/battle-stadium
 COPY Gemfile* /workspaces/battle-stadium/.
 RUN \
   bundle update --bundler && \
-  bundle config set path '/bundle' && \
+  bundle config set path ~/.bundle && \
   bundle install
 
 COPY . /workspaces/battle-stadium/.

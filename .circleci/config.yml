@@ -22,7 +22,7 @@ jobs:
           name: "Install dependencies"
           command: |
             mkdir -p ./vendor/bundle
-            bundle config set path ./vendor/bundle
+            bundle config set path ~/.bundle
             bundle install
       - save_cache: # Cache bundle dependencies
           paths:
