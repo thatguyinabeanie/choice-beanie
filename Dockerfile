@@ -18,7 +18,7 @@ WORKDIR /workspaces/battle-stadium
 
 RUN \
   bundle update --bundler && \
-  bundle config set path 'vendor/bundle' && \
+  bundle config set path '/bundle' && \
   bundle install
 
 # Copy the current directory contents into the container at /myapp
