@@ -17,12 +17,14 @@
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/workspaces/battle-stadium",
+
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {
 			"version": "3.3"
 		},
 		"ghcr.io/flexwie/devcontainer-features/op:1": {}
 	},
+
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
@@ -59,13 +61,13 @@
 	"runServices": ["db", "backend", "frontend"],
 
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-	"shutdownAction": "none"
+	"shutdownAction": "none",
 
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": "
 		cat /etc/os-release && \
 		git config --global --add safe.directory /workspaces/battle-stadium
-	",
+	"
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "devcontainer"
