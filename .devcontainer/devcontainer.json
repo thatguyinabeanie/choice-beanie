@@ -21,6 +21,7 @@
 		"ghcr.io/devcontainers/features/ruby:1": {},
 		"ghcr.io/flexwie/devcontainer-features/op:1": {}
 	},
+	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -44,7 +45,7 @@
 				"GitHub.github-vscode-theme"
 			]
 		}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -60,9 +61,6 @@
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "cat /etc/os-release",
-
-	// Configure tool-specific properties.
-	// "customizations": {}
 
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "devcontainer"
