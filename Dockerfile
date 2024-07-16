@@ -6,7 +6,8 @@ RUN \
   apt-get update -qq && \
   apt-get install -y -q  nodejs postgresql-client openssl libssl-dev libpq-dev git  watchman && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+  mkdir -p /workspaces/battle-stadium
 
 
 # Copy the Gemfile and Gemfile.lock into the container
