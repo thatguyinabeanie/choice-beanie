@@ -1,3 +1,5 @@
+# typed:
+
 module Api
   module V1
     class UsersController < ApplicationController
@@ -6,7 +8,7 @@ module Api
       # GET /api/v1/users
       def index
         @users = User.all
-        render json: @users
+        render(json: @users)
       end
 
       # GET /api/v1/users/:id
@@ -44,6 +46,7 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_user
         @user = User.find(params[:id])
+        binding.pry
       end
 
       # Only allow a list of trusted parameters through.

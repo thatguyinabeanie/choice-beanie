@@ -11,8 +11,8 @@ class User < ApplicationRecord
   # has_many :events, through: :organizers
   # has_many :staffed_organizers, through: :organizer_staffs, source: :organizer
 
-  validates :email, presence: true
-  validates :username, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

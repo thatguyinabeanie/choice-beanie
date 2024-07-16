@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_15_222714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,11 +54,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
     t.index ["user_id"], name: "index_organization_staff_on_user_id"
   end
 
+  create_table "organization_tournaments", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "tournament_id"], name: "index_org_tourns_on_org_id_and_tourn_id", unique: true
+    t.index ["organization_id"], name: "index_organization_tournaments_on_organization_id"
+    t.index ["tournament_id"], name: "index_organization_tournaments_on_tournament_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_organizations_on_user_id"
   end
 
   create_table "phases", force: :cascade do |t|
@@ -108,11 +120,35 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
     t.index ["game_id"], name: "index_tournament_formats_on_game_id"
   end
 
+  create_table "tournament_formats_tournaments", id: false, force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.bigint "tournament_format_id", null: false
+    t.index ["tournament_format_id", "tournament_id"], name: "idx_on_tournament_format_id_tournament_id_b59a3fbd69"
+    t.index ["tournament_id", "tournament_format_id"], name: "idx_on_tournament_id_tournament_format_id_2de2df4814"
+  end
+
+  create_table "tournament_phases", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["phase_id"], name: "index_tournament_phases_on_phase_id"
+    t.index ["tournament_id", "phase_id"], name: "index_tournament_phases_on_tournament_id_and_phase_id", unique: true
+    t.index ["tournament_id"], name: "index_tournament_phases_on_tournament_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.datetime "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "check_in_start_time"
+    t.bigint "game_id"
+    t.bigint "tournament_format_id"
+    t.index ["game_id"], name: "index_tournaments_on_game_id"
+    t.index ["organization_id"], name: "index_tournaments_on_organization_id"
+    t.index ["tournament_format_id"], name: "index_tournaments_on_tournament_format_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -127,6 +163,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
     t.datetime "remember_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "match_scores", "matches"
@@ -138,6 +175,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
   add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organization_staff", "organizations"
   add_foreign_key "organization_staff", "users"
+  add_foreign_key "organization_tournaments", "organizations"
+  add_foreign_key "organization_tournaments", "tournaments"
+  add_foreign_key "organizations", "users"
   add_foreign_key "phases", "tournaments"
   add_foreign_key "pokemon_sets", "tournament_formats"
   add_foreign_key "pokemon_sets", "tournaments"
@@ -145,4 +185,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_15_204744) do
   add_foreign_key "registrations", "tournaments"
   add_foreign_key "registrations", "users"
   add_foreign_key "tournament_formats", "games"
+  add_foreign_key "tournament_phases", "phases"
+  add_foreign_key "tournament_phases", "tournaments"
+  add_foreign_key "tournaments", "games"
+  add_foreign_key "tournaments", "organizations"
+  add_foreign_key "tournaments", "tournament_formats"
 end

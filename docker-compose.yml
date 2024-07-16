@@ -7,11 +7,11 @@ services:
       POSTGRES_PASSWORD: password
   backend:
     build: .
-    # command: tail -f /dev/null
-    command: bash -c  "
-        rm -f tmp/pids/server.pid && \
-        bundle install && \
-        rails server -b '0.0.0.0'"
+    command: tail -f /dev/null
+    # command: bash -c  "
+    #     rm -f tmp/pids/server.pid && \
+    #     bundle install && \
+    #     rails server -b '0.0.0.0'"
     volumes:
       - .:/src
     ports:
