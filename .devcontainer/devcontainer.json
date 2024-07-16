@@ -16,7 +16,7 @@
 
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/workspaces:cached",
+	"workspaceFolder": "/workspaces/battle-stadium",
 	"features": {
 		"ghcr.io/devcontainers/features/ruby:1": {
 			"version": "3.3"
