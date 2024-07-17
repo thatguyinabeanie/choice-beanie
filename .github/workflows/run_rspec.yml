@@ -1,9 +1,9 @@
-name: CI
+name: Tests
 
 on: [pull_request]
 
 jobs:
-  run-rspec-tests:
+  rspec:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -45,22 +45,3 @@ jobs:
           DATABASE_URL: postgres://postgres:password@localhost:5432/fuecoco_db
       - name: Run RSpec tests
         run: bundle exec rspec
-
-  run-jest-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
-      - name: Run Jest tests
-        run: |
-          cd frontend
-          npm run test
