@@ -45,13 +45,13 @@ end
 end
 
 reg_g = Tournament::Format.find_by(name: 'Regulation G', game: scarlet_violet)
-# tour = Tournament::Tournament.create!(
-#   name: 'Example Tournament',
-#   organization: org,
-#   start_date: Time.zone.today,
-#   check_in_start_time: Time.zone.now,
-#   game: scarlet_violet
-# )
+tour = Tournament::Tournament.create!(
+  name: 'Example Tournament',
+  organization: org,
+  start_date: Time.zone.today,
+  check_in_start_time: Time.zone.now,
+  game: scarlet_violet
+)
 
 # swiss_phase = Phase::Swiss.create!(tournament: tour, number_of_rounds: 5)
 # topcut_phase = Phase::SingleEliminationBracket.create!(tournament: tour, criteria: 'Top 8')
