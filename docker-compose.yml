@@ -13,11 +13,14 @@ services:
       dockerfile: Dockerfile
       tags:
         - battle-stadium:latest
-    command: bash -c "
-        rm -f tmp/pids/server.pid && \
-        bundle config set path ~/.bundle && \
-        bundle install && \
-        sleep infinity"
+    command: >
+      bash -lc "
+        rm -f tmp/pids/server.pid
+        && ( bundle check || bundle install )
+        && bash bin/setup
+        && ( rails server -b '0.0.0.0' & )
+        && sleep infinity
+      "
     # command: bash -c "
     #     rm -f tmp/pids/server.pid && \
     #     bundle config set path ~/.bundle && \
