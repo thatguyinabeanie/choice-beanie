@@ -7,17 +7,18 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   backend:
+    image: battle-stadium:latest
     build:
       context: .
       dockerfile: Dockerfile
-
+      tags:
+        - battle-stadium:latest
     command: bash -c "
         rm -f tmp/pids/server.pid && \
         bundle config set path ~/.bundle && \
         bundle install && \
         (rails server -b '0.0.0.0' &) && \
         sleep infinity"
-
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle
@@ -35,7 +36,12 @@ services:
       start_period: 40s
     tty: true
   frontend:
-    build: ./frontend/.
+    image: battle-stadium-frontend:latest
+    build:
+      context: ./frontend/.
+      dockerfile: Dockerfile
+      tags:
+        - battle-stadium-frontend:latest
     command: npm run dev
     volumes:
       - .:/workspaces/battle-stadium

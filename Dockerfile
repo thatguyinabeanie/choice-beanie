@@ -16,6 +16,10 @@ COPY Gemfile* /workspaces/battle-stadium/.
 # Install the gems specified in Gemfile
 WORKDIR /workspaces/battle-stadium
 
+RUN useradd -m -d /home/battle-stadium battle-stadium && \
+  chown -R battle-stadium:battle-stadium /workspaces/battle-stadium
+USER battle-stadium
+
 RUN \
   bundle update --bundler && \
   bundle config set path '/bundle' && \
@@ -41,6 +45,11 @@ RUN \
   mkdir -p /workspaces/battle-stadium
 
 WORKDIR /workspaces/battle-stadium
+
+# Create battle-stadium user
+RUN useradd -m -d /home/battle-stadium battle-stadium && \
+  chown -R battle-stadium:battle-stadium /workspaces/battle-stadium
+
 COPY Gemfile* /workspaces/battle-stadium/.
 RUN \
   bundle update --bundler && \
