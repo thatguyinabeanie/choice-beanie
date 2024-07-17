@@ -1,0 +1,27 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "db/schema.rb"
+    - "lib/tasks/**/*"
+    - "vendor/**/*"
+    - "frontend/**/*"
+Style/Documentation:
+  Enabled: false
+Rails/BulkChangeTable:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false

@@ -1,20 +1,55 @@
 services:
   db:
-    image: postgres
+    image: postgres:16
+    restart: unless-stopped
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
-  dev:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && rails server -b '0.0.0.0'"
+  backend:
+    image: battle-stadium:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - battle-stadium:latest
+    command: bash -c "
+        rm -f tmp/pids/server.pid && \
+        bundle config set path ~/.bundle && \
+        bundle install && \
+        (rails server -b '0.0.0.0' &) && \
+        sleep infinity"
     volumes:
-      - .:/app
+      - .:/workspaces/battle-stadium
+      - bundle-data:/bundle
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/rotom_db
+      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    tty: true
+  frontend:
+    tty: true
+    image: battle-stadium-frontend:latest
+    build:
+      context: ./frontend/.
+      dockerfile: Dockerfile
+      tags:
+        - battle-stadium-frontend:latest
+    command: sleep infinity
+    volumes:
+      - ./frontend:/workspaces/battle-stadium/frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
 volumes:
-  db-data:
+  postgres-data:
+  bundle-data:
