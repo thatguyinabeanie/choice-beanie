@@ -35,10 +35,10 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
-      interval: 30s
+      interval: 60s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 120s
     tty: true
   frontend:
     tty: true
