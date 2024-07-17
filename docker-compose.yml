@@ -22,7 +22,6 @@ services:
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle
-      - ~/.gitconfig:/root/.gitconfig
     ports:
       - "3000:3000"
     depends_on:
@@ -47,7 +46,6 @@ services:
     command: sleep infinity
     volumes:
       - ./frontend:/workspaces/battle-stadium/frontend
-      - ~/.gitconfig:/root/.gitconfig
     ports:
       - "5173:5173"
     depends_on:

@@ -54,5 +54,8 @@
     }
   ],
   "sorbet.highlightUntyped": "everywhere",
-  "rubyLsp.formatter": "rubocop"
+  "rubyLsp.formatter": "rubocop",
+  "circleci.persistedProjectSelection": [
+    "gh/thatguyinabeanie/battle-stadium"
+  ]
 }
