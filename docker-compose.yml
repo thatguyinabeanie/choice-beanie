@@ -36,15 +36,16 @@ services:
       start_period: 40s
     tty: true
   frontend:
+    tty: true
     image: battle-stadium-frontend:latest
     build:
       context: ./frontend/.
       dockerfile: Dockerfile
       tags:
         - battle-stadium-frontend:latest
-    command: npm run dev
+    command: sleep infinity
     volumes:
-      - .:/workspaces/battle-stadium
+      - ./frontend:/workspaces/battle-stadium/frontend
     ports:
       - "5173:5173"
     depends_on:

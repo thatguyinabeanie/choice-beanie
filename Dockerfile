@@ -1,10 +1,11 @@
 # Use the official Ruby image as the base image
 FROM ruby:3.3 AS production_base_image
 ARG USERNAME=battle-stadium
+# Create a group and user
 RUN mkdir -p /workspaces/$USERNAME && \
-  useradd -m -d /home/$USERNAME $USERNAME && \
+  groupadd -r $USERNAME && \
+  useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
   chown -R $USERNAME:$USERNAME /workspaces/$USERNAME
-USER $USERNAME
 
 # Install dependencies required for Rails
 RUN \
@@ -35,6 +36,7 @@ COPY . /workspaces/$USERNAME/.
 
 FROM  production_base_image AS production
 ARG USERNAME=battle-stadium
+# USER $USERNAME
 # Set the command to start the puma server
 WORKDIR /workspaces/$USERNAME
 CMD ["rails", "server", "-b", "0.0.0.0"]
@@ -49,7 +51,8 @@ FROM mcr.microsoft.com/devcontainers/ruby:3.3-bookworm AS dev_container_base_ima
 ARG USERNAME=battle-stadium
 
 RUN mkdir -p /workspaces/$USERNAME && \
-  useradd -m -d /home/$USERNAME $USERNAME && \
+  groupadd -r $USERNAME && \
+  useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
   chown -R $USERNAME:$USERNAME /workspaces/$USERNAME
 
 # Used to persist bash history as per https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
@@ -77,6 +80,7 @@ RUN \
 
 FROM dev_container_base_image AS development
 ARG USERNAME=battle-stadium
+
 COPY . /workspaces/$USERNAME/.
 CMD ["rails", "server", "-b", "0.0.0.0"]
 

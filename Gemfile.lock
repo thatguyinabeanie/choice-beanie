@@ -397,15 +397,15 @@ DEPENDENCIES
   bundler-audit
   database_cleaner
   debug
-  devise
-  devise_token_auth
+  devise (~> 4.9)
+  devise_token_auth (~> 1)
   factory_bot_rails
   faker
   listen (~> 3.3)
-  omniauth-discord
+  omniauth-discord (~> 1)
   omniauth-rails_csrf_protection
-  openssl
-  pg (~> 1.2, >= 1.2.3)
+  openssl (~> 3.2)
+  pg (~> 1.5.6)
   pry
   pry-byebug
   pry-rails
@@ -422,7 +422,7 @@ DEPENDENCIES
   rubocop-rspec_rails
   ruby-lsp
   shoulda-matchers (~> 4.0)
-  sidekiq
+  sidekiq (~> 7)
   spring
   traceroute
   versionist

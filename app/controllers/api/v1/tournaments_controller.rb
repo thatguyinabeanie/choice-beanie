@@ -1,4 +1,4 @@
-module Api
+module API
   module V1
     class TournamentsController < ApplicationController
       before_action :set_tournament, only: %i[show update destroy]
