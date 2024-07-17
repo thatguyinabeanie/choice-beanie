@@ -1,11 +1,6 @@
 # Use the official Ruby image as the base image
 FROM ruby:3.3 AS production_base_image
 ARG USERNAME=battle-stadium
-# Create a group and user
-RUN mkdir -p /workspaces/$USERNAME && \
-  groupadd -r $USERNAME && \
-  useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
-  chown -R $USERNAME:$USERNAME /workspaces/$USERNAME
 
 # Install dependencies required for Rails
 RUN \
@@ -33,7 +28,6 @@ COPY . /workspaces/$USERNAME/.
 #
 # PRODUCTION IMAGE
 #
-
 FROM  production_base_image AS production
 ARG USERNAME=battle-stadium
 # USER $USERNAME
@@ -42,33 +36,17 @@ WORKDIR /workspaces/$USERNAME
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
 
-
 #
 # DEVELOPMENT IMAGE
 #
-
 FROM mcr.microsoft.com/devcontainers/ruby:3.3-bookworm AS dev_container_base_image
 ARG USERNAME=battle-stadium
-
-RUN mkdir -p /workspaces/$USERNAME && \
-  groupadd -r $USERNAME && \
-  useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
-  chown -R $USERNAME:$USERNAME /workspaces/$USERNAME
-
-# Used to persist bash history as per https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
-  && mkdir /commandhistory \
-  && touch /commandhistory/.bash_history \
-  && chown -R $USERNAME /commandhistory \
-  && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc" \
-  && echo "$SNIPPET" >> "/home/$USERNAME/.zshrc"
-
 RUN \
+  mkdir -p /workspaces/$USERNAME && \
   apt-get update -qq && \
   apt-get install -y -q postgresql-client openssl libssl-dev libpq-dev git  watchman && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  mkdir -p /workspaces/$USERNAME
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /workspaces/$USERNAME
 
