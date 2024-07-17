@@ -1,0 +1,7 @@
+module Phase
+  class Base < ApplicationRecord
+    self.table_name = 'phases'
+    self.abstract_class = true
+    belongs_to :tournament, class_name: 'Tournament::Tournament', optional: true
+  end
+end
