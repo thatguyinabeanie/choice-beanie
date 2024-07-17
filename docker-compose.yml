@@ -17,8 +17,13 @@ services:
         rm -f tmp/pids/server.pid && \
         bundle config set path ~/.bundle && \
         bundle install && \
-        (rails server -b '0.0.0.0' &) && \
         sleep infinity"
+    # command: bash -c "
+    #     rm -f tmp/pids/server.pid && \
+    #     bundle config set path ~/.bundle && \
+    #     bundle install && \
+    #     (rails server -b '0.0.0.0' &) && \
+    #     sleep infinity"
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle

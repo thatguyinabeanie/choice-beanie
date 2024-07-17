@@ -8,7 +8,7 @@ module Api
       # GET /api/v1/users
       def index
         @users = User.all
-        render json: @users
+        render json: @users.as_json(only: %i[id username])
       end
 
       # GET /api/v1/users/:id

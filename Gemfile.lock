@@ -128,7 +128,7 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
-    faker (3.4.1)
+    faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
@@ -291,7 +291,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.1)
+    rexml (3.3.2)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -406,7 +406,6 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   openssl (~> 3.2)
   pg (~> 1.5.6)
-  pry
   pry-byebug
   pry-rails
   puma (~> 6.0)
@@ -432,4 +431,4 @@ RUBY VERSION
    ruby 3.3.4p94
 
 BUNDLED WITH
-   2.5.11
+   2.5.15

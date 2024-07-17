@@ -11,6 +11,8 @@
 #   end
 
 user1 = User.create!(
+  firstname: 'Pablo',
+  lastname: 'Escobar',
   username: 'fuecoco_supremacy',
   email: 'fuecoco_supremacy@example.com',
   password: 'password',
@@ -18,6 +20,8 @@ user1 = User.create!(
 )
 
 user2 = User.create!(
+  firstname: 'Ash',
+  lastname: 'Ketchum',
   username: 'sprigatito_lover',
   email: 'sprigatito_lover@example.com',
   password: 'password',
@@ -45,16 +49,17 @@ end
 end
 
 reg_g = Tournament::Format.find_by(name: 'Regulation G', game: scarlet_violet)
-# tour = Tournament::Tournament.create!(
-#   name: 'Example Tournament',
-#   organization: org,
-#   start_date: Time.zone.today,
-#   check_in_start_time: Time.zone.now,
-#   game: scarlet_violet
-# )
+tour = Tournament::Tournament.create!(
+  name: 'Example Tournament',
+  organization: org,
+  start_date: Time.zone.today,
+  check_in_start_time: Time.zone.now,
+  format: reg_g,
+  game: scarlet_violet
+)
 
-# swiss_phase = Phase::Swiss.create!(tournament: tour, number_of_rounds: 5)
-# topcut_phase = Phase::SingleEliminationBracket.create!(tournament: tour, criteria: 'Top 8')
+swiss_phase = Phase::Swiss.create!(tournament: tour, number_of_rounds: 5)
+topcut_phase = Phase::SingleEliminationBracket.create!(tournament: tour, criteria: 'Top 8')
 
-# tour.phases << swiss_phase
-# tour.phases << topcut_phase
+tour.phases << swiss_phase
+tour.phases << topcut_phase

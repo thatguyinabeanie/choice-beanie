@@ -1,5 +1,5 @@
 module Tournament
-  class TournamentPhase < ApplicationRecord
+  class Phase < ApplicationRecord
     self.table_name = 'tournament_phases'
     belongs_to :tournament, class_name: 'Tournament::Tournament'
 
