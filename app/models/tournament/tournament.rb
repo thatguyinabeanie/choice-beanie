@@ -6,6 +6,7 @@ module Tournament
 
     belongs_to :format, class_name: 'Tournament::Format', optional: true
 
-    has_many :tournament_phases, class_name: 'Tournament::Phase', dependent: :destroy
+    has_many :tournament_phases, class_name: 'Tournament::Phase', dependent: :destroy_async
+    has_many :phases, through: :tournament_phases, source: :phase
   end
 end

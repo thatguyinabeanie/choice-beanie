@@ -50,11 +50,12 @@ tour = Tournament::Tournament.create!(
   organization: org,
   start_date: Time.zone.today,
   check_in_start_time: Time.zone.now,
+  format: reg_g,
   game: scarlet_violet
 )
 
-# swiss_phase = Phase::Swiss.create!(tournament: tour, number_of_rounds: 5)
-# topcut_phase = Phase::SingleEliminationBracket.create!(tournament: tour, criteria: 'Top 8')
+swiss_phase = Phase::Swiss.create!(tournament: tour, number_of_rounds: 5)
+topcut_phase = Phase::SingleEliminationBracket.create!(tournament: tour, criteria: 'Top 8')
 
-# tour.phases << swiss_phase
-# tour.phases << topcut_phase
+tour.phases << swiss_phase
+tour.phases << topcut_phase
