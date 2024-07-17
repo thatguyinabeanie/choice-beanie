@@ -42,6 +42,6 @@ jobs:
         run: |
           bundle exec rake db:create db:migrate db:schema:load --trace
         env:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/fuecoco_db
+          DATABASE_URL: postgres://postgres:password@localhost:5432/fuecoco_db_test
       - name: Run RSpec tests
         run: bundle exec rspec
