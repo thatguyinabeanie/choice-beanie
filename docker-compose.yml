@@ -22,12 +22,13 @@ services:
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle
+      - ~/.gitconfig:/root/.gitconfig
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:password@db:5432/rotom_db
+      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
       interval: 30s
@@ -46,6 +47,7 @@ services:
     command: sleep infinity
     volumes:
       - ./frontend:/workspaces/battle-stadium/frontend
+      - ~/.gitconfig:/root/.gitconfig
     ports:
       - "5173:5173"
     depends_on:

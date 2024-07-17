@@ -9,7 +9,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.3
         environment:
-          DATABASE_URL: postgres://postgres:password@localhost:5432/rotom_db
+          DATABASE_URL: postgres://postgres:password@localhost:5432/fuecoco_db
       - image: cimg/postgres:16.3 # Use PostgreSQL image
 
     steps:
