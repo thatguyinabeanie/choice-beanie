@@ -11,6 +11,8 @@
 #   end
 
 user1 = User.create!(
+  firstname: 'Pablo',
+  lastname: 'Escobar',
   username: 'fuecoco_supremacy',
   email: 'fuecoco_supremacy@example.com',
   password: 'password',
@@ -18,6 +20,8 @@ user1 = User.create!(
 )
 
 user2 = User.create!(
+  firstname: 'Ash',
+  lastname: 'Ketchum',
   username: 'sprigatito_lover',
   email: 'sprigatito_lover@example.com',
   password: 'password',
