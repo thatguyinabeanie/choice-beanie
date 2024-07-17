@@ -19,7 +19,16 @@
 	"workspaceFolder": "/workspaces/battle-stadium",
 
 	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:1": {},
+		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
+
+	"mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=devcontainer-bashhistory,target=/commandhistory,type=volume"
+  ],
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -42,7 +51,30 @@
 				"Postman.postman-for-vscode",
 				"DavidAnson.vscode-markdownlint",
 				"GitHub.github-vscode-theme"
-			]
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh"
+          },
+          "fish": {
+            "path": "fish"
+          },
+          "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+          },
+          "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+          }
+        }
+			}
 		}
 	},
 
