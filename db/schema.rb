@@ -10,17 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_18_030349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "formats", force: :cascade do |t|
-    t.string "name"
-    t.bigint "game_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_formats_on_game_id"
-  end
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -123,12 +115,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
   end
 
   create_table "tournament_formats", force: :cascade do |t|
-    t.bigint "tournament_id", null: false
-    t.bigint "format_id", null: false
+    t.string "name"
+    t.bigint "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["format_id"], name: "index_tournament_formats_on_format_id"
-    t.index ["tournament_id"], name: "index_tournament_formats_on_tournament_id"
+    t.index ["game_id"], name: "index_tournament_formats_on_game_id"
   end
 
   create_table "tournament_phases", force: :cascade do |t|
@@ -141,7 +132,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
     t.index ["tournament_id"], name: "index_tournament_phases_on_tournament_id"
   end
 
-  create_table "tournaments", force: :cascade do |t|
+  create_table "tournament_rounds", force: :cascade do |t|
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["phase_id"], name: "index_tournament_rounds_on_phase_id"
+  end
+
+  create_table "tournament_tournament_formats", force: :cascade do |t|
+    t.bigint "tournament_id", null: false
+    t.bigint "format_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["format_id"], name: "index_tournament_tournament_formats_on_format_id"
+    t.index ["tournament_id"], name: "index_tournament_tournament_formats_on_tournament_id"
+  end
+
+  create_table "tournament_tournaments", force: :cascade do |t|
     t.string "name"
     t.datetime "start_date"
     t.datetime "created_at", null: false
@@ -151,9 +158,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
     t.bigint "game_id"
     t.bigint "format_id"
     t.datetime "ended_at"
-    t.index ["format_id"], name: "index_tournaments_on_format_id"
-    t.index ["game_id"], name: "index_tournaments_on_game_id"
-    t.index ["organization_id"], name: "index_tournaments_on_organization_id"
+    t.index ["format_id"], name: "index_tournament_tournaments_on_format_id"
+    t.index ["game_id"], name: "index_tournament_tournaments_on_game_id"
+    t.index ["organization_id"], name: "index_tournament_tournaments_on_organization_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -174,29 +181,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "formats", "games"
   add_foreign_key "match_scores", "matches"
   add_foreign_key "match_scores", "users", column: "loser_id"
   add_foreign_key "match_scores", "users", column: "winner_id"
-  add_foreign_key "matches", "tournaments"
+  add_foreign_key "matches", "tournament_tournaments", column: "tournament_id"
   add_foreign_key "matches", "users", column: "player1_id"
   add_foreign_key "matches", "users", column: "player2_id"
   add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organization_staff", "organizations"
   add_foreign_key "organization_staff", "users"
   add_foreign_key "organization_tournaments", "organizations"
-  add_foreign_key "organization_tournaments", "tournaments"
+  add_foreign_key "organization_tournaments", "tournament_tournaments", column: "tournament_id"
   add_foreign_key "organizations", "users"
-  add_foreign_key "phases", "tournaments"
-  add_foreign_key "pokemon_sets", "formats", column: "tournament_format_id"
-  add_foreign_key "pokemon_sets", "tournaments"
+  add_foreign_key "phases", "tournament_tournaments", column: "tournament_id"
+  add_foreign_key "pokemon_sets", "tournament_formats"
+  add_foreign_key "pokemon_sets", "tournament_tournaments", column: "tournament_id"
   add_foreign_key "pokemon_sets", "users", column: "player_id"
-  add_foreign_key "registrations", "tournaments"
+  add_foreign_key "registrations", "tournament_tournaments", column: "tournament_id"
   add_foreign_key "registrations", "users"
-  add_foreign_key "tournament_formats", "formats"
-  add_foreign_key "tournament_formats", "tournaments"
+  add_foreign_key "tournament_formats", "games"
   add_foreign_key "tournament_phases", "phases"
-  add_foreign_key "tournament_phases", "tournaments"
-  add_foreign_key "tournaments", "games"
-  add_foreign_key "tournaments", "organizations"
+  add_foreign_key "tournament_phases", "tournament_tournaments", column: "tournament_id"
+  add_foreign_key "tournament_rounds", "tournament_phases", column: "phase_id"
+  add_foreign_key "tournament_tournament_formats", "tournament_formats", column: "format_id"
+  add_foreign_key "tournament_tournament_formats", "tournament_tournaments", column: "tournament_id"
+  add_foreign_key "tournament_tournaments", "games"
+  add_foreign_key "tournament_tournaments", "organizations"
 end

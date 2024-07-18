@@ -14,7 +14,7 @@ def generate_faker_users
   (1..5).to_a.map do
     User.create!(
       first_name: Faker::Name.first_name,
-      lastn_ame: Faker::Name.last_name,
+      last_name: Faker::Name.last_name,
       username: Faker::Internet.username,
       email: Faker::Internet.email,
       password: Faker::Internet.password
