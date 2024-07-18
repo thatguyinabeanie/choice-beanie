@@ -44,4 +44,13 @@ jobs:
         env:
           DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
       - name: Run RSpec tests
-        run: bundle exec rspec
+        run: |
+          mkdir -p test-results/rspec
+          bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+      - name: Upload RSpec results
+        uses: actions/upload-artifact@v2
+        # Always upload the test results, even if the test run failed
+        if: always()
+        with:
+          name: rspec-results
+          path: test-results/rspec/results.xml
