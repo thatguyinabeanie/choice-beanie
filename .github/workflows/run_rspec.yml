@@ -48,7 +48,7 @@ jobs:
           mkdir -p test-results/rspec
           bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
       - name: Upload RSpec results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         # Always upload the test results, even if the test run failed
         if: always()
         with:
