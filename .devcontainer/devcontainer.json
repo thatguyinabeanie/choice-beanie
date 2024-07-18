@@ -29,10 +29,6 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 
-	"args": {
-		"NODE_VERSION": "20"
-	},
-
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
