@@ -13,17 +13,14 @@ services:
       dockerfile: Dockerfile
       tags:
         - battle-stadium:latest
-    command: bash -c "
-        rm -f tmp/pids/server.pid && \
-        bundle config set path ~/.bundle && \
-        bundle install && \
-        sleep infinity"
-    # command: bash -c "
-    #     rm -f tmp/pids/server.pid && \
-    #     bundle config set path ~/.bundle && \
-    #     bundle install && \
-    #     (rails server -b '0.0.0.0' &) && \
-    #     sleep infinity"
+    command: >
+      bash -lc "
+        rm -f tmp/pids/server.pid &&
+        (bundle check || bundle install) &&
+        (rails db:prepare || rails db:setup) &&
+        (rails server -b '0.0.0.0' -p 3000) &&
+        sleep infinity
+      "
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle
@@ -35,10 +32,10 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
-      interval: 30s
+      interval: 60s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 120s
     tty: true
   frontend:
     tty: true

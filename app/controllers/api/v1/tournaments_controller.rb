@@ -5,7 +5,7 @@ module Api
 
       # GET /api/v1/tournaments
       def index
-        @tournaments = Tournament.all
+        @tournaments = Tournament::Tournament.all
         render json: @tournaments
       end
 
@@ -16,7 +16,7 @@ module Api
 
       # POST /api/v1/tournaments
       def create
-        @tournament = Tournament.new(tournament_params)
+        @tournament = Tournament::Tournament.new(tournament_params)
         if @tournament.save
           render json: @tournament, status: :created, location: api_v1_tournament_url(@tournament)
         else
@@ -39,11 +39,19 @@ module Api
         head :no_content
       end
 
+      # TODO: Implement the following actions
+      # GET /api/v1/tournaments/:id/players
+      # GET /api/v1/tournaments/:id/phases
+      # POST /api/v1/tournaments/:id/phases
+      # PATCH/PUT /api/v1/tournaments/:id/phases/:phase_id
+      # DELETE /api/v1/tournaments/:id/phases/:phase_id
+      # GET /api/v1/tournaments/:id/registrations
+
       private
 
       # Use callbacks to share common setup or constraints between actions.
       def set_tournament
-        @tournament = Tournament.find(params[:id])
+        @tournament = Tournament::Tournament.find(params[:id])
       end
 
       # Only allow a list of trusted parameters through.

@@ -58,10 +58,12 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  host: db
-  username: postgres
-  password: password #
-  database: fuecoco_db_development
+  adapter: postgresql
+  encoding: unicode
+  host: localhost # Use localhost for GitHub Actions
+  username: postgres # Default username for GitHub Actions PostgreSQL service
+  password: password # Ensure this matches the password used in your GitHub Actions service configuration
+  database: fuecoco_db_test # Use a separate test database
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
