@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_053121) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_18_023715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -150,6 +150,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_053121) do
     t.datetime "check_in_start_time"
     t.bigint "game_id"
     t.bigint "format_id"
+    t.datetime "ended_at"
     t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
     t.index ["organization_id"], name: "index_tournaments_on_organization_id"
@@ -165,8 +166,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_053121) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "firstname"
-    t.string "lastname"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "pronouns"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

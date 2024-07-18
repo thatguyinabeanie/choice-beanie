@@ -18,6 +18,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
       resources :users, only: %i[index show update]
+      resources :organizations, only: %i[index show create update] do
+        member do
+          get 'staff', to: 'organizations#staff'
+        end
+      end
+      resources :games, only: %i[index show create update]
       resources :tournaments do
         resources :registrations, only: %i[create destroy]
         resources :matches, only: %i[index create update]
