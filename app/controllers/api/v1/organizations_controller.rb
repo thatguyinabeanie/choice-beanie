@@ -9,7 +9,7 @@ module Api
 
       def show
         # Logic to fetch a specific organization
-        organization = Organization::Organization.find(params[:id])
+        organization = Organization::Organization.friendly.find(params[:id])
         render json: organization
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Organization not found' }, status: :not_found

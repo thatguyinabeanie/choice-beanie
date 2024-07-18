@@ -35,6 +35,8 @@ gem 'devise_token_auth', '~> 1'
 gem 'omniauth-discord', '~> 1'
 gem 'omniauth-rails_csrf_protection'
 
+gem 'friendly_id', '~> 5.5.0'
+
 gem 'openssl', '~> 3.2'
 
 # For documentation and testing your API

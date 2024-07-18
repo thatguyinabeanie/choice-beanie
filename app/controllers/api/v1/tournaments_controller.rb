@@ -6,7 +6,7 @@ module Api
       # GET /api/v1/tournaments
       def index
         @tournaments = Tournament::Tournament.all
-        render json: @tournaments
+        render json: @tournaments, each_serializer: ::TournamentSerializer
       end
 
       # GET /api/v1/tournaments/:id

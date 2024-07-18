@@ -140,6 +140,8 @@ GEM
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
+    friendly_id (5.5.1)
+      activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -427,6 +429,7 @@ DEPENDENCIES
   devise_token_auth (~> 1)
   factory_bot_rails
   faker
+  friendly_id (~> 5.5.0)
   listen (~> 3.3)
   omniauth-discord (~> 1)
   omniauth-rails_csrf_protection

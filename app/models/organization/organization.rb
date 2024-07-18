@@ -3,6 +3,9 @@
 module Organization
   class Organization < ApplicationRecord
     self.table_name = 'organizations'
+    extend FriendlyId
+    friendly_id :name, use: :slugged
+
     belongs_to :user
 
     has_many :organization_staff, class_name: 'Organization::Staff', dependent: :destroy
