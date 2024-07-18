@@ -10,16 +10,41 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-def generate_faker_users
-  (1..5).to_a.map do
-    User.create!(
-      first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name,
-      username: Faker::Internet.username,
-      email: Faker::Internet.email,
-      password: Faker::Internet.password
-    )
+def create_unique_user
+  loop do
+    username = Faker::Internet.unique.username
+    email = Faker::Internet.unique.email
+    user = User.new(username:, email:, password: Faker::Internet.password, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+    begin
+      user.save!
+      break user # Exit the loop and return the created user
+    rescue ActiveRecord::RecordInvalid => e
+      raise e unless e.message.match?(/has already been taken/)
+      # If the username is taken, the loop will retry with a new username
+    end
   end
+end
+
+def generate_faker_users(how_many = 5)
+  (1..how_many).to_a.map { create_unique_user }
+end
+
+def generate_pokemon_set(reg)
+  Tournament::PokemonSet.new(
+    registration: reg,
+
+    name: Faker::Games::Pokemon.name,
+    ability: "ability_#{rand(1..3)}", # This is a placeholder for the ability
+    tera_type: "type_#{rand(1..18)}", # This is a placeholder for the tera_type
+    nature: "nature_#{rand(1..25)}", # This is a placeholder for the nature
+
+    held_item: "item_#{rand(1..10)}", # This is a placeholder for the held_item
+
+    move1: Faker::Games::Pokemon.move,
+    move2: Faker::Games::Pokemon.move,
+    move3: Faker::Games::Pokemon.move,
+    move4: Faker::Games::Pokemon.move
+  )
 end
 
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
@@ -65,7 +90,8 @@ orgs = org_owners.map do |owner|
     staff: generate_faker_users
   )
 end
-orgs.map do |org|
+
+tournaments = orgs.flat_map do |org|
   formats.map.with_index do |tour_format, index|
     tour = Tournament::Tournament.create!(
       name: "#{org.name} #{tour_format.name} Tournament #{index + 1}",
@@ -89,5 +115,15 @@ orgs.map do |org|
 
     tour.save!
     tour
+  end
+end
+
+players = generate_faker_users(10)
+
+registrations = tournaments.flat_map do |tour|
+  players.sample(rand(1..10)).map do |player|
+    registration = Tournament::Registration.new(tournament: tour, user: player)
+    registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
+    registration.save!
   end
 end
