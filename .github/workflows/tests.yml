@@ -5,8 +5,6 @@ on: [pull_request]
 jobs:
   jest:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -33,7 +31,6 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
       RAILS_ENV: test
     services:
       postgres:
