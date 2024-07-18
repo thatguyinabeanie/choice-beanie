@@ -1,12 +1,9 @@
 services:
   backend:
     image: battle-stadium:latest
-    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
-      platforms:
-        - linux/amd64
       tags:
         - battle-stadium:latest
     # command: >
