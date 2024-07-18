@@ -21,3 +21,9 @@ jobs:
         run: |
           cd frontend
           npm run test
+      - name: Upload Jest results
+        uses: actions/upload-artifact@v2
+        if: always() # This ensures the test results are uploaded even if the Jest step fails
+        with:
+          name: jest-results
+          path: frontend/test-results/jest/results.xml
