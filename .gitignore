@@ -29,6 +29,7 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+node_modules
 # Ignore master key for decrypting credentials and more.
 **/master.key
 

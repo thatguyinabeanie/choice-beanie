@@ -41,21 +41,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
-  frontend:
-    tty: true
-    image: battle-stadium-frontend:latest
-    build:
-      context: ./frontend/.
-      dockerfile: Dockerfile
-      tags:
-        - battle-stadium-frontend:latest
-    command: sleep infinity
-    volumes:
-      - ./frontend:/workspaces/battle-stadium/frontend
-    ports:
-      - "5173:5173"
-    # depends_on:
-    #   - backend
 volumes:
   postgres-data:
   bundle-data:
