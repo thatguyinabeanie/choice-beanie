@@ -139,6 +139,7 @@ GEM
       net-http
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
     globalid (1.2.1)
@@ -192,6 +193,8 @@ GEM
     nokogiri (1.16.6-aarch64-linux)
       racc (~> 1.4)
     nokogiri (1.16.6-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
@@ -413,6 +416,7 @@ GEM
 PLATFORMS
   aarch64-linux
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
