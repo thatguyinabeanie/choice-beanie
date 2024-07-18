@@ -3,5 +3,6 @@ module Phase
     self.table_name = 'phases'
     self.abstract_class = true
     belongs_to :tournament, class_name: 'Tournament::Tournament'
+    validates :name, presence: true
   end
 end
