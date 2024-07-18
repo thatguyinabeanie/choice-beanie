@@ -120,7 +120,7 @@ end
 
 players = generate_faker_users(10)
 
-registrations = tournaments.flat_map do |tour|
+tournaments.flat_map do |tour|
   players.sample(rand(1..10)).map do |player|
     registration = Tournament::Registration.new(tournament: tour, user: player)
     registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
