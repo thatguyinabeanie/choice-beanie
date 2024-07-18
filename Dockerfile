@@ -50,7 +50,6 @@ RUN \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
-  nvm install && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 FROM dev_container_base_image AS development
