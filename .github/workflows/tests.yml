@@ -75,6 +75,7 @@ jobs:
           bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
       - name: Run Rubocop
         run: bundle exec rubocop
+        if: always() # This ensures Rubocop is run even if the RSpec step fails
       - name: Upload RSpec results
         uses: actions/upload-artifact@v4
         # Always upload the test results, even if the test run failed
