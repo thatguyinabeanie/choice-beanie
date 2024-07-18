@@ -41,20 +41,17 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 #
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS dev_container_base_image
 ARG USERNAME=battle-stadium
+RUN mkdir -p /workspaces/$USERNAME
+WORKDIR /workspaces/$USERNAME
+COPY .nvmrc Gemfile* /workspaces/$USERNAME
 RUN \
-  mkdir -p /workspaces/$USERNAME && \
   apt-get update -qq && \
   apt-get install -y -q postgresql-client openssl libssl-dev libpq-dev git  watchman && \
   apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-WORKDIR /workspaces/$USERNAME
-
-COPY Gemfile* /workspaces/$USERNAME/.
-RUN \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
-  bundle install
+  nvm install && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 FROM dev_container_base_image AS development
 ARG USERNAME=battle-stadium
