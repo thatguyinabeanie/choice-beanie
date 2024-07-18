@@ -39,7 +39,7 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 #
 # DEVELOPMENT IMAGE
 #
-FROM mcr.microsoft.com/devcontainers/ruby:3.3-bookworm AS dev_container_base_image
+FROM mcr.microsoft.com/devcontainers/ruby:3 AS dev_container_base_image
 ARG USERNAME=battle-stadium
 RUN \
   mkdir -p /workspaces/$USERNAME && \

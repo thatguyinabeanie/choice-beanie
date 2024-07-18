@@ -1,25 +1,22 @@
 services:
-  db:
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
   backend:
     image: battle-stadium:latest
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
       tags:
         - battle-stadium:latest
-    command: >
-      bash -lc "
-        rm -f tmp/pids/server.pid &&
-        (bundle check || bundle install) &&
-        (rails db:prepare || rails db:setup) &&
-        sleep infinity
-      "
+    # command: >
+    #   bash -lc "
+    #     rm -f tmp/pids/server.pid &&
+    #     (bundle check || bundle install) &&
+    #     (rails db:prepare || rails db:setup) &&
+    #     sleep infinity
+    #   "
+    command: sleep infinity
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/bundle
@@ -36,6 +33,14 @@ services:
       retries: 3
       start_period: 120s
     tty: true
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
   frontend:
     tty: true
     image: battle-stadium-frontend:latest
@@ -49,8 +54,8 @@ services:
       - ./frontend:/workspaces/battle-stadium/frontend
     ports:
       - "5173:5173"
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
 volumes:
   postgres-data:
   bundle-data:

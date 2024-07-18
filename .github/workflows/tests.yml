@@ -3,7 +3,7 @@ name: Tests
 on: [pull_request]
 
 jobs:
-  jest:
+  Jest-Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
         with:
           name: jest-results
           path: frontend/test-results/jest/results.xml
-  rspec:
+  Rspect-Test:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
@@ -69,13 +69,13 @@ jobs:
           bundle exec rake db:create db:migrate db:schema:load --trace
         env:
           DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
+      - name: Run Rubocop
+        run: bundle exec rubocop
+        if: always() # This ensures Rubocop is run even if the RSpec step fails
       - name: Run RSpec tests
         run: |
           mkdir -p test-results/rspec
           bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
-      - name: Run Rubocop
-        run: bundle exec rubocop
-        if: always() # This ensures Rubocop is run even if the RSpec step fails
       - name: Upload RSpec results
         uses: actions/upload-artifact@v4
         # Always upload the test results, even if the test run failed
