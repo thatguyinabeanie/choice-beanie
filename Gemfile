@@ -54,6 +54,7 @@ group :development, :test do
   gem 'debug'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'rswag'
   gem 'rubocop-factory_bot'
   gem 'ruby-lsp'
   gem 'traceroute'

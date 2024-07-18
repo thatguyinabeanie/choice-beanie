@@ -1,5 +1,7 @@
 module Tournament
   class PokemonSet < ApplicationRecord
+    belongs_to :registration, class_name: 'Tournament::Registration'
+
     validates :name, presence: true
     validates :ability, presence: true
     validates :tera_type, presence: true
@@ -11,8 +13,5 @@ module Tournament
     validates :move2, presence: true
     validates :move3, presence: true
     validates :move4, presence: true
-
-    validates :format, presence: true
-    validates :tournament, presence: true
   end
 end

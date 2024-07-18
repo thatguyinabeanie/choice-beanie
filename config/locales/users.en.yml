@@ -1,0 +1,20 @@
+activerecord:
+  errors:
+    models:
+      user:
+        attributes:
+          email:
+            blank: "must be filled"
+            taken: "is already taken"
+          password:
+            blank: "must be filled"
+            too_short: "is too short (minimum is %{count} characters)"
+          password_confirmation:
+            blank: "must be filled"
+            confirmation: "doesn't match %{attribute}"
+      session:
+        attributes:
+          email:
+            blank: "must be filled"
+          password:
+            blank: "must be filled"

@@ -57,5 +57,6 @@
   "rubyLsp.formatter": "rubocop",
   "circleci.persistedProjectSelection": [
     "gh/thatguyinabeanie/battle-stadium"
-  ]
+  ],
+  "terminal.integrated.suggest.enabled": true
 }
