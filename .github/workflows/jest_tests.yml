@@ -1,0 +1,37 @@
+name: Jest Tests
+
+on: [pull_request]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-keys.outputs.key }}
+    steps:
+      - id: cache-keys
+        run: echo "::set-output name=key::${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}"
+
+  Jest-Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: Run Jest tests
+        run: |
+          cd frontend
+          npm run test
+      - name: Upload Jest results
+        uses: actions/upload-artifact@v4
+        if: always() # This ensures the test results are uploaded even if the Jest step fails
+        with:
+          name: jest-results
+          path: frontend/test-results/jest/results.xml
