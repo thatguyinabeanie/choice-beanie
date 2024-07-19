@@ -34,9 +34,9 @@ FileUtils.chdir APP_ROOT do
   puts "\n== Migrating Database =="
   system! 'bin/rails db:migrate'
 
-  # puts "\n== Seedings Database =="
-  # system! 'bin/rails db:seed'
+  puts "\n== Seedings Database =="
+  system! 'bin/rails db:seed'
 
   puts "\n== Restarting application server =="
-  system! 'bin/rails restart'
+  system! 'bin/rails server -b 0.0.0.0 -p 3000'
 end

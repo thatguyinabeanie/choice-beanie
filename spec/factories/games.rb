@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :game do
-    name { 'MyString' }
+    name { 'Pokemon Scarlet & Violet' }
   end
 end

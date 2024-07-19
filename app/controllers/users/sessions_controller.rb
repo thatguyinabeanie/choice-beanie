@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'helpers/jwt/token_handler'
-
 module Users
   class SessionsController < Devise::SessionsController
     include RackSessionsFix

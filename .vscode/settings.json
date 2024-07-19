@@ -10,5 +10,7 @@
   ],
 
   "rubyLsp.formatter": "rubocop",
-  "terminal.integrated.suggest.enabled": true
+  "terminal.integrated.suggest.enabled": true,
+  "rubocop.lintMode": true,
+  "rubocop.layoutMode": true
 }
