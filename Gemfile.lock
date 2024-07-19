@@ -135,6 +135,10 @@ GEM
       devise (> 3.5.2, < 5)
       rails (>= 4.2.0, < 7.2)
     diff-lcs (1.5.1)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     drb (2.2.1)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
@@ -494,6 +498,7 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-jwt
   devise_token_auth (~> 1)
+  dotenv-rails
   factory_bot_rails
   faker
   friendly_id (~> 5.5.0)

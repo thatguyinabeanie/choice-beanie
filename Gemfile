@@ -76,6 +76,7 @@ gem 'rswag'
 
 # For documentation and testing your API
 group :development, :test do
+  gem 'dotenv-rails', groups: %i[development test]
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rails-controller-testing'

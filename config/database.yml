@@ -23,8 +23,8 @@ default: &default
 development:
   <<: *default
   host: db
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
+  username: postgres
+  password: password
   database: fuecoco_db_development
 
   # The specified database role being used to connect to PostgreSQL.
@@ -62,10 +62,10 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost # Use localhost for GitHub Actions
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
+  username: postgres
+  password: password
   port: 5432
-  database: fuecoco_db_test # Use a separate test database
+  database: fuecoco_db_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
