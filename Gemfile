@@ -86,8 +86,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
-  gem 'ruby_audit'
-  gem 'simplecov', require: false
+
   gem 'webmock'
 
   gem 'bundler-audit'
@@ -112,8 +111,10 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec_junit_formatter'
   gem 'rubocop-junit-formatter'
+  gem 'ruby_audit'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'simplecov'
 end
 
 source 'https://rubygems.org'

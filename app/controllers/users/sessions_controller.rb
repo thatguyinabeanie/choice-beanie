@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'jwt_token_handler'
+require 'helpers/jwt/token_handler'
 
 module Users
   class SessionsController < Devise::SessionsController

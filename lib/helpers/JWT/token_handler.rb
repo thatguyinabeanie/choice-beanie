@@ -1,5 +1,5 @@
 module Helpers
-  module JWT
+  module Jwt
     module TokenHandler
       class << self
         def jwt_payload!(request)

@@ -31,6 +31,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
 
+      resources :matches, only: %i[index show create update]
       resources :users, only: %i[index show update]
 
       resources :organizations, only: %i[index show create update] do
