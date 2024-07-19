@@ -1,4 +1,4 @@
-name: Ruby on Rails CI - RSpec, Brakeman, Ruby Audit, Rubocop
+name: Ruby on Rails CI
 on: [pull_request]
 jobs:
   setup-ruby:
