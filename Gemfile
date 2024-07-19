@@ -69,6 +69,8 @@ gem 'omniauth-rails_csrf_protection'
 
 gem 'friendly_id', '~> 5.5.0'
 
+gem 'devise-jwt'
+gem 'jsonapi-serializer'
 gem 'openssl', '~> 3.2'
 gem 'rswag'
 
