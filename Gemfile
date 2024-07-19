@@ -70,6 +70,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'friendly_id', '~> 5.5.0'
 
 gem 'openssl', '~> 3.2'
+gem 'rswag'
 
 # For documentation and testing your API
 group :development, :test do
@@ -88,7 +89,6 @@ group :development, :test do
   gem 'debug'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rswag'
   gem 'rubocop-factory_bot'
   gem 'ruby-lsp'
   gem 'traceroute'

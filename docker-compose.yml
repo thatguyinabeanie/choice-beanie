@@ -2,10 +2,43 @@ services:
 
   # BATTLE STADIUM RAILS APP CONTAINER
   backend:
-    image: battle-stadium:latest
+    image: battle-stadium:dev
     build:
       context: .
       dockerfile: Dockerfile.dev
+      tags:
+        - battle-stadium:dev
+    command: >
+      bash -lc "
+        rm -f tmp/pids/server.pid &&
+        (bundle check || bundle install) &&
+        (rails db:prepare || rails db:setup) &&
+        sleep infinity
+      "
+    volumes:
+      - .:/workspaces/battle-stadium
+      - bundle-data:/root/.bundle
+    ports:
+      - "4000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    tty: true
+
+  # BATTLE STADIUM PRODUCTION CONTAINER
+  production:
+    image: battle-stadium:latest
+    profiles: ["production"]
+    build:
+      context: .
+      dockerfile: Dockerfile
       tags:
         - battle-stadium:latest
     command: >
@@ -16,8 +49,8 @@ services:
         sleep infinity
       "
     volumes:
-      - .:/workspaces/battle-stadium
-      - bundle-data:/bundle
+      - .:/rails
+      - bundle-data:/root/.bundle
     ports:
       - "3000:3000"
     depends_on:

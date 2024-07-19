@@ -5,7 +5,7 @@ ARG USERNAME=battle-stadium
 # Install dependencies required for Rails
 RUN \
   apt-get update -qq && \
-  apt-get install -y -q  nodejs postgresql-client openssl libssl-dev libpq-dev git  watchman && \
+  apt-get install -y -q  nodejs postgresql-client openssl libssl-dev libpq-dev git && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
   mkdir -p /workspaces/$USERNAME
@@ -46,7 +46,7 @@ WORKDIR /workspaces/$USERNAME
 COPY .nvmrc Gemfile* /workspaces/$USERNAME
 RUN \
   apt-get update -qq && \
-  apt-get install -y -q postgresql-client openssl libssl-dev libpq-dev git  watchman && \
+  apt-get install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git watchman && \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
