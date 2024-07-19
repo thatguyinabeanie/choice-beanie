@@ -1,7 +1,14 @@
 require 'rails_helper'
 
+# Define a temporary subclass of Phase::Base for testing purposes
+class TestPhase < Phase::Base
+  self.table_name = 'phases'
+end
+
 RSpec.describe Phase::Base do
   describe 'associations' do
+    subject { TestPhase.new }
+
     it { is_expected.to belong_to(:tournament).class_name('Tournament::Tournament') }
   end
 

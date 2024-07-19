@@ -84,6 +84,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
+  gem 'ruby_audit'
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'brakeman'
@@ -108,6 +109,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'rspec_junit_formatter'
+  gem 'rubocop-junit-formatter'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
 end

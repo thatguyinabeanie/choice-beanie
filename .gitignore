@@ -9,6 +9,7 @@
 
 # Ignore all environment files (except templates).
 /.env*
+.secret*
 !/.env*.erb
 
 # Ignore all logfiles and tempfiles.
@@ -44,3 +45,5 @@ vendor/bundle/*
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+spec/examples.txt

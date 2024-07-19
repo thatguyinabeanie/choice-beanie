@@ -383,6 +383,7 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-factory_bot (2.26.1)
       rubocop (~> 1.61)
+    rubocop-junit-formatter (0.1.4)
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -402,6 +403,8 @@ GEM
       rbs (>= 3, < 4)
       sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
+    ruby_audit (2.3.1)
+      bundler-audit (~> 0.9.0)
     rubyzip (2.3.2)
     selenium-webdriver (4.22.0)
       base64 (~> 0.2)
@@ -513,11 +516,13 @@ DEPENDENCIES
   rspec_junit_formatter
   rswag
   rubocop-factory_bot
+  rubocop-junit-formatter
   rubocop-performance
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
   ruby-lsp
+  ruby_audit
   selenium-webdriver
   shoulda-matchers (~> 4.0)
   sidekiq (~> 7)

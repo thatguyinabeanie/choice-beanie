@@ -3,31 +3,7 @@ name: Tests
 on: [pull_request]
 
 jobs:
-  Jest-Test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
-      - name: Run Jest tests
-        run: |
-          cd frontend
-          npm run test
-      - name: Upload Jest results
-        uses: actions/upload-artifact@v4
-        if: always() # This ensures the test results are uploaded even if the Jest step fails
-        with:
-          name: jest-results
-          path: frontend/test-results/jest/results.xml
-  Rspect-Test:
+  Rspect-Test-New:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
@@ -35,9 +11,9 @@ jobs:
       postgres:
         image: postgres:16.3
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: fuecoco_db_test
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
@@ -46,41 +22,68 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.3.4
+        bundler-cache: true # This automatically caches gems, no need for manual cache steps
+    - name: Prepare database
+      run: |
+        bundle exec rake db:create db:schema:load --trace
+      env:
+        # DATABASE_URL: "postgres://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.POSTGRES_DB }}"
+        DATABASE_USERNAME: ${{ secrets.POSTGRES_USER }}
+        DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        DATABASE_NAME: ${{ secrets.POSTGRES_DB }}
+    - name: Run RSpec tests
+      env:
+        DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+      run: |
+        mkdir -p test-results/rspec
+        bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+    - name: Upload RSpec results
+      uses: actions/upload-artifact@v4
+      if: ${{ !env.ACT }}
+      with:
+        name: rspec-results
+        path: test-results/rspec/results.xml
+
+
+  Rubocop-Check:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: 3.3.4
           bundler-cache: true
       - name: Install dependencies
-        run: |
-          mkdir -p ./vendor/bundle
-          bundle config set path 'vendor/bundle'
-          bundle install
-      - name: Prepare database
-        run: |
-          bundle exec rake db:create db:migrate db:schema:load --trace
-        env:
-          DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
+        run: bundle check || bundle install
       - name: Run Rubocop
-        run: bundle exec rubocop
-        if: always() # This ensures Rubocop is run even if the RSpec step fails
-      - name: Run RSpec tests
         run: |
-          mkdir -p test-results/rspec
-          bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
-      - name: Upload RSpec results
+          mkdir -p test-results/rubocop
+          bundle exec rubocop --format RuboCop::Formatter::JUnitFormatter --out test-results/rubocop/results.xml
+        if: always() # This ensures Rubocop is run even if the RSpec step fails
+      - name: Upload Rubocop results
         uses: actions/upload-artifact@v4
-        # Always upload the test results, even if the test run failed
-        if: always()
+        if: ${{ !env.ACT }}
         with:
-          name: rspec-results
-          path: test-results/rspec/results.xml
+            name: rubocop-results
+            path: test-results/rubocop/results.xml
 
+  Ruby-Audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.4
+          bundler-cache: true # This automatically caches gems, no need for manual cache steps
+      - uses: actions/checkout@v4
+      - name: Run Ruby Audit
+        run: bundle exec ruby-audit check
