@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+require 'jwt_token_handler'
+
 module Users
   class SessionsController < Devise::SessionsController
     include RackSessionsFix
 
     respond_to :json
-
-    private
 
     def respond_with(current_user, _opts = {})
       render json: {
@@ -17,23 +17,30 @@ module Users
       }, status: :ok
     end
 
-    def respond_to_on_destroy # rubocop:disable Metrics/AbcSize
-      if request.headers['Authorization'].present?
-        jwt_payload = JWT.decode(request.headers['Authorization'].split.last, Rails.application.credentials.devise_jwt_secret_key!).first
-        current_user = User.find(jwt_payload['sub'])
-      end
+    def respond_to_on_destroy
+      current_user = find_user_from_jwt
+      return render_unauthorized unless current_user
 
-      if current_user
-        render json: {
-          status: 200,
-          message: 'Logged out successfully.'
-        }, status: :ok
-      else
-        render json: {
-          status: 401,
-          message: "Couldn't find an active session."
-        }, status: :unauthorized
-      end
+      render json: {
+        status: 200,
+        message: 'Logged out successfully.'
+      }, status: :ok
+    end
+
+    private
+
+    def find_user_from_jwt
+      jwt_payload = Helpers::JWT::TokenHandler.jwt_payload(request)
+      return nil unless jwt_payload
+
+      User.find_by(id: jwt_payload['sub'])
+    end
+
+    def render_unauthorized
+      render json: {
+        status: 401,
+        message: "Couldn't find an active session."
+      }, status: :unauthorized
     end
   end
 end

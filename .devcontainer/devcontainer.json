@@ -47,7 +47,8 @@
 				"waderyan.gitblame",
 				"Postman.postman-for-vscode",
 				"DavidAnson.vscode-markdownlint",
-				"GitHub.github-vscode-theme"
+				"GitHub.github-vscode-theme",
+				"rubocop.vscode-rubocop"
 			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh",
