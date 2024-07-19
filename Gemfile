@@ -76,6 +76,7 @@ gem 'rswag'
 
 # For documentation and testing your API
 group :development, :test do
+  gem 'brakeman'
   gem 'dotenv-rails', groups: %i[development test]
   gem 'factory_bot_rails'
   gem 'faker'
@@ -86,9 +87,9 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
   gem 'ruby_audit'
+  gem 'simplecov', require: false
+  gem 'webmock'
 
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'brakeman'
   gem 'bundler-audit'
   gem 'debug'
   gem 'pry-byebug'

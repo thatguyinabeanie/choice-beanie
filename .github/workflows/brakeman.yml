@@ -1,0 +1,54 @@
+name: Ruby on Rails CI
+on: [pull_request]
+jobs:
+  setup-ruby:
+    env:
+      RAILS_ENV: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.4
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+
+  brakeman:
+    needs: setup-ruby
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Brakeman
+        run: brakeman
+
+  ruby-audit:
+    needs: setup-ruby
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@4
+      - name: Run Ruby Audit
+        run: bundle exec ruby-audit check
+
+  rubocop-check:
+    needs: setup-ruby
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run Rubocop
+        run: |
+          mkdir -p test-results/rubocop
+          bundle exec rubocop --format RuboCop::Formatter::JUnitFormatter --out test-results/rubocop/results.xml
+        if: always() # This ensures Rubocop is run even if the RSpec step fails
+      - name: Upload Rubocop results
+        uses: actions/upload-artifact@v4
+        if: ${{ !env.ACT }}
+        with:
+          name: rubocop-results
+          path: test-results/rubocop/results.xml
+
