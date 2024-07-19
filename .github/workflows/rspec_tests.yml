@@ -1,0 +1,48 @@
+name: Rspec Tests
+
+on: [pull_request]
+
+jobs:
+  Rspec-Tests:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    services:
+      postgres:
+        image: postgres:16.3
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: fuecoco_db_test
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.3.4
+        bundler-cache: true # This automatically caches gems, no need for manual cache steps
+    - name: Prepare database
+      run: |
+        bundle exec rake db:create db:schema:load --trace
+      env:
+        DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
+    - name: Run RSpec tests
+      env:
+        DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+      run: |
+        mkdir -p test-results/rspec
+        bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+    - name: Upload RSpec results
+      uses: actions/upload-artifact@v4
+      if: ${{ !env.ACT }}
+      with:
+        name: rspec-results
+        path: test-results/rspec/results.xml
