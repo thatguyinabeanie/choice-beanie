@@ -11,7 +11,7 @@ jobs:
       - id: cache-keys
         run: echo "::set-output name=key::${{ runner.os }}-node-${{ hashFiles('**/frontend/package-lock.json') }}"
 
-  Jest-Test:
+  Jest-Tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

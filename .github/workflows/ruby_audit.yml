@@ -3,7 +3,6 @@ name: Ruby Audit
 on: [pull_request]
 
 jobs:
-
   Ruby-Audit:
     env:
       RAILS_ENV: test
