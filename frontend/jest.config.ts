@@ -4,7 +4,6 @@ module.exports = {
   },
    // Other Jest configuration
   reporters: [
-    "default",
     ["jest-junit", { outputDirectory: "test-results/jest", outputName: "results.xml" }]
   ],
 };
