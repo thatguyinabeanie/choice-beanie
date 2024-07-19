@@ -1,29 +1,23 @@
 services:
-  db:
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
+
+  # BATTLE STADIUM RAILS APP CONTAINER
   backend:
-    image: battle-stadium:latest
+    image: battle-stadium-dev:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       tags:
-        - battle-stadium:latest
+        - battle-stadium-dev:latest
     command: >
       bash -lc "
         rm -f tmp/pids/server.pid &&
         (bundle check || bundle install) &&
         (rails db:prepare || rails db:setup) &&
-        (rails server -b '0.0.0.0' -p 3000) &&
         sleep infinity
       "
     volumes:
       - .:/workspaces/battle-stadium
-      - bundle-data:/bundle
+      - bundle-data:/root/.bundle
     ports:
       - "3000:3000"
     depends_on:
@@ -37,21 +31,48 @@ services:
       retries: 3
       start_period: 120s
     tty: true
-  frontend:
-    tty: true
-    image: battle-stadium-frontend:latest
+
+  # BATTLE STADIUM PRODUCTION CONTAINER
+  production:
+    image: battle-stadium:latest
+    profiles: ["production"]
     build:
-      context: ./frontend/.
+      context: .
       dockerfile: Dockerfile
       tags:
-        - battle-stadium-frontend:latest
-    command: sleep infinity
+        - battle-stadium:latest
+    command: >
+      bash -lc "
+        rm -f tmp/pids/server.pid &&
+        (bundle check || bundle install) &&
+        (rails db:prepare || rails db:setup) &&
+        sleep infinity
+      "
     volumes:
-      - ./frontend:/workspaces/battle-stadium/frontend
+      - .:/rails
+      - bundle-data:/root/.bundle
     ports:
-      - "5173:5173"
+      - "4000:3000"
     depends_on:
-      - backend
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    tty: true
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+
 volumes:
   postgres-data:
   bundle-data:

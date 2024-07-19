@@ -18,12 +18,13 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 development:
   <<: *default
   host: db
   username: postgres
-  password: password #
+  password: password
   database: fuecoco_db_development
 
   # The specified database role being used to connect to PostgreSQL.
@@ -61,9 +62,10 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost # Use localhost for GitHub Actions
-  username: postgres # Default username for GitHub Actions PostgreSQL service
-  password: password # Ensure this matches the password used in your GitHub Actions service configuration
-  database: fuecoco_db_test # Use a separate test database
+  username: postgres
+  password: password
+  port: 5432
+  database: fuecoco_db_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -87,6 +89,6 @@ test:
 #
 production:
   <<: *default
-  database: fuecoco_db_production
+  database: <%= ENV["DATABASE_NAME_PROD"] %>
   username: <%= ENV["DATABASE_USERNAME"] %>
   password: <%= ENV["DATABASE_PASSWORD"] %>

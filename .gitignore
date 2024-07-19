@@ -9,6 +9,7 @@
 
 # Ignore all environment files (except templates).
 /.env*
+.secret*
 !/.env*.erb
 
 # Ignore all logfiles and tempfiles.
@@ -29,6 +30,7 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+node_modules
 # Ignore master key for decrypting credentials and more.
 **/master.key
 
@@ -37,3 +39,11 @@ vendor/bundle/*
 /config/credentials/*
 
 .gitconfig
+
+
+/public/assets
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+spec/examples.txt

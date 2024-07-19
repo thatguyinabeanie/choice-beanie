@@ -1,8 +1,14 @@
 module Api
   module V1
-    module Tournaments
+    module Tournament
       class RegistrationsController < ApplicationController
         before_action :set_tournament
+
+        # GET /api/v1/tournaments/:tournament_id/registrations
+        def index
+          @registrations = @tournament.registrations
+          render json: @registrations, each_serializer: ::RegistrationSerializer
+        end
 
         # POST /api/v1/tournaments/:tournament_id/registrations
         def create
@@ -24,7 +30,7 @@ module Api
         private
 
         def set_tournament
-          @tournament = Tournament.find(params[:tournament_id])
+          @tournament = ::Tournament::Tournament.find(params[:tournament_id])
         end
 
         def registration_params

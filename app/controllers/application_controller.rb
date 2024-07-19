@@ -3,11 +3,11 @@ class ApplicationController < ActionController::API
 
   protected
 
+  DEVISE_USER_KEYS = %i[first_name last_name email password password_confirmation username].freeze
   def configure_permitted_parameters
-    keys = %i[first_name last_name]
     # For sign up
-    devise_parameter_sanitizer.permit(:sign_up, keys:)
+    devise_parameter_sanitizer.permit(:sign_up, keys: DEVISE_USER_KEYS)
     # For account update
-    devise_parameter_sanitizer.permit(:account_update, keys)
+    devise_parameter_sanitizer.permit(:account_update, keys: DEVISE_USER_KEYS)
   end
 end

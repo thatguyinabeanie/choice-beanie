@@ -1,64 +1,62 @@
-# Use the official Ruby image as the base image
-FROM ruby:3.3 AS production_base_image
-ARG USERNAME=battle-stadium
+# syntax = docker/dockerfile:1
 
-# Install dependencies required for Rails
-RUN \
-  apt-get update -qq && \
-  apt-get install -y -q  nodejs postgresql-client openssl libssl-dev libpq-dev git  watchman && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  mkdir -p /workspaces/$USERNAME
+# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.3.4
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-# Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile* /workspaces/$USERNAME/.
+# Rails app lives here
+WORKDIR /rails
 
-# Install the gems specified in Gemfile
-WORKDIR /workspaces/$USERNAME
-
-RUN \
-  bundle update --bundler && \
-  bundle config set path ~/.bundle && \
-  bundle install
-
-# Copy the current directory contents into the container at /myapp
-COPY . /workspaces/$USERNAME/.
+# Set production environment
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development"
 
 
-#
-# PRODUCTION IMAGE
-#
-FROM  production_base_image AS production
-ARG USERNAME=battle-stadium
-# USER $USERNAME
-# Set the command to start the puma server
-WORKDIR /workspaces/$USERNAME
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build gems
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev postgresql-client openssl libssl-dev
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
+RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle install && \
+    bundle exec bootsnap precompile --gemfile
+
+# Copy application code
+COPY . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
-#
-# DEVELOPMENT IMAGE
-#
-FROM mcr.microsoft.com/devcontainers/ruby:3.3-bookworm AS dev_container_base_image
-ARG USERNAME=battle-stadium
-RUN \
-  mkdir -p /workspaces/$USERNAME && \
-  apt-get update -qq && \
-  apt-get install -y -q postgresql-client openssl libssl-dev libpq-dev git  watchman && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Final stage for app image
+FROM base
 
-WORKDIR /workspaces/$USERNAME
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips libpq-dev && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-COPY Gemfile* /workspaces/$USERNAME/.
-RUN \
-  bundle update --bundler && \
-  bundle config set path ~/.bundle && \
-  bundle install
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
 
-FROM dev_container_base_image AS development
-ARG USERNAME=battle-stadium
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
 
-COPY . /workspaces/$USERNAME/.
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
