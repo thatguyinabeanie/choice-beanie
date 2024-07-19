@@ -3,7 +3,7 @@ name: Rspec Tests
 on: [pull_request]
 
 jobs:
-  Rspect-Test-New:
+  Rspec-Tests:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
