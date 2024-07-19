@@ -104,11 +104,13 @@ tournaments = orgs.flat_map do |org|
     )
 
     Phase::Swiss.create!(
+      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
       number_of_rounds: 5
     )
 
     Phase::SingleEliminationBracket.create!(
+      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
       criteria: 'Top 8'
     )

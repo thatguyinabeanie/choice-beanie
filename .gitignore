@@ -38,3 +38,9 @@ vendor/bundle/*
 /config/credentials/*
 
 .gitconfig
+
+
+/public/assets
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
