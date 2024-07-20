@@ -50,3 +50,5 @@ coverage
 spec/examples.txt
 
 test-results
+
+codeql*
