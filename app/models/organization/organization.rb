@@ -14,7 +14,7 @@ module Organization
     has_many :organization_memberships, class_name: 'Organization::Membership', dependent: :destroy
     has_many :staff, through: :organization_memberships, source: :user
 
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
     validates :owner, presence: true
     validates :owner_id, uniqueness: true
   end

@@ -1,7 +1,6 @@
 require 'devise'
 # backend/app/models/user.rb
 class User < ApplicationRecord
-  has_secure_password
   include Devise::JWT::RevocationStrategies::JTIMatcher
   extend FriendlyId
   friendly_id :username, use: :slugged

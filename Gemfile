@@ -99,7 +99,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '~> 3'
+  # gem 'capybara', '~> 3'
   gem 'database_cleaner-active_record'
   gem 'rspec_junit_formatter', '~> 0'
 
@@ -112,7 +112,7 @@ end
 group :development, :test, :rubocop do
   gem 'rubocop', require: false
 
-  gem 'rubocop-capybara', require: false
+  # gem 'rubocop-capybara', require: false
   gem 'rubocop-checkstyle_formatter', require: false
   gem 'rubocop-git', require: false
 

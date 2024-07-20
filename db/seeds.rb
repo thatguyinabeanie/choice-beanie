@@ -10,23 +10,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-def create_unique_user
-  loop do
-    username = Faker::Internet.unique.username
-    email = Faker::Internet.unique.email
-    user = User.new(username:, email:, password: Faker::Internet.password, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
-    begin
-      user.save!
-      break user # Exit the loop and return the created user
-    rescue ActiveRecord::RecordInvalid => e
-      raise e unless e.message.match?(/has already been taken/)
-      # If the username is taken, the loop will retry with a new username
-    end
+def create_user(username: nil, email: nil)
+  username ||= "regular_user_#{Faker::Internet.unique.username}"
+  email ||= "#{username}@battle-stadium-regular-users.com"
+  # Check if user already exists
+  User.find_or_create_by!(username:) do |the_user|
+    the_user.email = email
+    the_user.password = Faker::Internet.password
+    the_user.first_name = Faker::Name.first_name
+    the_user.last_name = Faker::Name.last_name
   end
-end
-
-def generate_faker_users(how_many = 5)
-  (1..how_many).to_a.map { create_unique_user }
 end
 
 def generate_pokemon_set(reg)
@@ -54,41 +47,25 @@ sv_formats = %w[A B C D E F G H].map { |regulation| Tournament::Format.create!(n
 swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
 formats = sv_formats + swsh_formats
 
-users = [
+org_owners = [
   {
-    first_name: 'Pablo',
-    last_name: 'Escobar',
     username: 'fuecoco_supremacy'
   },
   {
-    first_name: 'Ash',
-    last_name: 'Ketchum',
     username: 'sprigatito_lover'
   },
   {
-    first_name: 'Jake',
-    last_name: 'Peralta',
     username: 'quaxly_enthusiast'
   }
-]
-
-org_owners = users.map do |owner|
-  User.create!(
-    first_name: owner[:first_name],
-    last_name: owner[:last_name],
-    username: owner[:username],
-    email: "#{owner[:username]}@example.com",
-    password: Faker::Internet.password
-  )
-end
+].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
-  Organization::Organization.create!(
-    name: "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization",
-    user: owner,
-    description: 'This is an example organization.',
-    staff: generate_faker_users
-  )
+  org_name = "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization"
+
+  Organization::Organization.find_or_create_by!(name: org_name, owner:) do |org|
+    org.description = 'This is an example organization.'
+    org.staff = (1..5).to_a.map { create_user }
+  end
 end
 
 tournaments = orgs.flat_map do |org|
@@ -120,7 +97,7 @@ tournaments = orgs.flat_map do |org|
   end
 end
 
-players = generate_faker_users(10)
+players = (1..10).to_a.map { create_user }
 
 tournaments.flat_map do |tour|
   players.sample(rand(1..10)).map do |player|
