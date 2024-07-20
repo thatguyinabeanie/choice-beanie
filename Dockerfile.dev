@@ -5,13 +5,13 @@ ARG USERNAME=battle-stadium
 # Install dependencies required for Rails
 RUN \
   apt-get update -qq && \
-  apt-get install -y -q  nodejs postgresql-client openssl libssl-dev libpq-dev git && \
+  apt-get install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  mkdir -p /workspaces/$USERNAME
+  mkdir -p "/workspaces/$USERNAME"
 
 # Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile* /workspaces/$USERNAME/.
+COPY Gemfile Gemfile.lock /workspaces/$USERNAME/
 
 # Install the gems specified in Gemfile
 WORKDIR /workspaces/$USERNAME
@@ -22,7 +22,7 @@ RUN \
   bundle install
 
 # Copy the current directory contents into the container at /myapp
-COPY . /workspaces/$USERNAME/.
+COPY COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 
 
 #
@@ -41,9 +41,9 @@ CMD ["rails", "server", "-b", "0.0.0.0"]
 #
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS dev_container_base_image
 ARG USERNAME=battle-stadium
-RUN mkdir -p /workspaces/$USERNAME
+RUN mkdir -p "/workspaces/$USERNAME"
 WORKDIR /workspaces/$USERNAME
-COPY .nvmrc Gemfile* /workspaces/$USERNAME
+COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
 RUN \
   apt-get update -qq && \
   apt-get install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git watchman && \
@@ -55,6 +55,6 @@ RUN \
 FROM dev_container_base_image AS development
 ARG USERNAME=battle-stadium
 
-COPY . /workspaces/$USERNAME/.
+COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 CMD ["rails", "server", "-b", "0.0.0.0"]
 

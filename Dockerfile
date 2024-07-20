@@ -30,7 +30,7 @@ RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bund
     bundle exec bootsnap precompile --gemfile
 
 # Copy application code
-COPY . .
+COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version  ./
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
@@ -45,6 +45,7 @@ FROM base
 # Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libsqlite3-0 libvips libpq-dev && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
