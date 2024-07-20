@@ -115,20 +115,4 @@ jobs:
       - name: Run Rubocop
         run: |
           mkdir -p test-results/rubocop
-          bundle exec rubocop --format RuboCop::Formatter::JUnitFormatter --out test-results/rubocop/results.xml
-          exit_code=$?
-          echo "Rubocop exited with code $exit_code"
-          if [ $exit_code -ne 0 ]; then
-            echo "Rubocop found issues."
-          else
-            echo "No issues found by Rubocop."
-          fi
-        shell: /usr/bin/bash -e {0}
-        continue-on-error: true
-      - name: Upload Rubocop results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: rubocop-results
-          path: test-results/rubocop/results.xml
-
+          bundle exec rubocop

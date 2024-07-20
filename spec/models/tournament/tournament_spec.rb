@@ -42,16 +42,4 @@ RSpec.describe Tournament::Tournament do
       expect(tournament).not_to be_valid
     end
   end
-
-  describe 'associations' do
-    # it 'has many participants' do
-    #   tournament = described_class.new(name: 'Battle Stadium', date: Date.today)
-    #   expect(tournament.participants).to be_empty
-
-    #   participant = Participant.new(name: 'Player 1')
-    #   tournament.participants << participant
-
-    #   expect(tournament.participants).to include(participant)
-    # end
-  end
 end
