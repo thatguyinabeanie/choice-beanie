@@ -6,6 +6,8 @@ on:
   pull_request:
 jobs:
   setup-ruby:
+    env:
+      RAILS_ENV: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,6 +25,8 @@ jobs:
   rspec-tests:
     needs: setup-ruby
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     services:
       postgres:
         image: postgres:16.3
