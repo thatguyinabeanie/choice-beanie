@@ -59,7 +59,7 @@ gem 'sidekiq', '~> 7'
 gem 'devise', '~> 4.9'
 
 # Use Redis for cache and sessions
-gem 'redis', '~> 4.0'
+gem 'redis', '~> 5.2'
 
 # For secure token authentication
 gem 'bootsnap', '>= 1.4.4', require: false

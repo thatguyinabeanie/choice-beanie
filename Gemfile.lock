@@ -332,7 +332,8 @@ GEM
       logger
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis (4.8.1)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
     redis-client (0.22.2)
       connection_pool
     regexp_parser (2.9.2)
@@ -531,7 +532,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.1)
   rails-controller-testing
-  redis (~> 4.0)
+  redis (~> 5.2)
   rspec-rails
   rspec_junit_formatter
   rswag
