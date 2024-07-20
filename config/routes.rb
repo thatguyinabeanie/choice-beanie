@@ -1,5 +1,5 @@
 # config/routes.rb
-Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
+Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -31,6 +31,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
 
+      resources :matches, only: %i[index show update]
       resources :users, only: %i[index show update]
 
       resources :organizations, only: %i[index show create update] do

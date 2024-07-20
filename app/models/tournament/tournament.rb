@@ -10,5 +10,10 @@ module Tournament
     has_many :phases, through: :tournament_phases, source: :phase
 
     has_many :registrations, class_name: 'Tournament::Registration', dependent: :destroy_async
+
+    validates :start_date, presence: true
+    validates :format, presence: true
+
+    validates :organization, uniqueness: true
   end
 end

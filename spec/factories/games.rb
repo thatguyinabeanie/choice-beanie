@@ -1,5 +1,6 @@
 FactoryBot.define do
-  factory :game do
-    name { 'MyString' }
+  factory :game, class: 'Game' do
+    name { 'Pokemon Scarlet & Violet' }
+    formats { [] }
   end
 end

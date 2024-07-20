@@ -40,6 +40,7 @@ vendor/bundle/*
 
 .gitconfig
 
+coverage
 
 /public/assets
 
@@ -47,3 +48,5 @@ vendor/bundle/*
 /config/master.key
 
 spec/examples.txt
+
+test-results

@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :organizer_staff do
-    organizer { nil }
-    user { nil }
+  factory :organization_membership, class: 'Organization::Membership' do
+    organization
+    user
   end
 end

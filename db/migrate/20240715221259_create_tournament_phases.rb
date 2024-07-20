@@ -1,4 +1,4 @@
-class CreateTournamentPhases < ActiveRecord::Migration[6.0]
+class CreateTournamentPhases < ActiveRecord::Migration[7.1]
   def change
     create_table :tournament_phases do |t|
       t.bigint :tournament_id, null: false

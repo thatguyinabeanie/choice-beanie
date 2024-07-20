@@ -1,4 +1,4 @@
-class CreateOrganizationTournaments < ActiveRecord::Migration[6.0]
+class CreateOrganizationTournaments < ActiveRecord::Migration[7.1]
   def change
     create_table :organization_tournaments do |t|
       t.bigint :organization_id, null: false

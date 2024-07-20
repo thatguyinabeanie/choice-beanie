@@ -1,4 +1,4 @@
-class DropTournamentFormatsTournaments < ActiveRecord::Migration[6.0]
+class DropTournamentFormatsTournaments < ActiveRecord::Migration[7.1]
   def up
     drop_table :tournament_formats_tournaments
   end
