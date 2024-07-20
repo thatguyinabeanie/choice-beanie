@@ -1,4 +1,4 @@
-class DropOrganizationStaffTable < ActiveRecord::Migration[6.0]
+class DropOrganizationStaffTable < ActiveRecord::Migration[7.1]
   def up
     drop_table :organization_staff
   end

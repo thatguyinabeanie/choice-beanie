@@ -1,4 +1,4 @@
-class CreateTournamentFormatsJoinTable < ActiveRecord::Migration[6.0]
+class CreateTournamentFormatsJoinTable < ActiveRecord::Migration[7.1]
   def change
     create_table :tournament_formats do |t|
       t.references :tournament, null: false, foreign_key: { to_table: :tournaments }

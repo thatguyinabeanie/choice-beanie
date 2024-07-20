@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_19_233723) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_004236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,7 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_233723) do
     t.bigint "owner_id"
     t.string "slug"
     t.index ["name"], name: "index_organizations_on_name", unique: true
-    t.index ["owner_id"], name: "index_organizations_on_owner_id"
+    t.index ["owner_id"], name: "index_organizations_on_owner_id", unique: true
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 

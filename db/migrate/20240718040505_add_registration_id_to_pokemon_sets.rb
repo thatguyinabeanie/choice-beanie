@@ -1,4 +1,4 @@
-class AddRegistrationIdToPokemonSets < ActiveRecord::Migration[6.0]
+class AddRegistrationIdToPokemonSets < ActiveRecord::Migration[7.1]
   def change
     # Ensure the pokemon_sets table exists and then add the registration_id column
     return unless table_exists?(:pokemon_sets)

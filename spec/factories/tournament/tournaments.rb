@@ -4,7 +4,7 @@ FactoryBot.define do
     start_date { '2024-07-10 03:55:12' }
     ended_at { '2024-07-11 03:55:12' }
     organization
-    game
-    format
+    game factory: :game
+    format { create(:format, game:) }
   end
 end
