@@ -9,8 +9,9 @@
     }
   ],
 
-  "rubyLsp.formatter": "rubocop",
+  // "rubyLsp.formatter": "rubocop",
   "terminal.integrated.suggest.enabled": true,
   "rubocop.lintMode": true,
-  "rubocop.layoutMode": true
+  "rubocop.layoutMode": true,
+
 }

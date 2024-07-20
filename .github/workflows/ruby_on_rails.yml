@@ -110,6 +110,8 @@ jobs:
         with:
           ruby-version: 3.3.4
           bundler-cache: true
+      - name: Install dependencies
+        run: bundle check || bundle install
       - name: Run Rubocop
         run: |
           mkdir -p test-results/rubocop
