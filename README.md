@@ -1,4 +1,6 @@
-# README
+# Battle Stadium
+
+[![Build](https://github.com/thatguyinabeanie/battle-stadium/actions/workflows/ruby_on_rails.yml/badge.svg?branch=main)](https://github.com/thatguyinabeanie/battle-stadium/actions/workflows/ruby_on_rails.yml)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
