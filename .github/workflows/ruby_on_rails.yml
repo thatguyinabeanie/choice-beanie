@@ -1,5 +1,9 @@
 name: Ruby on Rails CI
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 jobs:
   setup-ruby:
     env:
