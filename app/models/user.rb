@@ -1,11 +1,13 @@
 require 'devise'
 # backend/app/models/user.rb
 class User < ApplicationRecord
+  has_secure_password
   include Devise::JWT::RevocationStrategies::JTIMatcher
   extend FriendlyId
   friendly_id :username, use: :slugged
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :password, presence: true, length: { minimum: 8 }
   validates :username, presence: true, uniqueness: true
   validates :pronouns, length: { maximum: 50 }, allow_blank: true
   validates :first_name, length: { maximum: 50 }, presence: true

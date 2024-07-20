@@ -96,6 +96,7 @@ GEM
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
     byebug (11.1.3)
+    cancancan (3.6.1)
     capybara (3.40.0)
       addressable
       matrix
@@ -295,6 +296,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.0)
     rack (3.1.7)
+    rack-attack (6.7.0)
+      rack (>= 1.0, < 4)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-protection (4.0.0)
@@ -533,6 +536,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   brakeman
   bundler-audit
+  cancancan
   capybara
   database_cleaner
   debug
@@ -555,6 +559,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 6.0)
+  rack-attack
   rack-cors
   rails (~> 7.1)
   rails-controller-testing

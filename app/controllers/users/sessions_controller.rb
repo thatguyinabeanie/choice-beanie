@@ -4,6 +4,14 @@ module Users
   class SessionsController < Devise::SessionsController
     include RackSessionsFix
 
+    # def create
+    #   user = User.find_by(email: params[:email])
+    #   if user&.authenticate(params[:password])
+    #     # Successful authentication
+    #   else
+    #     # Invalid credentials
+    #   end
+    # end
     respond_to :json
 
     def respond_with(current_user, _opts = {})

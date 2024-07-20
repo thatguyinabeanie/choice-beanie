@@ -17,6 +17,8 @@ gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
 
+gem 'cancancan'
+
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
 
@@ -54,7 +56,7 @@ gem 'versionist'
 gem 'sidekiq', '~> 7'
 
 gem 'devise', '~> 4.9'
-
+gem 'rack-attack'
 # For secure token authentication
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise_token_auth', '~> 1'
