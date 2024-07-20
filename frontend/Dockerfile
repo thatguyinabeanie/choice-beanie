@@ -13,16 +13,9 @@ ARG USERNAME=battle-stadium
 RUN mkdir -p /workspaces/$USERNAME/frontend && \
   groupadd -r $USERNAME && \
   useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
-  chown -R $USERNAME:$USERNAME /workspaces/$USERNAME
+  chown -R $USERNAME:$USERNAME /workspaces/$USERNAME/frontend
 
-# Used to persist bash history as per https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history
-RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
-  && mkdir /commandhistory \
-  && touch /commandhistory/.bash_history \
-  && chown -R $USERNAME /commandhistory \
-  && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc" \
-  && echo "$SNIPPET" >> "/home/$USERNAME/.zshrc"
-
+USER $USERNAME
 
 # Set the working directory inside the container
 WORKDIR /workspaces/$USERNAME/frontend
