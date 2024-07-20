@@ -115,7 +115,9 @@ jobs:
       - name: Install dependencies
         run: bundle check || bundle install
 
-      - name: Run Rubocop
-        run: |
-          mkdir -p test-results/rubocop
-          bundle exec rubocop
+      - name: Run RuboCop with Reviewdog
+        uses: reviewdog/action-rubocop@v1
+        with:
+          rubocop_version: gemfile
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review # This makes comments on PRs

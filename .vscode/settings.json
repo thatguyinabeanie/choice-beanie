@@ -17,5 +17,7 @@
     "connectionId": "thatguyinabeanie",
     "projectKey": "thatguyinabeanie_battle-stadium"
   },
+  "testing.coverageToolbarEnabled": true,
+  "coverage-gutters.coverageBaseDir": "coverage/*",
 
 }

@@ -19,12 +19,14 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  host: localhost
+  username: postgres
+  password: password
+  port: 5432
 
 development:
   <<: *default
-  host: db
-  username: postgres
-  password: password
+  # host: db
   database: fuecoco_db_dev
 
   # The specified database role being used to connect to PostgreSQL.
@@ -59,12 +61,6 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  adapter: postgresql
-  encoding: unicode
-  host: localhost # Use localhost for GitHub Actions
-  username: postgres
-  password: password
-  port: 5432
   database: fuecoco_db_test
 
 # As with config/credentials.yml, you never want to store sensitive information,

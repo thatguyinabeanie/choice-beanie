@@ -85,6 +85,13 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
+    better_html (2.1.1)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
     bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.18.3)
@@ -115,8 +122,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    database_cleaner (2.0.2)
-      database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
@@ -411,9 +416,31 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.31.3)
       parser (>= 3.3.1.0)
+    rubocop-capybara (2.21.0)
+      rubocop (~> 1.41)
+    rubocop-checkstyle_formatter (0.6.0)
+      rubocop (>= 1.14.0)
+    rubocop-erb (0.4.1)
+      better_html
+      rubocop (~> 1.45)
     rubocop-factory_bot (2.26.1)
       rubocop (~> 1.61)
+    rubocop-git (0.1.3)
+      rubocop (>= 0.24.1)
+    rubocop-graphql (1.5.3)
+      rubocop (>= 1.50, < 2)
+    rubocop-i18n (3.0.0)
+      rubocop (~> 1.0)
     rubocop-junit-formatter (0.1.4)
+    rubocop-md (1.2.2)
+      rubocop (>= 1.0)
+    rubocop-migrations (0.1.0)
+      rubocop (>= 0.42.0)
+    rubocop-minitest (0.35.1)
+      rubocop (>= 1.61, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-packaging (0.5.2)
+      rubocop (>= 1.33, < 2.0)
     rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -422,11 +449,25 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-rails_config (1.16.0)
+      rubocop (>= 1.57.0)
+      rubocop-ast (>= 1.26.0)
+      rubocop-md
+      rubocop-minitest (~> 0.22)
+      rubocop-packaging (~> 0.5)
+      rubocop-performance (~> 1.11)
+      rubocop-rails (~> 2.0)
+    rubocop-rails_deprecation (0.6.0)
+      rubocop (>= 1.27)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
     rubocop-rspec (3.0.3)
       rubocop (~> 1.61)
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
       rubocop-rspec (~> 3, >= 3.0.1)
+    rubocop-thread_safety (0.5.1)
+      rubocop (>= 0.90.0)
     ruby-lsp (0.17.8)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
@@ -456,10 +497,11 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    smart_properties (1.17.0)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet-runtime (0.5.11487)
+    sorbet-runtime (0.5.11491)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -531,63 +573,77 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10.0)
-  bcrypt
+  active_model_serializers (~> 0)
+  bcrypt (~> 3)
   bootsnap (>= 1.4.4)
-  brakeman
-  bundler-audit
-  cancancan
-  capybara
-  database_cleaner
-  debug
+  brakeman (~> 6)
+  bundler-audit (~> 0)
+  cancancan (~> 3)
+  capybara (~> 3)
+  database_cleaner-active_record
+  debug (~> 1)
   devise (~> 4.9)
-  devise-jwt
+  devise-jwt (~> 0)
   devise_token_auth (~> 1)
-  dotenv-rails
-  factory_bot_rails
-  faker
+  dotenv-rails (~> 3)
+  factory_bot_rails (~> 6)
+  faker (~> 3)
   friendly_id (~> 5.5.0)
-  importmap-rails
-  jbuilder
-  jsonapi-serializer
-  kredis
+  importmap-rails (~> 2)
+  jbuilder (~> 2)
+  jsonapi-serializer (~> 2)
+  kredis (~> 1)
   listen (~> 3.3)
   omniauth-discord (~> 1)
-  omniauth-rails_csrf_protection
+  omniauth-rails_csrf_protection (~> 1)
   openssl (~> 3.2)
   pg (~> 1.5.6)
-  pry-byebug
-  pry-rails
+  pry-byebug (~> 3)
+  pry-rails (~> 0)
   puma (~> 6.0)
-  rack-attack
-  rack-cors
+  rack-attack (~> 6)
+  rack-cors (~> 2)
   rails (~> 7.1)
-  rails-controller-testing
+  rails-controller-testing (~> 1)
   redis (~> 5)
-  rspec-rails
-  rspec_junit_formatter
-  rswag
+  rspec-rails (~> 6)
+  rspec_junit_formatter (~> 0)
+  rswag (~> 2)
+  rubocop
+  rubocop-capybara
+  rubocop-checkstyle_formatter
+  rubocop-erb
   rubocop-factory_bot
+  rubocop-git
+  rubocop-graphql
+  rubocop-i18n
   rubocop-junit-formatter
+  rubocop-md
+  rubocop-migrations
+  rubocop-minitest
   rubocop-performance
   rubocop-rails
+  rubocop-rails_config
+  rubocop-rails_deprecation
+  rubocop-rake
   rubocop-rspec
   rubocop-rspec_rails
-  ruby-lsp
-  ruby_audit
-  selenium-webdriver
+  rubocop-thread_safety
+  ruby-lsp (~> 0)
+  ruby_audit (~> 2)
+  selenium-webdriver (~> 4)
   shoulda-matchers (~> 6)
   sidekiq (~> 7)
   simplecov
-  spring
+  spring (~> 4)
   sprockets-rails
-  stimulus-rails
-  traceroute
-  turbo-rails
+  stimulus-rails (~> 1)
+  traceroute (~> 0)
+  turbo-rails (~> 2)
   tzinfo-data
-  versionist
-  web-console
-  webmock
+  versionist (~> 2)
+  web-console (~> 4)
+  webmock (~> 3)
 
 RUBY VERSION
    ruby 3.3.4p94

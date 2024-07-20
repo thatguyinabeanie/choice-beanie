@@ -23,6 +23,7 @@ services:
     depends_on:
       - db
     environment:
+      RAILS_ENV: development
       DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
