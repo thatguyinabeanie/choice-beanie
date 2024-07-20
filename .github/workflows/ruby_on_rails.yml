@@ -37,7 +37,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-
     - uses: actions/checkout@v4
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -59,12 +58,13 @@ jobs:
         bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
     - name: Upload RSpec results
       uses: actions/upload-artifact@v4
-      if: ${{ !env.ACT }}
+      if: always() && ${{ !env.ACT }}
       with:
         name: rspec-results
         path: test-results/rspec/results.xml
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
+      if: always() && ${{ !env.ACT }}
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
