@@ -113,7 +113,7 @@ group :test do
   gem 'rubocop-junit-formatter'
   gem 'ruby_audit'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-matchers', '~> 6.2'
   gem 'simplecov'
 end
 
