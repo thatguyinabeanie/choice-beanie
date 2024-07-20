@@ -9,10 +9,10 @@ RUN npm ci --ignore-scripts
 FROM node:22
 ARG USERNAME=battle-stadium
 
-RUN mkdir -p /workspaces/$USERNAME/frontend && \
-  groupadd -r $USERNAME && \
-  useradd -m -d /home/$USERNAME --no-log-init -r -g $USERNAME $USERNAME && \
-  chown -R $USERNAME:$USERNAME /workspaces/$USERNAME/frontend
+RUN mkdir -p "/workspaces/$USERNAME/frontend" && \
+  groupadd -r "$USERNAME" && \
+  useradd -m -d "/home/$USERNAME" --no-log-init -r -g "$USERNAME" "$USERNAME" && \
+  chown -R "$USERNAME:$USERNAME" "/workspaces/$USERNAME/frontend"
 
 USER $USERNAME
 
