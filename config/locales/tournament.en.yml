@@ -1,5 +1,8 @@
 en:
   tournament:
+    errors:
+      validations:
+        unique_per_org_name_start_date: "should be unique per organization, name, and start date"
     registration:
       success: "You have successfully registered for the tournament"
       failure: "You have already registered for the tournament"

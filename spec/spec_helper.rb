@@ -94,15 +94,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.include FactoryBot::Syntax::Methods
-
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.around do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
 end

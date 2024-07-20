@@ -5,7 +5,7 @@ RSpec.describe Organization::Organization do
     # Ensure an organization instance exists for the uniqueness test
     subject(:organization) { create(:organization) }
 
-    before { create(:user, id: 1) }
+    before { create(:user) }
 
     it { is_expected.to validate_presence_of(:name) }
 

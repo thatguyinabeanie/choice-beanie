@@ -40,6 +40,11 @@ def generate_pokemon_set(reg)
   )
 end
 
+def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
+  Tournament::Tournament.find_by!(organization:, name:, start_date:)
+rescue ActiveRecord::RecordInvalid
+  Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:)
+end
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
 sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
 
@@ -60,34 +65,32 @@ org_owners = [
 ].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
-  org_name = "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization"
+  Organization::Organization.find_by!(owner:)
+rescue ActiveRecord::RecordNotFound
+  description = 'This is an example organization.'
+  staff = (1..5).to_a.map { create_user }
+  name = "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization"
+  Organization::Organization.create!(name:, owner:, description:, staff:)
+end.compact
 
-  Organization::Organization.find_or_create_by!(name: org_name, owner:) do |org|
-    org.description = 'This is an example organization.'
-    org.staff = (1..5).to_a.map { create_user }
-  end
-end
+tournaments = orgs.flat_map do |organization|
+  formats.map.with_index do |format, index|
+    name = "#{organization.name} #{format.name} Tournament #{index + 1}"
+    start_date = Time.zone.today
+    ended_at = Time.zone.today + 1.week
+    check_in_start_time = Time.zone.now
+    game = format.game
 
-tournaments = orgs.flat_map do |org|
-  formats.map.with_index do |tour_format, index|
-    tour = Tournament::Tournament.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1}",
-      organization: org,
-      start_date: Time.zone.today,
-      ended_at: Time.zone.today + 1.week,
-      check_in_start_time: Time.zone.now,
-      format: tour_format,
-      game: tour_format.game
-    )
+    tour = create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
 
     Phase::Swiss.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Swiss Round",
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
       number_of_rounds: 5
     )
 
     Phase::SingleEliminationBracket.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Top Cut!",
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
       criteria: 'Top 8'
     )
@@ -99,9 +102,9 @@ end
 
 players = (1..10).to_a.map { create_user }
 
-tournaments.flat_map do |tour|
-  players.sample(rand(1..10)).map do |player|
-    registration = Tournament::Registration.new(tournament: tour, user: player)
+tournaments.flat_map do |tournament|
+  players.sample(rand(1..10)).map do |user|
+    registration = Tournament::Registration.new(tournament:, user:)
     registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
     registration.save!
   end

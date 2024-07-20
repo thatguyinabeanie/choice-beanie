@@ -15,6 +15,6 @@ module Tournament
     validates :format, presence: true
     validates :game, presence: true
     validates :organization, presence: true
-    validates :organization_id, uniqueness: { scope: %i[name start_date], message: 'should be unique per organization, name, and start date' }
+    validates :organization_id, uniqueness: { scope: %i[name start_date], message: I18n.t('tournament.errors.validations.unique_per_org_name_start_date') }
   end
 end
