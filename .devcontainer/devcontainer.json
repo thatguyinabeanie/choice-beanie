@@ -48,7 +48,8 @@
 				"Postman.postman-for-vscode",
 				"DavidAnson.vscode-markdownlint",
 				"GitHub.github-vscode-theme",
-				"rubocop.vscode-rubocop"
+				"rubocop.vscode-rubocop",
+				"snyk-security.snyk-vulnerability-scanner"
 			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh",
