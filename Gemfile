@@ -9,9 +9,6 @@ gem 'rails', '~> 7.1'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
-
 # Use the Puma web server [https://github.com/puma/puma]
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -27,13 +24,13 @@ gem 'stimulus-rails'
 gem 'jbuilder'
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", ">= 4.0.1"
+gem 'redis', '~> 5'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
+gem 'kredis'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem 'bcrypt'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[windows jruby]
@@ -57,9 +54,6 @@ gem 'versionist'
 gem 'sidekiq', '~> 7'
 
 gem 'devise', '~> 4.9'
-
-# Use Redis for cache and sessions
-gem 'redis', '~> 4.0'
 
 # For secure token authentication
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -113,7 +107,7 @@ group :test do
   gem 'rubocop-junit-formatter'
   gem 'ruby_audit'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-matchers', '~> 6'
   gem 'simplecov'
 end
 
