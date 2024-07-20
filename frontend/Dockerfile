@@ -7,8 +7,6 @@ COPY package*.json ./
 RUN npm install
 
 
-
-
 FROM node:22
 ARG USERNAME=battle-stadium
 
@@ -30,7 +28,7 @@ RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhisto
 WORKDIR /workspaces/$USERNAME/frontend
 
 # Copy the rest of the application code to the working directory
-COPY . .
+COPY public src index.html jest.config.ts tsconfig.app.json tsconfig.json tsconfig.node.json vite.config.ts .eslintrc.cjs /workspaces/$USERNAME/frontend/
 
 COPY --from=node_builder /workspaces/battle-stadium/frontend/node_modules /workspaces/battle-stadium/frontend/node_modules
 
