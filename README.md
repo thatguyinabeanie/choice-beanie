@@ -1,24 +1,5 @@
-# README
+# Battle Stadium
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Build](https://github.com/thatguyinabeanie/battle-stadium/actions/workflows/ruby_on_rails.yml/badge.svg?branch=main)](https://github.com/thatguyinabeanie/battle-stadium/actions/workflows/ruby_on_rails.yml)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Battle Stadium is the definitive Pokemon VGC Tournament Hosting website. This project is a Ruby on Rails API with a modern React frontend, utilizing the Devise gem for authentication.
