@@ -16,6 +16,6 @@ module Organization
 
     validates :name, presence: true
     validates :owner, presence: true
-    validates :owner_id, uniqueness: true # rubocop:disable Rails/UniqueValidationWithoutIndex
+    validates :owner_id, uniqueness: true
   end
 end
