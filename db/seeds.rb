@@ -103,8 +103,8 @@ end
 players = (1..10).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
-  players.sample(rand(1..10)).map do |user|
-    registration = Tournament::Registration.new(tournament:, user:)
+  players.sample(rand(1..10)).map do |player|
+    registration = Tournament::Registration.new(tournament:, player:)
     registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
     registration.save!
   end

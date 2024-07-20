@@ -15,14 +15,12 @@ RSpec.describe Organization::Organization do
   end
 
   describe 'associations' do
-    let(:org_owner) do
-      create(:user, username: 'fuecoco_number_1', email: 'fuecoco@example.com', pronouns: 'he/him', first_name: 'John', last_name: 'Doe', password: '12345678', password_confirmation: '12345678')
-    end
+    let(:org_owner) { create(:user) }
     let(:organization) { create(:organization, owner: org_owner) }
 
     it { is_expected.to belong_to(:owner) }
-    it { is_expected.to have_many(:organization_memberships).class_name('Organization::Membership').dependent(:destroy) }
-    it { is_expected.to have_many(:staff).through(:organization_memberships).source(:user) }
+    it { is_expected.to have_many(:organization_staff_members).class_name('Organization::StaffMember').dependent(:destroy) }
+    it { is_expected.to have_many(:staff).through(:organization_staff_members).source(:user) }
     it { is_expected.to have_many(:tournaments).through(:organization_tournaments) }
 
     describe 'adding and removing staff' do

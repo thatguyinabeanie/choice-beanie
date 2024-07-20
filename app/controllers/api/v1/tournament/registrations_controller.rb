@@ -34,7 +34,6 @@ module Api
         end
 
         def registration_params
-          # Ensure you permit the necessary parameters for a registration
           params.require(:registration).permit(:player_id, :other_attributes)
         end
       end

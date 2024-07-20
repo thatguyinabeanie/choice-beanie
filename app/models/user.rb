@@ -19,10 +19,10 @@ class User < ApplicationRecord
          #  :confirmable, :lockable, :timeoutable, :trackable, :omniauthable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
-  has_one :owned_organization, class_name: 'Organization', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
+  has_one :owned_organization, class_name: 'Organization::Organization', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
 
-  has_many :organization_memberships, class_name: 'Organization::Membership', dependent: :destroy
-  has_many :staff, through: :organization_memberships, source: :user
+  has_many :organization_staff_members, class_name: 'Organization::StaffMember', dependent: :destroy
+  has_many :staff, through: :organization_staff_members, source: :user
   # def self.from_omniauth(auth)
   #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
   #     user.email = auth.info.email
