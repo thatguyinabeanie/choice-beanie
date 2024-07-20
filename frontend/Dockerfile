@@ -4,8 +4,7 @@ FROM node:22 AS node_builder
 RUN mkdir -p /workspaces/battle-stadium/frontend
 WORKDIR /workspaces/battle-stadium/frontend
 COPY package*.json ./
-RUN npm install
-
+RUN npm ci --ignore-scripts
 
 FROM node:22
 ARG USERNAME=battle-stadium
