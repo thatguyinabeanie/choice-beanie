@@ -30,7 +30,7 @@ RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bund
     bundle exec bootsnap precompile --gemfile
 
 # Copy application code
-COPY . .
+COPY app bin config db lib public storage rakefile vendor config.ru .ruby-version  ./
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/

@@ -43,3 +43,6 @@
 codeql**/*
 coverage
 test-results/
+
+.secrets
+.env
