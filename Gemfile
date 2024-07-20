@@ -100,7 +100,7 @@ end
 
 group :test do
   # gem 'capybara', '~> 3'
-  gem 'database_cleaner-active_record', require: false
+  gem 'database_cleaner-active_record'
   gem 'rspec_junit_formatter', '~> 0'
 
   gem 'ruby_audit', '~> 2', require: false
