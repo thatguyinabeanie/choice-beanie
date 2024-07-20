@@ -48,3 +48,5 @@ coverage
 /config/master.key
 
 spec/examples.txt
+
+test-results
