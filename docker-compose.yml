@@ -18,6 +18,7 @@ services:
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/root/.bundle
+      - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
     ports:
       - "3000:3000"
     depends_on:
@@ -25,6 +26,8 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
+      environment:
+      # SSH_AUTH_SOCK: ${SSH_AUTH_SOCK}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
       interval: 60s
