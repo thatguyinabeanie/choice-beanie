@@ -22,7 +22,7 @@ RUN \
   bundle install
 
 # Copy the current directory contents into the container at /myapp
-COPY COPY app bin config db lib public storage rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
+COPY COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 
 
 #
@@ -55,6 +55,6 @@ RUN \
 FROM dev_container_base_image AS development
 ARG USERNAME=battle-stadium
 
-COPY app bin config db lib public storage rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
+COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 CMD ["rails", "server", "-b", "0.0.0.0"]
 
