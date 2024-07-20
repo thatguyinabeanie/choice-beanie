@@ -23,7 +23,7 @@ jobs:
           npm ci
           npm test -- --ci
       - name: Upload Jest results
-        if: ${{ !env.ACT }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jest-results
