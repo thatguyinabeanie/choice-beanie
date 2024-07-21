@@ -1,7 +1,7 @@
 module Tournament
   class MatchGame < ApplicationRecord
     self.table_name = 'match_games'
-    belongs_to :match, class_name: 'Tournament::Match'
+    belongs_to :match, class_name: 'Tournament::Match', inverse_of: :match_games
 
     belongs_to :winner, class_name: 'User', optional: true
     belongs_to :loser, class_name: 'User', optional: true
@@ -11,6 +11,7 @@ module Tournament
     delegate :player1, to: :match
     delegate :player2, to: :match
 
+    validates :game_number, presence: true
     validate :different_winner_and_loser
     validate :validate_winner_and_loser
 
@@ -18,16 +19,24 @@ module Tournament
     # - reporter must be one of the players, or a associated tournament organization staff member, or an associated tournament admin, an associated tournament organization owner
     # - when validating report. also validate that report_submitted_at is present
 
-    # Adds or updates the game report
-    def report_game(winner_id:, loser_id:, reporter_id:)
-      self.winner_id = winner_id
-      self.loser_id = loser_id
-      self.reporter_id = reporter_id
-      self.report_submitted_at = Time.current
-      save
+    def report_game_winner!(winner:, reporter:)
+      report_game(winner:, loser: other_player(winner), reporter:)
+    end
+
+    def report_game_loser!(loser:, reporter:)
+      report_game(loser:, winner: other_player(loser), reporter:)
+    end
+
+    def report_game!(winner:, loser:, reporter:)
+      report_submitted_at = Time.current.utc
+      update!(winner:, loser:, reporter:, report_submitted_at:)
     end
 
     private
+
+    def other_player(player)
+      player == player1 ? player2 : player1
+    end
 
     def different_winner_and_loser
       return if winner.nil? && loser.nil?

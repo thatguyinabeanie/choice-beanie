@@ -42,4 +42,13 @@ RSpec.describe Tournament::Tournament do
       expect(tournament).not_to be_valid
     end
   end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:organization).class_name('Organization::Organization') }
+    it { is_expected.to belong_to(:game).class_name('Game') }
+    it { is_expected.to belong_to(:format).class_name('Tournament::Format') }
+    it { is_expected.to have_many(:tournament_phases).class_name('Tournament::Phase').dependent(:destroy_async) }
+    it { is_expected.to have_many(:phases).through(:tournament_phases).source(:phase) }
+    it { is_expected.to have_many(:registrations).class_name('Tournament::Registration').dependent(:destroy_async) }
+  end
 end

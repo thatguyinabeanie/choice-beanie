@@ -3,7 +3,10 @@ module Tournament
     MAX_POKEMON_SUBMISSIONS = 6
 
     belongs_to :player, class_name: 'User'
-    belongs_to :tournament, class_name: 'Tournament::Tournament'
+    belongs_to :tournament, class_name: 'Tournament::Tournament', inverse_of: :registrations
+
+    validates :player_id, presence: true
+    validates :tournament_id, presence: true
     validates :player_id, uniqueness: { scope: :tournament_id, message: I18n.t('tournament.registration.already_registered') }
 
     has_many :pokemon_sets, dependent: :destroy

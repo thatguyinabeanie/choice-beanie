@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_20_223655) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_20_231640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,9 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_223655) do
     t.bigint "loser_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "game_number"
-    t.datetime "player1_check_in"
-    t.datetime "player2_check_in"
+    t.integer "game_number", default: 1, null: false
     t.bigint "reporter_id"
     t.index ["loser_id"], name: "index_match_games_on_loser_id"
     t.index ["match_id"], name: "index_match_games_on_match_id"
@@ -63,6 +61,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_223655) do
     t.bigint "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "player1_check_in"
+    t.datetime "player2_check_in"
+    t.bigint "loser_id"
+    t.index ["loser_id"], name: "index_matches_on_loser_id"
     t.index ["player1_id"], name: "index_matches_on_player1_id"
     t.index ["player2_id"], name: "index_matches_on_player2_id"
     t.index ["winner_id"], name: "index_matches_on_winner_id"
@@ -222,6 +224,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_20_223655) do
   add_foreign_key "match_games", "users", column: "loser_id"
   add_foreign_key "match_games", "users", column: "reporter_id"
   add_foreign_key "match_games", "users", column: "winner_id"
+  add_foreign_key "matches", "users", column: "loser_id"
   add_foreign_key "matches", "users", column: "player1_id"
   add_foreign_key "matches", "users", column: "player2_id"
   add_foreign_key "matches", "users", column: "winner_id"
