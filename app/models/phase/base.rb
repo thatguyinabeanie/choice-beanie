@@ -3,9 +3,9 @@ module Phase
     self.table_name = 'phases'
     self.abstract_class = true
     validates :name, presence: true
+    has_many :rounds, class_name: 'Tournament::Round', inverse_of: :phase, dependent: :destroy
 
-    has_one :tournament_phase, class_name: 'Tournament::Phase', dependent: :destroy
-    has_one :tournament, through: :tournament_phase
+    belongs_to :tournament, class_name: 'Tournament::Tournament'
 
     # has_many :rounds, class_name: 'Tournament::Round', dependent: :destroy
 

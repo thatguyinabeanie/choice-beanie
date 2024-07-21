@@ -2,12 +2,9 @@ module Tournament
   class Tournament < ApplicationRecord
     belongs_to :organization, class_name: 'Organization::Organization'
     belongs_to :game, class_name: 'Game'
-
     belongs_to :format, class_name: 'Tournament::Format'
 
-    has_many :tournament_phases, class_name: 'Tournament::Phase', dependent: :destroy_async
-    has_many :phases, through: :tournament_phases, source: :phase
-
+    has_many :phases, class_name: 'Phase::Base', dependent: :destroy_async
     has_many :registrations, class_name: 'Tournament::Registration', dependent: :destroy_async
 
     validates :name, presence: true

@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Tournament::MatchGame do
+  let(:tournament_hash) do
+    organization = create(:organization)
+    organization.staff << create(:user)
+    tournament = create(:tournament, organization:)
+    phase = create(:swiss_phase, tournament:)
+    round = create(:round, phase:)
+    match = create(:match, round:)
+    match_game = create(:match_game, match:)
+    { match_game:, tournament:, organization:, match:, phase:, round:, player1: match.player1, player2: match.player2, staff_member: organization.staff.first }
+  end
+
+  let(:match_game) { tournament_hash[:match_game] }
+  let(:player1) { tournament_hash[:player1] } # rubocop:disable RSpec/IndexedLet
+  let(:player2) { tournament_hash[:player2] } # rubocop:disable RSpec/IndexedLet
+
   describe 'associations' do
     it { is_expected.to belong_to(:match).class_name('Tournament::Match') }
     it { is_expected.to belong_to(:winner).class_name('User').optional }
@@ -11,42 +26,90 @@ RSpec.describe Tournament::MatchGame do
   end
 
   describe 'validations' do
-    # it { is_expected.to validate_presence_of(:winner).on(:report_game) }
-    # it { is_expected.to validate_presence_of(:loser).on(:report_game) }
-    # it { is_expected.to validate_presence_of(:reporter).on(:report_game) }
-
     it 'validates that winner and loser cannot be the same' do
-      match_game = build(:match_game, winner: user, loser: user)
-      match_game.valid?(:report_game)
-      expect(match_game.errors[:base]).to include('Winner and loser cannot be the same')
+      match_game = build(:match_game, winner: player1, loser: player1)
+      match_game.valid?(:report_game!)
+      expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.winner_and_loser_are_the_same'))
     end
 
     it 'validates that winner and loser must be either player 1 or player 2' do
-      match_game = build(:match_game, winner: user, loser: other_user)
-      match_game.valid?(:report_game)
-      expect(match_game.errors[:base]).to include('Winner and loser must be either player 1 or player 2')
+      match_game = build(:match_game, winner: player1, loser: create(:user))
+      match_game.valid?(:report_game!)
+      expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.loser_must_be_match_player'))
+    end
+
+    context 'when reporter is nil' do
+      it 'does not add any errors' do
+        match_game.reporter = nil
+        match_game.send(:reporter_role_validation)
+        expect(match_game.errors).to be_empty
+      end
+    end
+
+    context 'when reporter is one of the players' do
+      it 'does not add any errors' do
+        match_game.reporter = player1
+        match_game.send(:reporter_role_validation)
+        expect(match_game.errors).to be_empty
+      end
+    end
+
+    context 'when reporter is a staff member of the tournament organization' do
+      it 'does not add any errors' do
+        match_game.reporter = tournament_hash[:organization].staff.first
+        match_game.send(:reporter_role_validation)
+        expect(match_game.errors).to be_empty
+      end
+    end
+
+    context 'when reporter is not a player or staff member' do
+      it 'adds an error' do
+        match_game.reporter = create(:user)
+        match_game.send(:reporter_role_validation)
+        expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))
+      end
     end
   end
 
-  describe 'reporting match game' do
-    let(:player1) { create(:player) } # rubocop:disable RSpec/IndexedLet
-    let(:player2) { create(:player) } # rubocop:disable RSpec/IndexedLet
-    let(:phase) { create(:swiss_phase) }
-    let(:round) { create(:round, phase:) }
-    let(:match) { create(:match, player1:, player2:, round:) }
-    let(:match_game) { create(:match_game, match:) }
-    let(:reporter) { create(:user) }
+  describe '#report_game!' do
+    let(:staff_member) { tournament_hash[:staff_member] }
 
-    it 'sets the winner, loser, reporter, and report_submitted_at attributes' do
-      match_game.report_game(winner_id: player1, loser_id: player2, reporter_id: reporter.id)
-      expect(match_game.winner).to eq(winner)
-      expect(match_game.loser).to eq(loser)
-      expect(match_game.reporter).to eq(reporter)
-      expect(match_game.report_submitted_at).to be_within(1.second).of(Time.current.utc)
+    it 'reports the game with the winner as the winner' do
+      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      expect(match_game.winner).to eq(player1)
     end
 
-    it 'saves the match game' do
-      expect { match_game.report_game(winner_id: winner.id, loser_id: loser.id, reporter_id: reporter.id) }.to change(described_class, :count).by(1)
+    it 'reports the game with the loser as the loser' do
+      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      expect(match_game.loser).to eq(player2)
+    end
+
+    it 'does not allow a third person to be the winner' do
+      expect do
+        match_game.report_game!(winner: player1, loser: create(:user), reporter: staff_member)
+      end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.loser_must_be_match_player')}")
+    end
+
+    it 'does not allow a third person to be the loser' do
+      expect do
+        match_game.report_game!(winner: create(:user), loser: player2, reporter: staff_member)
+      end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.winner_must_be_match_player')}")
+    end
+
+    it 'sets the reporter if the reporter is a tournament staff' do
+      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      expect(match_game.reporter).to eq(staff_member)
+    end
+
+    it 'raises an error if the reporter is not a match player or staff member' do
+      expect do
+        match_game.report_game!(winner: player1, loser: player2, reporter: create(:user))
+      end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.reporter_must_be_match_player_or_staff')}")
+    end
+
+    it 'sets the reported_at attribute' do
+      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      expect(match_game.reported_at).to be_within(10.seconds).of(Time.current.utc)
     end
   end
 end

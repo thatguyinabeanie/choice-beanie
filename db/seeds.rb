@@ -42,9 +42,10 @@ end
 
 def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
   Tournament::Tournament.find_by!(organization:, name:, start_date:)
-rescue ActiveRecord::RecordInvalid
+rescue ActiveRecord::RecordNotFound
   Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:)
 end
+
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
 sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
 
