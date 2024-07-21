@@ -7,14 +7,13 @@ module Phase
     belongs_to :tournament, class_name: 'Tournament::Tournament'
 
     validates :name, presence: true
-    validates :best_of, numericality: { greater_than: 0, only_integer: true }
-    # Optionally, validate best_of to be odd to ensure decisiveness
+    validates :best_of, numericality: { greater_than: 0, only_integer: true }, presence: true
     validate :best_of_must_be_odd
 
     private
 
     def best_of_must_be_odd
-      errors.add(:best_of, 'must be odd') unless best_of.odd?
+      errors.add(:best_of, I18n.t('errors.phase.best_of_must_be_odd')) unless best_of.odd?
     end
     # has_many :rounds, class_name: 'Tournament::Round', dependent: :destroy
 
