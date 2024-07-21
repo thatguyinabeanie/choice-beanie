@@ -38,36 +38,28 @@ RSpec.describe Tournament::MatchGame do
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.loser_must_be_match_player'))
     end
 
-    context 'when reporter is nil' do
-      it 'does not add any errors' do
-        match_game.reporter = nil
-        match_game.send(:reporter_role_validation)
-        expect(match_game.errors).to be_empty
-      end
+    it 'does not add any errors when reporter is nil' do
+      match_game.reporter = nil
+      match_game.send(:reporter_role_validation)
+      expect(match_game.errors).to be_empty
     end
 
-    context 'when reporter is one of the players' do
-      it 'does not add any errors' do
-        match_game.reporter = player1
-        match_game.send(:reporter_role_validation)
-        expect(match_game.errors).to be_empty
-      end
+    it 'does not add any errors when reporter is one of the players' do
+      match_game.reporter = player1
+      match_game.send(:reporter_role_validation)
+      expect(match_game.errors).to be_empty
     end
 
-    context 'when reporter is a staff member of the tournament organization' do
-      it 'does not add any errors' do
-        match_game.reporter = tournament_hash[:organization].staff.first
-        match_game.send(:reporter_role_validation)
-        expect(match_game.errors).to be_empty
-      end
+    it 'does not add any errors when reporter is a staff member of the tournament organization' do
+      match_game.reporter = tournament_hash[:organization].staff.first
+      match_game.send(:reporter_role_validation)
+      expect(match_game.errors).to be_empty
     end
 
-    context 'when reporter is not a player or staff member' do
-      it 'adds an error' do
-        match_game.reporter = create(:user)
-        match_game.send(:reporter_role_validation)
-        expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))
-      end
+    it 'adds an error when reporter is not a player or staff member' do
+      match_game.reporter = create(:user)
+      match_game.send(:reporter_role_validation)
+      expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))
     end
   end
 
