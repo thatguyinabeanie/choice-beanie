@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :registration do
-    user
+    player factory: :user
     tournament
   end
 end

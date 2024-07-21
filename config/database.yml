@@ -19,13 +19,15 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  host: localhost
+  username: postgres
+  password: password
+  port: 5432
 
 development:
   <<: *default
-  host: db
-  username: postgres
-  password: password
-  database: fuecoco_db_dev
+  # host: db
+  database: fuecoco_db_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -57,15 +59,12 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
+test: &test
   <<: *default
-  adapter: postgresql
-  encoding: unicode
-  host: localhost # Use localhost for GitHub Actions
-  username: postgres
-  password: password
-  port: 5432
   database: fuecoco_db_test
+
+ci:
+  <<: *test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

@@ -34,6 +34,9 @@ node_modules
 # Ignore master key for decrypting credentials and more.
 **/master.key
 
+**.DS_Store**
+.DS_Store
+
 vendor/bundle/*
 
 /config/credentials/*

@@ -5,7 +5,8 @@ class User < ApplicationRecord
   extend FriendlyId
   friendly_id :username, use: :slugged
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :password, presence: true, length: { minimum: 8 }
   validates :username, presence: true, uniqueness: true
   validates :pronouns, length: { maximum: 50 }, allow_blank: true
   validates :first_name, length: { maximum: 50 }, presence: true
@@ -18,10 +19,14 @@ class User < ApplicationRecord
          #  :confirmable, :lockable, :timeoutable, :trackable, :omniauthable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
-  has_one :owned_organization, class_name: 'Organization', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
+  has_one :owned_organization, class_name: 'Organization::Organization', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
 
-  has_many :organization_memberships, class_name: 'Organization::Membership', dependent: :destroy
-  has_many :staff, through: :organization_memberships, source: :user
+  has_many :organization_staff_members, class_name: 'Organization::StaffMember', dependent: :destroy
+  has_many :staff, through: :organization_staff_members, source: :user
+
+  def staff_member_of?(organization)
+    organization.staff.exists?(id:)
+  end
   # def self.from_omniauth(auth)
   #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
   #     user.email = auth.info.email

@@ -31,3 +31,7 @@ FactoryBot/FactoryAssociationWithStrategy:
   Enabled: false
 Metrics/BlockLength:
   Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+# RSpec/MultipleExpectations:
+# Enabled: false

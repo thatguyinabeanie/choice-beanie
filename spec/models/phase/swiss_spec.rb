@@ -13,6 +13,14 @@ RSpec.describe Phase::Swiss do
     end
   end
 
+  describe 'create' do
+    it 'successfully creates a swiss phase' do
+      tournament = create(:tournament) # Assuming a :tournament factory exists
+      swiss_phase = create(:swiss_phase, tournament:)
+      expect(swiss_phase.persisted?).to be true
+    end
+  end
+
   # describe 'associations' do
   #   it 'has_many :matches' do
   #     expect(described_class.reflect_on_association(:matches).macro).to eq(:has_many)

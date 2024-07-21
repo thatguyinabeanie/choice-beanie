@@ -1,0 +1,7 @@
+en:
+  errors:
+    match_game:
+      reporter_must_be_match_player_or_staff: "Match Game Reporter must be an Organization Staff Member if not either the players"
+      winner_must_be_match_player: "The winner is not a player in the match."
+      loser_must_be_match_player: "The loser is not a player in the match."
+      winner_and_loser_are_the_same: "The winner and loser are both the same player."

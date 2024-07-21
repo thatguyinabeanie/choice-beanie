@@ -10,23 +10,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-def create_unique_user
-  loop do
-    username = Faker::Internet.unique.username
-    email = Faker::Internet.unique.email
-    user = User.new(username:, email:, password: Faker::Internet.password, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
-    begin
-      user.save!
-      break user # Exit the loop and return the created user
-    rescue ActiveRecord::RecordInvalid => e
-      raise e unless e.message.match?(/has already been taken/)
-      # If the username is taken, the loop will retry with a new username
-    end
+def create_user(username: nil, email: nil)
+  username ||= "regular_user_#{Faker::Internet.unique.username}"
+  email ||= "#{username}@battle-stadium-regular-users.com"
+  # Check if user already exists
+  User.find_or_create_by!(username:) do |the_user|
+    the_user.email = email
+    the_user.password = Faker::Internet.password
+    the_user.first_name = Faker::Name.first_name
+    the_user.last_name = Faker::Name.last_name
   end
-end
-
-def generate_faker_users(how_many = 5)
-  (1..how_many).to_a.map { create_unique_user }
 end
 
 def generate_pokemon_set(reg)
@@ -47,6 +40,12 @@ def generate_pokemon_set(reg)
   )
 end
 
+def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
+  Tournament::Tournament.find_by!(organization:, name:, start_date:)
+rescue ActiveRecord::RecordNotFound
+  Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:)
+end
+
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
 sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
 
@@ -54,63 +53,45 @@ sv_formats = %w[A B C D E F G H].map { |regulation| Tournament::Format.create!(n
 swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
 formats = sv_formats + swsh_formats
 
-users = [
+org_owners = [
   {
-    first_name: 'Pablo',
-    last_name: 'Escobar',
     username: 'fuecoco_supremacy'
   },
   {
-    first_name: 'Ash',
-    last_name: 'Ketchum',
     username: 'sprigatito_lover'
   },
   {
-    first_name: 'Jake',
-    last_name: 'Peralta',
     username: 'quaxly_enthusiast'
   }
-]
-
-org_owners = users.map do |owner|
-  User.create!(
-    first_name: owner[:first_name],
-    last_name: owner[:last_name],
-    username: owner[:username],
-    email: "#{owner[:username]}@example.com",
-    password: Faker::Internet.password
-  )
-end
+].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
-  Organization::Organization.create!(
-    name: "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization",
-    user: owner,
-    description: 'This is an example organization.',
-    staff: generate_faker_users
-  )
-end
+  Organization::Organization.find_by!(owner:)
+rescue ActiveRecord::RecordNotFound
+  description = 'This is an example organization.'
+  staff = (1..5).to_a.map { create_user }
+  name = "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization"
+  Organization::Organization.create!(name:, owner:, description:, staff:)
+end.compact
 
-tournaments = orgs.flat_map do |org|
-  formats.map.with_index do |tour_format, index|
-    tour = Tournament::Tournament.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1}",
-      organization: org,
-      start_date: Time.zone.today,
-      ended_at: Time.zone.today + 1.week,
-      check_in_start_time: Time.zone.now,
-      format: tour_format,
-      game: tour_format.game
-    )
+tournaments = orgs.flat_map do |organization|
+  formats.map.with_index do |format, index|
+    name = "#{organization.name} #{format.name} Tournament #{index + 1}"
+    start_date = Time.zone.today
+    ended_at = Time.zone.today + 1.week
+    check_in_start_time = Time.zone.now
+    game = format.game
+
+    tour = create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
 
     Phase::Swiss.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Swiss Round",
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
       number_of_rounds: 5
     )
 
     Phase::SingleEliminationBracket.create!(
-      name: "#{org.name} #{tour_format.name} Tournament #{index + 1} - Top Cut!",
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
       criteria: 'Top 8'
     )
@@ -120,11 +101,11 @@ tournaments = orgs.flat_map do |org|
   end
 end
 
-players = generate_faker_users(10)
+players = (1..10).to_a.map { create_user }
 
-tournaments.flat_map do |tour|
+tournaments.flat_map do |tournament|
   players.sample(rand(1..10)).map do |player|
-    registration = Tournament::Registration.new(tournament: tour, user: player)
+    registration = Tournament::Registration.new(tournament:, player:)
     registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
     registration.save!
   end

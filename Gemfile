@@ -6,109 +6,84 @@ ruby '3.3.4'
 # Rails framework
 gem 'rails', '~> 7.1'
 
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem 'sprockets-rails'
-
-# Use the Puma web server [https://github.com/puma/puma]
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
-
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem 'turbo-rails'
-
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem 'stimulus-rails'
-
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
-
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 5'
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-gem 'kredis'
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-gem 'bcrypt'
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[windows jruby]
-
-# Use Puma as the app server
-gem 'puma', '~> 6.0'
-
-# Use PostgreSQL as the database for Active Record
-gem 'pg', '~> 1.5.6'
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
-
-# Serialize API responses to JSON
-gem 'active_model_serializers', '~> 0.10.0'
-
-# Simplify API version management
-gem 'versionist'
-
-# Background jobs
-gem 'sidekiq', '~> 7'
-
-gem 'devise', '~> 4.9'
-
-# For secure token authentication
+gem 'active_model_serializers', '~> 0'
+gem 'bcrypt', '~> 3'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'cancancan', '~> 3'
+gem 'devise', '~> 4.9'
+gem 'devise-jwt', '~> 0'
 gem 'devise_token_auth', '~> 1'
-gem 'omniauth-discord', '~> 1'
-gem 'omniauth-rails_csrf_protection'
-
 gem 'friendly_id', '~> 5.5.0'
-
-gem 'devise-jwt'
-gem 'jsonapi-serializer'
+gem 'importmap-rails', '~> 2'
+gem 'jbuilder', '~> 2'
+gem 'jsonapi-serializer', '~> 2'
+gem 'kredis', '~> 1'
+gem 'omniauth-discord', '~> 1'
+gem 'omniauth-rails_csrf_protection', '~> 1'
 gem 'openssl', '~> 3.2'
-gem 'rswag'
+gem 'pg', '~> 1.5.6'
+gem 'puma', '~> 6.0'
+gem 'rack-attack', '~> 6'
+gem 'rack-cors', '~> 2'
+gem 'redis', '~> 5'
+gem 'rswag', '~> 2'
+gem 'sidekiq', '~> 7'
+gem 'sprockets-rails'
+gem 'stimulus-rails', '~> 1'
+gem 'turbo-rails', '~> 2'
+gem 'tzinfo-data', platforms: %i[windows jruby]
+gem 'versionist', '~> 2'
 
 # For documentation and testing your API
 group :development, :test do
-  gem 'brakeman'
-  gem 'dotenv-rails', groups: %i[development test]
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'rails-controller-testing'
-  gem 'rspec-rails'
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'rubocop-rspec_rails', require: false
-
-  gem 'webmock'
-
-  gem 'bundler-audit'
-  gem 'debug'
-  gem 'pry-byebug'
-  gem 'pry-rails'
-  gem 'rubocop-factory_bot'
-  gem 'ruby-lsp'
-  gem 'traceroute'
+  gem 'debug', '~> 1'
+  gem 'dotenv-rails', '~> 3'
+  gem 'faker', '~> 3'
+  gem 'listen', '~> 3.3'
+  gem 'pry-byebug', '~> 3'
+  gem 'pry-rails', '~> 0'
+  gem 'ruby-lsp', '~> 0'
+  gem 'spring', '~> 4'
+  gem 'traceroute', '~> 0'
+  gem 'webmock', '~> 3'
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'listen', '~> 3.3'
-  gem 'web-console'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'web-console', '~> 4'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'rspec_junit_formatter'
-  gem 'rubocop-junit-formatter'
-  gem 'ruby_audit'
-  gem 'selenium-webdriver'
+  gem 'brakeman', '~> 6', require: false
+  gem 'bundler-audit', '~> 0'
+  gem 'factory_bot_rails', '~> 6'
+  gem 'rails-controller-testing', '~> 1'
+  gem 'rspec_junit_formatter', '~> 0'
+  gem 'rspec-rails', '~> 6'
+  gem 'ruby_audit', '~> 2', require: false
+  gem 'selenium-webdriver', '~> 4', require: false
   gem 'shoulda-matchers', '~> 6'
-  gem 'simplecov'
+end
+
+group :development, :test, :rubocop do
+  gem 'rubocop'
+  gem 'rubocop-checkstyle_formatter'
+  gem 'rubocop-erb'
+  gem 'rubocop-factory_bot'
+  gem 'rubocop-git'
+  gem 'rubocop-graphql'
+  gem 'rubocop-i18n'
+  gem 'rubocop-junit-formatter'
+  gem 'rubocop-md'
+  gem 'rubocop-migrations'
+  gem 'rubocop-minitest'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-rails_config'
+  gem 'rubocop-rails_deprecation'
+  gem 'rubocop-rake'
+  gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
+  gem 'rubocop-thread_safety'
 end
 
 source 'https://rubygems.org'

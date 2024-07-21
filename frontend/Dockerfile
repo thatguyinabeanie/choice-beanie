@@ -1,12 +1,12 @@
 # Use the latest LTS version of Node.js as the base image
 
-FROM node:22 AS node_builder
+FROM node:20-bookworm-slim AS node_builder
 RUN mkdir -p /workspaces/battle-stadium/frontend
 WORKDIR /workspaces/battle-stadium/frontend
 COPY package*.json ./
 RUN npm ci --ignore-scripts
 
-FROM node:22
+FROM node_builder
 ARG USERNAME=battle-stadium
 
 RUN mkdir -p "/workspaces/$USERNAME/frontend" && \
