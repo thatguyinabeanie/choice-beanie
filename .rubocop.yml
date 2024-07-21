@@ -13,6 +13,8 @@ AllCops:
     - "lib/tasks/**/*"
     - "vendor/**/*"
     - "frontend/**/*"
+    - "sorbet/**"
+    - "sorbet/**/*"
 Style/Documentation:
   Enabled: false
 Rails/BulkChangeTable:

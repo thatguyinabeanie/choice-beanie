@@ -49,8 +49,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'sorbet'
-  gem 'tapioca'
   gem 'web-console', '~> 4'
 end
 

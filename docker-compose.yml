@@ -18,6 +18,7 @@ services:
     volumes:
       - .:/workspaces/battle-stadium
       - bundle-data:/root/.bundle
+      - ./tmp:/tmp
     ports:
       - "3000:3000"
     depends_on:
