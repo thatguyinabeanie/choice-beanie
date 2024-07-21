@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::TournamentsController' do
+RSpec.describe Api::V1::Tournament::RegistrationsController do
   describe 'GET /index' do
     pending "add some examples (or delete) #{__FILE__}"
   end

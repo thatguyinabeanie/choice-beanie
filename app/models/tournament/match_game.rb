@@ -1,5 +1,6 @@
 module Tournament
   class MatchGame < ApplicationRecord
+    include Helpers::Match::OpponentFor
     self.table_name = 'match_games'
     belongs_to :match, class_name: 'Tournament::Match', inverse_of: :match_games
 
@@ -17,16 +18,15 @@ module Tournament
     validate :reporter_role_validation
 
     def report_game_winner!(winner:, reporter:)
-      report_game!(winner:, loser: other_player(winner), reporter:)
+      report_game!(winner:, loser: opponnent_for(winner), reporter:)
     end
 
     def report_game_loser!(loser:, reporter:)
-      report_game!(loser:, winner: other_player(loser), reporter:)
+      report_game!(loser:, winner: opponnent_for(loser), reporter:)
     end
 
     def report_game!(winner:, loser:, reporter:)
-      reported_at = Time.current.utc
-      update!(winner:, loser:, reporter:, reported_at:)
+      update!(winner:, loser:, reporter:, reported_at: Time.current.utc)
     end
 
     private
@@ -37,10 +37,6 @@ module Tournament
       return if reporter.staff_member_of?(match.phase.tournament.organization)
 
       errors.add(:base, I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))
-    end
-
-    def other_player(player)
-      player == player1 ? player2 : player1
     end
 
     def validate_winner
