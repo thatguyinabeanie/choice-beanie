@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-# Define a temporary subclass of Phase::Base for testing purposes
-class TestPhase < Phase::Base
+# Define a temporary subclass of Phase::BasePhase for testing purposes
+class TestPhase < Phase::BasePhase
   self.table_name = 'phases'
 end
 
-RSpec.describe Phase::Base do
+RSpec.describe Phase::BasePhase do
   describe 'associations' do
     subject { TestPhase.new }
 

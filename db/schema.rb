@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_21_015321) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_21_053116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_21_015321) do
     t.datetime "updated_at", null: false
     t.string "type"
     t.string "name"
+    t.integer "best_of", default: 3, null: false
     t.index ["tournament_id"], name: "index_phases_on_tournament_id"
     t.index ["type"], name: "index_phases_on_type"
   end

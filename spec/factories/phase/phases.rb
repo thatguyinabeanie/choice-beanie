@@ -1,8 +1,8 @@
 FactoryBot.define do
-  factory :phase, class: 'Phase::Base' do
+  factory :phase, class: 'Phase::BasePhase' do
     name { 'Epic Swiss Rounds' }
     tournament factory: :tournament
-    type { 'Phase::Base' }
+    type { 'Phase::BasePhase' }
     number_of_rounds { 5 }
     criteria { 'this is a criteria' }
 
