@@ -16,10 +16,6 @@ module Tournament
     validate :validate_loser
     validate :reporter_role_validation
 
-    # TODO: Add validations for the following:
-    # - reporter must be one of the players, or a associated tournament organization staff member, or an associated tournament admin, an associated tournament organization owner
-    # - when validating report. also validate that report_submitted_at is present
-
     def report_game_winner!(winner:, reporter:)
       report_game!(winner:, loser: other_player(winner), reporter:)
     end
