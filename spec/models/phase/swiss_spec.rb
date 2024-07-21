@@ -8,8 +8,8 @@ RSpec.describe Phase::Swiss do
   end
 
   describe 'inheritance' do
-    it 'inherits from Phase::Base' do
-      expect(described_class.superclass).to eq(Phase::Base)
+    it 'inherits from Phase::BasePhase' do
+      expect(described_class.superclass).to eq(Phase::BasePhase)
     end
   end
 

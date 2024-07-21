@@ -15,7 +15,7 @@ RSpec.describe Tournament::Tournament do
     it { is_expected.to belong_to(:organization).class_name('Organization::Organization') }
     it { is_expected.to belong_to(:game).class_name('Game') }
     it { is_expected.to belong_to(:format).class_name('Tournament::Format') }
-    it { is_expected.to have_many(:phases).class_name('Phase::Base').dependent(:destroy_async) }
+    it { is_expected.to have_many(:phases).class_name('Phase::BasePhase').dependent(:destroy_async) }
     it { is_expected.to have_many(:registrations).class_name('Tournament::Registration').dependent(:destroy_async) }
   end
 

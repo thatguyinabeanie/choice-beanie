@@ -1,5 +1,5 @@
 module Phase
-  class SingleEliminationBracket < Phase::Base
+  class SingleEliminationBracket < Phase::BasePhase
     self.table_name = 'phases'
   end
 end
