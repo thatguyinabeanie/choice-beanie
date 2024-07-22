@@ -162,12 +162,13 @@ RSpec.describe Tournament::Tournament do
   describe 'start_tournament!' do
     let(:tournament) { create(:tournament, actual_start_time: nil) }
 
-    it 'updates actual_start_time' do
+    it 'updates actual_start_time' do # rubocop:disable RSpec/ExampleLength
       current_time = Time.current
-
       allow(Time).to receive(:current).and_return(current_time)
-
-      expect { tournament.start_tournament! }.to change { tournament.actual_start_time }.from(nil).to(current_time.utc)
+      expect { tournament.start_tournament! }
+        .to change { tournament.reload.actual_start_time }
+        .from(nil)
+        .to be_within(1.second).of(current_time.utc)
     end
   end
 end

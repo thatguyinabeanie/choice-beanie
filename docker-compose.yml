@@ -19,7 +19,7 @@ services:
       - .:/workspaces/battle-stadium
       - bundle-data:/root/.bundle
       - ./tmp:/tmp
-      - ./bashrc:/root/.bashrc
+      - ./.bashrc:/root/.bashrc
     ports:
       - "3000:3000"
     depends_on:
