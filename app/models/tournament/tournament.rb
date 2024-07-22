@@ -14,21 +14,37 @@ module Tournament
     validates :organization, presence: true
     validates :organization_id, uniqueness: { scope: %i[name start_date], message: I18n.t('tournament.errors.validations.unique_per_org_name_start_date') }
 
-    def registration_open?
+    validates :player_cap, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
+
+    def player_cap_reached?
+      player_cap.present? && registrations.count >= player_cap
+    end
+
+    def after_registration_start?
+      registration_start_time <= Time.current.utc
+    end
+
+    def before_registration_end?
+      registration_end_time.blank? || registration_end_time >= Time.current.utc
+    end
+
+    def open_for_registration?
       return false if registration_start_time.nil?
+      return false unless after_registration_start?
+      return false unless before_registration_end?
+      return false if player_cap_reached?
 
-      current_time = Time.current.utc
-      after_reg_start = registration_start_time <= current_time
-      return after_reg_start && current_time <= registration_end_time if registration_end_time.present?
-
-      after_reg_start
+      true
     end
 
     def add_registration!(registration:)
-      raise 'Registration is closed' unless registration_open?
-
-      registrations << registration
-      save!
+      if player_cap.present? && registrations.count < player_cap
+        registrations << registration
+        save!
+      else
+        errors.add(:registrations, 'Tournament is at capacity.')
+        raise ActiveRecord::RecordInvalid.new(self)
+      end
     end
   end
 end

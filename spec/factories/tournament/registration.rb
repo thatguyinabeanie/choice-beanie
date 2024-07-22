@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :registration do
+  factory :registration, class: 'Tournament::Registration' do
     player factory: :user
-    tournament
+    tournament factory: :tournament
   end
 end

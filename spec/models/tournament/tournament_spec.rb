@@ -52,13 +52,13 @@ RSpec.describe Tournament::Tournament do
   end
 
   describe 'registration' do
-    let(:tournament) { described_class.new(registration_start_time:, registration_end_time:) }
+    let(:tournament) { create(:tournament, registration_start_time:, registration_end_time:, player_cap: 2) }
     let(:registration_end_time) { nil }
     let(:registration_start_time) { nil }
 
     context 'when registration start time is nil' do
       it 'returns false' do
-        expect(tournament).not_to be_registration_open
+        expect(tournament).not_to be_open_for_registration
       end
     end
 
@@ -66,8 +66,8 @@ RSpec.describe Tournament::Tournament do
       let(:registration_start_time) { Time.current.utc - 1.day }
 
       context 'when registration end time is nil' do
-        it 'returns true if' do
-          expect(tournament).to be_registration_open
+        it 'returns true' do
+          expect(tournament).to be_open_for_registration
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe Tournament::Tournament do
         let(:registration_end_time) { Time.current.utc + 1.day }
 
         it 'returns true' do
-          expect(tournament).to be_registration_open
+          expect(tournament).to be_open_for_registration
         end
       end
 
@@ -83,7 +83,7 @@ RSpec.describe Tournament::Tournament do
         let(:registration_end_time) { Time.current.utc - 1.day }
 
         it 'returns false' do
-          expect(tournament).not_to be_registration_open
+          expect(tournament).not_to be_open_for_registration
         end
       end
     end
@@ -92,8 +92,68 @@ RSpec.describe Tournament::Tournament do
       let(:registration_start_time) { Time.current.utc + 1.day }
 
       it 'returns false' do
-        expect(tournament).not_to be_registration_open
+        expect(tournament).not_to be_open_for_registration
+      end
+    end
+
+    context 'when player cap is present' do
+      let(:registration_start_time) { Time.current.utc - 1.day }
+
+      context 'when registrations count is less than player cap' do
+        it 'returns true' do
+          registration = build(:registration, tournament:, player: create(:user))
+          tournament.add_registration!(registration:)
+          expect(tournament).to be_open_for_registration
+        end
+      end
+
+      context 'when registrations count is equal to player cap' do
+        it 'returns false' do
+          create(:registration, tournament:)
+          create(:registration, tournament:)
+          expect(tournament).not_to be_open_for_registration
+        end
+      end
+
+      context 'when trying to add registration after player cap is reached' do
+        it 'raises an error' do
+          tour = tournament
+          create(:registration, tournament:)
+          create(:registration, tournament:)
+
+          registration = build(:registration, tournament: tour)
+          expect { tournament.add_registration!(registration:) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Registrations Tournament is at capacity.')
+        end
       end
     end
   end
+
+  # describe 'add_registration!' do
+  #   let(:tournament) { described_class.new(registration_start_time:, registration_end_time:) }
+
+  #   context 'when registration is closed' do
+  #     it 'raises an error' do
+  #       registration = build(:registration)
+  #       expect { tournament.add_registration!(registration:) }.to raise_error('Registration is closed')
+  #     end
+  #   end
+
+  #   context 'when registration is open' do
+  #     let(:registration) { build(:registration) }
+
+  #     before do
+  #       allow(tournament).to receive(:registration_open?).and_return(true)
+  #     end
+
+  #     it 'adds the registration' do
+  #       tournament.add_registration!(registration:)
+  #       expect(tournament.registrations).to contain_exactly(registration)
+  #     end
+
+  #     it 'saves the tournament' do
+  #       expect(tournament).to receive(:save!)
+  #       tournament.add_registration!(registration:)
+  #     end
+  #   end
+  # end
 end
