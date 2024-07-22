@@ -22,9 +22,9 @@ def create_user(username: nil, email: nil)
   end
 end
 
-def generate_pokemon_set(reg)
+def generate_pokemon_set(player:)
   Tournament::PokemonSet.new(
-    registration: reg,
+    player:,
 
     name: Faker::Games::Pokemon.name,
     ability: "ability_#{rand(1..3)}", # This is a placeholder for the ability
@@ -109,9 +109,9 @@ end
 players = (1..10).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
-  players.sample(rand(1..10)).map do |player|
-    registration = Tournament::Registration.new(player:)
-    registration.add_pokemon_sets(Array.new(6) { generate_pokemon_set(registration) })
-    tournament.add_registration!(registration:)
+  players.sample(rand(1..10)).map do |user|
+    player = Tournament::Player.new(user:)
+    player.add_pokemon_sets(Array.new(6) { generate_pokemon_set(player:) })
+    tournament.register!(player:)
   end
 end

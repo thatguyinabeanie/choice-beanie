@@ -1,6 +1,6 @@
 module Tournament
   class PokemonSet < ApplicationRecord
-    belongs_to :registration, class_name: 'Tournament::Registration'
+    belongs_to :player, class_name: 'Tournament::Player', inverse_of: :pokemon_sets
 
     validates :name, presence: true
     validates :ability, presence: true

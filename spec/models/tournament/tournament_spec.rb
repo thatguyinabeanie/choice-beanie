@@ -16,7 +16,7 @@ RSpec.describe Tournament::Tournament do
     it { is_expected.to belong_to(:game).class_name('Game') }
     it { is_expected.to belong_to(:format).class_name('Tournament::Format') }
     it { is_expected.to have_many(:phases).class_name('Phase::BasePhase').dependent(:destroy_async) }
-    it { is_expected.to have_many(:registrations).class_name('Tournament::Registration').dependent(:destroy_async) }
+    it { is_expected.to have_many(:players).class_name('Tournament::Player').dependent(:destroy_async) }
   end
 
   describe 'validations' do
@@ -101,16 +101,16 @@ RSpec.describe Tournament::Tournament do
 
       context 'when registrations count is less than player cap' do
         it 'returns true' do
-          registration = build(:registration, tournament:, player: create(:user))
-          tournament.add_registration!(registration:)
+          player = build(:tournament_player, tournament:, user: create(:user))
+          tournament.register!(player:)
           expect(tournament).to be_open_for_registration
         end
       end
 
       context 'when registrations count is equal to player cap' do
         it 'returns false' do
-          create(:registration, tournament:)
-          create(:registration, tournament:)
+          create(:tournament_player, tournament:)
+          create(:tournament_player, tournament:)
           expect(tournament).not_to be_open_for_registration
         end
       end
@@ -118,11 +118,11 @@ RSpec.describe Tournament::Tournament do
       context 'when trying to add registration after player cap is reached' do
         it 'raises an error' do
           tour = tournament
-          create(:registration, tournament:)
-          create(:registration, tournament:)
+          create(:tournament_player, tournament:)
+          create(:tournament_player, tournament:)
 
-          registration = build(:registration, tournament: tour)
-          expect { tournament.add_registration!(registration:) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Registrations Tournament is at capacity.')
+          player = build(:tournament_player, tournament: tour)
+          expect { tournament.register!(player:) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Players have reached the player cap.')
         end
       end
     end

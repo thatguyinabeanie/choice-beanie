@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :user, aliases: [:player] do
+  factory :user do
     email { Faker::Internet.unique.email }
     # Generates a unique username with a length between 8 and 16 characters
     username { Faker::Internet.unique.username(specifier: 5..16) }

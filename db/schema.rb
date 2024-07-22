@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -120,6 +120,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
     t.index ["type"], name: "index_phases_on_type"
   end
 
+  create_table "players", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_players_on_tournament_id"
+    t.index ["user_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
+    t.index ["user_id"], name: "index_players_on_user_id"
+  end
+
   create_table "pokemon_sets", force: :cascade do |t|
     t.string "name"
     t.string "ability"
@@ -132,18 +142,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
     t.string "move4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "registration_id"
-    t.index ["registration_id"], name: "index_pokemon_sets_on_registration_id"
-  end
-
-  create_table "registrations", force: :cascade do |t|
-    t.bigint "player_id", null: false
-    t.bigint "tournament_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["player_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
-    t.index ["player_id"], name: "index_registrations_on_player_id"
-    t.index ["tournament_id"], name: "index_registrations_on_tournament_id"
+    t.bigint "player_id"
+    t.index ["player_id"], name: "index_pokemon_sets_on_player_id"
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -181,6 +181,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
     t.integer "player_cap"
     t.boolean "autostart", default: false, null: false
     t.datetime "actual_start_time"
+    t.boolean "late_registration", default: true, null: false
+    t.boolean "late_checkin", default: true, null: false
+    t.boolean "check_in_required", default: true, null: false
+    t.boolean "teamlists_required", default: true, null: false
+    t.boolean "open_team_sheets", default: true, null: false
     t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
     t.index ["organization_id", "name", "start_date"], name: "index_tournaments_on_org_id_name_start_date", unique: true
@@ -225,23 +230,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
 
   add_foreign_key "formats", "games"
   add_foreign_key "match_games", "matches"
-  add_foreign_key "match_games", "users", column: "loser_id"
+  add_foreign_key "match_games", "players", column: "loser_id"
+  add_foreign_key "match_games", "players", column: "winner_id"
   add_foreign_key "match_games", "users", column: "reporter_id"
-  add_foreign_key "match_games", "users", column: "winner_id"
+  add_foreign_key "matches", "players", column: "loser_id"
+  add_foreign_key "matches", "players", column: "player_one_id"
+  add_foreign_key "matches", "players", column: "player_two_id"
+  add_foreign_key "matches", "players", column: "winner_id"
   add_foreign_key "matches", "rounds"
-  add_foreign_key "matches", "users", column: "loser_id"
-  add_foreign_key "matches", "users", column: "player_one_id"
-  add_foreign_key "matches", "users", column: "player_two_id"
-  add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organization_staff_members", "organizations"
   add_foreign_key "organization_staff_members", "users"
   add_foreign_key "organization_tournaments", "organizations"
   add_foreign_key "organization_tournaments", "tournaments"
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "phases", "tournaments"
-  add_foreign_key "pokemon_sets", "registrations"
-  add_foreign_key "registrations", "tournaments"
-  add_foreign_key "registrations", "users", column: "player_id"
+  add_foreign_key "players", "tournaments"
+  add_foreign_key "players", "users"
+  add_foreign_key "pokemon_sets", "players"
   add_foreign_key "tournament_formats", "formats"
   add_foreign_key "tournament_formats", "tournaments"
   add_foreign_key "tournaments", "games"

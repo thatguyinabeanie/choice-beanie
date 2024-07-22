@@ -1,5 +1,5 @@
-class RegistrationSerializer < ActiveModel::Serializer
-  attribute :player_id
+class PlayerSerializer < ActiveModel::Serializer
+  attribute :user_id
   attribute :first_name
   attribute :last_name
   attribute :username

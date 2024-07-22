@@ -1,15 +1,15 @@
 module Tournament
-  class Registration < ApplicationRecord
+  class Player < ApplicationRecord
     MAX_POKEMON_SUBMISSIONS = 6
+    self.table_name = 'players'
+    belongs_to :user, class_name: 'User'
+    belongs_to :tournament, class_name: 'Tournament::Tournament', inverse_of: :players
 
-    belongs_to :player, class_name: 'User'
-    belongs_to :tournament, class_name: 'Tournament::Tournament', inverse_of: :registrations
-
-    validates :player_id, presence: true
+    validates :user_id, presence: true
     validates :tournament_id, presence: true
-    validates :player_id, uniqueness: { scope: :tournament_id, message: I18n.t('tournament.registration.already_registered') }
+    validates :user_id, uniqueness: { scope: :tournament_id, message: I18n.t('tournament.registration.already_registered') }
 
-    has_many :pokemon_sets, dependent: :destroy
+    has_many :pokemon_sets, dependent: :destroy, class_name: 'Tournament::PokemonSet', inverse_of: :player
     accepts_nested_attributes_for :pokemon_sets
 
     validate :pokemon_sets_count_within_limit

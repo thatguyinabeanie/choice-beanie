@@ -5,7 +5,7 @@ module Tournament
     belongs_to :format, class_name: 'Tournament::Format'
 
     has_many :phases, class_name: 'Phase::BasePhase', dependent: :destroy_async
-    has_many :registrations, class_name: 'Tournament::Registration', dependent: :destroy_async
+    has_many :players, class_name: 'Tournament::Player', dependent: :destroy_async
 
     validates :name, presence: true
     validates :start_date, presence: true
@@ -33,14 +33,14 @@ module Tournament
       true
     end
 
-    def add_registration!(registration:)
+    def register!(player:)
       return if player_cap.blank?
 
-      if registrations.count < player_cap
-        registrations << registration
+      if players.count < player_cap
+        players << player
         save!
       else
-        errors.add(:registrations, 'Tournament is at capacity.')
+        errors.add(:players, 'have reached the player cap.')
         raise ActiveRecord::RecordInvalid, self
       end
     end
@@ -52,7 +52,7 @@ module Tournament
     private
 
     def player_cap_reached?
-      player_cap.present? && registrations.count >= player_cap
+      player_cap.present? && players.count >= player_cap
     end
 
     def after_registration_start?

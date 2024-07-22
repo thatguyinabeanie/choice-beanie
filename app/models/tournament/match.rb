@@ -3,11 +3,11 @@ module Tournament
   class Match < ApplicationRecord
     include ::MatchPlayersConcern
     self.table_name = 'matches'
-    belongs_to :player_one, class_name: 'User'
-    belongs_to :player_two, class_name: 'User'
+    belongs_to :player_one, class_name: 'Tournament::Player'
+    belongs_to :player_two, class_name: 'Tournament::Player'
 
-    belongs_to :winner, class_name: 'User', optional: true
-    belongs_to :loser, class_name: 'User', optional: true
+    belongs_to :winner, class_name: 'Tournament::Player', optional: true
+    belongs_to :loser, class_name: 'Tournament::Player', optional: true
 
     belongs_to :round, class_name: 'Tournament::Round', inverse_of: :matches
     delegate :phase, to: :round
