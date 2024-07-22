@@ -1,6 +1,6 @@
 module Tournament
   class MatchGame < ApplicationRecord
-    include ::Match::Players
+    include ::MatchPlayersConcern
     self.table_name = 'match_games'
     belongs_to :match, class_name: 'Tournament::Match', inverse_of: :match_games
 
