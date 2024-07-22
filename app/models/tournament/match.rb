@@ -17,5 +17,28 @@ module Tournament
     validates :player_one, presence: true
     validates :player_two, presence: true
     validates :round, presence: true, uniqueness: { scope: %i[player_one_id player_two_id] }
+
+    def check_in(player:)
+      raise ArgumentError, 'Cannot check in a player that is not part of the match.' if [player_one, player_two].exclude?(player)
+
+      time_now = Time.current.utc
+      if player == player_one
+        self.player_one_check_in = time_now
+      else
+        self.player_two_check_in = time_now
+      end
+
+      save!
+    end
+
+    def checked_in?(player:)
+      if player == player_one
+        player_one_check_in.present?
+      elsif player == player_two
+        player_two_check_in.present?
+      else
+        raise ArgumentError, 'Cannot check in a player that is not part of the match.'
+      end
+    end
   end
 end
