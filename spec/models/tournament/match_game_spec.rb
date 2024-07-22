@@ -34,40 +34,40 @@ RSpec.describe Tournament::MatchGame do
     it 'validates presence of :game_number' do
       match_game.game_number = nil
       match_game.valid?(:report!)
-      expect(match_game.errors[:game_number]).to include("can't be blank")
+      expect(match_game.errors[:game_number]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates presence of :match' do
       match_game.match = nil
       match_game.valid?(:report!)
-      expect(match_game.errors[:match]).to include("can't be blank")
+      expect(match_game.errors[:match]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates presence of :reporter' do
       match_game.reported_at = Time.current.utc
       match_game.winner = player_one
       match_game.valid?(:report!)
-      expect(match_game.errors[:reporter]).to include("can't be blank")
+      expect(match_game.errors[:reporter]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates presence of :winner' do
       match_game.reported_at = Time.current.utc
       match_game.loser = player_two
       match_game.valid?(:report!)
-      expect(match_game.errors[:winner]).to include("can't be blank")
+      expect(match_game.errors[:winner]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates presence of :loser' do
       match_game.reported_at = Time.current.utc
       match_game.winner = player_one
       match_game.valid?(:report!)
-      expect(match_game.errors[:loser]).to include("can't be blank")
+      expect(match_game.errors[:loser]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates presence of :reported_at' do
       match_game.winner = player_one
       match_game.valid?(:report!)
-      expect(match_game.errors[:reported_at]).to include("can't be blank")
+      expect(match_game.errors[:reported_at]).to include(I18n.t('errors.validation.cannot_be_blank'))
     end
 
     it 'validates that winner must be either player 1 or player 2' do
