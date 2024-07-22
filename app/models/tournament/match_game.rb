@@ -12,15 +12,9 @@ module Tournament
     delegate :player_two, to: :match
 
     validates :game_number, presence: true
-    validate :different_winner_and_loser
-    validate :validate_winner_must_be_match_player
-    validate :validate_loser_must_be_match_player
+    validates :reporter, presence: true, if: -> { reported_at.present? && (winner.present? || loser.present?) }
     validate :reporter_role_validation
     validates :match, presence: true
-    validates :reporter, presence: true, if: -> { reported_at.present? && (winner.present? || loser.present?) }
-    validates :winner, presence: true, if: -> { reported_at.present? && loser.present? }
-    validates :loser, presence: true, if: -> { reported_at.present? && winner.present? }
-    validates :reported_at, presence: true, if: -> { winner.present? || loser.present? }
 
     def report_game_winner!(winner:, reporter:)
       report_game!(winner:, loser: opponnent_for(winner), reporter:)
