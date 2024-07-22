@@ -40,29 +40,33 @@ def generate_pokemon_set(reg)
   )
 end
 
-def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
+def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:, registration_start_time:)
   Tournament::Tournament.find_by!(organization:, name:, start_date:)
 rescue ActiveRecord::RecordNotFound
-  Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:)
+  Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:, registration_start_time:)
 end
 
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
-sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
+regulations = %w[G]
+# regulations = %w[A B C D E F G H]
+sv_formats = regulations.map { |regulation| Tournament::Format.create!(name: "Regulation #{regulation}", game: scarlet_violet) }
 
-sv_formats = %w[A B C D E F G H].map { |regulation| Tournament::Format.create!(name: "Regulation #{regulation}", game: scarlet_violet) }
-swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
-formats = sv_formats + swsh_formats
+# sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
+# swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
+
+# formats = sv_formats + swsh_formats
+formats = sv_formats
 
 org_owners = [
   {
     username: 'fuecoco_supremacy'
-  },
-  {
-    username: 'sprigatito_lover'
-  },
-  {
-    username: 'quaxly_enthusiast'
   }
+  # {
+  #   username: 'sprigatito_lover'
+  # },
+  # {
+  #   username: 'quaxly_enthusiast'
+  # }
 ].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
@@ -81,8 +85,9 @@ tournaments = orgs.flat_map do |organization|
     ended_at = Time.zone.today + 1.week
     check_in_start_time = Time.zone.now
     game = format.game
+    registration_start_time = 1.week.ago
 
-    tour = create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:)
+    tour = create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:, registration_start_time:)
 
     Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
@@ -105,8 +110,8 @@ players = (1..10).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
   players.sample(rand(1..10)).map do |player|
-    registration = Tournament::Registration.new(tournament:, player:)
-    registration.pokemon_sets = Array.new(6) { generate_pokemon_set(registration) }
-    registration.save!
+    registration = Tournament::Registration.new(player:)
+    registration.add_pokemon_sets(Array.new(6) { generate_pokemon_set(registration) })
+    tournament.add_registration!(registration:)
   end
 end

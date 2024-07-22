@@ -76,30 +76,32 @@ RSpec.describe Tournament::Match do
     end
   end
 
-  # Example: Testing a method that determines the winner
-  describe '#report_winner!' do
-    it 'correctly identifies the winner' do
-      # Assuming there's a method to set a match's outcome
-      match.report_winner!(player: player_one, reporter: player_one)
-      expect(match.winner).to eq(player_one)
+  describe 'match reporting' do
+    # Example: Testing a method that determines the winner
+    describe '#report_winner!' do
+      it 'correctly identifies the winner' do
+        # Assuming there's a method to set a match's outcome
+        match.report_winner!(player: player_one, reporter: player_one)
+        expect(match.winner).to eq(player_one)
+      end
+
+      it 'correctly identifies the loser' do
+        match.report_winner!(player: player_one, reporter: player_one)
+        expect(match.loser).to eq(player_two)
+      end
     end
 
-    it 'correctly identifies the loser' do
-      match.report_winner!(player: player_one, reporter: player_one)
-      expect(match.loser).to eq(player_two)
-    end
-  end
+    describe 'report_loser!' do
+      it 'correctly identifies the winner' do
+        # Assuming there's a method to set a match's outcome
+        match.report_loser!(player: player_one, reporter: player_one)
+        expect(match.winner).to eq(player_two)
+      end
 
-  describe 'report_loser!' do
-    it 'correctly identifies the winner' do
-      # Assuming there's a method to set a match's outcome
-      match.report_loser!(player: player_one, reporter: player_one)
-      expect(match.winner).to eq(player_two)
-    end
-
-    it 'correctly identifies the loser' do
-      match.report_loser!(player: player_one, reporter: player_one)
-      expect(match.loser).to eq(player_one)
+      it 'correctly identifies the loser' do
+        match.report_loser!(player: player_one, reporter: player_one)
+        expect(match.loser).to eq(player_one)
+      end
     end
   end
 end

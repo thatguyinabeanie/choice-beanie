@@ -50,4 +50,50 @@ RSpec.describe Tournament::Tournament do
       expect(tournament).not_to be_valid
     end
   end
+
+  describe 'registration' do
+    let(:tournament) { described_class.new(registration_start_time:, registration_end_time:) }
+    let(:registration_end_time) { nil }
+    let(:registration_start_time) { nil }
+
+    context 'when registration start time is nil' do
+      it 'returns false' do
+        expect(tournament).not_to be_registration_open
+      end
+    end
+
+    context 'when registration start time is in the past' do
+      let(:registration_start_time) { Time.current.utc - 1.day }
+
+      context 'when registration end time is nil' do
+        it 'returns true if' do
+          expect(tournament).to be_registration_open
+        end
+      end
+
+      context 'when current time is before registration end time' do
+        let(:registration_end_time) { Time.current.utc + 1.day }
+
+        it 'returns true' do
+          expect(tournament).to be_registration_open
+        end
+      end
+
+      context 'when current time is after registration end time' do
+        let(:registration_end_time) { Time.current.utc - 1.day }
+
+        it 'returns false' do
+          expect(tournament).not_to be_registration_open
+        end
+      end
+    end
+
+    context 'when registration start time is in the future' do
+      let(:registration_start_time) { Time.current.utc + 1.day }
+
+      it 'returns false' do
+        expect(tournament).not_to be_registration_open
+      end
+    end
+  end
 end

@@ -14,6 +14,27 @@ module Tournament
 
     validate :pokemon_sets_count_within_limit
 
+    def add_pokemon_sets!(pokemon_sets = [])
+      pokemon_sets.each { |pokemon_set| add_pokemon_set!(pokemon_set, skip_save: true) }
+      save!
+    end
+
+    def add_pokemon_set!(pokemon_set, skip_save: false)
+      raise 'Cannot add an empty Pokemon set.' if pokemon_set.blank? || pokemon_set.invalid? || pokemon_set.nil?
+
+      pokemon_sets << pokemon_set
+
+      save! unless skip_save
+    end
+
+    def add_pokemon_sets(pokemon_sets = [])
+      pokemon_sets.each { |pokemon_set| add_pokemon_set(pokemon_set) }
+    end
+
+    def add_pokemon_set(pokemon_set)
+      pokemon_sets << pokemon_set
+    end
+
     private
 
     def pokemon_sets_count_within_limit
