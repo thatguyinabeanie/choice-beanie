@@ -127,33 +127,4 @@ RSpec.describe Tournament::Tournament do
       end
     end
   end
-
-  # describe 'add_registration!' do
-  #   let(:tournament) { described_class.new(registration_start_time:, registration_end_time:) }
-
-  #   context 'when registration is closed' do
-  #     it 'raises an error' do
-  #       registration = build(:registration)
-  #       expect { tournament.add_registration!(registration:) }.to raise_error('Registration is closed')
-  #     end
-  #   end
-
-  #   context 'when registration is open' do
-  #     let(:registration) { build(:registration) }
-
-  #     before do
-  #       allow(tournament).to receive(:registration_open?).and_return(true)
-  #     end
-
-  #     it 'adds the registration' do
-  #       tournament.add_registration!(registration:)
-  #       expect(tournament.registrations).to contain_exactly(registration)
-  #     end
-
-  #     it 'saves the tournament' do
-  #       expect(tournament).to receive(:save!)
-  #       tournament.add_registration!(registration:)
-  #     end
-  #   end
-  # end
 end
