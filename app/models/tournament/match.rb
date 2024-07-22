@@ -13,5 +13,9 @@ module Tournament
     delegate :phase, to: :round
 
     has_many :match_games, class_name: 'Tournament::MatchGame', dependent: :destroy, inverse_of: :match
+
+    validates :player_one, presence: true
+    validates :player_two, presence: true
+    validates :round, presence: true, uniqueness: { scope: %i[player_one_id player_two_id] }
   end
 end

@@ -27,8 +27,13 @@ module MatchPlayersConcern
     report!(winner:, loser:, reporter:)
   end
 
-  def report!(winner:, loser:, reporter:)
-    update!(winner:, loser:, reporter:, reported_at: Time.current.utc)
+  def report!(winner:, loser:, reporter: nil)
+    Time.current.utc
+    if respond_to?(:reporter)
+      update!(winner:, loser:, reporter:, reported_at: Time.current.utc)
+    else
+      update!(winner:, loser:, reported_at: Time.current.utc)
+    end
   end
 
   private
