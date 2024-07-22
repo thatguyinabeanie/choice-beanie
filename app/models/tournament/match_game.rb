@@ -16,18 +16,6 @@ module Tournament
     validate :reporter_role_validation
     validates :match, presence: true
 
-    def report_game_winner!(winner:, reporter:)
-      report_game!(winner:, loser: opponnent_for(winner), reporter:)
-    end
-
-    def report_game_loser!(loser:, reporter:)
-      report_game!(loser:, winner: opponnent_for(loser), reporter:)
-    end
-
-    def report_game!(winner:, loser:, reporter:)
-      update!(winner:, loser:, reporter:, reported_at: Time.current.utc)
-    end
-
     private
 
     def reporter_role_validation
