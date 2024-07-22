@@ -11,6 +11,7 @@ module Tournament
 
     belongs_to :round, class_name: 'Tournament::Round', inverse_of: :matches
     delegate :phase, to: :round
+    delegate :started_at, :ended_at, to: :round
 
     has_many :match_games, class_name: 'Tournament::MatchGame', dependent: :destroy, inverse_of: :match
 

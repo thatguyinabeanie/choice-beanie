@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_163355) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_180703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_163355) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "round_number", default: 1, null: false
+    t.datetime "started_at"
+    t.datetime "ended_at"
     t.index ["phase_id", "round_number"], name: "index_rounds_on_phase_id_and_round_number", unique: true
     t.index ["phase_id"], name: "index_rounds_on_phase_id"
   end

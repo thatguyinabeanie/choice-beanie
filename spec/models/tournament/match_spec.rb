@@ -39,33 +39,6 @@ RSpec.describe Tournament::Match do
     # Add other validations here
   end
 
-  # Example: Testing a method that determines the winner
-  describe '#report_winner!' do
-    it 'correctly identifies the winner' do
-      # Assuming there's a method to set a match's outcome
-      match.report_winner!(player: player_one, reporter: player_one)
-      expect(match.winner).to eq(player_one)
-    end
-
-    it 'correctly identifies the loser' do
-      match.report_winner!(player: player_one, reporter: player_one)
-      expect(match.loser).to eq(player_two)
-    end
-  end
-
-  describe 'report_loser!' do
-    it 'correctly identifies the winner' do
-      # Assuming there's a method to set a match's outcome
-      match.report_loser!(player: player_one, reporter: player_one)
-      expect(match.winner).to eq(player_two)
-    end
-
-    it 'correctly identifies the loser' do
-      match.report_loser!(player: player_one, reporter: player_one)
-      expect(match.loser).to eq(player_one)
-    end
-  end
-
   describe '#check_in(player:)' do
     it 'raises an error if the player is not part of the match' do
       expect { match.check_in(player: create(:user)) }.to raise_error(ArgumentError)
@@ -100,6 +73,33 @@ RSpec.describe Tournament::Match do
     it 'checking in player_two does not check in player one' do
       match.check_in(player: player_two)
       expect(match.player_one_check_in).to be_nil
+    end
+  end
+
+  # Example: Testing a method that determines the winner
+  describe '#report_winner!' do
+    it 'correctly identifies the winner' do
+      # Assuming there's a method to set a match's outcome
+      match.report_winner!(player: player_one, reporter: player_one)
+      expect(match.winner).to eq(player_one)
+    end
+
+    it 'correctly identifies the loser' do
+      match.report_winner!(player: player_one, reporter: player_one)
+      expect(match.loser).to eq(player_two)
+    end
+  end
+
+  describe 'report_loser!' do
+    it 'correctly identifies the winner' do
+      # Assuming there's a method to set a match's outcome
+      match.report_loser!(player: player_one, reporter: player_one)
+      expect(match.winner).to eq(player_two)
+    end
+
+    it 'correctly identifies the loser' do
+      match.report_loser!(player: player_one, reporter: player_one)
+      expect(match.loser).to eq(player_one)
     end
   end
 end
