@@ -16,6 +16,11 @@ module Tournament
     validate :validate_winner
     validate :validate_loser
     validate :reporter_role_validation
+    validates :match, presence: true
+    validates :reporter, presence: true, if: -> { reported_at.present? && (winner.present? || loser.present?) }
+    validates :winner, presence: true, if: -> { reported_at.present? && loser.present? }
+    validates :loser, presence: true, if: -> { reported_at.present? && winner.present? }
+    validates :reported_at, presence: true, if: -> { winner.present? || loser.present? }
 
     def report_game_winner!(winner:, reporter:)
       report_game!(winner:, loser: opponnent_for(winner), reporter:)
