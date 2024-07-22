@@ -1,6 +1,7 @@
 # app/models/match.rb
 module Tournament
   class Match < ApplicationRecord
+    include ::MatchPlayersConcern
     self.table_name = 'matches'
     belongs_to :player_one, class_name: 'User'
     belongs_to :player_two, class_name: 'User'

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Tournament::MatchGame do
-  let(:tournament_hash) do
+  let(:match_hash) do
     player_one = create(:user)
     player_two = create(:user)
     organization = create(:organization)
@@ -15,9 +15,9 @@ RSpec.describe Tournament::MatchGame do
       staff_member: organization.staff.first }
   end
 
-  let(:match_game) { tournament_hash[:match_game] }
-  let(:player_one) { tournament_hash[:player_one] }
-  let(:player_two) { tournament_hash[:player_two] }
+  let(:match_game) { match_hash[:match_game] }
+  let(:player_one) { match_hash[:player_one] }
+  let(:player_two) { match_hash[:player_two] }
 
   describe 'associations' do
     subject { match_game }
@@ -107,7 +107,7 @@ RSpec.describe Tournament::MatchGame do
     end
 
     it 'does not add any errors when reporter is a staff member of the tournament organization' do
-      match_game.reporter = tournament_hash[:organization].staff.first
+      match_game.reporter = match_hash[:organization].staff.first
       match_game.send(:reporter_role_validation)
       expect(match_game.errors).to be_empty
     end
@@ -120,7 +120,7 @@ RSpec.describe Tournament::MatchGame do
   end
 
   describe '#report!' do
-    let(:staff_member) { tournament_hash[:staff_member] }
+    let(:staff_member) { match_hash[:staff_member] }
 
     it 'reports the game with the winner as the winner' do
       match_game.report!(winner: player_one, loser: player_two, reporter: staff_member)
