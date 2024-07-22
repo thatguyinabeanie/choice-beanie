@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_21_053116) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,17 +57,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_21_053116) do
   create_table "matches", force: :cascade do |t|
     t.integer "round_id", null: false
     t.integer "table_number"
-    t.bigint "player1_id", null: false
-    t.bigint "player2_id", null: false
+    t.bigint "player_one_id", null: false
+    t.bigint "player_two_id", null: false
     t.bigint "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "player1_check_in"
-    t.datetime "player2_check_in"
+    t.datetime "player_one_check_in"
+    t.datetime "player_two_check_in"
     t.bigint "loser_id"
+    t.datetime "reported_at"
     t.index ["loser_id"], name: "index_matches_on_loser_id"
-    t.index ["player1_id"], name: "index_matches_on_player1_id"
-    t.index ["player2_id"], name: "index_matches_on_player2_id"
+    t.index ["player_one_id"], name: "index_matches_on_player_one_id"
+    t.index ["player_two_id"], name: "index_matches_on_player_two_id"
     t.index ["winner_id"], name: "index_matches_on_winner_id"
   end
 
@@ -218,8 +219,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_21_053116) do
   add_foreign_key "match_games", "users", column: "winner_id"
   add_foreign_key "matches", "rounds"
   add_foreign_key "matches", "users", column: "loser_id"
-  add_foreign_key "matches", "users", column: "player1_id"
-  add_foreign_key "matches", "users", column: "player2_id"
+  add_foreign_key "matches", "users", column: "player_one_id"
+  add_foreign_key "matches", "users", column: "player_two_id"
   add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organization_staff_members", "organizations"
   add_foreign_key "organization_staff_members", "users"
