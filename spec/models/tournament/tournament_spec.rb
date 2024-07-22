@@ -127,4 +127,47 @@ RSpec.describe Tournament::Tournament do
       end
     end
   end
+
+  describe 'ready_to_start?' do
+    let(:tournament) { create(:tournament) }
+
+    context 'when phases are empty' do
+      it 'returns false' do
+        expect(tournament).not_to be_ready_to_start
+      end
+    end
+
+    context 'when phases are present' do
+      let(:phase) { create(:swiss_phase, tournament:) }
+
+      context 'when first phase is valid' do
+        it 'returns true' do
+          tournament.phases << phase
+          tournament.save!
+          ready = tournament.ready_to_start?
+          expect(ready).to be_truthy
+        end
+      end
+
+      context 'when first phase is invalid' do
+        it 'returns false' do # rubocop:disable RSpec/MultipleExpectations
+          phase.update_columns(number_of_rounds: -1) # rubocop:disable Rails/SkipsModelValidations
+          expect(phase).not_to be_valid
+          expect(tournament).not_to be_ready_to_start
+        end
+      end
+    end
+  end
+
+  describe 'start_tournament!' do
+    let(:tournament) { create(:tournament, actual_start_time: nil) }
+
+    it 'updates actual_start_time' do
+      current_time = Time.current
+
+      allow(Time).to receive(:current).and_return(current_time)
+
+      expect { tournament.start_tournament! }.to change { tournament.actual_start_time }.from(nil).to(current_time.utc)
+    end
+  end
 end

@@ -16,16 +16,12 @@ module Tournament
 
     validates :player_cap, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
 
-    def player_cap_reached?
-      player_cap.present? && registrations.count >= player_cap
-    end
+    before_save :ready_to_start?, if: -> { saved_change_to_actual_start_time?(from: nil) }
 
-    def after_registration_start?
-      registration_start_time <= Time.current.utc
-    end
+    def ready_to_start?
+      return false if phases.empty?
 
-    def before_registration_end?
-      registration_end_time.blank? || registration_end_time >= Time.current.utc
+      phases.order(order: :asc).first.valid?
     end
 
     def open_for_registration?
@@ -38,13 +34,33 @@ module Tournament
     end
 
     def add_registration!(registration:)
-      if player_cap.present? && registrations.count < player_cap
+      return if player_cap.blank?
+
+      if registrations.count < player_cap
         registrations << registration
         save!
       else
         errors.add(:registrations, 'Tournament is at capacity.')
-        raise ActiveRecord::RecordInvalid.new(self)
+        raise ActiveRecord::RecordInvalid, self
       end
+    end
+
+    def start_tournament!
+      update!(actual_start_time: Time.current.utc)
+    end
+
+    private
+
+    def player_cap_reached?
+      player_cap.present? && registrations.count >= player_cap
+    end
+
+    def after_registration_start?
+      registration_start_time <= Time.current.utc
+    end
+
+    def before_registration_end?
+      registration_end_time.blank? || registration_end_time >= Time.current.utc
     end
   end
 end

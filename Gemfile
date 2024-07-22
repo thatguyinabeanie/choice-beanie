@@ -62,6 +62,7 @@ group :test do
   gem 'ruby_audit', '~> 2', require: false
   gem 'selenium-webdriver', '~> 4', require: false
   gem 'shoulda-matchers', '~> 6'
+  gem 'timecop', '~> 0'
 end
 
 group :development, :test, :rubocop do

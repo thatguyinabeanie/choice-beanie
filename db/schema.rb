@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_205646) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_215340) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -115,6 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_205646) do
     t.integer "best_of", default: 3, null: false
     t.datetime "started_at"
     t.datetime "ended_at"
+    t.integer "order", default: 0, null: false
     t.index ["tournament_id"], name: "index_phases_on_tournament_id"
     t.index ["type"], name: "index_phases_on_type"
   end
@@ -178,6 +179,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_205646) do
     t.datetime "registration_start_time"
     t.datetime "registration_end_time"
     t.integer "player_cap"
+    t.boolean "autostart", default: false, null: false
+    t.datetime "actual_start_time"
     t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
     t.index ["organization_id", "name", "start_date"], name: "index_tournaments_on_org_id_name_start_date", unique: true
