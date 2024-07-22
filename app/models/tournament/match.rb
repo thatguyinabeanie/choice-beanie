@@ -2,8 +2,8 @@
 module Tournament
   class Match < ApplicationRecord
     self.table_name = 'matches'
-    belongs_to :player1, class_name: 'User'
-    belongs_to :player2, class_name: 'User'
+    belongs_to :player_one, class_name: 'User'
+    belongs_to :player_two, class_name: 'User'
 
     belongs_to :winner, class_name: 'User', optional: true
     belongs_to :loser, class_name: 'User', optional: true

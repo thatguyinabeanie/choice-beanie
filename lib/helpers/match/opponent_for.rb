@@ -2,7 +2,7 @@ module Helpers
   module Match
     module OpponentFor
       def opponent_for(player)
-        player == player1 ? player2 : player1
+        player == player_one ? player_two : player_one
       end
     end
   end

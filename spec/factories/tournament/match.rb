@@ -4,11 +4,11 @@ FactoryBot.define do
     round factory: :swiss_round
     table_number { 1 }
 
-    player1 factory: :player
-    player2 factory: :player
+    player_one factory: :player
+    player_two factory: :player
 
-    player1_check_in { nil }
-    player2_check_in { nil }
+    player_one_check_in { nil }
+    player_two_check_in { nil }
 
     winner { nil }
     loser { nil }

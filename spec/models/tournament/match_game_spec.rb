@@ -9,21 +9,21 @@ RSpec.describe Tournament::MatchGame do
     round = create(:round, phase:)
     match = create(:match, round:)
     match_game = create(:match_game, match:)
-    { match_game:, tournament:, organization:, match:, phase:, round:, player1: match.player1, player2: match.player2,
+    { match_game:, tournament:, organization:, match:, phase:, round:, player_one: match.player_one, player_two: match.player_two,
       staff_member: organization.staff.first }
   end
 
   let(:match_game) { tournament_hash[:match_game] }
-  let(:player1) { tournament_hash[:player1] } # rubocop:disable RSpec/IndexedLet
-  let(:player2) { tournament_hash[:player2] } # rubocop:disable RSpec/IndexedLet
+  let(:player_one) { tournament_hash[:player_one] }
+  let(:player_two) { tournament_hash[:player_two] }
 
   describe 'associations' do
     it { is_expected.to belong_to(:match).class_name('Tournament::Match') }
     it { is_expected.to belong_to(:winner).class_name('User').optional }
     it { is_expected.to belong_to(:loser).class_name('User').optional }
     it { is_expected.to belong_to(:reporter).class_name('User').optional }
-    it { is_expected.to delegate_method(:player1).to(:match) }
-    it { is_expected.to delegate_method(:player2).to(:match) }
+    it { is_expected.to delegate_method(:player_one).to(:match) }
+    it { is_expected.to delegate_method(:player_two).to(:match) }
   end
 
   describe 'validations' do
@@ -41,27 +41,27 @@ RSpec.describe Tournament::MatchGame do
 
     it 'validates presence of :reporter' do
       match_game.reported_at = Time.current.utc
-      match_game.winner = player1
+      match_game.winner = player_one
       match_game.valid?(:report_game!)
       expect(match_game.errors[:reporter]).to include("can't be blank")
     end
 
     it 'validates presence of :winner' do
       match_game.reported_at = Time.current.utc
-      match_game.loser = player2
+      match_game.loser = player_two
       match_game.valid?(:report_game!)
       expect(match_game.errors[:winner]).to include("can't be blank")
     end
 
     it 'validates presence of :loser' do
       match_game.reported_at = Time.current.utc
-      match_game.winner = player1
+      match_game.winner = player_one
       match_game.valid?(:report_game!)
       expect(match_game.errors[:loser]).to include("can't be blank")
     end
 
     it 'validates presence of :reported_at' do
-      match_game.winner = player1
+      match_game.winner = player_one
       match_game.valid?(:report_game!)
       expect(match_game.errors[:reported_at]).to include("can't be blank")
     end
@@ -79,13 +79,13 @@ RSpec.describe Tournament::MatchGame do
     end
 
     it 'validates that winner and loser cannot be the same' do
-      match_game = build(:match_game, winner: player1, loser: player1)
+      match_game = build(:match_game, winner: player_one, loser: player_one)
       match_game.valid?(:report_game!)
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.winner_and_loser_are_the_same'))
     end
 
     it 'validates that winner and loser must be either player 1 or player 2' do
-      match_game = build(:match_game, winner: player1, loser: create(:user))
+      match_game = build(:match_game, winner: player_one, loser: create(:user))
       match_game.valid?(:report_game!)
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.loser_must_be_match_player'))
     end
@@ -97,7 +97,7 @@ RSpec.describe Tournament::MatchGame do
     end
 
     it 'does not add any errors when reporter is one of the players' do
-      match_game.reporter = player1
+      match_game.reporter = player_one
       match_game.send(:reporter_role_validation)
       expect(match_game.errors).to be_empty
     end
@@ -119,40 +119,40 @@ RSpec.describe Tournament::MatchGame do
     let(:staff_member) { tournament_hash[:staff_member] }
 
     it 'reports the game with the winner as the winner' do
-      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
-      expect(match_game.winner).to eq(player1)
+      match_game.report_game!(winner: player_one, loser: player_two, reporter: staff_member)
+      expect(match_game.winner).to eq(player_one)
     end
 
     it 'reports the game with the loser as the loser' do
-      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
-      expect(match_game.loser).to eq(player2)
+      match_game.report_game!(winner: player_one, loser: player_two, reporter: staff_member)
+      expect(match_game.loser).to eq(player_two)
     end
 
     it 'does not allow a third person to be the winner' do
       expect do
-        match_game.report_game!(winner: player1, loser: create(:user), reporter: staff_member)
+        match_game.report_game!(winner: player_one, loser: create(:user), reporter: staff_member)
       end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.loser_must_be_match_player')}")
     end
 
     it 'does not allow a third person to be the loser' do
       expect do
-        match_game.report_game!(winner: create(:user), loser: player2, reporter: staff_member)
+        match_game.report_game!(winner: create(:user), loser: player_two, reporter: staff_member)
       end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.winner_must_be_match_player')}")
     end
 
     it 'sets the reporter if the reporter is a tournament staff' do
-      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      match_game.report_game!(winner: player_one, loser: player_two, reporter: staff_member)
       expect(match_game.reporter).to eq(staff_member)
     end
 
     it 'raises an error if the reporter is not a match player or staff member' do
       expect do
-        match_game.report_game!(winner: player1, loser: player2, reporter: create(:user))
+        match_game.report_game!(winner: player_one, loser: player_two, reporter: create(:user))
       end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.reporter_must_be_match_player_or_staff')}")
     end
 
     it 'sets the reported_at attribute' do
-      match_game.report_game!(winner: player1, loser: player2, reporter: staff_member)
+      match_game.report_game!(winner: player_one, loser: player_two, reporter: staff_member)
       expect(match_game.reported_at).to be_within(10.seconds).of(Time.current.utc)
     end
   end
