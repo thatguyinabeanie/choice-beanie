@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_114037) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_114037) do
     t.datetime "player_one_check_in"
     t.datetime "player_two_check_in"
     t.bigint "loser_id"
+    t.datetime "reported_at"
     t.index ["loser_id"], name: "index_matches_on_loser_id"
     t.index ["player_one_id"], name: "index_matches_on_player_one_id"
     t.index ["player_two_id"], name: "index_matches_on_player_two_id"

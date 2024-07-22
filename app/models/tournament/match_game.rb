@@ -1,6 +1,6 @@
 module Tournament
   class MatchGame < ApplicationRecord
-    include Helpers::Match::OpponentFor
+    include ::Match::Players
     self.table_name = 'match_games'
     belongs_to :match, class_name: 'Tournament::Match', inverse_of: :match_games
 
@@ -13,8 +13,8 @@ module Tournament
 
     validates :game_number, presence: true
     validate :different_winner_and_loser
-    validate :validate_winner
-    validate :validate_loser
+    validate :validate_winner_must_be_match_player
+    validate :validate_loser_must_be_match_player
     validate :reporter_role_validation
     validates :match, presence: true
     validates :reporter, presence: true, if: -> { reported_at.present? && (winner.present? || loser.present?) }
@@ -42,24 +42,6 @@ module Tournament
       return if reporter.staff_member_of?(match.phase.tournament.organization)
 
       errors.add(:base, I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))
-    end
-
-    def validate_winner
-      return if winner.nil? && loser.nil?
-
-      errors.add(:base, I18n.t('errors.match_game.winner_must_be_match_player')) if [player_one, player_two].exclude?(winner)
-    end
-
-    def validate_loser
-      return if winner.nil? && loser.nil?
-
-      errors.add(:base, I18n.t('errors.match_game.loser_must_be_match_player')) if [player_one, player_two].exclude?(loser)
-    end
-
-    def different_winner_and_loser
-      return if winner.nil? && loser.nil?
-
-      errors.add(:base, I18n.t('errors.match_game.winner_and_loser_are_the_same')) if winner == loser
     end
   end
 end
