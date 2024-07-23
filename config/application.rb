@@ -35,5 +35,6 @@ module BattleStadium
     #     resource '*', headers: :any, methods: %i[get post put patch delete]
     #   end
     # end
+    #
   end
 end

@@ -43,8 +43,6 @@ group :development, :test do
   gem 'dotenv-rails', '~> 3'
   gem 'faker', '~> 3'
   gem 'listen', '~> 3.3'
-  gem 'pry-byebug', '~> 3'
-  gem 'pry-rails', '~> 0'
   gem 'ruby-lsp', '~> 0'
   gem 'spring', '~> 4'
   gem 'traceroute', '~> 0'
@@ -89,7 +87,3 @@ group :development, :test, :rubocop do
   gem 'rubocop-rspec_rails'
   gem 'rubocop-thread_safety'
 end
-
-source 'https://rubygems.org'
-
-ruby '3.3.4'
