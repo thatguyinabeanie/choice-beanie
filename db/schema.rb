@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_042517) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_150028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -171,27 +171,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_042517) do
 
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
-    t.datetime "start_date"
+    t.datetime "start_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "organization_id"
-    t.datetime "check_in_start_time"
+    t.datetime "check_in_start_at"
     t.bigint "game_id"
     t.bigint "format_id"
     t.datetime "ended_at"
-    t.datetime "registration_start_time"
-    t.datetime "registration_end_time"
+    t.datetime "registration_start_at"
+    t.datetime "registration_end_at"
     t.integer "player_cap"
     t.boolean "autostart", default: false, null: false
-    t.datetime "actual_start_time"
+    t.datetime "started_at"
     t.boolean "late_registration", default: true, null: false
-    t.boolean "late_checkin", default: true, null: false
+    t.boolean "late_check_in", default: true, null: false
     t.boolean "check_in_required", default: true, null: false
     t.boolean "teamlists_required", default: true, null: false
     t.boolean "open_team_sheets", default: true, null: false
+    t.datetime "end_at"
     t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
-    t.index ["organization_id", "name", "start_date"], name: "index_tournaments_on_org_id_name_start_date", unique: true
+    t.index ["name", "organization_id"], name: "index_tournaments_on_name_and_organization_id", unique: true
+    t.index ["organization_id", "name", "start_at"], name: "index_tournaments_on_org_id_name_start_date", unique: true
     t.index ["organization_id"], name: "index_tournaments_on_organization_id"
   end
 
