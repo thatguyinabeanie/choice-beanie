@@ -1,16 +1,16 @@
 FactoryBot.define do
-  factory :pokemon_set do
+  factory :pokemon_set, class: 'Tournament::PokemonSet' do
     name { 'Skeledirge' }
     ability { 'Unaware' }
-    nature { 'Unaware' }
+    nature { 'Modest' }
     tera_type { 'Grass' }
     held_item { 'Leftovers' }
 
-    move_1 { 'Torch Song' }
-    move_2 { 'Shadow Ball' }
-    move_3 { 'Slack Off' }
-    move_4 { 'Protect' }
+    move1 { 'Torch Song' }
+    move2 { 'Shadow Ball' }
+    move3 { 'Slack Off' }
+    move4 { 'Protect' }
 
-    registration
+    player factory: :player
   end
 end
