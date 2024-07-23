@@ -5,7 +5,7 @@ RSpec.describe Tournament::Tournament do
   let(:organization) { create(:organization) }
   let(:game) { create(:game) }
   let(:format) { create(:format, game:) }
-  let(:start_date) do
+  let(:start_at) do
     Time.use_zone('Central Time (US & Canada)') do
       return Time.zone.parse('2007-07-07 12:00 PM').utc
     end
@@ -21,40 +21,40 @@ RSpec.describe Tournament::Tournament do
 
   describe 'validations' do
     it 'is valid with valid attributes' do
-      tournament = described_class.new(name:, start_date:, organization:, game:, format:)
+      tournament = described_class.new(name:, start_at:, organization:, game:, format:)
       expect(tournament).to be_valid
     end
 
     it 'is not valid without a name' do
-      tournament = described_class.new(start_date:, organization:, game:, format:)
+      tournament = described_class.new(start_at:, organization:, game:, format:)
       expect(tournament).not_to be_valid
     end
 
-    it 'is not valid without a start_date' do
+    it 'is not valid without a start_at' do
       tournament = described_class.new(name:, organization:, game:, format:)
       expect(tournament).not_to be_valid
     end
 
     it 'is not valid without an organization' do
-      tournament = described_class.new(name:, start_date:, game:, format:)
+      tournament = described_class.new(name:, start_at:, game:, format:)
       expect(tournament).not_to be_valid
     end
 
     it 'is not valid without a game' do
-      tournament = described_class.new(name:, start_date:, organization:, format:)
+      tournament = described_class.new(name:, start_at:, organization:, format:)
       expect(tournament).not_to be_valid
     end
 
     it 'is not valid without a format' do
-      tournament = described_class.new(name:, start_date:, organization:, game:)
+      tournament = described_class.new(name:, start_at:, organization:, game:)
       expect(tournament).not_to be_valid
     end
   end
 
   describe 'registration' do
-    let(:tournament) { create(:tournament, registration_start_time:, registration_end_time:, player_cap: 2) }
-    let(:registration_end_time) { nil }
-    let(:registration_start_time) { nil }
+    let(:tournament) { create(:tournament, registration_start_at:, registration_end_at:, player_cap: 2) }
+    let(:registration_end_at) { nil }
+    let(:registration_start_at) { nil }
 
     context 'when registration start time is nil' do
       it 'returns false' do
@@ -63,7 +63,7 @@ RSpec.describe Tournament::Tournament do
     end
 
     context 'when registration start time is in the past' do
-      let(:registration_start_time) { Time.current.utc - 1.day }
+      let(:registration_start_at) { Time.current.utc - 1.day }
 
       context 'when registration end time is nil' do
         it 'returns true' do
@@ -72,7 +72,7 @@ RSpec.describe Tournament::Tournament do
       end
 
       context 'when current time is before registration end time' do
-        let(:registration_end_time) { Time.current.utc + 1.day }
+        let(:registration_end_at) { Time.current.utc + 1.day }
 
         it 'returns true' do
           expect(tournament).to be_open_for_registration
@@ -80,7 +80,7 @@ RSpec.describe Tournament::Tournament do
       end
 
       context 'when current time is after registration end time' do
-        let(:registration_end_time) { Time.current.utc - 1.day }
+        let(:registration_end_at) { Time.current.utc - 1.day }
 
         it 'returns false' do
           expect(tournament).not_to be_open_for_registration
@@ -89,7 +89,7 @@ RSpec.describe Tournament::Tournament do
     end
 
     context 'when registration start time is in the future' do
-      let(:registration_start_time) { Time.current.utc + 1.day }
+      let(:registration_start_at) { Time.current.utc + 1.day }
 
       it 'returns false' do
         expect(tournament).not_to be_open_for_registration
@@ -97,7 +97,7 @@ RSpec.describe Tournament::Tournament do
     end
 
     context 'when player cap is present' do
-      let(:registration_start_time) { Time.current.utc - 1.day }
+      let(:registration_start_at) { Time.current.utc - 1.day }
 
       context 'when registrations count is less than player cap' do
         it 'returns true' do
@@ -160,7 +160,7 @@ RSpec.describe Tournament::Tournament do
   end
 
   describe 'start_tournament!' do
-    let(:tournament) { create(:tournament, actual_start_time: nil) }
+    let(:tournament) { create(:tournament, started_at: nil) }
 
     it 'updates actual_start_time' do # rubocop:disable RSpec/ExampleLength
       current_time = Time.current
@@ -169,7 +169,7 @@ RSpec.describe Tournament::Tournament do
       create(:swiss_phase, tournament:)
       create_list(:player, 5, tournament:)
       expect { tournament.start_tournament! }
-        .to change { tournament.reload.actual_start_time }
+        .to change { tournament.reload.started_at }
         .from(nil)
         .to be_within(1.second).of(current_time.utc)
     end

@@ -40,10 +40,10 @@ def generate_pokemon_set(player:)
   )
 end
 
-def create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:, registration_start_time:)
-  Tournament::Tournament.find_by!(organization:, name:, start_date:)
+def create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+  Tournament::Tournament.find_by!(organization:, name:, start_at:)
 rescue ActiveRecord::RecordNotFound
-  Tournament::Tournament.create!(organization:, name:, start_date:, ended_at:, check_in_start_time:, format:, game:, registration_start_time:)
+  Tournament::Tournament.create!(organization:, name:, start_at:, end_at:, check_in_start_at:, format:, game:, registration_start_at:)
 end
 
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
@@ -81,13 +81,13 @@ end.compact
 tournaments = orgs.flat_map do |organization|
   formats.map.with_index do |format, index|
     name = "#{organization.name} #{format.name} Tournament #{index + 1}"
-    start_date = Time.zone.today
-    ended_at = Time.zone.today + 1.week
-    check_in_start_time = Time.zone.now
+    start_at = Time.zone.today
+    end_at = Time.zone.today + 1.week
+    check_in_start_at = 1.hour.ago
     game = format.game
-    registration_start_time = 1.week.ago
+    registration_start_at = 1.week.ago
 
-    tour = create_tournament(name:, organization:, format:, game:, start_date:, ended_at:, check_in_start_time:, registration_start_time:)
+    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
 
     Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",

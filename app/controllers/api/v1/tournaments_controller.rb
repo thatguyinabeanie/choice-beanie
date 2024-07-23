@@ -56,7 +56,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def tournament_params
-        params.require(:tournament).permit(:name, :location, :start_date, :end_date)
+        params.require(:tournament).permit(:name, :location, :start_at, :end_date)
       end
     end
   end
