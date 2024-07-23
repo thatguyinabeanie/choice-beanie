@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_042517) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "round_id", null: false
+    t.bigint "round_id", null: false
     t.integer "table_number"
     t.bigint "player_one_id", null: false
     t.bigint "player_two_id", null: false

@@ -55,7 +55,7 @@ sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
 swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
 
 formats = sv_formats + swsh_formats
-# formats = sv_formats
+formats = sv_formats
 
 org_owners = [
   {
