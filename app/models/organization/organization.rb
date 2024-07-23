@@ -8,8 +8,7 @@ module Organization
 
     belongs_to :owner, class_name: 'User', optional: false
 
-    has_many :organization_tournaments, class_name: 'Organization::OrganizationTournament', dependent: :destroy
-    has_many :tournaments, through: :organization_tournaments
+    has_many :tournaments, class_name: 'Tournament::Tournament', dependent: :destroy
 
     has_many :organization_staff_members, class_name: 'Organization::StaffMember', dependent: :destroy
     has_many :staff, through: :organization_staff_members, source: :user

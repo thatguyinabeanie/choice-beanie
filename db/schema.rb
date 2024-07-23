@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_042517) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "round_id", null: false
+    t.bigint "round_id", null: false
     t.integer "table_number"
     t.bigint "player_one_id", null: false
     t.bigint "player_two_id", null: false
@@ -81,16 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_organization_staff_members_on_organization_id"
     t.index ["user_id"], name: "index_organization_staff_members_on_user_id"
-  end
-
-  create_table "organization_tournaments", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.bigint "tournament_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id", "tournament_id"], name: "index_org_tourns_on_org_id_and_tourn_id", unique: true
-    t.index ["organization_id"], name: "index_organization_tournaments_on_organization_id"
-    t.index ["tournament_id"], name: "index_organization_tournaments_on_tournament_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -207,7 +197,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
-    t.string "password_digest"
     t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -253,8 +242,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
   add_foreign_key "matches", "rounds"
   add_foreign_key "organization_staff_members", "organizations"
   add_foreign_key "organization_staff_members", "users"
-  add_foreign_key "organization_tournaments", "organizations"
-  add_foreign_key "organization_tournaments", "tournaments"
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "phase_players", "players"
   add_foreign_key "phases", "tournaments"

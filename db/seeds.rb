@@ -47,26 +47,26 @@ rescue ActiveRecord::RecordNotFound
 end
 
 scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
-regulations = %w[G]
-# regulations = %w[A B C D E F G H]
+# regulations = %w[G]
+regulations = %w[A B C D E F G H]
 sv_formats = regulations.map { |regulation| Tournament::Format.create!(name: "Regulation #{regulation}", game: scarlet_violet) }
 
-# sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
-# swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
+sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
+swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
 
-# formats = sv_formats + swsh_formats
+formats = sv_formats + swsh_formats
 formats = sv_formats
 
 org_owners = [
   {
     username: 'fuecoco_supremacy'
+  },
+  {
+    username: 'sprigatito_lover'
+  },
+  {
+    username: 'quaxly_enthusiast'
   }
-  # {
-  #   username: 'sprigatito_lover'
-  # },
-  # {
-  #   username: 'quaxly_enthusiast'
-  # }
 ].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
