@@ -27,9 +27,11 @@ module Tournament
       phases.order(order: :asc).first.valid?
     end
 
-    def start_tournament!
-      raise "Tournament #{id} has no phases. Cannot start tournament." if phases.empty?
-      raise "Tournament #{id} has no players. Cannot start tournament." if players.empty?
+    def start_tournament! # rubocop:disable Metrics/AbcSize
+      cannot_start = 'Cannot start tournament.'
+      raise "The tournament has no phases. #{cannot_start}" if phases.empty?
+      raise "The tournament has no players. #{cannot_start}" if players.empty?
+      raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
 
       update!(actual_start_time: Time.current.utc)
 

@@ -167,7 +167,7 @@ RSpec.describe Tournament::Tournament do
       allow(Time).to receive(:current).and_return(current_time)
 
       create(:swiss_phase, tournament:)
-      create(:player, tournament:)
+      create_list(:player, 5, tournament:)
       expect { tournament.start_tournament! }
         .to change { tournament.reload.actual_start_time }
         .from(nil)
@@ -176,13 +176,13 @@ RSpec.describe Tournament::Tournament do
 
     it 'raises error if there are no phases' do
       expect { tournament.start_tournament! }
-        .to raise_error("Tournament #{tournament.id} has no phases. Cannot start tournament.")
+        .to raise_error('The tournament has no phases. Cannot start tournament.')
     end
 
     it 'raises error if there are no players' do
       create(:swiss_phase, tournament:)
       expect { tournament.start_tournament! }
-        .to raise_error("Tournament #{tournament.id} has no players. Cannot start tournament.")
+        .to raise_error('The tournament has no players. Cannot start tournament.')
     end
   end
 end
