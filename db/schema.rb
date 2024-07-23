@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_formats_on_game_id"
+    t.index ["name", "game_id"], name: "index_formats_on_name_and_game_id", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -69,6 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.index ["loser_id"], name: "index_matches_on_loser_id"
     t.index ["player_one_id"], name: "index_matches_on_player_one_id"
     t.index ["player_two_id"], name: "index_matches_on_player_two_id"
+    t.index ["round_id", "player_one_id", "player_two_id"], name: "index_matches_on_round_and_players_unique", unique: true
     t.index ["winner_id"], name: "index_matches_on_winner_id"
   end
 
@@ -103,6 +105,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
+  create_table "phase_players", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.string "phase_type", null: false
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["phase_type", "phase_id"], name: "index_tournament_phase_players_on_phase"
+    t.index ["player_id"], name: "index_phase_players_on_player_id"
+  end
+
   create_table "phases", force: :cascade do |t|
     t.bigint "tournament_id", null: false
     t.integer "number_of_rounds"
@@ -112,8 +124,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.string "type"
     t.string "name"
     t.integer "best_of", default: 3, null: false
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.integer "order", default: 0, null: false
     t.index ["tournament_id"], name: "index_phases_on_tournament_id"
     t.index ["type"], name: "index_phases_on_type"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tournament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "checked_in", default: false, null: false
+    t.boolean "team_sheet_submitted", default: false, null: false
+    t.index ["tournament_id"], name: "index_players_on_tournament_id"
+    t.index ["user_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "pokemon_sets", force: :cascade do |t|
@@ -128,18 +155,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.string "move4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "registration_id"
-    t.index ["registration_id"], name: "index_pokemon_sets_on_registration_id"
-  end
-
-  create_table "registrations", force: :cascade do |t|
-    t.bigint "player_id", null: false
-    t.bigint "tournament_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["player_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
-    t.index ["player_id"], name: "index_registrations_on_player_id"
-    t.index ["tournament_id"], name: "index_registrations_on_tournament_id"
+    t.bigint "player_id"
+    t.index ["player_id"], name: "index_pokemon_sets_on_player_id"
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -147,6 +164,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "round_number", default: 1, null: false
+    t.datetime "started_at"
+    t.datetime "ended_at"
     t.index ["phase_id", "round_number"], name: "index_rounds_on_phase_id_and_round_number", unique: true
     t.index ["phase_id"], name: "index_rounds_on_phase_id"
   end
@@ -170,6 +189,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
     t.bigint "game_id"
     t.bigint "format_id"
     t.datetime "ended_at"
+    t.datetime "registration_start_time"
+    t.datetime "registration_end_time"
+    t.integer "player_cap"
+    t.boolean "autostart", default: false, null: false
+    t.datetime "actual_start_time"
+    t.boolean "late_registration", default: true, null: false
+    t.boolean "late_checkin", default: true, null: false
+    t.boolean "check_in_required", default: true, null: false
+    t.boolean "teamlists_required", default: true, null: false
+    t.boolean "open_team_sheets", default: true, null: false
     t.index ["format_id"], name: "index_tournaments_on_format_id"
     t.index ["game_id"], name: "index_tournaments_on_game_id"
     t.index ["organization_id", "name", "start_date"], name: "index_tournaments_on_org_id_name_start_date", unique: true
@@ -214,23 +243,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_121014) do
 
   add_foreign_key "formats", "games"
   add_foreign_key "match_games", "matches"
-  add_foreign_key "match_games", "users", column: "loser_id"
+  add_foreign_key "match_games", "players", column: "loser_id"
+  add_foreign_key "match_games", "players", column: "winner_id"
   add_foreign_key "match_games", "users", column: "reporter_id"
-  add_foreign_key "match_games", "users", column: "winner_id"
+  add_foreign_key "matches", "players", column: "loser_id"
+  add_foreign_key "matches", "players", column: "player_one_id"
+  add_foreign_key "matches", "players", column: "player_two_id"
+  add_foreign_key "matches", "players", column: "winner_id"
   add_foreign_key "matches", "rounds"
-  add_foreign_key "matches", "users", column: "loser_id"
-  add_foreign_key "matches", "users", column: "player_one_id"
-  add_foreign_key "matches", "users", column: "player_two_id"
-  add_foreign_key "matches", "users", column: "winner_id"
   add_foreign_key "organization_staff_members", "organizations"
   add_foreign_key "organization_staff_members", "users"
   add_foreign_key "organization_tournaments", "organizations"
   add_foreign_key "organization_tournaments", "tournaments"
   add_foreign_key "organizations", "users", column: "owner_id"
+  add_foreign_key "phase_players", "players"
   add_foreign_key "phases", "tournaments"
-  add_foreign_key "pokemon_sets", "registrations"
-  add_foreign_key "registrations", "tournaments"
-  add_foreign_key "registrations", "users", column: "player_id"
+  add_foreign_key "players", "tournaments"
+  add_foreign_key "players", "users"
+  add_foreign_key "pokemon_sets", "players"
   add_foreign_key "tournament_formats", "formats"
   add_foreign_key "tournament_formats", "tournaments"
   add_foreign_key "tournaments", "games"

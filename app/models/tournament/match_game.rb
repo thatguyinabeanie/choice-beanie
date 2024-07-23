@@ -4,8 +4,8 @@ module Tournament
     self.table_name = 'match_games'
     belongs_to :match, class_name: 'Tournament::Match', inverse_of: :match_games
 
-    belongs_to :winner, class_name: 'User', optional: true
-    belongs_to :loser, class_name: 'User', optional: true
+    belongs_to :winner, class_name: 'Tournament::Player', optional: true
+    belongs_to :loser, class_name: 'Tournament::Player', optional: true
     belongs_to :reporter, class_name: 'User', optional: true
 
     delegate :player_one, to: :match
@@ -18,9 +18,9 @@ module Tournament
 
     private
 
-    def reporter_role_validation
+    def reporter_role_validation # rubocop:disable Metrics/AbcSize
       return if reporter.nil?
-      return if reporter == player_one || reporter == player_two
+      return if reporter == player_one.user || reporter == player_two.user
       return if reporter.staff_member_of?(match.phase.tournament.organization)
 
       errors.add(:base, I18n.t('errors.match_game.reporter_must_be_match_player_or_staff'))

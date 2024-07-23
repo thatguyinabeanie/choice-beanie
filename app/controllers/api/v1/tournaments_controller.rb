@@ -45,7 +45,7 @@ module Api
       # POST /api/v1/tournaments/:id/phases
       # PATCH/PUT /api/v1/tournaments/:id/phases/:phase_id
       # DELETE /api/v1/tournaments/:id/phases/:phase_id
-      # GET /api/v1/tournaments/:id/registrations
+      # GET /api/v1/tournaments/:id/players
 
       private
 

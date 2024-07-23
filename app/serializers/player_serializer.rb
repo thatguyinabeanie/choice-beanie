@@ -1,4 +1,4 @@
-class RegistrationSerializer < ActiveModel::Serializer
+class PlayerSerializer < ActiveModel::Serializer
   attribute :user_id
   attribute :first_name
   attribute :last_name
@@ -6,19 +6,19 @@ class RegistrationSerializer < ActiveModel::Serializer
   attribute :team_submission
 
   def user_id
-    object.user.id
+    object.player.id
   end
 
   def first_name
-    object.user.first_name
+    object.player.first_name
   end
 
   def last_name
-    object.user.last_name
+    object.player.last_name
   end
 
   def username
-    object.user.username
+    object.player.username
   end
 
   def team_submission

@@ -15,10 +15,16 @@ module MatchPlayersConcern
     player == player_one ? player_two : player_one
   end
 
+  def reporter_user(reporter:)
+    return reporter.user if reporter.is_a?(Tournament::Player) && [player_one, player_two].include?(reporter)
+
+    reporter
+  end
+
   def report_winner!(player:, reporter:)
     winner = player
     loser = opponent_for(player:)
-    report!(winner:, loser:, reporter:)
+    report!(winner:, loser:, reporter: reporter_user(reporter:))
   end
 
   def report_loser!(player:, reporter:)
@@ -27,8 +33,13 @@ module MatchPlayersConcern
     report!(winner:, loser:, reporter:)
   end
 
-  def report!(winner:, loser:, reporter:)
-    update!(winner:, loser:, reporter:, reported_at: Time.current.utc)
+  def report!(winner:, loser:, reporter: nil)
+    time_now = Time.current.utc
+    if respond_to?(:reporter)
+      update!(winner:, loser:, reporter:, reported_at: time_now)
+    else
+      update!(winner:, loser:, reported_at: time_now)
+    end
   end
 
   private

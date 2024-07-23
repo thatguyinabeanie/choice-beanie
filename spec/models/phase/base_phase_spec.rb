@@ -32,7 +32,7 @@ RSpec.describe Phase::BasePhase do
     it { is_expected.to validate_numericality_of(:best_of).is_greater_than(0).only_integer }
   end
 
-  describe 'custom validation' do
+  describe 'additional validation' do
     subject(:phase) { TestPhase.new(best_of:, tournament:, name: 'BassFace') }
 
     let(:tournament) { create(:tournament) }
@@ -55,6 +55,16 @@ RSpec.describe Phase::BasePhase do
         phase.valid?
         expect(phase.errors[:best_of]).to include(I18n.t('errors.phase.best_of_must_be_odd'))
       end
+    end
+  end
+
+  describe '#accept_players' do
+    let(:phase) { TestPhase.new }
+    let(:players) { create_list(:player, 5) }
+
+    it 'sets the players' do
+      phase.accept_players(players:)
+      expect(phase.players).to match_array(players)
     end
   end
 end
