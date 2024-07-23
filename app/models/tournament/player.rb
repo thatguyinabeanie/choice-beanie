@@ -9,6 +9,9 @@ module Tournament
     validates :tournament_id, presence: true
     validates :user_id, uniqueness: { scope: :tournament_id, message: I18n.t('tournament.registration.already_registered') }
 
+    has_many :phase_players, class_name: 'Tournament::PhasePlayer', dependent: :destroy, inverse_of: :player
+    has_many :phases, through: :phase_players, source: :phase, source_type: 'Phase::BasePhase'
+
     has_many :pokemon_sets, dependent: :destroy, class_name: 'Tournament::PokemonSet', inverse_of: :player
     accepts_nested_attributes_for :pokemon_sets
 

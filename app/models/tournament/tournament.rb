@@ -1,5 +1,7 @@
 module Tournament
   class Tournament < ApplicationRecord
+    self.table_name = 'tournaments'
+    MINIMUM_PLAYER_COUNT = 4
     belongs_to :organization, class_name: 'Organization::Organization'
     belongs_to :game, class_name: 'Game'
     belongs_to :format, class_name: 'Tournament::Format'
@@ -20,8 +22,20 @@ module Tournament
 
     def ready_to_start?
       return false if phases.empty?
+      return false if players.empty? || players.count < MINIMUM_PLAYER_COUNT
 
       phases.order(order: :asc).first.valid?
+    end
+
+    def start_tournament!
+      raise "Tournament #{id} has no phases. Cannot start tournament." if phases.empty?
+      raise "Tournament #{id} has no players. Cannot start tournament." if players.empty?
+
+      update!(actual_start_time: Time.current.utc)
+
+      # Assuming the first phase can accept players, you might have something like this:
+      first_phase = phases.order(order: :asc).first
+      first_phase.accept_players(players:)
     end
 
     def open_for_registration?
@@ -43,10 +57,6 @@ module Tournament
         errors.add(:players, 'have reached the player cap.')
         raise ActiveRecord::RecordInvalid, self
       end
-    end
-
-    def start_tournament!
-      update!(actual_start_time: Time.current.utc)
     end
 
     private

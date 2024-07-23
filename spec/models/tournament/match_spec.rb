@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Tournament::Match do
   let(:match_hash) do
-    player_one = create(:tournament_player)
-    player_two = create(:tournament_player)
+    player_one = create(:player)
+    player_two = create(:player)
     organization = create(:organization)
     organization.staff << create(:user)
     tournament = create(:tournament, organization:)

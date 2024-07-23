@@ -109,8 +109,8 @@ RSpec.describe Tournament::Tournament do
 
       context 'when registrations count is equal to player cap' do
         it 'returns false' do
-          create(:tournament_player, tournament:)
-          create(:tournament_player, tournament:)
+          create(:player, tournament:)
+          create(:player, tournament:)
           expect(tournament).not_to be_open_for_registration
         end
       end
@@ -118,8 +118,8 @@ RSpec.describe Tournament::Tournament do
       context 'when trying to add registration after player cap is reached' do
         it 'raises an error' do
           tour = tournament
-          create(:tournament_player, tournament:)
-          create(:tournament_player, tournament:)
+          create(:player, tournament:)
+          create(:player, tournament:)
 
           player = build(:tournament_player, tournament: tour)
           expect { tournament.register!(player:) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Players have reached the player cap.')
@@ -142,10 +142,10 @@ RSpec.describe Tournament::Tournament do
 
       context 'when first phase is valid' do
         it 'returns true' do
+          tournament.players = create_list(:player, 5)
           tournament.phases << phase
           tournament.save!
-          ready = tournament.ready_to_start?
-          expect(ready).to be_truthy
+          expect(tournament).to be_ready_to_start
         end
       end
 
@@ -165,10 +165,24 @@ RSpec.describe Tournament::Tournament do
     it 'updates actual_start_time' do # rubocop:disable RSpec/ExampleLength
       current_time = Time.current
       allow(Time).to receive(:current).and_return(current_time)
+
+      create(:swiss_phase, tournament:)
+      create(:player, tournament:)
       expect { tournament.start_tournament! }
         .to change { tournament.reload.actual_start_time }
         .from(nil)
         .to be_within(1.second).of(current_time.utc)
+    end
+
+    it 'raises error if there are no phases' do
+      expect { tournament.start_tournament! }
+        .to raise_error("Tournament #{tournament.id} has no phases. Cannot start tournament.")
+    end
+
+    it 'raises error if there are no players' do
+      create(:swiss_phase, tournament:)
+      expect { tournament.start_tournament! }
+        .to raise_error("Tournament #{tournament.id} has no players. Cannot start tournament.")
     end
   end
 end

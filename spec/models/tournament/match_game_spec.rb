@@ -7,8 +7,8 @@ RSpec.describe Tournament::MatchGame do
     organization = create(:organization)
     organization.staff << create(:user)
     tournament = create(:tournament, organization:)
-    player_one = create(:tournament_player, user: user_one, tournament:)
-    player_two = create(:tournament_player, user: user_two, tournament:)
+    player_one = create(:player, user: user_one, tournament:)
+    player_two = create(:player, user: user_two, tournament:)
     phase = create(:swiss_phase, tournament:)
     round = create(:round, phase:)
     match = create(:match, round:, player_one:, player_two:)
@@ -75,13 +75,13 @@ RSpec.describe Tournament::MatchGame do
     end
 
     it 'validates that winner must be either player 1 or player 2' do
-      match_game = build(:match_game, winner: create(:tournament_player))
+      match_game = build(:match_game, winner: create(:player))
       match_game.valid?(:report!)
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.winner_must_be_match_player'))
     end
 
     it 'validates that loser must be either player 1 or player 2' do
-      match_game = build(:match_game, loser: create(:tournament_player))
+      match_game = build(:match_game, loser: create(:player))
       match_game.valid?(:report!)
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.loser_must_be_match_player'))
     end
@@ -93,7 +93,7 @@ RSpec.describe Tournament::MatchGame do
     end
 
     it 'validates that winner and loser must be either player 1 or player 2' do
-      match_game = build(:match_game, winner: player_one, loser: create(:tournament_player))
+      match_game = build(:match_game, winner: player_one, loser: create(:player))
       match_game.valid?(:report!)
       expect(match_game.errors[:base]).to include(I18n.t('errors.match_game.loser_must_be_match_player'))
     end
@@ -138,13 +138,13 @@ RSpec.describe Tournament::MatchGame do
 
     it 'does not allow a third person to be the winner' do
       expect do
-        match_game.report!(winner: player_one, loser: create(:tournament_player), reporter: staff_member)
+        match_game.report!(winner: player_one, loser: create(:player), reporter: staff_member)
       end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.loser_must_be_match_player')}")
     end
 
     it 'does not allow a third person to be the loser' do
       expect do
-        match_game.report!(winner: create(:tournament_player), loser: player_two, reporter: staff_member)
+        match_game.report!(winner: create(:player), loser: player_two, reporter: staff_member)
       end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: #{I18n.t('errors.match_game.winner_must_be_match_player')}")
     end
 

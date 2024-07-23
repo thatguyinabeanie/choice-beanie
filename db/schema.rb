@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_23_010140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_formats_on_game_id"
+    t.index ["name", "game_id"], name: "index_formats_on_name_and_game_id", unique: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -104,6 +105,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
     t.index ["slug"], name: "index_organizations_on_slug", unique: true
   end
 
+  create_table "phase_players", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.string "phase_type", null: false
+    t.bigint "phase_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["phase_type", "phase_id"], name: "index_tournament_phase_players_on_phase"
+    t.index ["player_id"], name: "index_phase_players_on_player_id"
+  end
+
   create_table "phases", force: :cascade do |t|
     t.bigint "tournament_id", null: false
     t.integer "number_of_rounds"
@@ -125,6 +136,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
     t.bigint "tournament_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "checked_in", default: false, null: false
+    t.boolean "team_sheet_submitted", default: false, null: false
     t.index ["tournament_id"], name: "index_players_on_tournament_id"
     t.index ["user_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
     t.index ["user_id"], name: "index_players_on_user_id"
@@ -243,6 +256,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_22_231949) do
   add_foreign_key "organization_tournaments", "organizations"
   add_foreign_key "organization_tournaments", "tournaments"
   add_foreign_key "organizations", "users", column: "owner_id"
+  add_foreign_key "phase_players", "players"
   add_foreign_key "phases", "tournaments"
   add_foreign_key "players", "tournaments"
   add_foreign_key "players", "users"
