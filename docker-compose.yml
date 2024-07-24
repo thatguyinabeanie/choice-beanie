@@ -27,6 +27,9 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
+      RAILS_DB_HOST: db
+      RAILS_DB_USERNAME: postgres
+      RAILS_DB_PASSWORD: password
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/up"]
       interval: 60s

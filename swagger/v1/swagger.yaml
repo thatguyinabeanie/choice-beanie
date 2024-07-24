@@ -6,71 +6,21 @@ info:
 paths:
   "/api/v1/games":
     get:
-      summary: LIST games
+      summary: List Games
       tags:
       - Games
-      description: List all games.
+      description: Retrieves a list of all games
       responses:
         '200':
-          description: Returns a list of games
+          description: successful
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    slug:
-                      type: string
-                  required:
-                  - id
-                  - name
-                  - slug
-                required:
-                - id
-                - name
-                - slug
-                example:
-                - id: 1
-                  name: Pokemon Scarlet & Violet
-                  slug: chess
-                - id: 2
-                  name: Checkers
-                  slug: checkers
-    post:
-      summary: Create Game
-      tags:
-      - Games
-      description: Create a new game.
-      parameters: []
-      responses:
-        '201':
-          description: Game Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  slug:
-                    type: string
-                required:
-                - id
-                - name
-                - slug
-                example:
-                  id: 420
-                  name: Pokemon Scarlet & Violet
-                  slug: pokemon-scarlet-violet
-        '422':
-          description: Invalid Request
+                  "$ref": "#/components/schemas/Game"
+        '400':
+          description: bad request
           content:
             application/json:
               schema:
@@ -80,58 +30,109 @@ paths:
                     type: string
                 required:
                 - error
-                example:
-                  error: Name can't be blank
+    post:
+      summary: Create Game
+      tags:
+      - Games
+      description: Creates a new game.
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Game"
+        '422':
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                required:
+                - errors
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                id:
-                  type: integer
-                  example: 420
-                name:
+                title:
                   type: string
-                  example: Pokemon Scarlet & Violet
-                slug:
+                genre:
                   type: string
-                  example: pokemon-scarlet-violet
+                release_date:
+                  type: string
+                  format: date
               required:
-              - name
-              - slug
+              - title
+              - genre
   "/api/v1/games/{id}":
     parameters:
     - name: id
       in: path
-      description: Game ID
+      description: id
       required: true
       schema:
-        type: integer
+        type: string
     get:
       summary: Show Game
       tags:
       - Games
-      description: Show a game.
+      description: Retrieves a specific game by ID.
       responses:
         '200':
-          description: Successful
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Game"
         '404':
-          description: Not Found
+          description: not found
     patch:
-      summary: update game
+      summary: Update Game
+      tags:
+      - Games
+      description: Updates a game by ID.
       responses:
         '200':
           description: successful
     put:
-      summary: update game
+      summary: Update Game
+      tags:
+      - Games
+      description: Updates a game by ID.
       responses:
         '200':
           description: successful
     delete:
-      summary: delete game
+      summary: Delete Game
+      tags:
+      - Games
+      description: Deletes a game by ID.
       responses:
         '200':
           description: successful
 servers:
-- url: http://localhost
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+      required:
+      - id
+      - name
+      - slug

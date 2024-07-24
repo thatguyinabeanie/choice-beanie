@@ -154,7 +154,7 @@ GEM
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
       logger
-    faraday-net_http (3.1.0)
+    faraday-net_http (3.1.1)
       net-http
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -258,7 +258,7 @@ GEM
     prism (0.30.0)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.8.0)
@@ -351,10 +351,6 @@ GEM
     rspec-support (3.13.1)
     rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rswag (2.13.0)
-      rswag-api (= 2.13.0)
-      rswag-specs (= 2.13.0)
-      rswag-ui (= 2.13.0)
     rswag-api (2.13.0)
       activesupport (>= 3.1, < 7.2)
       railties (>= 3.1, < 7.2)
@@ -429,7 +425,7 @@ GEM
       rubocop-rspec (~> 3, >= 3.0.1)
     rubocop-thread_safety (0.5.1)
       rubocop (>= 0.90.0)
-    ruby-lsp (0.17.8)
+    ruby-lsp (0.17.9)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
       rbs (>= 3, < 4)
@@ -456,7 +452,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet-runtime (0.5.11491)
+    sorbet-runtime (0.5.11493)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -549,9 +545,11 @@ DEPENDENCIES
   rails-controller-testing (~> 1)
   rb-readline
   redis (~> 5)
-  rspec-rails (~> 6)
+  rspec-rails
   rspec_junit_formatter (~> 0)
-  rswag (~> 2)
+  rswag-api
+  rswag-specs
+  rswag-ui
   rubocop
   rubocop-checkstyle_formatter
   rubocop-erb
