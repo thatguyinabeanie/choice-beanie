@@ -13,7 +13,7 @@ module Api
       # GET /api/v1/games/:id
       # GET /api/v1/games/:id.json
       def show
-        render json: @game
+        render json: @game.as_json(only: %i[id name slug])
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Game not found' }, status: :not_found
       end
@@ -60,7 +60,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def game_params
-        params.require(:game).permit(:name)
+        params.require(:game).permit(:name, :slug, :release_date)
       end
     end
   end

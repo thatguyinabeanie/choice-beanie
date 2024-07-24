@@ -30,6 +30,17 @@ paths:
                   - id
                   - name
                   - slug
+                required:
+                - id
+                - name
+                - slug
+                example:
+                - id: 1
+                  name: Pokemon Scarlet & Violet
+                  slug: chess
+                - id: 2
+                  name: Checkers
+                  slug: checkers
     post:
       summary: Create Game
       tags:
@@ -39,8 +50,38 @@ paths:
       responses:
         '201':
           description: Game Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  slug:
+                    type: string
+                required:
+                - id
+                - name
+                - slug
+                example:
+                  id: 420
+                  name: Pokemon Scarlet & Violet
+                  slug: pokemon-scarlet-violet
         '422':
           description: Invalid Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                example:
+                  error: Name can't be blank
       requestBody:
         content:
           application/json:
@@ -63,15 +104,20 @@ paths:
     parameters:
     - name: id
       in: path
-      description: id
+      description: Game ID
       required: true
       schema:
-        type: string
+        type: integer
     get:
-      summary: show game
+      summary: Show Game
+      tags:
+      - Games
+      description: Show a game.
       responses:
         '200':
-          description: successful
+          description: Successful
+        '404':
+          description: Not Found
     patch:
       summary: update game
       responses:

@@ -10,4 +10,16 @@ Rswag::Api.configure do |c|
   # For example, you could leverage this to dynamically assign the "host" property
   #
   # c.swagger_filter = lambda { |swagger, env| swagger['host'] = env['HTTP_HOST'] }
+
+  c.swagger_docs = {
+    'v1/swagger.json' => {
+      openapi: '3.0.1',
+      # Replace 'www.yourapp.com' with your application's host
+      # and adjust the base path as necessary
+      servers: [{
+        url: 'https://www.battleststadium.com/api/v1',
+        description: 'Primary API server'
+      }],
+    }
+  }
 end

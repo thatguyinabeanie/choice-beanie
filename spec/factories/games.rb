@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :game, class: 'Game' do
-    name { 'Pokemon Scarlet & Violet' }
+    name { Faker::Game.title }
     formats { [] }
   end
 end
