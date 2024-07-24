@@ -5,6 +5,13 @@
       "server": "localhost",
       "driver": "PostgreSQL",
       "name": "fuecoco_db",
+      "connectString": "postgres://postgres:password@localhost:5432/fuecoco_db"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "fuecoco_db",
       "connectString": "postgres://postgres:password@db:5432/fuecoco_db"
     }
   ],

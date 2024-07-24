@@ -46,13 +46,15 @@ rescue ActiveRecord::RecordNotFound
   Tournament::Tournament.create!(organization:, name:, start_at:, end_at:, check_in_start_at:, format:, game:, registration_start_at:)
 end
 
-scarlet_violet = Game.create!(name: 'Pokemon Scarlet & Violet')
-# regulations = %w[G]
-regulations = %w[A B C D E F G H]
-sv_formats = regulations.map { |regulation| Tournament::Format.create!(name: "Regulation #{regulation}", game: scarlet_violet) }
+def create_format(name:, game:)
+  Tournament::Format.find_or_create_by!(name:, game:)
+end
 
-sword_and_shield = Game.create!(name: 'Pokemon Sword & Shield')
-swsh_formats = (1..13).to_a.map { |series| Tournament::Format.create!(name: "Series #{series}", game: sword_and_shield) }
+scarlet_violet = Game.find_or_create_by!(name: 'Pokemon Scarlet & Violet')
+sword_and_shield = Game.find_or_create_by!(name: 'Pokemon Sword & Shield')
+
+sv_formats = %w[A B C D E F G H].map { |regulation| Tournament::Format.find_or_create_by!(name: "Regulation #{regulation}", game: scarlet_violet) }
+swsh_formats = (1..13).to_a.map { |series| Tournament::Format.find_or_create_by!(name: "Series #{series}", game: sword_and_shield) }
 
 formats = sv_formats + swsh_formats
 formats = sv_formats
@@ -88,20 +90,22 @@ tournaments = orgs.flat_map do |organization|
     registration_start_at = 1.week.ago
 
     tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+    tour.game = game
 
-    Phase::Swiss.create!(
+    swiss = Phase::Swiss.build(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
       number_of_rounds: 5
     )
 
-    Phase::SingleEliminationBracket.create!(
+    bracket = Phase::SingleEliminationBracket.build(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
       criteria: 'Top 8'
     )
 
-    tour.save!
+    tour.add_phase!(phase: swiss)
+    tour.add_phase!(phase: bracket)
     tour
   end
 end

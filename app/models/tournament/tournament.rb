@@ -4,7 +4,7 @@ module Tournament
     MINIMUM_PLAYER_COUNT = 4
     # High level tournament information
     validates :name, presence: true
-    validates :name, uniqueness: { scope: :organization_id, message: I18n.t('tournament.errors.validations.unique_per_org_name_at') }
+    validates :name, uniqueness: { scope: :organization_id, message: I18n.t('tournament.errors.validations.unique_per_org_name_start_at') }
     belongs_to :organization, class_name: 'Organization::Organization'
     validates :organization, presence: true
     validates :organization_id, uniqueness: { scope: %i[name start_at], message: I18n.t('tournament.errors.validations.unique_per_org_name_start_at') }
@@ -75,6 +75,16 @@ module Tournament
         errors.add(:players, 'have reached the player cap.')
         raise ActiveRecord::RecordInvalid, self
       end
+    end
+
+    def add_phase(phase:)
+      phases << phase
+      save
+    end
+
+    def add_phase!(phase:)
+      phases << phase
+      save!
     end
 
     private
