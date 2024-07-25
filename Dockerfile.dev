@@ -51,7 +51,7 @@ RUN \
   apt-get update -qq && \
   apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
   curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-  apt-get install -y nodejs && \
+  apt-get --no-install-recommends install -y nodejs && \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
