@@ -48,7 +48,7 @@ jobs:
           target: development_base_image
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.VERSION }}
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MINOR }}
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MAJOR }}
