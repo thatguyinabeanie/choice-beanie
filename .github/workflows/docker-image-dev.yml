@@ -48,14 +48,10 @@ jobs:
           target: development_base_image
           push: true
           tags: |
-<<<<<<< HEAD
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-latest
-=======
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base
->>>>>>> origin/main
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MINOR }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MAJOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MINOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MAJOR }}
 
       - name: Post build cleanup
         run: docker builder prune --force
