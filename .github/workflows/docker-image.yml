@@ -48,13 +48,24 @@ jobs:
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
       - name: Build ${{ matrix.platform }} Docker Image
+        if:  github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./Dockerfile.dev_base
           target: development-base-image
           platforms: ${{ matrix.platform }}
-          push: github.ref == 'refs/heads/main' || github.event_name == 'release'
+          push: false
+
+      - name: Build and Push ${{ matrix.platform }} Docker Image
+        if:  github.ref == 'refs/heads/main' || github.event_name == 'release'
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile.dev_base
+          target: development-base-image
+          platforms: ${{ matrix.platform }}
+          push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
