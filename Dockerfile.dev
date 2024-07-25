@@ -55,6 +55,7 @@ RUN \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
+  bundle install && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
