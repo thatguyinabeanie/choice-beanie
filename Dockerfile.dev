@@ -47,6 +47,7 @@ RUN mkdir -p "/workspaces/$USERNAME"
 WORKDIR /workspaces/$USERNAME
 COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
 COPY .bashrc /root/.bashrc
+ENV RAILS_ENV=development
 RUN \
   apt-get update -qq && \
   apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
@@ -63,6 +64,7 @@ RUN \
 ## DEVELOPMENT IMAGE
 ##
 FROM thatguyinabeanie/battle-stadium:development-base-latest AS development
+ENV RAILS_ENV=development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 RUN bundle check || bundle install
 CMD ["rails", "server", "-b", "0.0.0.0"]
