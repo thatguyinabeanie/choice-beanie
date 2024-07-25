@@ -2,12 +2,11 @@ name: Build and Push Docker Images
 
 on:
   push:
-  #   branches:
-  #     - main
-  # release:
-  #   types:
-  #     - published
-
+    branches:
+      - '**'
+  release:
+    types:
+      - published
 
 jobs:
   build-amd64:
@@ -45,7 +44,17 @@ jobs:
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
-      - name: Build and push Docker image (amd64)
+      - name: Build amd64 Docker Image
+        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.dev
+          platforms: linux/amd64
+          push: false
+
+      - name: Build and Push amd64 Docker Image
+        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -98,7 +107,17 @@ jobs:
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
-      - name: Build and push Docker image (amd64)
+      - name: Build arm64 Docker Image
+        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile.dev
+          platforms: linux/arm64
+          push: false
+
+      - name: Build and Push arm64 Docker Image
+        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
         uses: docker/build-push-action@v3
         with:
           context: .
