@@ -39,28 +39,6 @@
 
 
 ##
-## DEVELOPMENT IMAGE BASE
-##
-FROM mcr.microsoft.com/devcontainers/ruby:3 AS development-base-image
-ARG USERNAME=battle-stadium
-RUN mkdir -p "/workspaces/$USERNAME"
-WORKDIR /workspaces/$USERNAME
-COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
-COPY .bashrc /root/.bashrc
-ENV RAILS_ENV=development
-RUN \
-  apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
-  curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
-  apt-get --no-install-recommends install -y nodejs && \
-  apt-get clean && \
-  bundle update --bundler && \
-  bundle config set path ~/.bundle && \
-  bundle install && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
-##
 ## DEVELOPMENT IMAGE
 ##
 FROM thatguyinabeanie/battle-stadium:development-base-latest AS development

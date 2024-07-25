@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile.dev
+          file: ./Dockerfile.dev_base
           platforms: ${{ matrix.docker_platform }}
           push: false
 
