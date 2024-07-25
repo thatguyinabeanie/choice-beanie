@@ -18,16 +18,15 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-  host: db
-  username: postgres
-  password: password
-  port: 5432
+  timeout: <%= ENV.fetch("RAILS_DB_TIMEOUT", 5000) %>
+  host: <%= ENV.fetch("RAILS_DB_HOST", "localhost") %>
+  username: <%= ENV.fetch("RAILS_DB_USERNAME", "postgres") %>
+  password: <%= ENV.fetch("RAILS_DB_PASSWORD", "password") %>
+  port: <%= ENV.fetch("RAILS_DB_PORT", 5432) %>
 
 development:
   <<: *default
-  host: localhost
-  database: fuecoco_db_development
+  database: <%= ENV.fetch("RAILS_DB_NAME", "fuecoco_db_development") %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -59,10 +58,9 @@ development:
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test: &test
+test:
   <<: *default
-  host: localhost
-  database: fuecoco_db_test
+  database: <%= ENV.fetch("RAILS_DB_NAME", "fuecoco_db_test") %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -86,7 +84,4 @@ test: &test
 #
 production:
   <<: *default
-  # database: fuecoco_db_prod
-  database: <%= ENV["DATABASE_NAME_PROD"] %>
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
+  database: <%= ENV.fetch("RAILS_DB_NAME", "fuecoco_db_production") %>

@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
+  # config.include SwaggerHelper
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
@@ -27,11 +28,24 @@ RSpec.configure do |config|
           url: 'https://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: '127.0.0.1'
             }
           }
         }
-      ]
+      ],
+      components: {
+        schemas: {
+          Game: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              slug: { type: :string }
+            },
+            required: %w[id name slug]
+          }
+        }
+      }
     }
   }
 

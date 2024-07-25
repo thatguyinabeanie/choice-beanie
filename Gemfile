@@ -29,7 +29,9 @@ gem 'rack-attack', '~> 6'
 gem 'rack-cors', '~> 2'
 gem 'rb-readline'
 gem 'redis', '~> 5'
-gem 'rswag', '~> 2'
+gem 'rswag-api'
+gem 'rswag-ui'
+
 gem 'sidekiq', '~> 7'
 gem 'sprockets-rails'
 gem 'stimulus-rails', '~> 1'
@@ -43,6 +45,8 @@ group :development, :test do
   gem 'dotenv-rails', '~> 3'
   gem 'faker', '~> 3'
   gem 'listen', '~> 3.3'
+  gem 'rspec-rails'
+  gem 'rswag-specs'
   gem 'ruby-lsp', '~> 0'
   gem 'spring', '~> 4'
   gem 'traceroute', '~> 0'
@@ -59,7 +63,6 @@ group :test do
   gem 'factory_bot_rails', '~> 6'
   gem 'rails-controller-testing', '~> 1'
   gem 'rspec_junit_formatter', '~> 0'
-  gem 'rspec-rails', '~> 6'
   gem 'ruby_audit', '~> 2', require: false
   gem 'selenium-webdriver', '~> 4', require: false
   gem 'shoulda-matchers', '~> 6'

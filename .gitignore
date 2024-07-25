@@ -55,3 +55,8 @@ spec/examples.txt
 test-results
 
 codeql*
+*.session.sql
+
+test/
+tests/
+**_test.rb

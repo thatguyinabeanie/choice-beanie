@@ -44,6 +44,7 @@ ARG USERNAME=battle-stadium
 RUN mkdir -p "/workspaces/$USERNAME"
 WORKDIR /workspaces/$USERNAME
 COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
+COPY .bashrc /root/.bashrc
 RUN \
   apt-get update -qq && \
   apt-get --no-install-recommends install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git watchman && \
