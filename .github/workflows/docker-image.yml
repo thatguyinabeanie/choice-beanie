@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        docker_platform: ['linux/amd64', 'limux/amd64']
+        docker_platform: ['linux/amd64', 'linux/arm64']
 
     permissions:
       contents: read
