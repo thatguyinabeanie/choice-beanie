@@ -41,7 +41,7 @@
 ##
 ## DEVELOPMENT IMAGE BASE
 ##
-FROM mcr.microsoft.com/devcontainers/ruby:3 AS development_base_image
+FROM mcr.microsoft.com/devcontainers/ruby:3 AS development-base-image
 ARG USERNAME=battle-stadium
 RUN mkdir -p "/workspaces/$USERNAME"
 WORKDIR /workspaces/$USERNAME

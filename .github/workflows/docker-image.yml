@@ -48,7 +48,8 @@ jobs:
       - name: Build and push Docker image (amd64)
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: Dockerfile.dev
+          target: development-base-image
           platforms: linux/amd64
           push: true
           tags: |
@@ -59,6 +60,8 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-latest
             ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.VERSION }}
             ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.MAJOR }}
+
+
   build-arm64:
     runs-on: ubuntu-latest
 
@@ -97,7 +100,8 @@ jobs:
       - name: Build and push Docker image (amd64)
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: Dockerfile.dev
+          target: development-base-image
           platforms: linux/arm64
           push: true
           tags: |
