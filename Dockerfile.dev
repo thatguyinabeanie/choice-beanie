@@ -38,9 +38,9 @@
 # CMD ["rails", "server", "-b", "0.0.0.0"]
 
 
-#
-# DEVELOPMENT IMAGE BASE
-#
+##
+## DEVELOPMENT IMAGE BASE
+##
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS development_base_image
 ARG USERNAME=battle-stadium
 RUN mkdir -p "/workspaces/$USERNAME"
@@ -58,7 +58,9 @@ RUN \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-
-FROM dev_container_base_image AS development
+##
+## DEVELOPMENT IMAGE
+##
+FROM thatguyinabeanie/battle-stadium:development-base-latest AS development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 CMD ["rails", "server", "-b", "0.0.0.0"]
