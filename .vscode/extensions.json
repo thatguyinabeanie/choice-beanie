@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "snyk-security.snyk-vulnerability-scanner",
+    "ms-azuretools.vscode-docker",
+    "shopify.ruby-lsp",
+    "misogi.ruby-rubocop",
+    "koichisasada.vscode-rdbg",
+    "connorshea.vscode-ruby-test-adapter",
+    "iliazeus.vscode-ansi",
+    "github.github-vscode-theme",
+    "sonarsource.sonarlint-vscode",
+    "vscode-icons-team.vscode-icons"
+  ]
+}

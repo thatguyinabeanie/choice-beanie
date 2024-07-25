@@ -1,45 +1,47 @@
-# Use the official Ruby image as the base image
-FROM ruby:3.3 AS production_base_image
-ARG USERNAME=battle-stadium
+# # Use the official Ruby image as the base image
+# FROM ruby:3.3 AS production_base_image
+# ARG USERNAME=battle-stadium
 
-# Install dependencies required for Rails
-RUN \
-  apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  mkdir -p "/workspaces/$USERNAME"
+# # Install dependencies required for Rails
+# RUN \
+#   apt-get update -qq && \
+#   apt-get --no-install-recommends install -y -q postgresql-client openssl libssl-dev libpq-dev git curl && \
+#   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
+#   apt-get --no-install-recommends install -y nodejs && \
+#   apt-get clean && \
+#   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+#   mkdir -p "/workspaces/$USERNAME"
 
-# Copy the Gemfile and Gemfile.lock into the container
-COPY Gemfile Gemfile.lock /workspaces/$USERNAME/
+# # Copy the Gemfile and Gemfile.lock into the container
+# COPY Gemfile Gemfile.lock /workspaces/$USERNAME/
 
-# Install the gems specified in Gemfile
-WORKDIR /workspaces/$USERNAME
+# # Install the gems specified in Gemfile
+# WORKDIR /workspaces/$USERNAME
 
-RUN \
-  bundle update --bundler && \
-  bundle config set path ~/.bundle && \
-  bundle install
+# RUN \
+#   bundle update --bundler && \
+#   bundle config set path ~/.bundle && \
+#   bundle install
 
-# Copy the current directory contents into the container at /myapp
-COPY COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
-
-
-#
-# PRODUCTION IMAGE
-#
-FROM  production_base_image AS production
-ARG USERNAME=battle-stadium
-# USER $USERNAME
-# Set the command to start the puma server
-WORKDIR /workspaces/$USERNAME
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# # Copy the current directory contents into the container at /myapp
+# COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 
 
-#
-# DEVELOPMENT IMAGE
-#
-FROM mcr.microsoft.com/devcontainers/ruby:3 AS dev_container_base_image
+# #
+# # PRODUCTION IMAGE
+# #
+# FROM production_base_image AS production
+# ARG USERNAME=battle-stadium
+# # USER $USERNAME
+# # Set the command to start the puma server
+# WORKDIR /workspaces/$USERNAME
+# CMD ["rails", "server", "-b", "0.0.0.0"]
+
+
+##
+## DEVELOPMENT IMAGE BASE
+##
+FROM mcr.microsoft.com/devcontainers/ruby:3 AS development_base_image
 ARG USERNAME=battle-stadium
 RUN mkdir -p "/workspaces/$USERNAME"
 WORKDIR /workspaces/$USERNAME
@@ -47,15 +49,18 @@ COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
 COPY .bashrc /root/.bashrc
 RUN \
   apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git watchman && \
+  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
+  curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
+  apt-get --no-install-recommends install -y nodejs && \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-FROM dev_container_base_image AS development
-ARG USERNAME=battle-stadium
 
+##
+## DEVELOPMENT IMAGE
+##
+FROM thatguyinabeanie/battle-stadium:development-base-latest AS development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 CMD ["rails", "server", "-b", "0.0.0.0"]
-
