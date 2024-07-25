@@ -48,7 +48,7 @@ jobs:
       - name: Build and push Docker image (amd64)
         uses: docker/build-push-action@v3
         with:
-          context: Dockerfile.dev
+          context: ./Dockerfile.dev
           target: development-base-image
           platforms: linux/amd64
           push: true
@@ -100,7 +100,7 @@ jobs:
       - name: Build and push Docker image (amd64)
         uses: docker/build-push-action@v3
         with:
-          context: Dockerfile.dev
+          context: ./Dockerfile.dev
           target: development-base-image
           platforms: linux/arm64
           push: true
