@@ -1,4 +1,4 @@
-name: Build and Push Development Docker Image
+name: Build and Push Development Docker Image (arm64)
 
 on:
   push:
@@ -60,7 +60,7 @@ jobs:
           file: Dockerfile.dev
           target: development_base_image
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
