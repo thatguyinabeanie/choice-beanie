@@ -8,6 +8,11 @@ on:
     types:
       - published
 
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
   build_and_push_amd64:
     uses: ./.github/workflows/docker-build.yml
