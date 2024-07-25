@@ -46,7 +46,7 @@ RSpec.describe Game do
       end
 
       it 'has many tournaments' do
-        game = described_class.new(name: 'Pokemon Scarlet & Violet')
+        game = described_class.new(name: "Pokemon #{Faker::Game.title} Version")
         tournament1 = create_tournament(game:)
         tournament2 = create_tournament(game:)
         expect(game.tournaments).to contain_exactly(tournament1, tournament2)

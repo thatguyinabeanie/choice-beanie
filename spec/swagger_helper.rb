@@ -2,18 +2,8 @@
 
 require 'rails_helper'
 
-module SwaggerHelper
-  def set_example_response_metadata(example, response)
-    example.metadata[:response][:content] = {
-      'application/json' => {
-        example: JSON.parse(response.body, symbolize_names: true)
-      }
-    }
-  end
-end
-
 RSpec.configure do |config|
-  config.include SwaggerHelper
+  # config.include SwaggerHelper
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder

@@ -24,10 +24,12 @@ module Api
         @game = Game.new(game_params)
 
         if @game.save
-          render :show, status: :created, location: @game
+          render json: @game, status: :created
         else
           render json: @game.errors, status: :unprocessable_entity
         end
+      rescue ActionController::ParameterMissing => e
+        render json: { error: e.message }, status: :unprocessable_entity
       end
 
       # PATCH/PUT /api/v1/games/:id
@@ -60,7 +62,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def game_params
-        params.require(:game).permit(:name, :slug, :release_date)
+        params.require(:game).permit(:name)
       end
     end
   end

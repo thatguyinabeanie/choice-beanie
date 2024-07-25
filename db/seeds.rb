@@ -40,10 +40,10 @@ def generate_pokemon_set(player:)
   )
 end
 
-def create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
-  Tournament::Tournament.find_by!(organization:, name:, start_at:)
-rescue ActiveRecord::RecordNotFound
-  Tournament::Tournament.create!(organization:, name:, start_at:, end_at:, check_in_start_at:, format:, game:, registration_start_at:)
+def create_tournament(attributes)
+  Tournament::Tournament.create!(attributes)
+rescue ActiveRecord::RecordInvalid => e
+  Rails.logger.debug { "Failed to create tournament: #{e.record.errors.full_messages.join(', ')}" }
 end
 
 def create_format(name:, game:)

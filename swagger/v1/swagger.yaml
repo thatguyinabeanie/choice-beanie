@@ -45,36 +45,26 @@ paths:
                 "$ref": "#/components/schemas/Game"
         '422':
           description: unprocessable entity
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: object
-                required:
-                - errors
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                title:
-                  type: string
-                genre:
-                  type: string
-                release_date:
-                  type: string
-                  format: date
+                game:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
               required:
-              - title
-              - genre
+              - game
   "/api/v1/games/{id}":
     parameters:
     - name: id
       in: path
-      description: id
+      description: ID of the game
       required: true
       schema:
         type: string
@@ -97,17 +87,27 @@ paths:
       tags:
       - Games
       description: Updates a game by ID.
+      parameters: []
       responses:
         '200':
           description: successful
-    put:
-      summary: Update Game
-      tags:
-      - Games
-      description: Updates a game by ID.
-      responses:
-        '200':
-          description: successful
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                game:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                  required:
+                  - name
+              required:
+              - game
     delete:
       summary: Delete Game
       tags:
@@ -116,6 +116,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not found
 servers:
 - url: https://{defaultHost}
   variables:

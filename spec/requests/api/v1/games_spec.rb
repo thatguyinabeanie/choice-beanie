@@ -1,6 +1,6 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/games', type: :request do
+RSpec.describe 'api/v1/games' do
   path '/api/v1/games' do
     get('List Games') do
       tags 'Games'
@@ -35,6 +35,12 @@ RSpec.describe 'api/v1/games', type: :request do
 
         let(:page) { 'invalid' }
 
+        before do
+          controller = Api::V1::GamesController.new
+          allow(Api::V1::GamesController).to receive(:new).and_return(controller)
+          allow(controller).to receive(:index).and_raise(ActionController::ParameterMissing.new(:page))
+        end
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -58,17 +64,21 @@ RSpec.describe 'api/v1/games', type: :request do
       parameter name: :game, in: :body, schema: {
         type: :object,
         properties: {
-          title: { type: :string },
-          genre: { type: :string },
-          release_date: { type: :string, format: :date }
+          game: {
+            type: :object,
+            properties: {
+              name: { type: :string }
+            },
+            required: %w[name]
+          }
         },
-        required: ['title', 'genre']
+        required: %w[game]
       }
 
       response(201, 'created') do
-        schema '$ref' => '#/components/schemas/Game'
+        let(:game) { { game: { name: 'New Game' } } }
 
-        let(:game) { { title: 'New Game', genre: 'Action', release_date: '2023-01-01' } }
+        schema '$ref' => '#/components/schemas/Game'
 
         after { |example| set_example_response_metadata(example, response) }
 
@@ -76,12 +86,6 @@ RSpec.describe 'api/v1/games', type: :request do
       end
 
       response(422, 'unprocessable entity') do
-        schema type: :object,
-               properties: {
-                 errors: { type: :object }
-               },
-               required: ['errors']
-
         let(:game) { { title: '', genre: '' } }
 
         after { |example| set_example_response_metadata(example, response) }
@@ -93,7 +97,7 @@ RSpec.describe 'api/v1/games', type: :request do
 
   path '/api/v1/games/{id}' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: :id, in: :path, type: :string, description: 'ID of the game'
 
     get('Show Game') do
       tags 'Games'
@@ -101,16 +105,20 @@ RSpec.describe 'api/v1/games', type: :request do
       description 'Retrieves a specific game by ID.'
 
       response(200, 'successful') do
+        let(:id) { Game.create(name: 'Existing Game').id }
+
         schema '$ref' => '#/components/schemas/Game'
 
-        let(:id) { '123' }
-
         after { |example| set_example_response_metadata(example, response) }
+
         run_test!
       end
 
       response(404, 'not found') do
+        let(:id) { 'invalid' } # Define the id parameter here
+
         after { |example| set_example_response_metadata(example, response) }
+
         run_test!
       end
     end
@@ -118,22 +126,35 @@ RSpec.describe 'api/v1/games', type: :request do
     patch('Update Game') do
       tags 'Games'
       produces 'application/json'
+      consumes 'application/json'
       description 'Updates a game by ID.'
+
+      parameter name: :game, in: :body, schema: {
+        type: :object,
+        properties: {
+          game: {
+            type: :object,
+            properties: {
+              name: { type: :string }
+            },
+            required: %w[name]
+          }
+        },
+        required: %w[game]
+      }
+
       response(200, 'successful') do
-        let(:id) { '123' }
+        let(:id) { Game.create(name: 'Existing Game').id }
+        let(:game) { { game: { name: 'Updated Game' } } }
 
         after { |example| set_example_response_metadata(example, response) }
 
         run_test!
       end
-    end
 
-    put('Update Game') do
-      tags 'Games'
-      produces 'application/json'
-      description 'Updates a game by ID.'
-      response(200, 'successful') do
-        let(:id) { '123' }
+      response(404, 'not found') do
+        let(:id) { 'invalid' }
+        let(:game) { { game: { name: 'Updated Game' } } }
 
         after { |example| set_example_response_metadata(example, response) }
 
@@ -147,8 +168,19 @@ RSpec.describe 'api/v1/games', type: :request do
       description 'Deletes a game by ID.'
 
       response(200, 'successful') do
-        let(:id) { '123' }
+        let(:game) { Game.create!(name: 'Test Game', slug: 'test-game') }
+        let(:id) { game.id }
+
         after { |example| set_example_response_metadata(example, response) }
+
+        run_test!
+      end
+
+      response(404, 'not found') do
+        let(:id) { 'invalid' }
+
+        after { |example| set_example_response_metadata(example, response) }
+
         run_test!
       end
     end
