@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      target: development
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
     command: >

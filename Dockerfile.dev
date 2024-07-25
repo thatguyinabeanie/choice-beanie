@@ -23,7 +23,7 @@ RUN \
 ##
 ## DEVELOPMENT IMAGE
 ##
-FROM development-base-latest AS development
+FROM development-base-image AS development
 ENV RAILS_ENV=development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 RUN bundle check || bundle install
