@@ -2,12 +2,12 @@ services:
 
   # BATTLE STADIUM RAILS APP CONTAINER
   backend:
-    image: battle-stadium-dev:latest
+    image: battle-stadium:development
     build:
       context: .
       dockerfile: Dockerfile.dev
       tags:
-        - battle-stadium-dev:latest
+        - battle-stadium:development
     command: >
       bash -lc "
         rm -f tmp/pids/server.pid &&
