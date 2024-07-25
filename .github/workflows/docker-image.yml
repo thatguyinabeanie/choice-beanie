@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        docker_platform: [linux/amd64, linux/arm64]
+        platform: [linux/amd64, linux/arm64]
 
     permissions:
       contents: read
@@ -47,24 +47,14 @@ jobs:
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
-      - name: Build amd64 Docker Image
-        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile.dev_base
-          platforms: ${{ matrix.docker_platform }}
-          push: false
-
-      - name: Build and Push amd64 Docker Image
-        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+      - name: Build ${{ matrix.platform }} Docker Image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile.dev_base
           target: development-base-image
-          platforms: ${{ matrix.docker_platform }}
-          push: true
+          platforms: ${{ matrix.platform }}
+          push: github.ref == 'refs/heads/main' || github.event_name == 'release'
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
