@@ -8,8 +8,7 @@ WORKDIR /workspaces/$USERNAME
 COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
 COPY .bashrc /root/.bashrc
 ENV RAILS_ENV=development
-RUN --mount=type=cache,target=/root/.bundle/ && \
-  apt-get update -qq && \
+RUN apt-get update -qq && \
   apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
   apt-get --no-install-recommends install -y nodejs && \
@@ -26,5 +25,5 @@ RUN --mount=type=cache,target=/root/.bundle/ && \
 FROM development-base-image AS development
 ENV RAILS_ENV=development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
-RUN --mount=type=cache,target=/root/.bundle/ bundle check || bundle install
+RUN bundle check || bundle install
 CMD ["rails", "server", "-b", "0.0.0.0"]

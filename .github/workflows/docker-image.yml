@@ -66,8 +66,6 @@ jobs:
           target: development-base-image
           platforms: ${{ matrix.platform }}
           push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
