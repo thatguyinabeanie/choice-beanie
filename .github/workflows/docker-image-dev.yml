@@ -8,14 +8,16 @@ on:
   #   types:
   #     - published
 
-permissions:
-  contents: read
-  packages: write
-  id-token: write
+
 
 jobs:
   build_and_push_amd64:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -45,6 +47,10 @@ jobs:
   build_and_push_ard64:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
