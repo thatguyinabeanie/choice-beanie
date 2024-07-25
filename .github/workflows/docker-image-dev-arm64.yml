@@ -2,11 +2,11 @@ name: Build and Push Development Docker Image (arm64)
 
 on:
   push:
-    branches:
-      - main
-  release:
-    types:
-      - published
+  #   branches:
+  #     - main
+  # release:
+  #   types:
+  #     - published
 
 permissions:
   contents: read
