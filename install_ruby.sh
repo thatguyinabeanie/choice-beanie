@@ -5,9 +5,8 @@ RUBY_VERSION=$(head -n 1 "$(dirname "$0")/.ruby-version")
 
 # Check if the specified Ruby version is already installed
 if [ -d "/Users/$(whoami)/.frum/versions/$RUBY_VERSION" ]; then
+  echo "Ruby $RUBY_VERSION is already installed."
   exit 0
-else
-  echo "Installing Ruby $RUBY_VERSION..."
 fi
 
 # Check if Homebrew is installed
@@ -18,14 +17,19 @@ fi
 
 # Check if OpenSSL is installed
 if ! brew list --formula | grep -q openssl; then
-  echo "OpenSSL is not installed. Please install OpenSSL using Homebrew."
-  exit 1
+  echo "OpenSSL is not installed. Installing OpenSSL using Homebrew..."
+  brew install openssl
 fi
 
-# Check if rbenv is installed
+# Check if frum is installed
 if ! command -v frum &> /dev/null; then
-  echo "rbenv is not installed. Please install rbenv first."
+  echo "frum is not installed. Please install frum first."
   exit 1
 fi
 
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)" frum install
+
+with_ssl_dir_option="--with-openssl-dir=$(brew --prefix openssl)"
+
+echo "Installing Ruby $RUBY_VERSION $with_ssl_dir_option"
+# Install Ruby with OpenSSL support
+frum install $RUBY_VERSION $with_ssl_dir_option

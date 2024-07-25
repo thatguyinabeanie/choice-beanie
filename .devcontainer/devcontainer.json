@@ -43,7 +43,10 @@
 				"DavidAnson.vscode-markdownlint",
 				"GitHub.github-vscode-theme",
 				"rubocop.vscode-rubocop",
-				"snyk-security.snyk-vulnerability-scanner"
+				"connorshea.vscode-ruby-test-adapter",
+				"mutantdino.resourcemonitor",
+				"iliazeus.vscode-ansi",
+				"vscode-icons-team.vscode-icons"
 			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "zsh",

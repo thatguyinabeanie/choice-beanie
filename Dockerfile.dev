@@ -5,7 +5,9 @@ ARG USERNAME=battle-stadium
 # Install dependencies required for Rails
 RUN \
   apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git && \
+  apt-get --no-install-recommends install -y -q postgresql-client openssl libssl-dev libpq-dev git curl && \
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+  apt-get install -y nodejs && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
   mkdir -p "/workspaces/$USERNAME"
@@ -22,13 +24,13 @@ RUN \
   bundle install
 
 # Copy the current directory contents into the container at /myapp
-COPY COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
+COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 
 
 #
 # PRODUCTION IMAGE
 #
-FROM  production_base_image AS production
+FROM production_base_image AS production
 ARG USERNAME=battle-stadium
 # USER $USERNAME
 # Set the command to start the puma server
@@ -47,7 +49,9 @@ COPY .nvmrc Gemfile Gemfile.lock /workspaces/$USERNAME
 COPY .bashrc /root/.bashrc
 RUN \
   apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q nodejs postgresql-client openssl libssl-dev libpq-dev git watchman && \
+  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+  apt-get install -y nodejs && \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
@@ -58,4 +62,3 @@ ARG USERNAME=battle-stadium
 
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
 CMD ["rails", "server", "-b", "0.0.0.0"]
-
