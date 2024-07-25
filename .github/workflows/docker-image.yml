@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        docker_platform: ['linux/amd64', 'linux/arm64']
+        docker_platform: [linux/amd64, linux/arm64]
 
     permissions:
       contents: read
@@ -61,7 +61,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile.dev
+          file: ./Dockerfile.dev_base
           target: development-base-image
           platforms: ${{ matrix.docker_platform }}
           push: true
