@@ -45,13 +45,13 @@ jobs:
         with:
           context: .
           file: Dockerfile.dev
-          target: development
+          target: development_base_image
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-${{ env.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-${{ env.MINOR }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-${{ env.MAJOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MINOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development_base-${{ env.MAJOR }}
 
       - name: Post build cleanup
         run: docker builder prune --force
