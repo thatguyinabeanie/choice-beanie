@@ -55,6 +55,7 @@ RUN \
   apt-get clean && \
   bundle update --bundler && \
   bundle config set path ~/.bundle && \
+  bundle install && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
@@ -63,4 +64,5 @@ RUN \
 ##
 FROM thatguyinabeanie/battle-stadium:development-base-latest AS development
 COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version /workspaces/$USERNAME/
+RUN bundle check || bundle install
 CMD ["rails", "server", "-b", "0.0.0.0"]
