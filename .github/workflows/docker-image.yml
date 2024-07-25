@@ -9,8 +9,11 @@ on:
       - published
 
 jobs:
-  build-amd64:
+  build-docker:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        docker_platform: ['linux/amd64', 'limux/amd64']
 
     permissions:
       contents: read
@@ -50,7 +53,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile.dev
-          platforms: linux/amd64
+          platforms: ${{ matrix.docker_platform }}
           push: false
 
       - name: Build and Push amd64 Docker Image
@@ -60,70 +63,7 @@ jobs:
           context: .
           file: ./Dockerfile.dev
           target: development-base-image
-          platforms: linux/amd64
-          push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MINOR }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MAJOR }}
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-latest
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.VERSION }}
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.MAJOR }}
-
-
-  build-arm64:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Log in to GitHub Packages
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract version from tag
-        if: github.event_name == 'release'
-        id: extract_version
-        run: |
-          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-          echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
-
-      - name: Build arm64 Docker Image
-        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile.dev
-          platforms: linux/arm64
-          push: false
-
-      - name: Build and Push arm64 Docker Image
-        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile.dev
-          target: development-base-image
-          platforms: linux/arm64
+          platforms: ${{ matrix.docker_platform }}
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
