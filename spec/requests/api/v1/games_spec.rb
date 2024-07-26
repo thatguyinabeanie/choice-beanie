@@ -1,4 +1,6 @@
 require 'swagger_helper'
+require_relative '../../../support/openapi/schema_helper'
+require_relative '../../../support/openapi/response_helper'
 
 RSpec.describe 'api/v1/games' do
   path '/api/v1/games' do
@@ -14,25 +16,13 @@ RSpec.describe 'api/v1/games' do
       response(200, 'successful') do
         schema type: :array, items: { '$ref' => '#/components/schemas/Game' }
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              examples: {
-                example: JSON.parse(response.body, symbolize_names: true)
-              }
-            }
-          }
-        end
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
 
       response(400, 'bad request') do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: ['error']
+        OpenApi::Schema.bad_request
 
         let(:page) { 'invalid' }
 
@@ -42,15 +32,7 @@ RSpec.describe 'api/v1/games' do
           allow(controller).to receive(:index).and_raise(ActionController::ParameterMissing.new(:page))
         end
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              examples: {
-                example: JSON.parse(response.body, symbolize_names: true)
-              }
-            }
-          }
-        end
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -68,6 +50,7 @@ RSpec.describe 'api/v1/games' do
         properties: {
           game: {
             type: :object,
+            title: 'postGame',
             properties: {
               name: { type: :string }
             },
@@ -82,7 +65,7 @@ RSpec.describe 'api/v1/games' do
 
         schema '$ref' => '#/components/schemas/Game'
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -90,7 +73,7 @@ RSpec.describe 'api/v1/games' do
       response(422, 'unprocessable entity') do
         let(:game) { { title: '', genre: '' } }
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -112,7 +95,7 @@ RSpec.describe 'api/v1/games' do
 
         schema '$ref' => '#/components/schemas/Game'
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -120,7 +103,7 @@ RSpec.describe 'api/v1/games' do
       response(404, 'not found') do
         let(:id) { 'invalid' } # Define the id parameter here
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -151,7 +134,7 @@ RSpec.describe 'api/v1/games' do
         let(:id) { Game.create(name: 'Existing Game').id }
         let(:game) { { game: { name: 'Updated Game' } } }
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -160,7 +143,7 @@ RSpec.describe 'api/v1/games' do
         let(:id) { 'invalid' }
         let(:game) { { game: { name: 'Updated Game' } } }
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -176,7 +159,7 @@ RSpec.describe 'api/v1/games' do
         let(:game) { Game.create!(name: 'Test Game', slug: 'test-game') }
         let(:id) { game.id }
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end
@@ -184,7 +167,7 @@ RSpec.describe 'api/v1/games' do
       response(404, 'not found') do
         let(:id) { 'invalid' }
 
-        after { |example| set_example_response_metadata(example, response) }
+        OpenApi::Response.set_example_response_metadata
 
         run_test!
       end

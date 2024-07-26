@@ -22,15 +22,6 @@ paths:
                   "$ref": "#/components/schemas/Game"
         '400':
           description: bad request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                required:
-                - error
     post:
       summary: Create Game
       tags:
@@ -55,6 +46,7 @@ paths:
               properties:
                 game:
                   type: object
+                  title: postGame
                   properties:
                     name:
                       type: string
