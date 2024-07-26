@@ -1,4 +1,5 @@
 require 'active_support/core_ext/integer/time'
+ENV['RAILS_SERVE_STATIC_FILES'] = 'true'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -96,4 +97,6 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 end
