@@ -56,6 +56,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: "{{defaultContext}}:rails_api"
+          file: "{{defaultContext}}:rails_api/Dockerfile"
           target: development-base-image
           platforms: ${{ matrix.platform }}
           push: false
