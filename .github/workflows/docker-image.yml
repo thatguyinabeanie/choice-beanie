@@ -55,8 +55,8 @@ jobs:
         if:  github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:rails_api"
-          target: development-base-image
+          context: .
+          target: development
           platforms: ${{ matrix.platform }}
           push: false
 
@@ -64,8 +64,8 @@ jobs:
         if:  github.ref == 'refs/heads/main' || github.event_name == 'release'
         uses: docker/build-push-action@v6
         with:
-          context: "{{defaultContext}}:rails_api"
-          target: development-base-image
+          context: .
+          target: development
           platforms: ${{ matrix.platform }}
           push: true
           tags: |
