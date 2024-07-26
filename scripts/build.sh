@@ -28,8 +28,7 @@ bundle exec rails rswag
 ##
 ## Build frontend
 ##
-cd $current_dir/nextjs
-
+cd $current_dir
 echo "Generating Typescript API client..."
 npm run generate:api
 echo "Building frontend..."
