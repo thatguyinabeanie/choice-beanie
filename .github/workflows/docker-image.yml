@@ -57,7 +57,7 @@ jobs:
         with:
           context: .
           target: development
-          file: ./Dockerfile
+          file: Dockerfile
           platforms: ${{ matrix.platform }}
           push: false
 
@@ -67,7 +67,7 @@ jobs:
         with:
           context: .
           target: development
-          file: ./Dockerfile
+          file: Dockerfile
           platforms: ${{ matrix.platform }}
           push: true
           tags: |
