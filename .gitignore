@@ -62,3 +62,4 @@ codeql*
 test/
 tests/
 **_test.rb
+rails_api/log/*
