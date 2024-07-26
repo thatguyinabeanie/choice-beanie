@@ -35,6 +35,7 @@ services:
       start_period: 120s
     volumes:
       - ./rails_api:/workspaces/battle-stadium
+      - ./next_js:/workspaces/next_js
       - ./rails_api/tmp:/tmp
       # - ./rails_api/.bashrc:/root/.bashrc
       - bundle-data:/root/.bundle
