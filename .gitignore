@@ -46,6 +46,7 @@ vendor/bundle/*
 coverage
 
 /public/assets
+/public/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
