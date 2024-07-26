@@ -21,7 +21,7 @@ RUN bundle install
 ##
 ## DEVELOPMENT IMAGE
 ##
-FROM development-base-image AS development
+FROM development-base-image
 ARG USERNAME=battle-stadium
 ENV USERNAME=$USERNAME
 
