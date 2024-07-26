@@ -112,8 +112,11 @@ jobs:
         run: cd rails_api && (bundle check || bundle install)
 
       - name: Run RuboCop with Reviewdog
-        uses: reviewdog/action-rubocop@v1
+        uses: reviewdog/action-rubocop@v2
         with:
           rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-security:gemfile rubocop-rspec:gemfile
+
+          workdir: ./rails_api
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review # This makes comments on PRs
