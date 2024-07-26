@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-base
-
+RUN mkdir -p "/workspaces/battle-stadium"
 RUN apt-get update -qq && \
   apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
@@ -13,12 +13,7 @@ RUN apt-get update -qq && \
 FROM base-base AS development-base-image
 ARG USERNAME=battle-stadium
 
-RUN mkdir -p "/workspaces/battle-stadium"
-WORKDIR /workspaces/battle-stadium
-
 COPY Gemfile Gemfile.lock /workspaces/battle-stadium/
-
-
 RUN bundle update --bundler && \
   bundle config set path ~/.bundle && \
   bundle install
