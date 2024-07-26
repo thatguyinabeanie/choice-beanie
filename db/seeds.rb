@@ -53,6 +53,8 @@ end
 scarlet_violet = Game.find_or_create_by!(name: 'Pokemon Scarlet & Violet')
 sword_and_shield = Game.find_or_create_by!(name: 'Pokemon Sword & Shield')
 
+(1..10).to_a.map { |series| Game.find_or_create_by!(name: "Pokemon Series #{series}") }
+
 sv_formats = %w[A B C D E F G H].map { |regulation| Tournament::Format.find_or_create_by!(name: "Regulation #{regulation}", game: scarlet_violet) }
 swsh_formats = (1..13).to_a.map { |series| Tournament::Format.find_or_create_by!(name: "Series #{series}", game: sword_and_shield) }
 

@@ -5,11 +5,14 @@ import { GamesApi, Game } from '../api'; // Adjust the import path based on your
 const GamesTable: React.FC = () => {
   const [games, setGames] = useState<Game[]>([]);
 
+
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
         const api = new GamesApi();
         const response = await api.getGames(); // Adjust the method name based on your OpenAPI client
+        console.log('Games:', response);
         setGames(response.data);
       } catch (error) {
         console.error('Error fetching games:', error);

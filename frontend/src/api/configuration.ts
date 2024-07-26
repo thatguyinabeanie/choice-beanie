@@ -13,7 +13,11 @@
  */
 
 export const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ?? "http://localhost:3000";
+  typeof process !== "undefined" && process.env && process.env.API_BASE_URL
+    ? process.env.API_BASE_URL
+    : "http://localhost:3000";
+
+console.log("API_BASE_URL", API_BASE_URL);
 
 export interface ConfigurationParameters {
   apiKey?:
@@ -76,7 +80,7 @@ export class Configuration {
    * @type {string}
    * @memberof Configuration
    */
-  basePath?: string = API_BASE_URL;
+  basePath?: string;
   /**
    * override server index
    *

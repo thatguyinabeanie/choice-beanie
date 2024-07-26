@@ -2,8 +2,6 @@
 /* eslint-disable */
 {{>licenseInfo}}
 
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL ?? 'http://localhost:3000';
-
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     username?: string;
@@ -49,7 +47,7 @@ export class Configuration {
      * @type {string}
      * @memberof Configuration
      */
-    basePath?: string = API_BASE_URL;
+    basePath?: = string = (typeof process !== 'undefined' && process.env && process.env.API_BASE_URL) ? process.env.API_BASE_URL : 'default_base_url';
     /**
      * override server index
      *
