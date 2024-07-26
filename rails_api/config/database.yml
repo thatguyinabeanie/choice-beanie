@@ -19,10 +19,12 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: <%= ENV.fetch("RAILS_DB_TIMEOUT", 5000) %>
+
   host: <%= ENV.fetch("RAILS_DB_HOST") %>
+  port: <%= ENV.fetch("RAILS_DB_PORT") %>
+
   username: <%= ENV.fetch("RAILS_DB_USERNAME") %>
   password: <%= ENV.fetch("RAILS_DB_PASSWORD") %>
-  port: <%= ENV.fetch("RAILS_DB_PORT") %>
 
 development:
   <<: *default
