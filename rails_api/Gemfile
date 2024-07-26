@@ -80,7 +80,6 @@ group :development, :test, :rubocop do
   gem 'rubocop-junit-formatter'
   gem 'rubocop-md'
   gem 'rubocop-migrations'
-  gem 'rubocop-minitest'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rails_config'
