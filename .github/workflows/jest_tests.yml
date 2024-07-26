@@ -22,6 +22,7 @@ jobs:
           CI: true
         run: |
           cd next_js
+          npm ci
           npm test -- --ci --passWithNoTests --reporters=default --reporters=jest-junit
 
       - name: Upload Jest results
