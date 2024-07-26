@@ -3,7 +3,7 @@ services:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: rails_api
-      dockerfile: Dockerfile.rails_api_dev
+      dockerfile: Dockerfile
       target: development-base-image
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
@@ -13,7 +13,7 @@ services:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: rails_api
-      dockerfile: Dockerfile.rails_api_dev
+      dockerfile: Dockerfile
       target: development
       tags:
         - thatguyinabeanie/battle-stadium:development-latest
