@@ -5,11 +5,16 @@
 import type { Configuration } from './configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
+import type {
+    // NOSONAR @ts-ignore
+    AxiosPromise,
+    AxiosInstance,
+    RawAxiosRequestConfig
+} from 'axios';
 import globalAxios from 'axios';
-import { API_BASE_URL } from './configuration';
-// NOSONAR
-export const BASE_PATH = API_BASE_URL.replace(/\/+$/, "");
+import { API_BASE_URL_PATH } from './configuration';
+
+export const BASE_PATH = API_BASE_URL_PATH;
 
 /**
  *
