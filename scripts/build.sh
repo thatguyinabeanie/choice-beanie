@@ -7,11 +7,12 @@ current_dir=$(pwd)
 ##
 ## RAILS APP SETUP
 ##
-cd $current_dir/rails_app
+cd $current_dir/rails_api
 
 echo "Checking for bundle dependencies..."
 bundle check || bundle install
 
+export RAILS_DB_HOST=localhost
 echo "Preparing database..."
 bundle exec rails db:prepare
 
@@ -27,7 +28,7 @@ bundle exec rails rswag
 ##
 ## Build frontend
 ##
-cd $current_dir/frontend
+cd $current_dir/nextjs
 
 echo "Generating Typescript API client..."
 npm run generate:api

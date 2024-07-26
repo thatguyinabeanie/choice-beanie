@@ -59,6 +59,7 @@ test-results
 codeql*
 *.session.sql
 
+rails_api/public/assets/**
 test/
 tests/
 **_test.rb
