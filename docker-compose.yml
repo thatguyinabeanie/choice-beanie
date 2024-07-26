@@ -1,37 +1,36 @@
 services:
-
-  # BATTLE STADIUM RAILS APP CONTAINER
-  backend:
+  rails_api_dev_base:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
-      context: backend
-      dockerfile: ../docker/Dockerfile.dev
-      target: development
+      context: rails_api
+      dockerfile: ../docker/Dockerfile.rails_api_dev
+      target: development-base-image
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
-    command: >
-      bash -lc "
-        rm -f tmp/pids/server.pid &&
-        (bundle check || bundle install) &&
-        (rails db:prepare || rails db:setup) &&
-        sleep infinity
-      "
+
+  # BATTLE STADIUM RAILS APP CONTAINER
+  rails_api:
+    image: thatguyinabeanie/battle-stadium:development-base-latest
+    build:
+      context: rails_api
+      dockerfile: ../docker/Dockerfile.rails_api_dev
+      target: development
+      tags:
+        - thatguyinabeanie/battle-stadium:development-latest
+    command: sleep infinity
     volumes:
-      - .:/workspaces/battle-stadium
+      - ./rails_api:/workspaces/battle-stadium
+      - ./rails_api/tmp:/tmp
+      # - ./rails_api/.bashrc:/root/.bashrc
       - bundle-data:/root/.bundle
-      - ./tmp:/tmp
-      - ./.bashrc:/root/.bashrc
     ports:
       - 3000:3000
       - 5173:5173
     depends_on:
       - db
-    environment:
-      RAILS_ENV: development
-      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
-      RAILS_DB_HOST: db
-      RAILS_DB_USERNAME: postgres
-      RAILS_DB_PASSWORD: password
+      - rails_api_dev_base
+    env_file:
+      - rails_api/.env
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
