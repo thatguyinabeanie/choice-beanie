@@ -8,25 +8,25 @@ version: 2
 updates:
   # Ruby on Rails dependencies (Bundler)
   - package-ecosystem: "bundler"
-    directory: "/" # Assuming the Gemfile is in the root directory
+    directory: "/rails_api" # Assuming the Gemfile is in the root directory
     schedule:
       interval: "weekly"
 
   # JavaScript dependencies (npm) for the React app
   - package-ecosystem: "npm"
-    directory: "/frontend" # Adjust this if your React app is in a different directory
+    directory: "/next_js" # Adjust this if your React app is in a different directory
     schedule:
       interval: "weekly"
 
   # If you're using Docker for development or production, you can also add:
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/next_js"
     schedule:
       interval: "weekly"
 
     # If you're using Docker for development or production, you can also add:
   - package-ecosystem: "docker"
-    directory: "/frontend"
+    directory: "/rails_api"
     schedule:
       interval: "weekly"
 

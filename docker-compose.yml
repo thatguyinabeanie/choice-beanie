@@ -18,11 +18,7 @@ services:
       tags:
         - thatguyinabeanie/battle-stadium:development-latest
     command: sleep infinity
-    volumes:
-      - ./rails_api:/workspaces/battle-stadium
-      - ./rails_api/tmp:/tmp
-      # - ./rails_api/.bashrc:/root/.bashrc
-      - bundle-data:/root/.bundle
+    tty: true
     ports:
       - 3000:3000
       - 5173:5173
@@ -37,7 +33,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 120s
-    tty: true
+    volumes:
+      - ./rails_api:/workspaces/battle-stadium
+      - ./rails_api/tmp:/tmp
+      # - ./rails_api/.bashrc:/root/.bashrc
+      - bundle-data:/root/.bundle
 
   # BATTLE STADIUM PRODUCTION CONTAINER
   production:

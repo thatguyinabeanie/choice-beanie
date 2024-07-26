@@ -11,15 +11,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: next_js/package-lock.json
       - name: Prepare Jest
         run: |
-          mkdir -p frontend/test-results/jest
+          mkdir -p next_js/test-results/jest
       - name: Run Jest tests
         env:
           CI: true
         run: |
-          cd frontend
+          cd next_js
           npm ci
           npm test -- --ci
       - name: Upload Jest results
@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jest-results
-          path: frontend/test-results/jest/results.xml
+          path: next_js/test-results/jest/results.xml
