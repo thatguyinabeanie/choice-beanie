@@ -1,5 +1,9 @@
+##
+## BASE IMAGE
+##
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-base
-RUN mkdir -p "/workspaces/battle-stadium"
+ARG BATTLE_STADIUM=battle-stadium
+RUN mkdir -p "/workspaces/$BATTLE_STADIUM"
 RUN apt-get update -qq && \
   apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev git watchman curl && \
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
@@ -11,33 +15,34 @@ RUN apt-get update -qq && \
 ## DEVELOPMENT IMAGE BASE
 ##
 FROM base-base AS development-base-image
-ARG USERNAME=battle-stadium
+ARG BATTLE_STADIUM=battle-stadium
+WORKDIR /workspaces/$BATTLE_STADIUM
+COPY rails_api/Gemfile rails_api/Gemfile.lock /workspaces/$BATTLE_STADIUM/
 
-COPY rails_api/Gemfile rails_api/Gemfile.lock /workspaces/battle-stadium/
-RUN bundle update --bundler
-RUN bundle config set path ~/.bundle
-RUN bundle install
+RUN \
+  bundle update --bundler && \
+  bundle config set path ~/.bundle && \
+  bundle install
 
 ##
 ## DEVELOPMENT IMAGE
 ##
 FROM development-base-image
-ARG USERNAME=battle-stadium
-ENV USERNAME=$USERNAME
+ARG BATTLE_STADIUM=battle-stadium
 
-WORKDIR /workspaces/battle-stadium
+WORKDIR /workspaces/$BATTLE_STADIUM
 
-COPY rails_api/app /workspaces/battle-stadium/app
-COPY rails_api/bin /workspaces/battle-stadium/bin
-COPY rails_api/config /workspaces/battle-stadium/config
-COPY rails_api/db /workspaces/battle-stadium/db
-COPY rails_api/lib /workspaces/battle-stadium/lib
-COPY rails_api/public /workspaces/battle-stadium/public
-COPY rails_api/storage /workspaces/battle-stadium/storage
-COPY rails_api/Rakefile /workspaces/battle-stadium/Rakefile
-COPY rails_api/vendor /workspaces/battle-stadium/vendor
-COPY rails_api/config.ru /workspaces/battle-stadium/config.ru
-COPY .ruby-version /workspaces/battle-stadium/.ruby-version
+COPY rails_api/app /workspaces/$BATTLE_STADIUM/app
+COPY rails_api/bin /workspaces/$BATTLE_STADIUM/bin
+COPY rails_api/config /workspaces/$BATTLE_STADIUM/config
+COPY rails_api/db /workspaces/$BATTLE_STADIUM/db
+COPY rails_api/lib /workspaces/$BATTLE_STADIUM/lib
+COPY rails_api/public /workspaces/$BATTLE_STADIUM/public
+COPY rails_api/storage /workspaces/$BATTLE_STADIUM/storage
+COPY rails_api/Rakefile /workspaces/$BATTLE_STADIUM/Rakefile
+COPY rails_api/vendor /workspaces/$BATTLE_STADIUM/vendor
+COPY rails_api/config.ru /workspaces/$BATTLE_STADIUM/config.ru
+COPY .ruby-version /workspaces/$BATTLE_STADIUM/.ruby-version
 
 RUN bundle check || bundle install
 ENTRYPOINT [ "./bin/docker-entrypoint" ]
