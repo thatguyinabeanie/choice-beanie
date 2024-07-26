@@ -24,7 +24,6 @@ RUN bundle install
 FROM development-base-image AS development
 ARG USERNAME=battle-stadium
 ENV USERNAME=$USERNAME
-ENV RAILS_ENV=development
 
 WORKDIR /workspaces/battle-stadium
 
