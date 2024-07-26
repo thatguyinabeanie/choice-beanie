@@ -35,7 +35,7 @@ echo "Building frontend..."
 npm run build
 
 # Copy frontend build output to Rails public directory
-echo "Copying next_js build output to Rails public directory..."
+echo "Copying nextjs build output to Rails public directory..."
 cd $current_dir
-cp -r next_js/dist/* rails_app/public/
+cp -r nextjs/dist/* rails_app/public/
 

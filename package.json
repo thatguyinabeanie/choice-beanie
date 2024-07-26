@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
-    "build": "next build",
-    "start": "next start  -p 8080",
-    "lint": "next lint",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "dev": "cd nextjs && next dev -p 8080",
+    "build": "cd nextjs && next build",
+    "start": "cd nextjs && next start  -p 8080",
+    "lint": "cd nextjs && next lint",
+    "test": "cd nextjs && jest",
+    "test:watch": "cd nextjs && jest --watch"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",

@@ -11,20 +11,20 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: next_js/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Prepare Jest
         run: |
-          mkdir -p next_js/test-results/jest
+          mkdir -p nextjs/test-results/jest
 
       - name: Run Jest tests
         env:
           CI: true
-        run: cd next_js && npm ci && npm test -- --ci --passWithNoTests --reporters=default --reporters=jest-junit
+        run: npm ci && npm test -- --ci --passWithNoTests --reporters=default --reporters=jest-junit
 
       - name: Upload Jest results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jest-results
-          path: next_js/test-results/jest/results.xml
+          path: nextjs/test-results/jest/results.xml

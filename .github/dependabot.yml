@@ -14,13 +14,13 @@ updates:
 
   # JavaScript dependencies (npm) for the React app
   - package-ecosystem: "npm"
-    directory: "/next_js" # Adjust this if your React app is in a different directory
+    directory: "/nextjs" # Adjust this if your React app is in a different directory
     schedule:
       interval: "weekly"
 
   # If you're using Docker for development or production, you can also add:
   - package-ecosystem: "docker"
-    directory: "/next_js"
+    directory: "/nextjs"
     schedule:
       interval: "weekly"
 
