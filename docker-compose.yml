@@ -4,8 +4,8 @@ services:
   backend:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: backend
+      dockerfile: ../docker/Dockerfile.dev
       target: development
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
