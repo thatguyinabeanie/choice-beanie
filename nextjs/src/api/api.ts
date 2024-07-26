@@ -49,7 +49,7 @@ import type { RequestArgs } from "./base";
 import {
   BASE_PATH,
   // @ts-ignore
-  COLLECTION_FORMATS,
+  // COLLECTION_FORMATS,
   BaseAPI,
   // @ts-ignore
   RequiredError,
@@ -172,8 +172,7 @@ export const GamesApiAxiosParamCreator = function (
       localVarHeaderParameter["Content-Type"] = "application/json";
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
@@ -223,8 +222,7 @@ export const GamesApiAxiosParamCreator = function (
       const localVarQueryParameter = {} as any;
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
@@ -269,8 +267,7 @@ export const GamesApiAxiosParamCreator = function (
       const localVarQueryParameter = {} as any;
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
@@ -308,8 +305,7 @@ export const GamesApiAxiosParamCreator = function (
       const localVarQueryParameter = {} as any;
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
@@ -358,8 +354,7 @@ export const GamesApiAxiosParamCreator = function (
       localVarHeaderParameter["Content-Type"] = "application/json";
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
