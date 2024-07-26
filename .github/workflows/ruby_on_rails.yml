@@ -36,8 +36,9 @@ jobs:
         working-directory: ./rails_api
 
     - name: Install dependencies
-      run: bundle check || bundle install
-      working-directory: ./rails_api
+      run: >
+        cd rails_api
+        bundle check || bundle install
 
     - name: Prepare database
       run: |
