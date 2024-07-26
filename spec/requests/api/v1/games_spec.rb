@@ -6,6 +6,7 @@ RSpec.describe 'api/v1/games' do
       tags 'Games'
       produces 'application/json'
       description 'Retrieves a list of all games'
+      operationId 'getGames'
 
       # parameter name: :page, in: :query, type: :integer, description: 'Page number'
       # parameter name: :per_page, in: :query, type: :integer, description: 'Number of games per page'
@@ -60,6 +61,7 @@ RSpec.describe 'api/v1/games' do
       consumes 'application/json'
       produces 'application/json'
       description 'Creates a new game.'
+      operationId 'createGame'
 
       parameter name: :game, in: :body, schema: {
         type: :object,
@@ -103,6 +105,7 @@ RSpec.describe 'api/v1/games' do
       tags 'Games'
       produces 'application/json'
       description 'Retrieves a specific game by ID.'
+      operationId 'getGame'
 
       response(200, 'successful') do
         let(:id) { Game.create(name: 'Existing Game').id }
@@ -128,6 +131,7 @@ RSpec.describe 'api/v1/games' do
       produces 'application/json'
       consumes 'application/json'
       description 'Updates a game by ID.'
+      operationId 'patchGame'
 
       parameter name: :game, in: :body, schema: {
         type: :object,
@@ -166,6 +170,7 @@ RSpec.describe 'api/v1/games' do
       tags 'Games'
       produces 'application/json'
       description 'Deletes a game by ID.'
+      operationId 'deleteGame'
 
       response(200, 'successful') do
         let(:game) { Game.create!(name: 'Test Game', slug: 'test-game') }

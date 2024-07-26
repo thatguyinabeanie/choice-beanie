@@ -10,6 +10,7 @@ paths:
       tags:
       - Games
       description: Retrieves a list of all games
+      operationId: getGames
       responses:
         '200':
           description: successful
@@ -35,6 +36,7 @@ paths:
       tags:
       - Games
       description: Creates a new game.
+      operationId: createGame
       parameters: []
       responses:
         '201':
@@ -73,6 +75,7 @@ paths:
       tags:
       - Games
       description: Retrieves a specific game by ID.
+      operationId: getGame
       responses:
         '200':
           description: successful
@@ -87,6 +90,7 @@ paths:
       tags:
       - Games
       description: Updates a game by ID.
+      operationId: patchGame
       parameters: []
       responses:
         '200':
@@ -113,6 +117,7 @@ paths:
       tags:
       - Games
       description: Deletes a game by ID.
+      operationId: deleteGame
       responses:
         '200':
           description: successful
