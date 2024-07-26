@@ -39,21 +39,23 @@ jobs:
       with:
         ruby-version: 3.3.4
         bundler-cache: true
+        working-directory: /workspaces/battle-stadium/rails_api
 
     - name: Setup Brakeman
       env:
         BRAKEMAN_VERSION: '6.1' # SARIF support is provided in Brakeman version 4.10+
-      run: |
-        gem install brakeman --version $BRAKEMAN_VERSION
+      run: gem install brakeman --version $BRAKEMAN_VERSION
+      working-directory: /workspaces/battle-stadium/rails_api
 
     # Execute Brakeman CLI and generate a SARIF output with the security issues identified during the analysis
     - name: Scan
       continue-on-error: true
       run: |
         brakeman -f sarif -o output.sarif.json .
+      working-directory: /workspaces/battle-stadium/rails_api
 
     # Upload the SARIF file generated in the previous step
     - name: Upload SARIF
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: output.sarif.json
+        sarif_file: /workspaces/battle-stadium/rails_api/output.sarif.json
