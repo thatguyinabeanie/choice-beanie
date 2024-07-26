@@ -84,12 +84,10 @@ jobs:
           working-directory: ./rails_api
 
       - name: Install dependencies
-        run: bundle check || bundle install
-        working-directory: ./rails_api
+        run: cd rails_api && (bundle check || bundle install)
 
       - name: Run Ruby Audit
-        run: bundle exec ruby-audit check
-        working-directory: ./rails_api
+        run: cd rails_api && bundle exec ruby-audit check
 
   rubocop-check:
     runs-on: ubuntu-latest
@@ -105,8 +103,7 @@ jobs:
           working-directory: ./rails_api
 
       - name: Install dependencies
-        run: bundle check || bundle install
-        working-directory: ./rails_api
+        run: cd rails_api && (bundle check || bundle install)
 
       - name: Run RuboCop with Reviewdog
         uses: reviewdog/action-rubocop@v1
