@@ -2,13 +2,9 @@
 
 set -e
 
-current_dir=$(pwd)
-
 ##
 ## RAILS APP SETUP
 ##
-cd $current_dir/rails_api
-
 echo "Checking for bundle dependencies..."
 bundle check || bundle install
 
@@ -28,7 +24,6 @@ bundle exec rails rswag
 ##
 ## Build frontend
 ##
-cd $current_dir
 echo "Generating Typescript API client..."
 npm run generate:api
 # echo "Building frontend..."

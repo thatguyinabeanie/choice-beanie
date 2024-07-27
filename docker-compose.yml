@@ -37,7 +37,6 @@ services:
       - .:/workspaces/battle-stadium
       - ./tmp:/tmp
       - bundle-data:/root/.bundle
-      - home:/home/battle-stadium
 
   # BATTLE STADIUM PRODUCTION CONTAINER
   production:

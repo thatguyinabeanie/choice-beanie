@@ -1,5 +1,5 @@
 require 'devise'
-# rails_api/app/models/user.rb
+# app/models/user.rb
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
   extend FriendlyId

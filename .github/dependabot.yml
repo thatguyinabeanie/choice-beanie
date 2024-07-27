@@ -8,7 +8,7 @@ version: 2
 updates:
   # Ruby on Rails dependencies (Bundler)
   - package-ecosystem: "bundler"
-    directory: "/rails_api" # Assuming the Gemfile is in the root directory
+    directory: "/" # Assuming the Gemfile is in the root directory
     schedule:
       interval: "weekly"
 
@@ -26,7 +26,7 @@ updates:
 
     # If you're using Docker for development or production, you can also add:
   - package-ecosystem: "docker"
-    directory: "/rails_api"
+    directory: "/"
     schedule:
       interval: "weekly"
 

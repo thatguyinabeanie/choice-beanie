@@ -4,14 +4,6 @@
       "name": "battle-stadium",
       "path": ".",
     },
-    {
-      "name": "rails_api",
-      "path": "rails_api",
-    },
-    {
-      "name": "nextjs",
-      "path": "nextjs",
-    },
   ],
   "settings": {
     // We don't want to show duplicates, so we hide the directories that are already showing up as workspaces
