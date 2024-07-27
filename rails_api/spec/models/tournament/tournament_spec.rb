@@ -1,6 +1,8 @@
 require 'rails_helper'
 
+RETURNS_FALSE = 'returns false'.freeze
 RSpec.describe Tournament::Tournament do
+
   let(:name) { 'Battle Stadium #1' }
   let(:organization) { create(:organization) }
   let(:game) { create(:game) }
@@ -57,7 +59,7 @@ RSpec.describe Tournament::Tournament do
     let(:registration_start_at) { nil }
 
     context 'when registration start time is nil' do
-      it 'returns false' do
+      it RETURNS_FALSE do
         expect(tournament).not_to be_open_for_registration
       end
     end
@@ -82,7 +84,7 @@ RSpec.describe Tournament::Tournament do
       context 'when current time is after registration end time' do
         let(:registration_end_at) { Time.current.utc - 1.day }
 
-        it 'returns false' do
+        it RETURNS_FALSE do
           expect(tournament).not_to be_open_for_registration
         end
       end
@@ -91,7 +93,7 @@ RSpec.describe Tournament::Tournament do
     context 'when registration start time is in the future' do
       let(:registration_start_at) { Time.current.utc + 1.day }
 
-      it 'returns false' do
+      it RETURNS_FALSE do
         expect(tournament).not_to be_open_for_registration
       end
     end
@@ -108,7 +110,7 @@ RSpec.describe Tournament::Tournament do
       end
 
       context 'when registrations count is equal to player cap' do
-        it 'returns false' do
+        it RETURNS_FALSE do
           create(:player, tournament:)
           create(:player, tournament:)
           expect(tournament).not_to be_open_for_registration
@@ -132,7 +134,7 @@ RSpec.describe Tournament::Tournament do
     let(:tournament) { create(:tournament) }
 
     context 'when phases are empty' do
-      it 'returns false' do
+      it RETURNS_FALSE do
         expect(tournament).not_to be_ready_to_start
       end
     end
@@ -150,7 +152,7 @@ RSpec.describe Tournament::Tournament do
       end
 
       context 'when first phase is invalid' do
-        it 'returns false' do # rubocop:disable RSpec/MultipleExpectations
+        it RETURNS_FALSE do # rubocop:disable RSpec/MultipleExpectations
           phase.update_columns(number_of_rounds: -1) # rubocop:disable Rails/SkipsModelValidations
           expect(phase).not_to be_valid
           expect(tournament).not_to be_ready_to_start
