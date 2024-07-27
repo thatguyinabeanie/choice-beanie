@@ -56,7 +56,7 @@ jobs:
         DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
       run: |
         mkdir -p rails_api/test-results/rspec
-        bundle exec rspec --format RspecJunitFormatter --out rails_api/test-results/rspec
+        bundle exec rspec --format RspecJunitFormatter --out rails_api/test-results/rspec/results.xml
       working-directory: ./rails_api
 
     - name: Upload RSpec results
