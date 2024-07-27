@@ -34,13 +34,8 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - ./rails_api:/workspaces/battle-stadium/rails_api
+      - .:/workspaces/battle-stadium
       - ./tmp:/tmp
-      - ./nextjs:/workspaces/battle-stadium/nextjs
-      - ./scripts:/workspaces/battle-stadium/scripts
-      - ./package.json:/workspaces/battle-stadium/package.json
-      - ./package-lock.json:/workspaces/battle-stadium/package-lock.json
-      - ./openapitools:/workspaces/battle-stadium/openapitools
       - bundle-data:/root/.bundle
       - home:/home/battle-stadium
 
