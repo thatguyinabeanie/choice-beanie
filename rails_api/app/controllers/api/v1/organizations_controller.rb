@@ -1,6 +1,7 @@
 module Api
   module V1
     class OrganizationsController < ApplicationController
+      ORGANIZATION_NOT_FOUND = 'Organization not found'.freeze
       def index
         # Logic to fetch all organizations
         organizations = Organization::Organization.all
@@ -12,7 +13,7 @@ module Api
         organization = Organization::Organization.friendly.find(params[:id])
         render json: organization
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Organization not found' }, status: :not_found
+        render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
 
       def create
@@ -34,7 +35,7 @@ module Api
           render json: { error: organization.errors.full_messages }, status: :unprocessable_entity
         end
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Organization not found' }, status: :not_found
+        render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
 
       def destroy
@@ -43,7 +44,7 @@ module Api
         organization.destroy
         head :no_content
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Organization not found' }, status: :not_found
+        render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
 
       def staff
@@ -52,7 +53,7 @@ module Api
         # If not, replace `organization.staff_members` with your logic to fetch staff members
         render json: organization.staff, each_serializer: ::UserSerializer
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Organization not found' }, status: :not_found
+        render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
 
       private
