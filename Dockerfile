@@ -42,7 +42,7 @@ RUN \
   chown -R "$BATTLE_STADIUM:$BATTLE_STADIUM" "/workspaces" && \
   chmod -R u+w "/workspaces/$BATTLE_STADIUM" && \
   chmod -R u+w "/home/${BATTLE_STADIUM}" && \
-  chmod 777 /home/${BATTLE_STADIUM}/.zshrc && \
+  chmod 644 /home/${BATTLE_STADIUM}/.zshrc && \
   chsh -s $(which zsh) ${BATTLE_STADIUM} && \
   cd "/workspaces/$BATTLE_STADIUM/$RAILS_API" && \
   bundle config set path "/home/$BATTLE_STADIUM/.bundle" && \
