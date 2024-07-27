@@ -13,7 +13,7 @@ services:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
       target: development
       tags:
         - thatguyinabeanie/battle-stadium:development-latest

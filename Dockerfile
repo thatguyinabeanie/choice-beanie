@@ -19,10 +19,11 @@ RUN \
 
 COPY Gemfile Gemfile.lock  /workspaces/$BATTLE_STADIUM/
 
+WORKDIR /workspaces/$BATTLE_STADIUM/
 RUN \
   # INSTALL DEPENDENCIES
   apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl zsh && \
+  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl && \
   # INSTALL NODEJS
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
   apt-get --no-install-recommends install -y nodejs && \
@@ -34,6 +35,7 @@ RUN \
 ##
 ## DEVELOPMENT IMAGE
 ##
+## NOSONAR
 FROM base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 
@@ -49,8 +51,6 @@ COPY Rakefile ./Rakefile
 COPY vendor ./vendor
 COPY config.ru ./config.ru
 COPY .ruby-version ./.ruby-version
-
-USER $BATTLE_STADIUM
 
 WORKDIR /workspaces/$BATTLE_STADIUM
 ENTRYPOINT [ "./bin/docker-entrypoint" ]
