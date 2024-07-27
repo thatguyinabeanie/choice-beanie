@@ -5,28 +5,16 @@ on:
       - main
   pull_request:
 jobs:
-  setup-ruby:
-    env:
-      RAILS_ENV: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3.4
-          bundler-cache: true
-
-      - name: Install dependencies
-        run: bundle check || bundle install
-
   rspec-tests:
-    needs: setup-ruby
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
+      RAILS_DB_HOST: localhost
+      RAILS_DB_PORT: 5432
+      RAILS_DB_USERNAME: postgres
+      RAILS_DB_PASSWORD: password
+      RAILS_DB_NAME: fuecoco_db_test
+
     services:
       postgres:
         image: postgres:16.3
@@ -43,35 +31,40 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.3.4
         bundler-cache: true
+        working-directory: ./rails_api
 
     - name: Install dependencies
-      run: bundle check || bundle install
+      run: cd rails_api && (bundle check || bundle install)
 
     - name: Prepare database
       run: |
         bundle exec rake db:create db:schema:load --trace
       env:
         DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
+      working-directory: ./rails_api
+
     - name: Run RSpec tests
       env:
         DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
       run: |
         mkdir -p test-results/rspec
         bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+      working-directory: ./rails_api
 
     - name: Upload RSpec results
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: rspec-results
-        path: test-results/rspec/results.xml
+        path: rails_api/test-results/rspec/results.xml
 
     # - name: Upload coverage reports to Codecov
     #   uses: codecov/codecov-action@v4.0.1
@@ -84,7 +77,6 @@ jobs:
     #     verbose: true
 
   ruby-audit:
-    needs: setup-ruby
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -95,29 +87,38 @@ jobs:
         with:
           ruby-version: 3.3.4
           bundler-cache: true
-
-      - name: Run Ruby Audit
-        run: bundle exec ruby-audit check
-
-  rubocop-check:
-    needs: setup-ruby
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3.4
-          bundler-cache: true
+          working-directory: ./rails_api
 
       - name: Install dependencies
-        run: bundle check || bundle install
+        run: cd rails_api && (bundle check || bundle install)
+
+      - name: Run Ruby Audit
+        run: cd rails_api && bundle exec ruby-audit check
+
+  rubocop-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.4
+          bundler-cache: true
+          working-directory: ./rails_api
+
+      - name: Install dependencies
+        run: cd rails_api && (bundle check || bundle install)
 
       - name: Run RuboCop with Reviewdog
-        uses: reviewdog/action-rubocop@v1
+        uses: reviewdog/action-rubocop@v2
         with:
           rubocop_version: gemfile
+          rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-rspec:gemfile
+          only_changed: true
+          workdir: rails_api
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review # This makes comments on PRs
+          reporter: github-pr-review # Default is github-pr-check
+          skip_install: true
+          use_bundler: true

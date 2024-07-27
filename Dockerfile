@@ -1,65 +1,77 @@
-# syntax = docker/dockerfile:1
+##
+## BASE IMAGE
+##
+FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-image
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.3.4
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim AS base
+ARG BATTLE_STADIUM=battle-stadium
+ARG RAILS_API=rails_api
+ARG NEXTJS=nextjs
+ENV \
+  ZSH="/home/$BATTLE_STADIUM/.oh-my-zsh" \
+  BUNDLE_PATH="/workspaces/$BATTLE_STADIUM/$RAILS_API/vendor/bundle" \
+  BUNDLE_BIN="/workspaces/$BATTLE_STADIUM/$RAILS_API/vendor/bundle/bin" \
+  GEM_HOME="/workspaces/$BATTLE_STADIUM/$RAILS_API/vendor/bundle" \
+  GEM_PATH="/workspaces/$BATTLE_STADIUM/$RAILS_API/vendor/bundle" \
+  PATH="/workspaces/$BATTLE_STADIUM/$RAILS_API/vendor/bundle/bin:$PATH" \
+  PATH="/workspaces/$BATTLE_STADIUM/$RAILS_API/bin:$PATH"
 
-# Rails app lives here
-WORKDIR /rails
+RUN \
+  # CREATE BATTLE-STADIUM USER AND GROUP
+  mkdir -p "/home/$BATTLE_STADIUM" && \
+  mkdir -p "/workspaces/$BATTLE_STADIUM/$RAILS_API" && \
+  mkdir -p "/workspaces/$BATTLE_STADIUM/$NEXTJS"
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+COPY $RAILS_API/Gemfile $RAILS_API/Gemfile.lock  /workspaces/$BATTLE_STADIUM/$RAILS_API/
+COPY .zshrc /home/$BATTLE_STADIUM/.zshrc
 
+RUN \
+  # INSTALL DEPENDENCIES
+  apt-get update -qq && \
+  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl zsh && \
+  # INSTALL NODEJS
+  curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
+  apt-get --no-install-recommends install -y nodejs && \
+  # CLEAN UP
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Throw-away build stage to reduce size of final image
-FROM base AS build
+RUN \
+  groupadd -r "$BATTLE_STADIUM" && \
+  useradd -r -g "$BATTLE_STADIUM" -d "/home/$BATTLE_STADIUM" -s /bin/zsh "$BATTLE_STADIUM" && \
+  chown -R "$BATTLE_STADIUM:$BATTLE_STADIUM" "/home/$BATTLE_STADIUM" && \
+  chown -R "$BATTLE_STADIUM:$BATTLE_STADIUM" "/workspaces" && \
+  chmod -R u+w "/workspaces/$BATTLE_STADIUM" && \
+  chmod -R u+w "/home/${BATTLE_STADIUM}" && \
+  chmod 644 /home/${BATTLE_STADIUM}/.zshrc && \
+  chsh -s $(which zsh) ${BATTLE_STADIUM} && \
+  cd "/workspaces/$BATTLE_STADIUM/$RAILS_API" && \
+  bundle config set path "/home/$BATTLE_STADIUM/.bundle" && \
+  bundle install
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config libpq-dev postgresql-client openssl libssl-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+##
+## DEVELOPMENT IMAGE
+##
+FROM base-image AS development
+ARG RAILS_API=rails_api
+ARG NEXTJS=nextjs
+ARG BATTLE_STADIUM=battle-stadium
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle install && \
-    bundle exec bootsnap precompile --gemfile
+WORKDIR /workspaces/$BATTLE_STADIUM/$RAILS_API
 
-# Copy application code
-COPY app bin config db lib public storage Rakefile vendor config.ru .ruby-version  ./
+# COPY .zshrc /home/$BATTLE_STADIUM/.zshrc
+COPY $RAILS_API/app ./app
+COPY $RAILS_API/bin/* ./bin/
+COPY $RAILS_API/config ./config
+COPY $RAILS_API/db ./db
+COPY $RAILS_API/lib ./lib
+COPY $RAILS_API/public ./public
+COPY $RAILS_API/storage ./storage
+COPY $RAILS_API/Rakefile ./Rakefile
+COPY $RAILS_API/vendor ./vendor
+COPY $RAILS_API/config.ru ./config.ru
+COPY .ruby-version ./.ruby-version
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+USER $BATTLE_STADIUM
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-# Final stage for app image
-FROM base
-
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get --no-install-recommends install -y curl libsqlite3-0 libvips libpq-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files AS a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD ["./bin/rails", "server"]
+WORKDIR /workspaces/$BATTLE_STADIUM
+ENTRYPOINT [ "./rails_api/bin/docker-entrypoint" ]

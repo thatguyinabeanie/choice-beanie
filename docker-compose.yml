@@ -1,44 +1,48 @@
 services:
-
-  # BATTLE STADIUM RAILS APP CONTAINER
-  backend:
+  rails-api-base-image:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: .
-      dockerfile: Dockerfile.dev
-      target: development
+      dockerfile: Dockerfile
+      target: base-image
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
-    command: >
-      bash -lc "
-        rm -f tmp/pids/server.pid &&
-        (bundle check || bundle install) &&
-        (rails db:prepare || rails db:setup) &&
-        sleep infinity
-      "
-    volumes:
-      - .:/workspaces/battle-stadium
-      - bundle-data:/root/.bundle
-      - ./tmp:/tmp
-      - ./.bashrc:/root/.bashrc
+
+  # BATTLE STADIUM RAILS APP CONTAINER
+  rails_api:
+    image: thatguyinabeanie/battle-stadium:development-base-latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+      tags:
+        - thatguyinabeanie/battle-stadium:development-latest
+    command: sleep infinity
+    tty: true
     ports:
       - 3000:3000
       - 5173:5173
     depends_on:
       - db
-    environment:
-      RAILS_ENV: development
-      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
-      RAILS_DB_HOST: db
-      RAILS_DB_USERNAME: postgres
-      RAILS_DB_PASSWORD: password
+      - rails-api-base-image
+    env_file:
+      - rails_api/.env
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
       timeout: 10s
       retries: 3
       start_period: 120s
-    tty: true
+    volumes:
+      - ./rails_api:/workspaces/battle-stadium/rails_api
+      - ./tmp:/tmp
+      - ./nextjs:/workspaces/battle-stadium/nextjs
+      - ./scripts:/workspaces/battle-stadium/scripts
+      - ./package.json:/workspaces/battle-stadium/package.json
+      - ./package-lock.json:/workspaces/battle-stadium/package-lock.json
+      - ./openapitools:/workspaces/battle-stadium/openapitools
+      - bundle-data:/root/.bundle
+      - home:/home/battle-stadium
 
   # BATTLE STADIUM PRODUCTION CONTAINER
   production:
@@ -46,7 +50,7 @@ services:
     profiles: [ "production" ]
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
       tags:
         - battle-stadium:latest
     command: >
@@ -86,3 +90,4 @@ services:
 volumes:
   postgres-data:
   bundle-data:
+  home:

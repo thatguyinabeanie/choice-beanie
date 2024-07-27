@@ -9,6 +9,7 @@
 
 # Ignore all environment files (except templates).
 /.env*
+**.env*
 .secret*
 !/.env*.erb
 
@@ -40,7 +41,7 @@ node_modules
 vendor/bundle/*
 
 /config/credentials/*
-
+home/
 .gitconfig
 
 coverage
@@ -58,6 +59,10 @@ test-results
 codeql*
 *.session.sql
 
+rails_api/public/assets/**
 test/
 tests/
 **_test.rb
+rails_api/log/*
+
+rails_api/spec/examples.txt
