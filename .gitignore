@@ -64,3 +64,5 @@ test/
 tests/
 **_test.rb
 rails_api/log/*
+
+rails_api/spec/examples.txt

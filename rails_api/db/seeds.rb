@@ -92,7 +92,6 @@ tournaments = orgs.flat_map do |organization|
     registration_start_at = 1.week.ago
 
     tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
-    tour.game = game
 
     swiss = Phase::Swiss.build(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",

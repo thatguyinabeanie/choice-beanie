@@ -6,7 +6,7 @@ RSpec.describe 'api/v1/games' do
   path '/api/v1/games' do
     get('List Games') do
       tags 'Games'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all games'
       operationId 'getGames'
 
@@ -40,8 +40,8 @@ RSpec.describe 'api/v1/games' do
 
     post('Create Game') do
       tags 'Games'
-      consumes 'application/json'
-      produces 'application/json'
+      consumes OpenApi::Response::JSON_CONTENT_TYPE
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Creates a new game.'
       operationId 'createGame'
 
@@ -86,7 +86,7 @@ RSpec.describe 'api/v1/games' do
 
     get('Show Game') do
       tags 'Games'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a specific game by ID.'
       operationId 'getGame'
 
@@ -111,8 +111,8 @@ RSpec.describe 'api/v1/games' do
 
     patch('Update Game') do
       tags 'Games'
-      produces 'application/json'
-      consumes 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
+      consumes OpenApi::Response::JSON_CONTENT_TYPE
       description 'Updates a game by ID.'
       operationId 'patchGame'
 
@@ -151,7 +151,7 @@ RSpec.describe 'api/v1/games' do
 
     delete('Delete Game') do
       tags 'Games'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Deletes a game by ID.'
       operationId 'deleteGame'
 
