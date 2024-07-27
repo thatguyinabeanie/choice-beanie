@@ -1,6 +1,7 @@
 module Api
   module V1
     class GamesController < ApplicationController
+      GAME_NOT_FOUND = 'Game not found'.freeze
       before_action :set_game, only: %i[show update destroy]
 
       # GET /api/v1/games
@@ -15,7 +16,7 @@ module Api
       def show
         render json: @game.as_json(only: %i[id name slug])
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Game not found' }, status: :not_found
+        render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
 
       # POST /api/v1/games
@@ -41,7 +42,7 @@ module Api
           render json: { error: @game.errors.full_messages }, status: :unprocessable_entity
         end
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Game not found' }, status: :not_found
+        render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
 
       # DELETE /api/v1/games/:id
@@ -50,7 +51,7 @@ module Api
         @game.destroy!
         render json: { message: 'Game deleted' }, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Game not found' }, status: :not_found
+        render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
 
       private
