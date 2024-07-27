@@ -5,6 +5,7 @@ module RackSessionsFix
       false
     end
 
+    # this method is called by empty because of copypasta
     def destroy; end
   end
 
