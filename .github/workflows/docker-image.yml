@@ -56,25 +56,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile
+          file: ./Dockerfile
           target: development
           platforms: ${{ matrix.platform }}
           push: false
 
-      - name: Build and Push ${{ matrix.platform }} Docker Image
-        if:  github.ref == 'refs/heads/main' || github.event_name == 'release'
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile
-          target: development
-          platforms: ${{ matrix.platform }}
-          push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-latest
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.VERSION }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MINOR }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:development-base-${{ env.MAJOR }}
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-latest
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.VERSION }}
-            ghcr.io/${{ github.repository_owner }}/battle-stadium:development-base-${{ env.MAJOR }}
