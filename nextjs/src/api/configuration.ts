@@ -13,9 +13,7 @@
  */
 
 export const API_BASE_URL_PATH: string =
-  typeof process !== "undefined" && process.env && process.env.API_BASE_URL
-    ? process.env.API_BASE_URL
-    : "default_base_url";
+  process?.env?.API_BASE_URL ?? "default_base_url";
 
 export interface ConfigurationParameters {
   apiKey?:

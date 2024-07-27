@@ -50,7 +50,7 @@ export const setApiKeyToObject = async function (
   keyParamName: string,
   configuration?: Configuration,
 ) {
-  if (configuration && configuration.apiKey) {
+  if (configuration?.apiKey) {
     const localVarApiKeyValue =
       typeof configuration.apiKey === "function"
         ? await configuration.apiKey(keyParamName)
@@ -83,7 +83,7 @@ export const setBearerAuthToObject = async function (
   object: any,
   configuration?: Configuration,
 ) {
-  if (configuration && configuration.accessToken) {
+  if (configuration?.accessToken) {
     const accessToken =
       typeof configuration.accessToken === "function"
         ? await configuration.accessToken()
@@ -102,7 +102,7 @@ export const setOAuthToObject = async function (
   scopes: string[],
   configuration?: Configuration,
 ) {
-  if (configuration && configuration.accessToken) {
+  if (configuration?.accessToken) {
     const localVarAccessTokenValue =
       typeof configuration.accessToken === "function"
         ? await configuration.accessToken(name, scopes)
@@ -161,7 +161,7 @@ export const serializeDataIfNeeded = function (
 ) {
   const nonString = typeof value !== "string";
   const needsSerialization =
-    nonString && configuration && configuration.isJsonMime
+    nonString && configuration?.isJsonMime
       ? configuration.isJsonMime(requestOptions.headers["Content-Type"])
       : nonString;
   return needsSerialization

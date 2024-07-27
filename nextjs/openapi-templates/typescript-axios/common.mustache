@@ -32,7 +32,7 @@ export const assertParamExists = function (functionName: string, paramName: stri
  * @export
  */
 export const setApiKeyToObject = async function (object: any, keyParamName: string, configuration?: Configuration) {
-    if (configuration && configuration.apiKey) {
+    if (configuration?.apiKey) {
         const localVarApiKeyValue = typeof configuration.apiKey === 'function'
             ? await configuration.apiKey(keyParamName)
             : await configuration.apiKey;
@@ -55,7 +55,7 @@ export const setBasicAuthToObject = function (object: any, configuration?: Confi
  * @export
  */
 export const setBearerAuthToObject = async function (object: any, configuration?: Configuration) {
-    if (configuration && configuration.accessToken) {
+    if (configuration?.accessToken) {
         const accessToken = typeof configuration.accessToken === 'function'
             ? await configuration.accessToken()
             : await configuration.accessToken;
@@ -68,7 +68,7 @@ export const setBearerAuthToObject = async function (object: any, configuration?
  * @export
  */
 export const setOAuthToObject = async function (object: any, name: string, scopes: string[], configuration?: Configuration) {
-    if (configuration && configuration.accessToken) {
+    if (configuration?.accessToken) {
         const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
             ? await configuration.accessToken(name, scopes)
             : await configuration.accessToken;
@@ -81,17 +81,17 @@ function setFlattenedQueryParams(urlSearchParams: URLSearchParams, parameter: an
     if (typeof parameter === "object") {
         if (Array.isArray(parameter)) {
             (parameter as any[]).forEach(item => setFlattenedQueryParams(urlSearchParams, item, key));
-        } 
+        }
         else {
-            Object.keys(parameter).forEach(currentKey => 
+            Object.keys(parameter).forEach(currentKey =>
                 setFlattenedQueryParams(urlSearchParams, parameter[currentKey], `${key}${key !== '' ? '.' : ''}${currentKey}`)
             );
         }
-    } 
+    }
     else {
         if (urlSearchParams.has(key)) {
             urlSearchParams.append(key, parameter);
-        } 
+        }
         else {
             urlSearchParams.set(key, parameter);
         }
@@ -114,7 +114,7 @@ export const setSearchParams = function (url: URL, ...objects: any[]) {
  */
 export const serializeDataIfNeeded = function (value: any, requestOptions: any, configuration?: Configuration) {
     const nonString = typeof value !== 'string';
-    const needsSerialization = nonString && configuration && configuration.isJsonMime
+    const needsSerialization = nonString && configuration?.isJsonMime
         ? configuration.isJsonMime(requestOptions.headers['Content-Type'])
         : nonString;
     return needsSerialization
