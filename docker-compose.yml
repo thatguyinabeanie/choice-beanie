@@ -1,10 +1,10 @@
 services:
-  rails_api_dev_base:
+  rails-api-base-image:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: .
       dockerfile: Dockerfile
-      target: bundler-base
+      target: base-image
       tags:
         - thatguyinabeanie/battle-stadium:development-base-latest
 
@@ -24,7 +24,7 @@ services:
       - 5173:5173
     depends_on:
       - db
-      - rails_api_dev_base
+      - rails-api-base-image
     env_file:
       - rails_api/.env
     healthcheck:
@@ -34,11 +34,15 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - ./rails_api:/workspaces/battle-stadium
-      - ./nextjs:/workspaces/nextjs
-      - ./rails_api/tmp:/tmp
-      # - ./rails_api/.bashrc:/root/.bashrc
+      - ./rails_api:/workspaces/battle-stadium/rails_api
+      - ./tmp:/tmp
+      - ./nextjs:/workspaces/battle-stadium/nextjs
+      - ./scripts:/workspaces/battle-stadium/scripts
+      - ./package.json:/workspaces/battle-stadium/package.json
+      - ./package-lock.json:/workspaces/battle-stadium/package-lock.json
+      - ./openapitools:/workspaces/battle-stadium/openapitools
       - bundle-data:/root/.bundle
+      - home:/home/battle-stadium
 
   # BATTLE STADIUM PRODUCTION CONTAINER
   production:
@@ -86,3 +90,4 @@ services:
 volumes:
   postgres-data:
   bundle-data:
+  home:

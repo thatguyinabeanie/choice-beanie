@@ -41,7 +41,7 @@ node_modules
 vendor/bundle/*
 
 /config/credentials/*
-
+home/
 .gitconfig
 
 coverage
