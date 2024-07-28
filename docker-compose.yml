@@ -11,14 +11,19 @@ services:
 
   # BATTLE STADIUM RAILS APP CONTAINER
   rails_api:
-    image: thatguyinabeanie/battle-stadium:development-base-latest
+    image: thatguyinabeanie/battle-stadium/rails:dev-latest
     build:
       context: .
       dockerfile: Dockerfile
       target: development
       tags:
-        - thatguyinabeanie/battle-stadium:development-latest
-    command: sleep infinity
+        - thatguyinabeanie/battle-stadium/rails:dev-latest
+    command: >
+      bash -c "
+        rm -f tmp/pids/server.pid && \
+        (bundle check || bundle install) && \
+        bundle exec rails s -p 3000 -b 0.0.0.0
+      "
     tty: true
     ports:
       - 3000:3000
@@ -36,13 +41,13 @@ services:
       - .zsh/.zshrc:/root/.zshrc
 
   nextjs:
-    image: thatguyinabeanie/battle-stadium:nextjs-latest
+    image: thatguyinabeanie/battle-stadium/nextjs:dev-latest
     build:
       context: .
       dockerfile: Dockerfile.nextjs
       target: nextjs
       tags:
-        - thatguyinabeanie/battle-stadium:nextjs-latest
+        - thatguyinabeanie/battle-stadium/nextjs:dev-latest
     tty: true
     ports:
       - 5173:5173
