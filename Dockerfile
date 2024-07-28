@@ -28,7 +28,7 @@ RUN \
 ##
 ## DEVELOPMENT IMAGE
 ##
-## NOSONAR
+# NOSONAR
 FROM base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 
