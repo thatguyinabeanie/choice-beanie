@@ -20,6 +20,7 @@ RUN \
   # INSTALL NODEJS
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
   apt-get --no-install-recommends install -y nodejs && \
+  rbenv install $(cat .ruby-version) && \
   # CLEAN UP
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
