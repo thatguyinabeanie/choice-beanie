@@ -5,13 +5,6 @@ FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-image
 
 ARG BATTLE_STADIUM=battle-stadium
 ARG NEXTJS=nextjs
-ENV \
-  BUNDLE_PATH="/workspaces/$BATTLE_STADIUM/vendor/bundle" \
-  BUNDLE_BIN="/workspaces/$BATTLE_STADIUM/vendor/bundle/bin" \
-  GEM_HOME="/workspaces/$BATTLE_STADIUM/vendor/bundle" \
-  GEM_PATH="/workspaces/$BATTLE_STADIUM/vendor/bundle" \
-  PATH="/workspaces/$BATTLE_STADIUM/vendor/bundle/bin:$PATH" \
-  PATH="/workspaces/$BATTLE_STADIUM/bin:$PATH"
 
 RUN \
   # CREATE BATTLE-STADIUM USER AND GROUP
@@ -52,6 +45,6 @@ COPY Rakefile ./Rakefile
 COPY vendor ./vendor
 COPY config.ru ./config.ru
 COPY .ruby-version ./.ruby-version
-
+ENV PATH="/usr/local/bundle/bin:${PATH}"
 WORKDIR /workspaces/$BATTLE_STADIUM
 ENTRYPOINT [ "./bin/docker-entrypoint" ]

@@ -25,8 +25,8 @@ services:
     depends_on:
       - db
       - rails-api-base-image
-    # env_file:
-    #   - rails_api/.env
+    env_file:
+      - .env
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
