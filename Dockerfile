@@ -23,7 +23,9 @@ WORKDIR /workspaces/$BATTLE_STADIUM/
 RUN \
   # INSTALL DEPENDENCIES
   apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl && \
+  apt-get --no-install-recommends install -y -q \
+  build-essential libreadline-dev  zlib1g-dev \
+  default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl && \
   # INSTALL NODEJS
   curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
   apt-get --no-install-recommends install -y nodejs && \
@@ -39,7 +41,6 @@ RUN \
 FROM base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 
-# COPY .zshrc /home/$BATTLE_STADIUM/.zshrc
 COPY app ./app
 COPY bin/* ./bin/
 COPY config ./config
