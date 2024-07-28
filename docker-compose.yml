@@ -1,12 +1,13 @@
 services:
-  rails-api-base-image:
-    image: thatguyinabeanie/battle-stadium:development-base-latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base-image
-      tags:
-        - thatguyinabeanie/battle-stadium:development-base-latest
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
 
   # BATTLE STADIUM RAILS APP CONTAINER
   rails_api:
@@ -21,10 +22,8 @@ services:
     tty: true
     ports:
       - 3000:3000
-      - 5173:5173
     depends_on:
       - db
-      - rails-api-base-image
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
@@ -36,45 +35,22 @@ services:
       - ./tmp:/tmp
       - .zsh/.zshrc:/root/.zshrc
 
-  # BATTLE STADIUM PRODUCTION CONTAINER
-  production:
-    image: battle-stadium:latest
-    profiles: [ "production" ]
+  nextjs:
+    image: thatguyinabeanie/battle-stadium:nextjs-latest
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile.nextjs
+      target: nextjs
       tags:
-        - battle-stadium:latest
-    command: >
-      bash -lc "
-        rm -f tmp/pids/server.pid &&
-        (bundle check || bundle install) &&
-        (rails db:prepare || rails db:setup) &&
-        sleep infinity
-      "
-    volumes:
-      - .:/rails
-    ports:
-      - "4000:3000"
-    depends_on:
-      - db
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
-      interval: 60s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
+        - thatguyinabeanie/battle-stadium:nextjs-latest
     tty: true
-
-  db:
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    env_file:
-      - .env
     ports:
-      - "5432:5432"
+      - 5173:5173
+      - 8080:8080
+    volumes:
+      - .:/workspaces/battle-stadium
+      - ./tmp:/tmp
+      - .zsh/.zshrc:/root/.zshrc
 
 volumes:
   postgres-data:

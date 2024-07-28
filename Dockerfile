@@ -40,6 +40,6 @@ COPY config.ru ./config.ru
 COPY Gemfile Gemfile.lock /workspaces/$BATTLE_STADIUM/
 
 RUN bundle install
-
+EXPOSE 3000
 WORKDIR /workspaces/$BATTLE_STADIUM
 ENTRYPOINT [ "./bin/docker-entrypoint" ]

@@ -44,6 +44,10 @@
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
 
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ],
+
   // Configure tool-specific properties.
   "customizations": {
     "vscode": {
@@ -65,7 +69,8 @@
         "connorshea.vscode-ruby-test-adapter",
         "mutantdino.resourcemonitor",
         "iliazeus.vscode-ansi",
-        "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons",
+        "streetsidesoftware.code-spell-checker"
       ],
       "settings": {
         "remote.containers.copyGitConfig": true,
@@ -76,24 +81,12 @@
             "path": "bash",
             "icon": "terminal-bash"
           },
-          "zsh": {
-            "path": "zsh"
-          },
-          "fish": {
-            "path": "fish"
-          },
           "tmux": {
-            "path": "tmux",
-            "icon": "terminal-tmux"
+            "path": "zsh",
+            "icon": "terminal-zsh"
           },
-          "pwsh": {
-            "path": "pwsh",
-            "icon": "terminal-powershell"
-          }
         }
       }
     }
   },
-
-
 }
