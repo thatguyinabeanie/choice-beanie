@@ -27,6 +27,7 @@
   "testing.coverageToolbarEnabled": true,
   "coverage-gutters.coverageBaseDir": "coverage/*",
   "rubyLsp.indexing": {
+    "enabled": true,
     "excludedPatterns": ["**/test/**.rb"],
     "includedPatterns": ["**/bin/**"],
     "includedPatterns": ["rake"],

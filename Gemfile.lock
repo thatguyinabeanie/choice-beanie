@@ -430,6 +430,8 @@ GEM
       prism (>= 0.29.0, < 0.31)
       rbs (>= 3, < 4)
       sorbet-runtime (>= 0.5.10782)
+    ruby-lsp-rspec (0.1.12)
+      ruby-lsp (~> 0.17.0)
     ruby-progressbar (1.13.0)
     ruby_audit (2.3.1)
       bundler-audit (~> 0.9.0)
@@ -568,7 +570,8 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   rubocop-thread_safety
-  ruby-lsp (~> 0)
+  ruby-lsp
+  ruby-lsp-rspec
   ruby_audit (~> 2)
   selenium-webdriver (~> 4)
   shoulda-matchers (~> 6)

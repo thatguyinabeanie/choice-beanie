@@ -17,7 +17,7 @@ RUN \
   # CREATE BATTLE-STADIUM USER AND GROUP
   mkdir -p "/workspaces/$BATTLE_STADIUM"
 
-COPY Gemfile Gemfile.lock  /workspaces/$BATTLE_STADIUM/
+COPY Gemfile Gemfile.lock  .rvm .ruby-version /workspaces/$BATTLE_STADIUM/
 
 WORKDIR /workspaces/$BATTLE_STADIUM/
 RUN \
