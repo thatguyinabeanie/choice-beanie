@@ -1,0 +1,24 @@
+{
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/pre-commit:2": {
+      "version": "2.0.17",
+      "resolved": "ghcr.io/devcontainers-contrib/features/pre-commit@sha256:c18a7604e12b531e5a4e990c630e3f036d932903eb1e3b333e5c9e10a891e1a8",
+      "integrity": "sha256:c18a7604e12b531e5a4e990c630e3f036d932903eb1e3b333e5c9e10a891e1a8"
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "1.5.0",
+      "resolved": "ghcr.io/devcontainers/features/docker-outside-of-docker@sha256:20761bd733511c1995ee955682cc2778b0a2e556abf88e9b88490c3be3c80bbc",
+      "integrity": "sha256:20761bd733511c1995ee955682cc2778b0a2e556abf88e9b88490c3be3c80bbc"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "1.0.13",
+      "resolved": "ghcr.io/devcontainers/features/github-cli@sha256:13b301a039ce9e0bb07d45ea0c106c946cfff01c3b9844bbec6b0c7bacba8de3",
+      "integrity": "sha256:13b301a039ce9e0bb07d45ea0c106c946cfff01c3b9844bbec6b0c7bacba8de3"
+    },
+    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/mikaello/devcontainer-features/modern-shell-utils@sha256:f2b6646ef69a22ab8e7eab71345271575513fe98620d6b969dfdaa4700177783",
+      "integrity": "sha256:f2b6646ef69a22ab8e7eab71345271575513fe98620d6b969dfdaa4700177783"
+    }
+  }
+}

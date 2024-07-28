@@ -9,7 +9,7 @@ RSpec.describe 'Seed Data' do # rubocop:disable RSpec/DescribeClass
     end
   end
 
-  pending 'loads successfully' do
+  it 'loads successfully' do
     expect { load Rails.root.join('db/seeds.rb') }.not_to raise_error
   end
 end

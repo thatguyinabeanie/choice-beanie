@@ -13,7 +13,7 @@ services:
     image: thatguyinabeanie/battle-stadium:development-base-latest
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
       target: development
       tags:
         - thatguyinabeanie/battle-stadium:development-latest
@@ -25,8 +25,10 @@ services:
     depends_on:
       - db
       - rails-api-base-image
-    env_file:
-      - rails_api/.env
+    # env_file:
+      # - .env
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/fuecoco_db
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
@@ -34,15 +36,8 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - ./rails_api:/workspaces/battle-stadium/rails_api
+      - .:/workspaces/battle-stadium
       - ./tmp:/tmp
-      - ./nextjs:/workspaces/battle-stadium/nextjs
-      - ./scripts:/workspaces/battle-stadium/scripts
-      - ./package.json:/workspaces/battle-stadium/package.json
-      - ./package-lock.json:/workspaces/battle-stadium/package-lock.json
-      - ./openapitools:/workspaces/battle-stadium/openapitools
-      - bundle-data:/root/.bundle
-      - home:/home/battle-stadium
 
   # BATTLE STADIUM PRODUCTION CONTAINER
   production:
@@ -62,7 +57,6 @@ services:
       "
     volumes:
       - .:/rails
-      - bundle-data:/root/.bundle
     ports:
       - "4000:3000"
     depends_on:
@@ -89,5 +83,4 @@ services:
 
 volumes:
   postgres-data:
-  bundle-data:
   home:

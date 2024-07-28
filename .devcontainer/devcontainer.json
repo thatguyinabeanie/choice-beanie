@@ -30,7 +30,6 @@
 		"vscode": {
 			"extensions": [
 				"KoichiSasada.vscode-rdbg",
-				"Shopify.ruby-lsp",
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
 				"GitHub.vscode-pull-request-github",
@@ -79,7 +78,7 @@
 	"forwardPorts": [3000],
 
 	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
+	"runServices": ["db", "rails_api"],
 
 	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
 	"shutdownAction": "none",
@@ -87,5 +86,5 @@
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /workspaces/battle-stadium",
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "battle-stadium"
+	"remoteUser": "root"
 }

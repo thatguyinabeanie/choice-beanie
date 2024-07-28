@@ -47,7 +47,6 @@ home/
 coverage
 
 /public/assets
-/public/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
@@ -59,10 +58,12 @@ test-results
 codeql*
 *.session.sql
 
-rails_api/public/assets/**
+public/assets/**
 test/
 tests/
 **_test.rb
-rails_api/log/*
+log/*
 
-rails_api/spec/examples.txt
+spec/examples.txt
+rails_api
+rails_api/tmp/*
