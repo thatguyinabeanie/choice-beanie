@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RETURNS_FALSE = 'returns false'.freeze
 RSpec.describe Tournament::Tournament do
-
   let(:name) { 'Battle Stadium #1' }
   let(:organization) { create(:organization) }
   let(:game) { create(:game) }

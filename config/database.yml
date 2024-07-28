@@ -20,15 +20,15 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
   timeout: <%= ENV.fetch("RAILS_DB_TIMEOUT", 5000) %>
 
-  host: localhost
-  port: <%= ENV.fetch("RAILS_DB_PORT", '5432') %>
+  host: <%= ENV.fetch("DB_HOST") %>
+  port: <%= ENV.fetch("DB_PORT", '5432') %>
 
-  username: <%= ENV.fetch("RAILS_DB_USERNAME", 'postgres') %>
-  password: <%= ENV.fetch("RAILS_DB_PASSWORD", 'password') %>
-
+  username: <%= ENV.fetch("POSTGRES_USER") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") %>
+  database: <%= ENV.fetch("POSTGRES_DB") %>
 development:
   <<: *default
-  database: <%= ENV.fetch("RAILS_DB_NAME", 'fuecoco_db_development') %>
+
 # RAILS_DB_NAME=fuecoco_db_test   bin/rails db:create && rspec
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -62,7 +62,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV.fetch("RAILS_DB_NAME", 'fuecoco_db_test') %>
+
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -86,4 +86,3 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV.fetch("RAILS_DB_NAME") %>

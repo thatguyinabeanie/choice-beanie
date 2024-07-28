@@ -82,7 +82,7 @@ rescue ActiveRecord::RecordNotFound
   Organization::Organization.create!(name:, owner:, description:, staff:)
 end.compact
 
-tournaments = orgs.flat_map do |organization|
+orgs.flat_map do |organization|
   formats.map.with_index do |format, index|
     name = "#{organization.name} #{format.name} Tournament #{index + 1}"
     start_at = Time.zone.today
