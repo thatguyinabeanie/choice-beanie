@@ -8,9 +8,10 @@ WORKDIR /workspaces/nextjs
 
 # Install dependencies
 COPY nextjs/package.json .
-# COPY nextjs/package-lock.json .
+COPY nextjs/package-lock.json .
 
-RUN npm install
+RUN npm ci --silent --ignore-scripts
+
 # Copy the source code
 COPY nextjs /workspaces/nextjs
 
