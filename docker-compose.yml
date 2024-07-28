@@ -50,13 +50,13 @@ services:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
     tty: true
     ports:
-      - 5173:5173
-      - 8080:8080
+      - 8080:3000
     volumes:
-      - .:/workspaces/battle-stadium
+      - ./nextjs:/workspaces/nextjs
       - ./tmp:/tmp
       - .zsh/.zshrc:/root/.zshrc
-
+      - node_modules:/workspaces/nextjs/node_modules
 volumes:
   postgres-data:
+  node_modules:
   home:
