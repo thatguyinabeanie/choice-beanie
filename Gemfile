@@ -62,6 +62,9 @@ group :development, :test do
   gem 'listen', '~> 3.3'
   gem 'rspec-rails'
   gem 'rswag-specs'
+  gem 'ruby-lsp', '~> 0.17.9'
+  gem 'ruby-lsp-rails', '~> 0.3.11'
+  gem 'ruby-lsp-rspec'
   gem 'spring', '~> 4'
   gem 'traceroute', '~> 0'
   gem 'webmock', '~> 3'
@@ -88,5 +91,3 @@ group :development, :test, :rubocop do
   gem 'rubocop-rubycw'
   gem 'rubocop-thread_safety'
 end
-
-gem "ruby-lsp", "~> 0.17.9"

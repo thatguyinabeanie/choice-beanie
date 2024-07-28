@@ -1,36 +1,30 @@
 ##
-## BASE IMAGE
+## LINUX BASE IMAGE WITH DEVELOPMENT TOOLS & DEPENDENCIES
 ##
-FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-image
-ARG BATTLE_STADIUM=battle-stadium
+FROM mcr.microsoft.com/devcontainers/ruby:3 AS linux-base-image
 
-RUN \
-  # CREATE BATTLE-STADIUM USER AND GROUP
-  mkdir -p "/workspaces/$BATTLE_STADIUM"
-
-COPY Gemfile Gemfile.lock /workspaces/$BATTLE_STADIUM/
-
-WORKDIR /workspaces/$BATTLE_STADIUM/
 RUN \
   # INSTALL DEPENDENCIES
-  apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q \
-  build-essential libreadline-dev  zlib1g-dev \
-  default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl && \
+  apt-get update -qq  \
+  && apt-get --no-install-recommends install -y -q \
+  build-essential libreadline-dev  zlib1g-dev sudo \
+  default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl \
   # INSTALL NODEJS
-  curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - && \
-  apt-get --no-install-recommends install -y nodejs && \
+  && curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - \
+  && apt-get --no-install-recommends install -y nodejs \
   # CLEAN UP
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  bundle install
+  && apt-get clean \
+  && mkdir -p /workspaces/battle-stadium \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 ##
 ## DEVELOPMENT IMAGE
 ##
-
-FROM base-image AS development
+FROM linux-base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
+ARG USERNAME=vscode
+WORKDIR /workspaces/$BATTLE_STADIUM/
 
 COPY .zsh/.zshrc /root/.zshrc
 COPY app ./app
@@ -43,10 +37,9 @@ COPY storage ./storage
 COPY Rakefile ./Rakefile
 COPY vendor ./vendor
 COPY config.ru ./config.ru
+COPY Gemfile Gemfile.lock /workspaces/$BATTLE_STADIUM/
 
-# RUN groupadd -r "$BATTLE_STADIUM" && useradd -m -r -g "$BATTLE_STADIUM" "$BATTLE_STADIUM"
-
-# USER $BATTLE_STADIUM
+RUN bundle install
 
 WORKDIR /workspaces/$BATTLE_STADIUM
 ENTRYPOINT [ "./bin/docker-entrypoint" ]

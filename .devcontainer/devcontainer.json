@@ -17,6 +17,25 @@
   // connected. This is typically a file mount in .devcontainer/docker-compose.yml
   "workspaceFolder": "/workspaces/battle-stadium",
 
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000],
+
+  // Uncomment the next line if you want start specific services in your Docker Compose config.
+  "runServices": ["db", "rails_api"],
+
+  // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+  "shutdownAction": "none",
+
+  // Uncomment the next line to run commands after the container is created.
+  "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /workspaces/battle-stadium ",
+
+  // "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /workspaces/battle-stadium && echo 'export PATH=\"$PATH:/root/.vscode-server/bin/$(ls /root/.vscode-server/bin)\"' >> ~/.bashrc && source ~/.bashrc && gem install bundler && bundle install",
+
+  // && sudo chown -r battle-stadium:battle-stadium /workspaces/battle-stadium
+
+  // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "root",
+
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
@@ -49,6 +68,8 @@
         "vscode-icons-team.vscode-icons"
       ],
       "settings": {
+        "remote.containers.copyGitConfig": true,
+        // "remote.containers.dotfiles.repository": "thatguyinabeanie/dotfiles",
         "terminal.integrated.defaultProfile.linux": "/bin/zsh",
         "terminal.integrated.profiles.linux": {
           "bash": {
@@ -74,22 +95,5 @@
     }
   },
 
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [3000],
 
-  // Uncomment the next line if you want start specific services in your Docker Compose config.
-  "runServices": ["db", "rails_api"],
-
-  // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-  "shutdownAction": "none",
-
-  // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /workspaces/battle-stadium ",
-
-  // "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /workspaces/battle-stadium && echo 'export PATH=\"$PATH:/root/.vscode-server/bin/$(ls /root/.vscode-server/bin)\"' >> ~/.bashrc && source ~/.bashrc && gem install bundler && bundle install",
-
-  // && sudo chown -r battle-stadium:battle-stadium /workspaces/battle-stadium
-
-  // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-  "remoteUser": "root"
 }
