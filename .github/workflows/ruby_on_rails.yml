@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
-      RAILS_DB_HOST: localhost
-      RAILS_DB_PORT: 5432
-      RAILS_DB_USERNAME: postgres
-      RAILS_DB_PASSWORD: password
-      RAILS_DB_NAME: fuecoco_db_test
+      DB_HOST: localhost
+      DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fuecoco_db_test
 
     services:
       postgres:

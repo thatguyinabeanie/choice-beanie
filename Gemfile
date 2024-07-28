@@ -38,19 +38,6 @@ gem 'turbo-rails', '~> 2'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'versionist', '~> 2'
 
-# For documentation and testing your API
-group :development, :test do
-  gem 'debug', '~> 1'
-  gem 'dotenv-rails', '~> 3'
-  gem 'faker', '~> 3'
-  gem 'listen', '~> 3.3'
-  gem 'rspec-rails'
-  gem 'rswag-specs'
-  gem 'spring', '~> 4'
-  gem 'traceroute', '~> 0'
-  gem 'webmock', '~> 3'
-end
-
 group :development do
   gem 'web-console', '~> 4'
 end
@@ -65,6 +52,19 @@ group :test do
   gem 'selenium-webdriver', '~> 4', require: false
   gem 'shoulda-matchers', '~> 6'
   gem 'timecop', '~> 0'
+end
+
+# For documentation and testing your API
+group :development, :test do
+  gem 'debug', '~> 1'
+  gem 'dotenv-rails'
+  gem 'faker', '~> 3'
+  gem 'listen', '~> 3.3'
+  gem 'rspec-rails'
+  gem 'rswag-specs'
+  gem 'spring', '~> 4'
+  gem 'traceroute', '~> 0'
+  gem 'webmock', '~> 3'
 end
 
 group :development, :test, :rubocop do
@@ -85,5 +85,8 @@ group :development, :test, :rubocop do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
   gem 'rubocop-rspec_rails'
+  gem 'rubocop-rubycw'
   gem 'rubocop-thread_safety'
 end
+
+gem "ruby-lsp", "~> 0.17.9"

@@ -29,10 +29,10 @@ RUN \
 ## DEVELOPMENT IMAGE
 ##
 
-# NOSONAR
 FROM base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 
+COPY .zsh/.zshrc /root/.zshrc
 COPY app ./app
 COPY bin/* ./bin/
 COPY config ./config
@@ -43,6 +43,10 @@ COPY storage ./storage
 COPY Rakefile ./Rakefile
 COPY vendor ./vendor
 COPY config.ru ./config.ru
+
+# RUN groupadd -r "$BATTLE_STADIUM" && useradd -m -r -g "$BATTLE_STADIUM" "$BATTLE_STADIUM"
+
+# USER $BATTLE_STADIUM
 
 WORKDIR /workspaces/$BATTLE_STADIUM
 ENTRYPOINT [ "./bin/docker-entrypoint" ]
