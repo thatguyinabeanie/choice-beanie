@@ -2,9 +2,7 @@
 ## BASE IMAGE
 ##
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS base-image
-
 ARG BATTLE_STADIUM=battle-stadium
-ARG NEXTJS=nextjs
 
 RUN \
   # CREATE BATTLE-STADIUM USER AND GROUP
