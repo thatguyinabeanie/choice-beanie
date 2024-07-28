@@ -26,5 +26,10 @@
   },
   "testing.coverageToolbarEnabled": true,
   "coverage-gutters.coverageBaseDir": "coverage/*",
-
+  "rubyLsp.indexing": {
+    "excludedPatterns": ["**/test/**.rb"],
+    "includedPatterns": ["**/bin/**"],
+    "includedPatterns": ["rake"],
+    "excludedMagicComments": ["compiled:true"],
+  },
 }
