@@ -37,7 +37,7 @@ COPY bin/* ./bin/
 COPY config ./config
 COPY db ./db
 COPY lib ./lib
-# COPY public ./public
+COPY public ./public
 COPY storage ./storage
 COPY Rakefile ./Rakefile
 COPY vendor ./vendor
