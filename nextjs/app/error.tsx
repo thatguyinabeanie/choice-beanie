@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 
-export default function Error({
+function ErrorBoundry ({
   error,
   reset,
 }: {
-  error: Error;
-  reset: () => void;
+  readonly error: Error;
+  readonly reset: () => void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
@@ -29,3 +29,5 @@ export default function Error({
     </div>
   );
 }
+
+export default ErrorBoundry;
