@@ -50,7 +50,7 @@ services:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
     tty: true
     ports:
-      - 8080:3000
+      - 8080:8080
     volumes:
       - ./nextjs:/workspaces/nextjs
       - ./tmp:/tmp
