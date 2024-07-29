@@ -2,13 +2,15 @@
 
 import { useEffect } from "react";
 
-function ErrorBoundry ({
+interface ErrorComponentProps {
+  error: Error;
+  reset: () => void;
+}
+
+function ErrorComponent ({
   error,
   reset,
-}: {
-  readonly error: Error;
-  readonly reset: () => void;
-}) {
+}: Readonly<ErrorComponentProps>) {
   useEffect(() => {
     // Log the error to an error reporting service
     /* eslint-disable no-console */
@@ -30,4 +32,4 @@ function ErrorBoundry ({
   );
 }
 
-export default ErrorBoundry;
+export default ErrorComponent;
