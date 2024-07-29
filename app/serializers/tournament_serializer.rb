@@ -7,7 +7,7 @@ class TournamentSerializer < ActiveModel::Serializer
   # has_many :players, serializer: PlayerSerializer
 end
 
-class TournamentDetailsSerializer < Tournament
+class TournamentDetailsSerializer < TournamentSerializer
   has_one :game, serializer: GameSerializer
   has_one :format, serializer: FormatSerializer
   has_one :organization, serializer: OrganizationSerializer
