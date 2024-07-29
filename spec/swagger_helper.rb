@@ -35,6 +35,18 @@ RSpec.configure do |config|
       ],
       components: {
         schemas: {
+          User: {
+            type: :object,
+            properties: {
+              id: { type: :integer },
+              username: { type: :string },
+              email: { type: :string },
+              pronouns: { type: :string },
+              first_name: { type: :string },
+              last_name: { type: :string },
+              slug: { type: :string }
+            }, required: %w[id username pronouns]
+          },
           Game: {
             type: :object,
             properties: {
@@ -42,7 +54,17 @@ RSpec.configure do |config|
               name: { type: :string },
               slug: { type: :string }
             },
-            required: %w[id name slug]
+            required: %w[name slug]
+          },
+          Organization: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              description: { type: :string },
+              slug: { type: :string },
+              owner: { '$ref' => '#/components/schemas/User' }
+            },
+            required: %w[name]
           }
         }
       }

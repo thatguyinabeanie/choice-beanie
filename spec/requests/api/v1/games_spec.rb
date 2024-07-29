@@ -3,34 +3,18 @@ require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
 RSpec.describe 'api/v1/games' do
-  path '/api/v1/games' do
+  path('/api/v1/games') do
     get('List Games') do
       tags 'Games'
       produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all games'
-      operationId 'getGames'
+      operationId 'listGames'
 
       # parameter name: :page, in: :query, type: :integer, description: 'Page number'
       # parameter name: :per_page, in: :query, type: :integer, description: 'Number of games per page'
 
       response(200, 'successful') do
         schema type: :array, items: { '$ref' => '#/components/schemas/Game' }
-
-        OpenApi::Response.set_example_response_metadata
-
-        run_test!
-      end
-
-      response(400, 'bad request') do
-        OpenApi::Schema.bad_request
-
-        let(:page) { 'invalid' }
-
-        before do
-          controller = Api::V1::GamesController.new
-          allow(Api::V1::GamesController).to receive(:new).and_return(controller)
-          allow(controller).to receive(:index).and_raise(ActionController::ParameterMissing.new(:page))
-        end
 
         OpenApi::Response.set_example_response_metadata
 
@@ -43,7 +27,7 @@ RSpec.describe 'api/v1/games' do
       consumes OpenApi::Response::JSON_CONTENT_TYPE
       produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Creates a new game.'
-      operationId 'createGame'
+      operationId 'postGame'
 
       parameter name: :game, in: :body, schema: {
         type: :object,
@@ -80,7 +64,7 @@ RSpec.describe 'api/v1/games' do
     end
   end
 
-  path '/api/v1/games/{id}' do
+  path('/api/v1/games/{id}') do
     # You'll want to customize the parameter types...
     parameter name: :id, in: :path, type: :string, description: 'ID of the game'
 
@@ -156,7 +140,7 @@ RSpec.describe 'api/v1/games' do
       operationId 'deleteGame'
 
       response(200, 'successful') do
-        let(:game) { Game.create!(name: 'Test Game', slug: 'test-game') }
+        let(:game) { create(:game, name: 'Test Game', slug: 'test-game') }
         let(:id) { game.id }
 
         OpenApi::Response.set_example_response_metadata

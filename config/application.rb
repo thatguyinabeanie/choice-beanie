@@ -7,7 +7,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 # Load .env file in development and test environments
-Dotenv::Railtie.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
+Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
 
 module BattleStadium
   class Application < Rails::Application

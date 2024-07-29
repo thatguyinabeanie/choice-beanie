@@ -29,9 +29,9 @@ Rails.application.routes.draw do
       get '/auth/:provider/callback', to: 'sessions#create'
 
       resources :matches, only: %i[index show update]
-      resources :users, only: %i[index show update]
+      resources :users, only: %i[index show create update destroy]
 
-      resources :organizations, only: %i[index show create update] do
+      resources :organizations, only: %i[index show create update destroy] do
         member do
           get 'staff', to: 'organizations#staff'
         end

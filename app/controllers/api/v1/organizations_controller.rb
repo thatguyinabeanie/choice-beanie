@@ -2,10 +2,11 @@ module Api
   module V1
     class OrganizationsController < ApplicationController
       ORGANIZATION_NOT_FOUND = 'Organization not found'.freeze
+
       def index
         # Logic to fetch all organizations
         organizations = Organization::Organization.all
-        render json: organizations
+        render json: organizations, status: :ok
       end
 
       def show
@@ -18,7 +19,8 @@ module Api
 
       def create
         # Logic to create a new organization
-        organization = Organization::Organization.new(organization_params)
+        organization = Organization::Organization.new organization_params
+
         if organization.save
           render json: organization, status: :created
         else
@@ -30,7 +32,7 @@ module Api
         # Logic to update an existing organization
         organization = Organization::Organization.find(params[:id])
         if organization.update(organization_params)
-          render json: organization
+          render json: organization, status: :ok
         else
           render json: { error: organization.errors.full_messages }, status: :unprocessable_entity
         end
@@ -42,7 +44,7 @@ module Api
         # Logic to delete an organization
         organization = Organization::Organization.find(params[:id])
         organization.destroy
-        head :no_content
+        render json: { message: 'Organization deleted' }, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
@@ -59,7 +61,7 @@ module Api
       private
 
       def organization_params
-        params.require(:organization).permit(:name, :description, :location)
+        params.require(:organization).permit(:name, :description, :owner_id)
       end
     end
   end

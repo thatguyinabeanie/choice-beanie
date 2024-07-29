@@ -2,6 +2,7 @@ module Api
   module V1
     class GamesController < ApplicationController
       GAME_NOT_FOUND = 'Game not found'.freeze
+
       before_action :set_game, only: %i[show update destroy]
 
       # GET /api/v1/games

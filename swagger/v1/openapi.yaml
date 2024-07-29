@@ -10,7 +10,7 @@ paths:
       tags:
       - Games
       description: Retrieves a list of all games
-      operationId: getGames
+      operationId: listGames
       responses:
         '200':
           description: successful
@@ -20,14 +20,12 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Game"
-        '400':
-          description: bad request
     post:
       summary: Create Game
       tags:
       - Games
       description: Creates a new game.
-      operationId: createGame
+      operationId: postGame
       parameters: []
       responses:
         '201':
@@ -115,6 +113,258 @@ paths:
           description: successful
         '404':
           description: not found
+  "/api/v1/organizations":
+    get:
+      summary: List Organizations
+      tags:
+      - Organizations
+      operationId: listOrganizations
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Organization"
+    post:
+      summary: Create Organization
+      tags:
+      - Organizations
+      description: Creates a new organization.
+      operationId: postOrganization
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  title: postOrganization
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    owner_id:
+                      type: integer
+                  required:
+                  - name
+                  - description
+  "/api/v1/organizations/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Organization
+      tags:
+      - Organizations
+      description: Retrieves a specific organization.
+      operationId: getOrganization
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '404':
+          description: not found
+    patch:
+      summary: Update Organization
+      tags:
+      - Organizations
+      description: Updates an existing organization.
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  name: patchOrganization
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    owner_id:
+                      type: integer
+                  required:
+                  - name
+                  - description
+    delete:
+      summary: Delete Organization
+      tags:
+      - Organizations
+      description: Deletes an organization.
+      operationId: deleteOrganization
+      responses:
+        '200':
+          description: Organization deleted
+        '404':
+          description: not found
+  "/api/v1/users":
+    get:
+      summary: List Users
+      tags:
+      - Users
+      description: Retrieves a list of all Users
+      operationId: listUsers
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/User"
+    post:
+      summary: Create User
+      tags:
+      - Users
+      description: Creates a new User.
+      operationId: postUser
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  title: postUser
+                  properties:
+                    username:
+                      type: string
+                    email:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    pronouns:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+                  required:
+                  - username
+                  - email
+                  - first_name
+                  - last_name
+                  - password
+                  - password_confirmation
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: ID of the User
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Show User
+      tags:
+      - Users
+      description: Retrieves a specific User by ID.
+      operationId: getUser
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
+        '404':
+          description: not found
+    patch:
+      summary: Update User
+      tags:
+      - Users
+      description: Updates an existing User.
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  title: patchUser
+                  properties:
+                    username:
+                      type: string
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    pronouns:
+                      type: string
+                  required:
+                  - username
+                  - email
+                  - password
+                  - first_name
+                  - last_name
+              required:
+              - user
+    delete:
+      summary: Delete User
+      tags:
+      - Users
+      operationId: deleteUser
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
 servers:
 - url: https://{defaultHost}
   variables:
@@ -122,6 +372,27 @@ servers:
       default: 127.0.0.1
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        pronouns:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        slug:
+          type: string
+      required:
+      - id
+      - username
+      - pronouns
     Game:
       type: object
       properties:
@@ -132,6 +403,16 @@ components:
         slug:
           type: string
       required:
-      - id
       - name
       - slug
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        slug:
+          type: string
+      required:
+      - name

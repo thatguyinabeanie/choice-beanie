@@ -6,8 +6,8 @@ class User < ApplicationRecord
   friendly_id :username, use: :slugged
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :password, presence: true, length: { minimum: 8 }
-  validates :username, presence: true, uniqueness: true
+  validates :password, presence: true, length: { minimum: 8 }, if: :password_required?
+  validates :username, presence: true, uniqueness: true, allow_blank: false
   validates :pronouns, length: { maximum: 50 }, allow_blank: true
   validates :first_name, length: { maximum: 50 }, presence: true
   validates :last_name, length: { maximum: 50 }, presence: true
@@ -27,11 +27,10 @@ class User < ApplicationRecord
   def staff_member_of?(organization)
     organization.staff.exists?(id:)
   end
-  # def self.from_omniauth(auth)
-  #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-  #     user.email = auth.info.email
-  #     user.username = auth.info.name
-  #     user.avatar = auth.info.image
-  #   end
-  # end
+
+  private
+
+  def password_required?
+    new_record? || password.present?
+  end
 end
