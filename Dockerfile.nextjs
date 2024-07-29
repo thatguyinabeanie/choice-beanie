@@ -1,22 +1,24 @@
 # nosonar
 FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:20 AS nextjs
 
-RUN mkdir -p /workspaces/battle-stadium
+RUN mkdir -p /workspaces/nextjs
 
 # Set the working directory
-WORKDIR /workspaces/battle-stadium
+WORKDIR /workspaces/nextjs
 
 # Install dependencies
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
+COPY nextjs/package.json .
+COPY nextjs/package-lock.json .
+
+RUN npm ci --silent --ignore-scripts
 
 # Copy the source code
-COPY nextjs /workspaces/battle-stadium/nextjs
+COPY nextjs /workspaces/nextjs
 
-WORKDIR /workspaces/battle-stadium/nextjs
+WORKDIR /workspaces/nextjs
 # Expose the Next.js development server port
 
-EXPOSE 5173
+EXPOSE 8080
 
 # Start the development server
 CMD ["npm", "run", "dev"]
