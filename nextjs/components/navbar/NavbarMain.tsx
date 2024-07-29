@@ -1,10 +1,8 @@
 import {
   Navbar as NextUINavbar,
   NavbarContent,
-  NavbarMenu,
   NavbarMenuToggle,
   NavbarItem,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
@@ -20,6 +18,7 @@ import {
 import { NavbarBrandComponent } from "./NavbarBrand";
 import { NavbarSiteList } from "./NavbarSiteList";
 import { NavbarSearch } from "./NavbarSearch";
+import { NavbarMenu } from "./NavbarMenu";
 
 export const NavbarMain = () => {
 
@@ -30,6 +29,7 @@ export const NavbarMain = () => {
         <NavbarBrandComponent />
         <NavbarSiteList />
       </NavbarContent>
+
 
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
@@ -66,6 +66,7 @@ export const NavbarMain = () => {
         </NavbarItem>
       </NavbarContent>
 
+
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal aria-label="Github" href={ siteConfig.links.github }>
           <GithubIcon className="text-default-500" />
@@ -74,30 +75,8 @@ export const NavbarMain = () => {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      <NavbarMenuToggle />
+      <NavbarMenu />
 
-      <NavbarMenu>
-        {/* <NavbarSearch /> */ }
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          { siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={ `${item}-${index}` }>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
-                { item.label }
-              </Link>
-            </NavbarMenuItem>
-          )) }
-        </div>
-      </NavbarMenu>
     </NextUINavbar>
   );
 };
