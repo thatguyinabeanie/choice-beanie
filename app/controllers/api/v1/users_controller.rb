@@ -11,7 +11,7 @@ module Api
       def index
         @users = User.all
         # render json: @users.as_json(only: %i[id username pronouns slug])
-        render json: @users, each_serializer: ::Serializer::User, status: :ok
+        render json: @users, each_serializer: ::UserSerializer, status: :ok
       end
 
       # GET /api/v1/users/:id
@@ -55,7 +55,7 @@ module Api
       private
 
       def serialize_user_details
-        ::Serializer::UserDetails.new(@user).attributes
+        ::UserDetailsSerializer.new(@user).attributes
       end
 
       # Use callbacks to share common setup or constraints between actions.

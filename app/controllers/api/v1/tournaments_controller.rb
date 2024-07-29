@@ -6,12 +6,12 @@ module Api
       # GET /api/v1/tournaments
       def index
         @tournaments = ::Tournament::Tournament.all
-        render json: @tournaments, each_serializer: ::Serializer::Tournament, status: :ok
+        render json: @tournaments, each_serializer: ::TournamentSerializer, status: :ok
       end
 
       # GET /api/v1/tournaments/:id
       def show
-        render json: @tournament, each_serializer: ::Serializer::TournamentDetails, status: :ok
+        render json: @tournament, each_serializer: ::TournamentDetailsSerializer, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Tournament not found' }, status: :not_found
       end
@@ -20,7 +20,7 @@ module Api
       def create
         @tournament = ::Tournament::Tournament.new(tournament_params)
         if @tournament.save
-          render json: @tournament, status: :created, each_serializer: ::Serializer::TournamentDetails
+          render json: @tournament, status: :created, each_serializer: ::TournamentDetailsSerializer
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end
@@ -31,7 +31,7 @@ module Api
       # PATCH/PUT /api/v1/tournaments/:id
       def update
         if @tournament.update(tournament_params)
-          render json: @tournament, status: :ok, each_serializer: ::Serializer::TournamentDetails
+          render json: @tournament, status: :ok, each_serializer: ::TournamentDetailsSerializer
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end

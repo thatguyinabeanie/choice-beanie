@@ -9,7 +9,7 @@ module Api
       def index
         # Logic to fetch all organizations
         @organizations = Organization::Organization.all
-        render json: @organizations, each_serializer: ::Serializer::Organization, status: :ok
+        render json: @organizations, each_serializer: OrganizationSerializer, status: :ok
       end
 
       def show
@@ -49,7 +49,7 @@ module Api
       def staff
         # Assuming there's an association called `staff_members` you can directly use it
         # If not, replace `organization.staff_members` with your logic to fetch staff members
-        render json: @organization.staff, each_serializer: ::Serializer::User, status: :ok
+        render json: @organization.staff, each_serializer: UserSerializer, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
@@ -57,7 +57,7 @@ module Api
       private
 
       def serialize_org_details
-        ::Serializer::OrganizationDetails.new(@organization).attributes
+        ::OrganizationDetailSerializer.new(@organization).attributes
       end
 
       def set_organization

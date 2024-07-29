@@ -11,7 +11,7 @@ module Api
       # GET /api/v1/games.json
       def index
         @games = Game.all
-        render json: @games, each_serializer: ::Serializer::Game, status: :ok
+        render json: @games, each_serializer: ::GameSerializer, status: :ok
       end
 
       # GET /api/v1/games/:id
@@ -60,7 +60,7 @@ module Api
       private
 
       def serialize
-        ::Serializer::Game.new(@game).attributes
+        ::GameSerializer.new(@game).attributes
       end
 
       # Use callbacks to share common setup or constraints between actions.

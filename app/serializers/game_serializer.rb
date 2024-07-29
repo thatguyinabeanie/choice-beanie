@@ -1,5 +1,3 @@
-module Serializer
-  class Game < ActiveModel::Serializer
-    attributes :id, :name, :slug
-  end
+class GameSerializer < ActiveModel::Serializer
+  attributes :id, :name, :slug
 end
