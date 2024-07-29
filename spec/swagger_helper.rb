@@ -43,6 +43,16 @@ RSpec.configure do |config|
         },
 
         schemas: {
+          Format: {
+            type: :object,
+            title: 'Format',
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              slug: { type: :string }
+            }
+          },
+
           Game: {
             type: :object,
             title: 'Game',
@@ -52,6 +62,18 @@ RSpec.configure do |config|
               slug: { type: :string }
             },
             required: %w[id name slug]
+          },
+
+          GameDetail: {
+            type: :object,
+            title: 'GameDetail',
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              slug: { type: :string },
+              formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
+            },
+            required: %w[id name slug formats]
           },
 
           User: {

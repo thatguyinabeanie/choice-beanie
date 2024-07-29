@@ -55,7 +55,7 @@ module Api
       private
 
       def serialize_user_details
-        ::UserDetailsSerializer.new(@user).attributes
+        ::UserDetailSerializer.new(@user).attributes
       end
 
       # Use callbacks to share common setup or constraints between actions.

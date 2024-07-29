@@ -43,7 +43,7 @@ RSpec.describe 'api/v1/games' do
       response(201, 'created') do
         let(:game) { { game: { name: 'New Game' } } }
 
-        schema '$ref' => '#/components/schemas/Game'
+        schema '$ref' => '#/components/schemas/GameDetail'
 
         OpenApi::Response.set_example_response_metadata
 
@@ -73,7 +73,7 @@ RSpec.describe 'api/v1/games' do
       response(200, 'successful') do
         let(:id) { Game.create(name: 'Existing Game').id }
 
-        schema '$ref' => '#/components/schemas/Game'
+        schema '$ref' => '#/components/schemas/GameDetail'
 
         OpenApi::Response.set_example_response_metadata
 
@@ -113,6 +113,8 @@ RSpec.describe 'api/v1/games' do
       response(200, 'successful') do
         let(:id) { Game.create(name: 'Existing Game').id }
         let(:game) { { game: { name: 'Updated Game' } } }
+
+        schema '$ref' => '#/components/schemas/GameDetail'
 
         OpenApi::Response.set_example_response_metadata
 

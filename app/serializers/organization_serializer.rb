@@ -4,14 +4,14 @@ class OrganizationSerializer < ActiveModel::Serializer
   attributes :id, :name, :owner
 
   def owner
-    UserSerializer.new(object.owner).attributes
+    ::UserSerializer.new(object.owner).attributes
   end
 end
 
-class OrganizationDetailSerializer < OrganizationSerializer
-  attributes :updated_at, :created_at, :slug, :description, :slug
+class OrganizationDetailSerializer < ActiveModel::Serializer
+  attributes :id, :name, :owner, :updated_at, :created_at, :slug, :description, :slug
 
   def owner
-    UserDetailsSerializer.new(object.owner).attributes
+    ::UserDetailSerializer.new(object.owner).attributes
   end
 end

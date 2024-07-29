@@ -1,3 +1,4 @@
+require_relative '../../../serializers/tournament_serializer'
 module Api
   module V1
     class TournamentsController < ApplicationController
@@ -11,7 +12,7 @@ module Api
 
       # GET /api/v1/tournaments/:id
       def show
-        render json: @tournament, each_serializer: ::TournamentDetailsSerializer, status: :ok
+        render json: serialize_tournament, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Tournament not found' }, status: :not_found
       end
@@ -20,7 +21,7 @@ module Api
       def create
         @tournament = ::Tournament::Tournament.new(tournament_params)
         if @tournament.save
-          render json: @tournament, status: :created, each_serializer: ::TournamentDetailsSerializer
+          render json: serialize_tournament, status: :created_at
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end
@@ -31,7 +32,7 @@ module Api
       # PATCH/PUT /api/v1/tournaments/:id
       def update
         if @tournament.update(tournament_params)
-          render json: @tournament, status: :ok, each_serializer: ::TournamentDetailsSerializer
+          render serialize_tournament, status: :ok
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end
@@ -56,6 +57,10 @@ module Api
       # GET /api/v1/tournaments/:id/players
 
       private
+
+      def serialize_tournament
+        ::TournamentDetailSerializer.new(@tournament).attributes
+      end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_tournament

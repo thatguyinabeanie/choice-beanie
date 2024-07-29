@@ -33,7 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Game"
+                "$ref": "#/components/schemas/GameDetail"
         '422':
           description: unprocessable entity
       requestBody:
@@ -72,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Game"
+                "$ref": "#/components/schemas/GameDetail"
         '404':
           description: not found
     patch:
@@ -85,6 +85,10 @@ paths:
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GameDetail"
         '404':
           description: not found
       requestBody:
@@ -381,6 +385,16 @@ components:
     NotFound:
       description: Not found
   schemas:
+    Format:
+      type: object
+      title: Format
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
     Game:
       type: object
       title: Game
@@ -395,6 +409,25 @@ components:
       - id
       - name
       - slug
+    GameDetail:
+      type: object
+      title: GameDetail
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        formats:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Format"
+      required:
+      - id
+      - name
+      - slug
+      - formats
     User:
       type: object
       title: User
