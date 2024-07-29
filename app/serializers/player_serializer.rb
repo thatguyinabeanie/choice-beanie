@@ -1,6 +1,5 @@
 module Serializer
-  class PlayerSerializer
-    include JSONAPI::Serializer
+  class PlayerSerializer < ActiveModel::Serializer
     attribute :user_id
     attribute :first_name
     attribute :last_name

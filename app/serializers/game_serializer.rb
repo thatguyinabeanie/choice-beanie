@@ -1,6 +1,5 @@
 module Serializer
-  class Game
-    include JSONAPI::Serializer
+  class Game < ActiveModel::Serializer
     attributes :id, :name, :slug
   end
 end

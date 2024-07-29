@@ -48,6 +48,7 @@ services:
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
+    # command: npm install && (npm run dev & ) && sleep infinity
     tty: true
     ports:
       - 8080:8080

@@ -159,7 +159,7 @@ RSpec.describe 'api/v1/users' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/User'
+        schema '$ref' => '#/components/schemas/UserDetails'
 
         OpenApi::Response.set_example_response_metadata
 

@@ -141,7 +141,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Organization"
+                "$ref": "#/components/schemas/OrganizationDetails"
       requestBody:
         content:
           application/json:
@@ -180,7 +180,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Organization"
+                "$ref": "#/components/schemas/OrganizationDetails"
         '404':
           description: not found
     patch:
@@ -196,7 +196,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Organization"
+                "$ref": "#/components/schemas/OrganizationDetails"
         '404':
           description: not found
       requestBody:
@@ -381,6 +381,19 @@ components:
     NotFound:
       description: Not found
   schemas:
+    Game:
+      type: object
+      title: Game
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+      required:
+      - name
+      - slug
     User:
       type: object
       title: User
@@ -409,19 +422,6 @@ components:
             type: string
           slug:
             type: string
-    Game:
-      type: object
-      title: Game
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        slug:
-          type: string
-      required:
-      - name
-      - slug
     Organization:
       type: object
       title: Organization
@@ -430,11 +430,37 @@ components:
           type: integer
         name:
           type: string
+        owner:
+          "$ref": "#/components/schemas/User"
+      required:
+      - id
+      - name
+      - owner
+    OrganizationDetails:
+      type: object
+      title: OrganizationDetails
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        owner:
+          "$ref": "#/components/schemas/UserDetails"
         description:
           type: string
         slug:
           type: string
-        owner:
-          "$ref": "#/components/schemas/User"
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
       required:
+      - id
       - name
+      - owner
+      - description
+      - slug
+      - created_at
+      - updated_at

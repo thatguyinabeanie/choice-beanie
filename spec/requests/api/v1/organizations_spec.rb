@@ -53,7 +53,7 @@ RSpec.describe 'api/v1/organizations' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/Organization'
+        schema '$ref' => '#/components/schemas/OrganizationDetails'
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
@@ -73,7 +73,7 @@ RSpec.describe 'api/v1/organizations' do
         let(:organization) { create(:organization) }
         let(:id) { organization.id }
 
-        schema '$ref' => '#/components/schemas/Organization'
+        schema '$ref' => '#/components/schemas/OrganizationDetails'
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
@@ -121,7 +121,7 @@ RSpec.describe 'api/v1/organizations' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/Organization'
+        schema '$ref' => '#/components/schemas/OrganizationDetails'
         OpenApi::Response.set_example_response_metadata
         run_test!
       end

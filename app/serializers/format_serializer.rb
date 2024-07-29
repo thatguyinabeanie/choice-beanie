@@ -1,6 +1,5 @@
 module Serializer
-  class Format
-    include JSONAPI::Serializer
+  class Format < ActiveModel::Serializer
     attributes :id, :name
   end
 end

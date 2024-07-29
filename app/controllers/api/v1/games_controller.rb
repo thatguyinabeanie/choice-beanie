@@ -17,7 +17,7 @@ module Api
       # GET /api/v1/games/:id
       # GET /api/v1/games/:id.json
       def show
-        render json: @game, each_serializer: ::Serializer::Game, status: :ok
+        render json: serialize, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
@@ -28,7 +28,7 @@ module Api
         @game = Game.new(game_params)
 
         if @game.save
-          render json: @game, each_serializer: ::Serializer::Game, status: :created
+          render json: serialize, status: :created
         else
           render json: @game.errors, status: :unprocessable_entity
         end
@@ -40,7 +40,7 @@ module Api
       # PATCH/PUT /api/v1/games/:id.json
       def update
         if @game.update(game_params)
-          render json: @game, each_serializer: ::Serializer::Game, status: :ok
+          render json: serialize, status: :ok
         else
           render json: { error: @game.errors.full_messages }, status: :unprocessable_entity
         end
@@ -58,6 +58,10 @@ module Api
       end
 
       private
+
+      def serialize
+        ::Serializer::Game.new(@game).attributes
+      end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_game

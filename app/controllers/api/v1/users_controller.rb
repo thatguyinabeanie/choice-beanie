@@ -16,7 +16,7 @@ module Api
 
       # GET /api/v1/users/:id
       def show
-        render json: @user, each_serializer: ::Serializer::UserDetails, status: :ok
+        render json: serialize_user_details, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: USER_NOT_FOUND }, status: :not_found
       end
@@ -25,7 +25,7 @@ module Api
       def create
         @user = User.new user_params
         if @user.save
-          render json: @user, each_serializer: ::Serializer::UserDetails, status: :created
+          render json: serialize_user_details, status: :created
         else
           render json: @user.errors, status: :unprocessable_entity
         end
@@ -36,7 +36,7 @@ module Api
       # PATCH/PUT /api/v1/users/:id
       def update
         if @user.update(user_params)
-          render json: @user, each_serializer: ::Serializer::UserDetails, status: :ok
+          render json: serialize_user_details, status: :ok
         else
           render json: @user.errors, status: :unprocessable_entity
         end
@@ -54,6 +54,10 @@ module Api
 
       private
 
+      def serialize_user_details
+        ::Serializer::UserDetails.new(@user).attributes
+      end
+
       # Use callbacks to share common setup or constraints between actions.
       def set_user
         @user = User.find(params[:id])
@@ -61,7 +65,7 @@ module Api
 
       # Only allow a list of trusted parameters through.
       def user_params
-        params.require(:user).permit(:username, :email, :pronouns, :first_name, :last_name, :password, :password_confirmation)
+        params.require(:user).permit(:id, :username, :email, :pronouns, :first_name, :last_name, :password, :password_confirmation, :slug)
       end
     end
   end

@@ -13,7 +13,7 @@ module Api
       end
 
       def show
-        render json: @organization, each_serializer: ::Serializer::OrganizationDetails, status: :ok
+        render json: serialize_org_details, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
       end
@@ -23,7 +23,7 @@ module Api
         @organization = Organization::Organization.new organization_params
 
         if @organization.save
-          render json: @organization, each_serializer: ::Serializer::OrganizationDetails, status: :created
+          render json: serialize_org_details, status: :created
         else
           render json: { error: @organization.errors.full_messages }, status: :unprocessable_entity
         end
@@ -31,7 +31,7 @@ module Api
 
       def update
         if @organization.update(organization_params)
-          render json: @organization, each_serializer: ::Serializer::OrganizationDetails, status: :ok
+          render json: serialize_org_details, status: :ok
         else
           render json: { error: @organization.errors.full_messages }, status: :unprocessable_entity
         end
@@ -55,6 +55,10 @@ module Api
       end
 
       private
+
+      def serialize_org_details
+        ::Serializer::OrganizationDetails.new(@organization).attributes
+      end
 
       def set_organization
         @organization = Organization::Organization.friendly.find(params[:id])
