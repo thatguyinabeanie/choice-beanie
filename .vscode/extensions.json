@@ -2,13 +2,23 @@
   "recommendations": [
     "snyk-security.snyk-vulnerability-scanner",
     "ms-azuretools.vscode-docker",
-    "shopify.ruby-lsp",
     "misogi.ruby-rubocop",
     "koichisasada.vscode-rdbg",
     "connorshea.vscode-ruby-test-adapter",
     "iliazeus.vscode-ansi",
     "github.github-vscode-theme",
     "sonarsource.sonarlint-vscode",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "postman.postman-for-vscode",
+    "ms-vscode-remote.remote-containers",
+    "github.vscode-github-actions",
+    "github.codespaces",
+    "github.copilot",
+    "github.copilot-chat",
+    "github.vscode-pull-request-github",
+    "imgildev.vscode-mustache-snippets",
+    "mutantdino.resourcemonitor",
+    "ms-vscode.test-adapter-converter",
+    "hbenl.vscode-test-explorer"
   ]
 }
