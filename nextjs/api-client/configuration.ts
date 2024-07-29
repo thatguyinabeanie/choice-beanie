@@ -13,7 +13,7 @@
  */
 
 export const API_BASE_URL_PATH: string =
-  process?.env?.API_BASE_URL ?? "http://localhost:3000";
+  process?.env?.API_BASE_URL ?? "default_base_url";
 
 export interface ConfigurationParameters {
   apiKey?:

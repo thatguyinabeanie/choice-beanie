@@ -328,7 +328,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserDetails"
         '404':
           description: not found
       requestBody:
@@ -392,6 +392,7 @@ components:
         slug:
           type: string
       required:
+      - id
       - name
       - slug
     User:
@@ -411,17 +412,29 @@ components:
     UserDetails:
       type: object
       title: UserDetails
-      allOf:
-      - "$ref": "#/components/schemas/User"
-      - properties:
-          email:
-            type: string
-          first_name:
-            type: string
-          last_name:
-            type: string
-          slug:
-            type: string
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        pronouns:
+          type: string
+        slug:
+          type: string
+      required:
+      - id
+      - username
+      - email
+      - first_name
+      - last_name
+      - pronouns
+      - slug
     Organization:
       type: object
       title: Organization

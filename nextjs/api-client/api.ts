@@ -67,7 +67,7 @@ export interface Game {
    * @type {number}
    * @memberof Game
    */
-  id?: number;
+  id: number;
   /**
    *
    * @type {string}
@@ -142,6 +142,18 @@ export interface OrganizationDetails {
    * @memberof OrganizationDetails
    */
   slug: string;
+  /**
+   *
+   * @type {string}
+   * @memberof OrganizationDetails
+   */
+  updated_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof OrganizationDetails
+   */
+  created_at: string;
 }
 /**
  *
@@ -437,31 +449,31 @@ export interface UserDetails {
    * @type {string}
    * @memberof UserDetails
    */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  last_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
   pronouns: string;
   /**
    *
    * @type {string}
    * @memberof UserDetails
    */
-  email?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UserDetails
-   */
-  first_name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UserDetails
-   */
-  last_name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UserDetails
-   */
-  slug?: string;
+  slug: string;
 }
 
 /**
@@ -1958,7 +1970,7 @@ export const UsersApiFp = function (configuration?: Configuration) {
       patchUserRequest?: PatchUserRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(
         id,
@@ -2073,7 +2085,7 @@ export const UsersApiFactory = function (
       id: number,
       patchUserRequest?: PatchUserRequest,
       options?: RawAxiosRequestConfig,
-    ): AxiosPromise<User> {
+    ): AxiosPromise<UserDetails> {
       return localVarFp
         .patchUser(id, patchUserRequest, options)
         .then((request) => request(axios, basePath));
