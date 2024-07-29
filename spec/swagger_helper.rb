@@ -34,21 +34,43 @@ RSpec.configure do |config|
         }
       ],
       components: {
+        responses: {
+          NotFound: {
+            description: 'Not found'
+          }
+        },
+
         schemas: {
           User: {
             type: :object,
+            title: 'User',
             properties: {
               id: { type: :integer },
               username: { type: :string },
-              email: { type: :string },
-              pronouns: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              slug: { type: :string }
-            }, required: %w[id username pronouns]
+              pronouns: { type: :string }
+            },
+            required: %w[id username pronouns]
           },
+
+          UserDetails: {
+            type: :object,
+            title: 'UserDetails',
+            allOf: [
+              { '$ref' => '#/components/schemas/User' },
+              {
+                properties: {
+                  email: { type: :string },
+                  first_name: { type: :string },
+                  last_name: { type: :string },
+                  slug: { type: :string }
+                }
+              }
+            ]
+          },
+
           Game: {
             type: :object,
+            title: 'Game',
             properties: {
               id: { type: :integer },
               name: { type: :string },
@@ -56,9 +78,12 @@ RSpec.configure do |config|
             },
             required: %w[name slug]
           },
+
           Organization: {
             type: :object,
+            title: 'Organization',
             properties: {
+              id: { type: :integer },
               name: { type: :string },
               description: { type: :string },
               slug: { type: :string },

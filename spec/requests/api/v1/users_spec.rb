@@ -63,7 +63,7 @@ RSpec.describe 'api/v1/users' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/User'
+        schema '$ref' => '#/components/schemas/UserDetails'
 
         OpenApi::Response.set_example_response_metadata
 
@@ -104,7 +104,7 @@ RSpec.describe 'api/v1/users' do
       response(200, 'successful') do
         let(:id) { create(:user, first_name: 'Existing', last_name: 'User').id }
 
-        schema '$ref' => '#/components/schemas/User'
+        schema '$ref' => '#/components/schemas/UserDetails'
 
         run_test!
       end
@@ -123,6 +123,7 @@ RSpec.describe 'api/v1/users' do
       produces OpenApi::Response::JSON_CONTENT_TYPE
       consumes OpenApi::Response::JSON_CONTENT_TYPE
       description 'Updates an existing User.'
+      operationId 'patchUser'
 
       parameter name: :user, in: :body, schema: {
         type: :object,
@@ -157,6 +158,8 @@ RSpec.describe 'api/v1/users' do
             }
           }
         end
+
+        schema '$ref' => '#/components/schemas/User'
 
         OpenApi::Response.set_example_response_metadata
 

@@ -1,6 +1,6 @@
 module Serializer
-  class Game
+  class Format
     include JSONAPI::Serializer
-    attributes :id, :name, :slug
+    attributes :id, :name
   end
 end

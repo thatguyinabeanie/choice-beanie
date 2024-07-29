@@ -1,3 +1,5 @@
+require_relative '../../../serializers/game_serializer'
+
 module Api
   module V1
     class GamesController < ApplicationController
@@ -9,13 +11,13 @@ module Api
       # GET /api/v1/games.json
       def index
         @games = Game.all
-        render json: @games
+        render json: @games, each_serializer: ::Serializer::Game, status: :ok
       end
 
       # GET /api/v1/games/:id
       # GET /api/v1/games/:id.json
       def show
-        render json: @game.as_json(only: %i[id name slug])
+        render json: @game, each_serializer: ::Serializer::Game, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
@@ -26,7 +28,7 @@ module Api
         @game = Game.new(game_params)
 
         if @game.save
-          render json: @game, status: :created
+          render json: @game, each_serializer: ::Serializer::Game, status: :created
         else
           render json: @game.errors, status: :unprocessable_entity
         end
@@ -38,7 +40,7 @@ module Api
       # PATCH/PUT /api/v1/games/:id.json
       def update
         if @game.update(game_params)
-          render json: @game
+          render json: @game, each_serializer: ::Serializer::Game, status: :ok
         else
           render json: { error: @game.errors.full_messages }, status: :unprocessable_entity
         end

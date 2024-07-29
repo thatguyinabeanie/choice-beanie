@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       resources :matches, only: %i[index show update]
       resources :users, only: %i[index show create update destroy]
 
-      resources :organizations, only: %i[index show create update destroy] do
+      resources :organizations, only: %i[index show create update destroy staff] do
         member do
           get 'staff', to: 'organizations#staff'
         end

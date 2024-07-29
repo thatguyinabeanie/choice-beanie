@@ -59,19 +59,6 @@ import {
 /**
  *
  * @export
- * @interface CreateGameRequest
- */
-export interface CreateGameRequest {
-  /**
-   *
-   * @type {PostGame}
-   * @memberof CreateGameRequest
-   */
-  game: PostGame;
-}
-/**
- *
- * @export
  * @interface Game
  */
 export interface Game {
@@ -80,7 +67,7 @@ export interface Game {
    * @type {number}
    * @memberof Game
    */
-  id: number;
+  id?: number;
   /**
    *
    * @type {string}
@@ -93,6 +80,43 @@ export interface Game {
    * @memberof Game
    */
   slug: string;
+}
+/**
+ *
+ * @export
+ * @interface Organization
+ */
+export interface Organization {
+  /**
+   *
+   * @type {number}
+   * @memberof Organization
+   */
+  id?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof Organization
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Organization
+   */
+  description?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Organization
+   */
+  slug?: string;
+  /**
+   *
+   * @type {User}
+   * @memberof Organization
+   */
+  owner?: User;
 }
 /**
  *
@@ -123,6 +147,100 @@ export interface PatchGameRequestGame {
 /**
  *
  * @export
+ * @interface PatchOrganization
+ */
+export interface PatchOrganization {
+  /**
+   *
+   * @type {string}
+   * @memberof PatchOrganization
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchOrganization
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof PatchOrganization
+   */
+  owner_id?: number;
+}
+/**
+ *
+ * @export
+ * @interface PatchOrganizationRequest
+ */
+export interface PatchOrganizationRequest {
+  /**
+   *
+   * @type {PatchOrganization}
+   * @memberof PatchOrganizationRequest
+   */
+  organization?: PatchOrganization;
+}
+/**
+ *
+ * @export
+ * @interface PatchUser
+ */
+export interface PatchUser {
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  password: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  last_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PatchUser
+   */
+  pronouns?: string;
+}
+/**
+ *
+ * @export
+ * @interface PatchUserRequest
+ */
+export interface PatchUserRequest {
+  /**
+   *
+   * @type {PatchUser}
+   * @memberof PatchUserRequest
+   */
+  user: PatchUser;
+}
+/**
+ *
+ * @export
  * @interface PostGame
  */
 export interface PostGame {
@@ -133,6 +251,193 @@ export interface PostGame {
    */
   name: string;
 }
+/**
+ *
+ * @export
+ * @interface PostGameRequest
+ */
+export interface PostGameRequest {
+  /**
+   *
+   * @type {PostGame}
+   * @memberof PostGameRequest
+   */
+  game: PostGame;
+}
+/**
+ *
+ * @export
+ * @interface PostOrganization
+ */
+export interface PostOrganization {
+  /**
+   *
+   * @type {string}
+   * @memberof PostOrganization
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostOrganization
+   */
+  description: string;
+  /**
+   *
+   * @type {number}
+   * @memberof PostOrganization
+   */
+  owner_id?: number;
+}
+/**
+ *
+ * @export
+ * @interface PostOrganizationRequest
+ */
+export interface PostOrganizationRequest {
+  /**
+   *
+   * @type {PostOrganization}
+   * @memberof PostOrganizationRequest
+   */
+  organization?: PostOrganization;
+}
+/**
+ *
+ * @export
+ * @interface PostUser
+ */
+export interface PostUser {
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  last_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  pronouns?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  password: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostUser
+   */
+  password_confirmation: string;
+}
+/**
+ *
+ * @export
+ * @interface PostUserRequest
+ */
+export interface PostUserRequest {
+  /**
+   *
+   * @type {PostUser}
+   * @memberof PostUserRequest
+   */
+  user?: PostUser;
+}
+/**
+ *
+ * @export
+ * @interface User
+ */
+export interface User {
+  /**
+   *
+   * @type {number}
+   * @memberof User
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  pronouns: string;
+}
+/**
+ *
+ * @export
+ * @interface UserDetails
+ */
+export interface UserDetails {
+  /**
+   *
+   * @type {number}
+   * @memberof UserDetails
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  pronouns: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  email?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  first_name?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  last_name?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
+  slug?: string;
+}
 
 /**
  * GamesApi - axios parameter creator
@@ -142,53 +447,6 @@ export const GamesApiAxiosParamCreator = function (
   configuration?: Configuration,
 ) {
   return {
-    /**
-     * Creates a new game.
-     * @summary Create Game
-     * @param {CreateGameRequest} [createGameRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createGame: async (
-      createGameRequest?: CreateGameRequest,
-      options: RawAxiosRequestConfig = {},
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/api/v1/games`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options,
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions = baseOptions?.headers ?? {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        createGameRequest,
-        localVarRequestOptions,
-        configuration,
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
     /**
      * Deletes a game by ID.
      * @summary Delete Game
@@ -285,7 +543,7 @@ export const GamesApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getGames: async (
+    listGames: async (
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/games`;
@@ -371,6 +629,53 @@ export const GamesApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     * Creates a new game.
+     * @summary Create Game
+     * @param {PostGameRequest} [postGameRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postGame: async (
+      postGameRequest?: PostGameRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/games`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        postGameRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -381,36 +686,6 @@ export const GamesApiAxiosParamCreator = function (
 export const GamesApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = GamesApiAxiosParamCreator(configuration);
   return {
-    /**
-     * Creates a new game.
-     * @summary Create Game
-     * @param {CreateGameRequest} [createGameRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createGame(
-      createGameRequest?: CreateGameRequest,
-      options?: RawAxiosRequestConfig,
-    ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Game>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createGame(
-        createGameRequest,
-        options,
-      );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["GamesApi.createGame"]?.[
-          localVarOperationServerIndex
-        ]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
-    },
     /**
      * Deletes a game by ID.
      * @summary Delete Game
@@ -476,16 +751,16 @@ export const GamesApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getGames(
+    async listGames(
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Game>>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getGames(options);
+        await localVarAxiosParamCreator.listGames(options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
-        operationServerMap["GamesApi.getGames"]?.[localVarOperationServerIndex]
+        operationServerMap["GamesApi.listGames"]?.[localVarOperationServerIndex]
           ?.url;
       return (axios, basePath) =>
         createRequestFunction(
@@ -527,6 +802,35 @@ export const GamesApiFp = function (configuration?: Configuration) {
           configuration,
         )(axios, localVarOperationServerBasePath || basePath);
     },
+    /**
+     * Creates a new game.
+     * @summary Create Game
+     * @param {PostGameRequest} [postGameRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async postGame(
+      postGameRequest?: PostGameRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Game>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.postGame(
+        postGameRequest,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["GamesApi.postGame"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
   };
 };
 
@@ -541,21 +845,6 @@ export const GamesApiFactory = function (
 ) {
   const localVarFp = GamesApiFp(configuration);
   return {
-    /**
-     * Creates a new game.
-     * @summary Create Game
-     * @param {CreateGameRequest} [createGameRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createGame(
-      createGameRequest?: CreateGameRequest,
-      options?: RawAxiosRequestConfig,
-    ): AxiosPromise<Game> {
-      return localVarFp
-        .createGame(createGameRequest, options)
-        .then((request) => request(axios, basePath));
-    },
     /**
      * Deletes a game by ID.
      * @summary Delete Game
@@ -589,9 +878,9 @@ export const GamesApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getGames(options?: RawAxiosRequestConfig): AxiosPromise<Array<Game>> {
+    listGames(options?: RawAxiosRequestConfig): AxiosPromise<Array<Game>> {
       return localVarFp
-        .getGames(options)
+        .listGames(options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -611,6 +900,21 @@ export const GamesApiFactory = function (
         .patchGame(id, patchGameRequest, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     * Creates a new game.
+     * @summary Create Game
+     * @param {PostGameRequest} [postGameRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postGame(
+      postGameRequest?: PostGameRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Game> {
+      return localVarFp
+        .postGame(postGameRequest, options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
 
@@ -621,23 +925,6 @@ export const GamesApiFactory = function (
  * @extends {BaseAPI}
  */
 export class GamesApi extends BaseAPI {
-  /**
-   * Creates a new game.
-   * @summary Create Game
-   * @param {CreateGameRequest} [createGameRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof GamesApi
-   */
-  public createGame(
-    createGameRequest?: CreateGameRequest,
-    options?: RawAxiosRequestConfig,
-  ) {
-    return GamesApiFp(this.configuration)
-      .createGame(createGameRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
   /**
    * Deletes a game by ID.
    * @summary Delete Game
@@ -673,9 +960,9 @@ export class GamesApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof GamesApi
    */
-  public getGames(options?: RawAxiosRequestConfig) {
+  public listGames(options?: RawAxiosRequestConfig) {
     return GamesApiFp(this.configuration)
-      .getGames(options)
+      .listGames(options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -695,6 +982,1167 @@ export class GamesApi extends BaseAPI {
   ) {
     return GamesApiFp(this.configuration)
       .patchGame(id, patchGameRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Creates a new game.
+   * @summary Create Game
+   * @param {PostGameRequest} [postGameRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof GamesApi
+   */
+  public postGame(
+    postGameRequest?: PostGameRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return GamesApiFp(this.configuration)
+      .postGame(postGameRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * OrganizationsApi - axios parameter creator
+ * @export
+ */
+export const OrganizationsApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     * Deletes an organization.
+     * @summary Delete Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteOrganization: async (
+      id: string,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("deleteOrganization", "id", id);
+      const localVarPath = `/api/v1/organizations/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "DELETE",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Retrieves a specific organization.
+     * @summary Show Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getOrganization: async (
+      id: string,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getOrganization", "id", id);
+      const localVarPath = `/api/v1/organizations/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary List Organizations
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listOrganizations: async (
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/organizations`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Updates an existing organization.
+     * @summary Update Organization
+     * @param {string} id
+     * @param {PatchOrganizationRequest} [patchOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    patchOrganization: async (
+      id: string,
+      patchOrganizationRequest?: PatchOrganizationRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("patchOrganization", "id", id);
+      const localVarPath = `/api/v1/organizations/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "PATCH",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        patchOrganizationRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Creates a new organization.
+     * @summary Create Organization
+     * @param {PostOrganizationRequest} [postOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postOrganization: async (
+      postOrganizationRequest?: PostOrganizationRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/organizations`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        postOrganizationRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * OrganizationsApi - functional programming interface
+ * @export
+ */
+export const OrganizationsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    OrganizationsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     * Deletes an organization.
+     * @summary Delete Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async deleteOrganization(
+      id: string,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.deleteOrganization(id, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["OrganizationsApi.deleteOrganization"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Retrieves a specific organization.
+     * @summary Show Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getOrganization(
+      id: string,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getOrganization(
+        id,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["OrganizationsApi.getOrganization"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     *
+     * @summary List Organizations
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listOrganizations(
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string,
+      ) => AxiosPromise<Array<Organization>>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.listOrganizations(options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["OrganizationsApi.listOrganizations"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Updates an existing organization.
+     * @summary Update Organization
+     * @param {string} id
+     * @param {PatchOrganizationRequest} [patchOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async patchOrganization(
+      id: string,
+      patchOrganizationRequest?: PatchOrganizationRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.patchOrganization(
+          id,
+          patchOrganizationRequest,
+          options,
+        );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["OrganizationsApi.patchOrganization"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Creates a new organization.
+     * @summary Create Organization
+     * @param {PostOrganizationRequest} [postOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async postOrganization(
+      postOrganizationRequest?: PostOrganizationRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.postOrganization(
+          postOrganizationRequest,
+          options,
+        );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["OrganizationsApi.postOrganization"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * OrganizationsApi - factory interface
+ * @export
+ */
+export const OrganizationsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = OrganizationsApiFp(configuration);
+  return {
+    /**
+     * Deletes an organization.
+     * @summary Delete Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteOrganization(
+      id: string,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<void> {
+      return localVarFp
+        .deleteOrganization(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Retrieves a specific organization.
+     * @summary Show Organization
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getOrganization(
+      id: string,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Organization> {
+      return localVarFp
+        .getOrganization(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary List Organizations
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listOrganizations(
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Array<Organization>> {
+      return localVarFp
+        .listOrganizations(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Updates an existing organization.
+     * @summary Update Organization
+     * @param {string} id
+     * @param {PatchOrganizationRequest} [patchOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    patchOrganization(
+      id: string,
+      patchOrganizationRequest?: PatchOrganizationRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Organization> {
+      return localVarFp
+        .patchOrganization(id, patchOrganizationRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Creates a new organization.
+     * @summary Create Organization
+     * @param {PostOrganizationRequest} [postOrganizationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postOrganization(
+      postOrganizationRequest?: PostOrganizationRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Organization> {
+      return localVarFp
+        .postOrganization(postOrganizationRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * OrganizationsApi - object-oriented interface
+ * @export
+ * @class OrganizationsApi
+ * @extends {BaseAPI}
+ */
+export class OrganizationsApi extends BaseAPI {
+  /**
+   * Deletes an organization.
+   * @summary Delete Organization
+   * @param {string} id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof OrganizationsApi
+   */
+  public deleteOrganization(id: string, options?: RawAxiosRequestConfig) {
+    return OrganizationsApiFp(this.configuration)
+      .deleteOrganization(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Retrieves a specific organization.
+   * @summary Show Organization
+   * @param {string} id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof OrganizationsApi
+   */
+  public getOrganization(id: string, options?: RawAxiosRequestConfig) {
+    return OrganizationsApiFp(this.configuration)
+      .getOrganization(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary List Organizations
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof OrganizationsApi
+   */
+  public listOrganizations(options?: RawAxiosRequestConfig) {
+    return OrganizationsApiFp(this.configuration)
+      .listOrganizations(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Updates an existing organization.
+   * @summary Update Organization
+   * @param {string} id
+   * @param {PatchOrganizationRequest} [patchOrganizationRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof OrganizationsApi
+   */
+  public patchOrganization(
+    id: string,
+    patchOrganizationRequest?: PatchOrganizationRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return OrganizationsApiFp(this.configuration)
+      .patchOrganization(id, patchOrganizationRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Creates a new organization.
+   * @summary Create Organization
+   * @param {PostOrganizationRequest} [postOrganizationRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof OrganizationsApi
+   */
+  public postOrganization(
+    postOrganizationRequest?: PostOrganizationRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return OrganizationsApiFp(this.configuration)
+      .postOrganization(postOrganizationRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * UsersApi - axios parameter creator
+ * @export
+ */
+export const UsersApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     *
+     * @summary Delete User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteUser: async (
+      id: number,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("deleteUser", "id", id);
+      const localVarPath = `/api/v1/users/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "DELETE",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Retrieves a specific User by ID.
+     * @summary Show User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUser: async (
+      id: number,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getUser", "id", id);
+      const localVarPath = `/api/v1/users/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Retrieves a list of all Users
+     * @summary List Users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listUsers: async (
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/users`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Updates an existing User.
+     * @summary Update User
+     * @param {number} id ID of the User
+     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    patchUser: async (
+      id: number,
+      patchUserRequest?: PatchUserRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("patchUser", "id", id);
+      const localVarPath = `/api/v1/users/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id)),
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "PATCH",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        patchUserRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Creates a new User.
+     * @summary Create User
+     * @param {PostUserRequest} [postUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postUser: async (
+      postUserRequest?: PostUserRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/users`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        postUserRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * UsersApi - functional programming interface
+ * @export
+ */
+export const UsersApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary Delete User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async deleteUser(
+      id: number,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(
+        id,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["UsersApi.deleteUser"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Retrieves a specific User by ID.
+     * @summary Show User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getUser(
+      id: number,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(
+        id,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["UsersApi.getUser"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Retrieves a list of all Users
+     * @summary List Users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listUsers(
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<User>>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.listUsers(options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["UsersApi.listUsers"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Updates an existing User.
+     * @summary Update User
+     * @param {number} id ID of the User
+     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async patchUser(
+      id: number,
+      patchUserRequest?: PatchUserRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(
+        id,
+        patchUserRequest,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["UsersApi.patchUser"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Creates a new User.
+     * @summary Create User
+     * @param {PostUserRequest} [postUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async postUser(
+      postUserRequest?: PostUserRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.postUser(
+        postUserRequest,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["UsersApi.postUser"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * UsersApi - factory interface
+ * @export
+ */
+export const UsersApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = UsersApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary Delete User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteUser(
+      id: number,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<void> {
+      return localVarFp
+        .deleteUser(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Retrieves a specific User by ID.
+     * @summary Show User
+     * @param {number} id ID of the User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUser(
+      id: number,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<UserDetails> {
+      return localVarFp
+        .getUser(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Retrieves a list of all Users
+     * @summary List Users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listUsers(options?: RawAxiosRequestConfig): AxiosPromise<Array<User>> {
+      return localVarFp
+        .listUsers(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Updates an existing User.
+     * @summary Update User
+     * @param {number} id ID of the User
+     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    patchUser(
+      id: number,
+      patchUserRequest?: PatchUserRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<User> {
+      return localVarFp
+        .patchUser(id, patchUserRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Creates a new User.
+     * @summary Create User
+     * @param {PostUserRequest} [postUserRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postUser(
+      postUserRequest?: PostUserRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<UserDetails> {
+      return localVarFp
+        .postUser(postUserRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * UsersApi - object-oriented interface
+ * @export
+ * @class UsersApi
+ * @extends {BaseAPI}
+ */
+export class UsersApi extends BaseAPI {
+  /**
+   *
+   * @summary Delete User
+   * @param {number} id ID of the User
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public deleteUser(id: number, options?: RawAxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      .deleteUser(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Retrieves a specific User by ID.
+   * @summary Show User
+   * @param {number} id ID of the User
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public getUser(id: number, options?: RawAxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      .getUser(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Retrieves a list of all Users
+   * @summary List Users
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public listUsers(options?: RawAxiosRequestConfig) {
+    return UsersApiFp(this.configuration)
+      .listUsers(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Updates an existing User.
+   * @summary Update User
+   * @param {number} id ID of the User
+   * @param {PatchUserRequest} [patchUserRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public patchUser(
+    id: number,
+    patchUserRequest?: PatchUserRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return UsersApiFp(this.configuration)
+      .patchUser(id, patchUserRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Creates a new User.
+   * @summary Create User
+   * @param {PostUserRequest} [postUserRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UsersApi
+   */
+  public postUser(
+    postUserRequest?: PostUserRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return UsersApiFp(this.configuration)
+      .postUser(postUserRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

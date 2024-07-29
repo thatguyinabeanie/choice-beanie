@@ -9,10 +9,6 @@ RSpec.describe 'api/v1/games' do
       produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all games'
       operationId 'listGames'
-
-      # parameter name: :page, in: :query, type: :integer, description: 'Page number'
-      # parameter name: :per_page, in: :query, type: :integer, description: 'Number of games per page'
-
       response(200, 'successful') do
         schema type: :array, items: { '$ref' => '#/components/schemas/Game' }
 

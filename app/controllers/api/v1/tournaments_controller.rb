@@ -6,37 +6,45 @@ module Api
       # GET /api/v1/tournaments
       def index
         @tournaments = ::Tournament::Tournament.all
-        render json: @tournaments, each_serializer: ::TournamentSerializer
+        render json: @tournaments, each_serializer: ::Serializer::Tournament, status: :ok
       end
 
       # GET /api/v1/tournaments/:id
       def show
-        render json: @tournament
+        render json: @tournament, each_serializer: ::Serializer::TournamentDetails, status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: 'Tournament not found' }, status: :not_found
       end
 
       # POST /api/v1/tournaments
       def create
         @tournament = ::Tournament::Tournament.new(tournament_params)
         if @tournament.save
-          render json: @tournament, status: :created, location: api_v1_tournament_url(@tournament)
+          render json: @tournament, status: :created, each_serializer: ::Serializer::TournamentDetails
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end
+      rescue ActionController::ParameterMissing => e
+        render json: { error: e.message }, status: :bad_request
       end
 
       # PATCH/PUT /api/v1/tournaments/:id
       def update
         if @tournament.update(tournament_params)
-          render json: @tournament
+          render json: @tournament, status: :ok, each_serializer: ::Serializer::TournamentDetails
         else
           render json: @tournament.errors, status: :unprocessable_entity
         end
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: 'Tournament not found' }, status: :not_found
       end
 
       # DELETE /api/v1/tournaments/:id
       def destroy
         @tournament.destroy
-        head :no_content
+        render json: { message: 'Tournament deleted' }, status: :ok
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: 'Tournament not found' }, status: :not_found
       end
 
       # TODO: Implement the following actions

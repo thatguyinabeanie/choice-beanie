@@ -1,4 +1,11 @@
-class UserSerializer
-  include JSONAPI::Serializer
-  attributes :id, :email, :first_name, :last_name, :username, :created_at
+module Serializer
+  class User
+    include JSONAPI::Serializer
+    attributes :id, :username, :pronouns
+  end
+
+  class UserDetails < User
+    include JSONAPI::Serializer
+    attributes :email, :first_name, :last_name, :slug
+  end
 end

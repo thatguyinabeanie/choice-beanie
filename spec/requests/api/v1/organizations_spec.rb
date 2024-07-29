@@ -92,13 +92,14 @@ RSpec.describe 'api/v1/organizations' do
       produces OpenApi::Response::JSON_CONTENT_TYPE
       consumes OpenApi::Response::JSON_CONTENT_TYPE
       description 'Updates an existing organization.'
+      operationId 'patchOrganization'
 
       parameter name: :organization, in: :body, schema: {
         type: :object,
         properties: {
           organization: {
             type: :object,
-            name: 'patchOrganization',
+            title: 'patchOrganization',
             properties: {
               name: { type: :string },
               description: { type: :string },

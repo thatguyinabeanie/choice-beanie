@@ -188,6 +188,7 @@ paths:
       tags:
       - Organizations
       description: Updates an existing organization.
+      operationId: patchOrganization
       parameters: []
       responses:
         '200':
@@ -206,7 +207,7 @@ paths:
               properties:
                 organization:
                   type: object
-                  name: patchOrganization
+                  title: patchOrganization
                   properties:
                     name:
                       type: string
@@ -257,7 +258,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserDetails"
         '422':
           description: unprocessable entity
       requestBody:
@@ -311,7 +312,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserDetails"
         '404':
           description: not found
     patch:
@@ -319,10 +320,15 @@ paths:
       tags:
       - Users
       description: Updates an existing User.
+      operationId: patchUser
       parameters: []
       responses:
         '200':
           description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
         '404':
           description: not found
       requestBody:
@@ -371,30 +377,41 @@ servers:
     defaultHost:
       default: 127.0.0.1
 components:
+  responses:
+    NotFound:
+      description: Not found
   schemas:
     User:
       type: object
+      title: User
       properties:
         id:
           type: integer
         username:
           type: string
-        email:
-          type: string
         pronouns:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        slug:
           type: string
       required:
       - id
       - username
       - pronouns
+    UserDetails:
+      type: object
+      title: UserDetails
+      allOf:
+      - "$ref": "#/components/schemas/User"
+      - properties:
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          slug:
+            type: string
     Game:
       type: object
+      title: Game
       properties:
         id:
           type: integer
@@ -407,12 +424,17 @@ components:
       - slug
     Organization:
       type: object
+      title: Organization
       properties:
+        id:
+          type: integer
         name:
           type: string
         description:
           type: string
         slug:
           type: string
+        owner:
+          "$ref": "#/components/schemas/User"
       required:
       - name
