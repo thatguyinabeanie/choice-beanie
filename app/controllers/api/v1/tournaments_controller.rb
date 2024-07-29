@@ -2,6 +2,7 @@ require_relative '../../../serializers/tournament_serializer'
 module Api
   module V1
     class TournamentsController < ApplicationController
+      TOURNAMENT_NOT_FOUND = 'Tournament not found'.freeze
       before_action :set_tournament, only: %i[show update destroy]
 
       # GET /api/v1/tournaments
@@ -14,7 +15,7 @@ module Api
       def show
         render json: serialize_tournament, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Tournament not found' }, status: :not_found
+        render json: { error: TOURNAMENT_NOT_FOUND }, status: :not_found
       end
 
       # POST /api/v1/tournaments
@@ -37,7 +38,7 @@ module Api
           render json: @tournament.errors, status: :unprocessable_entity
         end
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Tournament not found' }, status: :not_found
+        render json: { error: TOURNAMENT_NOT_FOUND }, status: :not_found
       end
 
       # DELETE /api/v1/tournaments/:id
@@ -45,7 +46,7 @@ module Api
         @tournament.destroy
         render json: { message: 'Tournament deleted' }, status: :ok
       rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Tournament not found' }, status: :not_found
+        render json: { error: TOURNAMENT_NOT_FOUND }, status: :not_found
       end
 
       # TODO: Implement the following actions
