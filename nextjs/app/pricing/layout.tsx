@@ -1,13 +1,2 @@
-import ChildrenProps from "@/types/childrenProps";
-
-export default function PricingLayout ({
-  children,
-}: Readonly<ChildrenProps>) {
-  return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-lg text-center justify-center">
-        { children }
-      </div>
-    </section>
-  );
-}
+import Layout from "@/components/layout";
+export default Layout;
