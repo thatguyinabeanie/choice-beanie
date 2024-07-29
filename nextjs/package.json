@@ -6,7 +6,8 @@
     "dev": "next dev --turbo --port 8080",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+    "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+    "test": "jest --coverage --passWithNoTests"
   },
   "dependencies": {
     "@nextui-org/button": "2.0.37",
