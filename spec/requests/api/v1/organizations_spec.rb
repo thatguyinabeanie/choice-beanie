@@ -4,6 +4,7 @@ require_relative '../../../support/openapi/response_helper'
 
 ORGANIZATION_DETAIL_SCHEMA = '#/components/schemas/OrganizationDetails'.freeze
 DESCRIPTION = 'the bomb dot com'.freeze
+NOT_FOUND = 'not found'.freeze
 RSpec.describe 'api/v1/organizations' do
   path('/api/v1/organizations') do
     get('List Organizations') do
@@ -80,7 +81,7 @@ RSpec.describe 'api/v1/organizations' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
@@ -128,7 +129,7 @@ RSpec.describe 'api/v1/organizations' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { -1 }
         let(:organization) do
           {
@@ -160,7 +161,7 @@ RSpec.describe 'api/v1/organizations' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
