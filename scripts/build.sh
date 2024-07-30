@@ -8,7 +8,6 @@ set -e
 echo "Checking for bundle dependencies..."
 bundle check || bundle install
 
-export RAILS_DB_HOST=localhost
 echo "Preparing database..."
 bundle exec rails db:prepare
 

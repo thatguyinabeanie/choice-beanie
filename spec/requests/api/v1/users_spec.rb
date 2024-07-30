@@ -4,7 +4,7 @@ require_relative '../../../support/openapi/response_helper'
 
 PASSWORD = 'a_whole_new_world_1!'.freeze
 USER_DETAILS_SCHEMA = '#/components/schemas/UserDetails'.freeze
-NOT_FOUND = 'not found'.freeze
+
 
 RSpec.describe 'api/v1/users' do
   path('/api/v1/users') do
