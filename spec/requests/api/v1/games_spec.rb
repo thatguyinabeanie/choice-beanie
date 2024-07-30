@@ -2,7 +2,7 @@ require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
-GAME_DETAIL_COMPONENT_SPEC = '#/components/schemas/Game'.freeze
+GAME_DETAIL_COMPONENT_SPEC = '#/components/schemas/GameDetail'.freeze
 
 RSpec.describe 'api/v1/games' do
   path('/api/v1/games') do
