@@ -9,6 +9,8 @@ RSpec.configure do |config|
   # to ensure that it's configured to serve Swagger from the same folder
   config.openapi_root = Rails.root.join('swagger').to_s
 
+  config.openapi_strict_schema_validation = true
+
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
   # be generated at the provided relative path under openapi_root
@@ -34,15 +36,97 @@ RSpec.configure do |config|
         }
       ],
       components: {
+        responses: {
+          NotFound: {
+            description: 'Not found'
+          }
+        },
+
         schemas: {
+          Format: {
+            type: :object,
+            title: 'Format',
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              slug: { type: :string }
+            }
+          },
+
           Game: {
             type: :object,
+            title: 'Game',
             properties: {
               id: { type: :integer },
               name: { type: :string },
               slug: { type: :string }
             },
             required: %w[id name slug]
+          },
+
+          GameDetail: {
+            type: :object,
+            title: 'GameDetail',
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              slug: { type: :string },
+              formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
+            },
+            required: %w[id name slug formats]
+          },
+
+          User: {
+            type: :object,
+            title: 'User',
+            properties: {
+              id: { type: :integer },
+              username: { type: :string },
+              pronouns: { type: :string }
+            },
+            required: %w[id username pronouns]
+          },
+
+          UserDetails: {
+            type: :object,
+            title: 'UserDetails',
+            properties: {
+              id: { type: :integer },
+              username: { type: :string },
+              email: { type: :string },
+              first_name: { type: :string },
+              last_name: { type: :string },
+              pronouns: { type: :string },
+              slug: { type: :string }
+            },
+            required: %w[id username email first_name last_name pronouns slug]
+          },
+
+          Organization: {
+            type: :object,
+            title: 'Organization',
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              owner: { '$ref' => '#/components/schemas/User' }
+            },
+            required: %w[id name owner]
+          },
+
+          OrganizationDetails: {
+            type: :object,
+            title: 'OrganizationDetails',
+
+            properties: {
+              id: { type: :integer },
+              name: { type: :string },
+              owner: { '$ref' => '#/components/schemas/UserDetails' },
+              description: { type: :string },
+              slug: { type: :string },
+              updated_at: { type: :string, format: 'date-time' },
+              created_at: { type: :string, format: 'date-time' }
+            },
+            required: %w[id name owner description slug created_at updated_at]
           }
         }
       }
