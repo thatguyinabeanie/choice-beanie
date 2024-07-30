@@ -1,5 +1,5 @@
 # nosonar
-FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:20 AS nextjs
+FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:22 AS nextjs
 
 RUN mkdir -p /workspaces/nextjs
 
