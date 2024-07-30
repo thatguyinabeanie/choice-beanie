@@ -377,7 +377,7 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-checkstyle_formatter (0.6.0)
       rubocop (>= 1.14.0)
-    rubocop-erb (0.5.1)
+    rubocop-erb (0.5.2)
       better_html
       rubocop (~> 1.45)
     rubocop-factory_bot (2.26.1)
