@@ -4,6 +4,8 @@ require_relative '../../../support/openapi/response_helper'
 
 PASSWORD = 'a_whole_new_world_1!'.freeze
 USER_DETAILS_SCHEMA = '#/components/schemas/UserDetails'.freeze
+NOT_FOUND = 'not found'.freeze
+
 RSpec.describe 'api/v1/users' do
   path('/api/v1/users') do
     get('List Users') do
@@ -111,7 +113,7 @@ RSpec.describe 'api/v1/users' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
@@ -168,7 +170,7 @@ RSpec.describe 'api/v1/users' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
         let(:user) do
           {
@@ -199,7 +201,7 @@ RSpec.describe 'api/v1/users' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
