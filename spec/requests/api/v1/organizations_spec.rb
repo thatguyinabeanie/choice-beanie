@@ -4,7 +4,6 @@ require_relative '../../../support/openapi/response_helper'
 
 ORGANIZATION_DETAIL_SCHEMA = '#/components/schemas/OrganizationDetails'.freeze
 DESCRIPTION = 'the bomb dot com'.freeze
-NOT_FOUND = 'not found'.freeze
 RSpec.describe 'api/v1/organizations' do
   path('/api/v1/organizations') do
     get('List Organizations') do

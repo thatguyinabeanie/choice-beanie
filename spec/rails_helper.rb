@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] = 'test'
-ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
+
 require 'spec_helper'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production

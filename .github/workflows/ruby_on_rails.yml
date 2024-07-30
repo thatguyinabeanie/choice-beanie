@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
-      DB_HOST: localhost
       DB_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password

@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
