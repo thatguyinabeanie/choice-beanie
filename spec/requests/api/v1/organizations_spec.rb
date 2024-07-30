@@ -3,6 +3,7 @@ require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
 ORGANIZATION_DETAIL_SCHEMA = '#/components/schemas/OrganizationDetails'.freeze
+DESCRIPTION = 'the bomb dot com'.freeze
 RSpec.describe 'api/v1/organizations' do
   path('/api/v1/organizations') do
     get('List Organizations') do
@@ -48,7 +49,7 @@ RSpec.describe 'api/v1/organizations' do
           {
             organization: {
               name: 'New Organization',
-              description: 'the bomb dot com',
+              description: DESCRIPTION,
               owner_id: owner.id
             }
           }
@@ -117,7 +118,7 @@ RSpec.describe 'api/v1/organizations' do
           {
             organization: {
               name: 'Updated Organization',
-              description: 'the bomb dot com'
+              description: DESCRIPTION
             }
           }
         end
@@ -133,7 +134,7 @@ RSpec.describe 'api/v1/organizations' do
           {
             organization: {
               name: 'Updated Organization',
-              description: 'the bomb dot com'
+              description: DESCRIPTION
             }
           }
         end
