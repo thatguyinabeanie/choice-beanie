@@ -25,6 +25,7 @@ FROM linux-base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /workspaces/$BATTLE_STADIUM/
+ENV DEV_ENVIRONMENT=devcontainer
 
 COPY .zsh/.zshrc /root/.zshrc
 COPY app ./app
