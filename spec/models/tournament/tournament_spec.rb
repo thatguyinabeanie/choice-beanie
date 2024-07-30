@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RETURNS_FALSE = 'returns false'.freeze
+RETURNS_TRUE = 'returns true'.freeze
 RSpec.describe Tournament::Tournament do
   let(:name) { 'Battle Stadium #1' }
   let(:organization) { create(:organization) }
@@ -67,7 +68,7 @@ RSpec.describe Tournament::Tournament do
       let(:registration_start_at) { Time.current.utc - 1.day }
 
       context 'when registration end time is nil' do
-        it 'returns true' do
+        it RETURNS_TRUE do
           expect(tournament).to be_open_for_registration
         end
       end
@@ -75,7 +76,7 @@ RSpec.describe Tournament::Tournament do
       context 'when current time is before registration end time' do
         let(:registration_end_at) { Time.current.utc + 1.day }
 
-        it 'returns true' do
+        it RETURNS_TRUE do
           expect(tournament).to be_open_for_registration
         end
       end
@@ -101,7 +102,7 @@ RSpec.describe Tournament::Tournament do
       let(:registration_start_at) { Time.current.utc - 1.day }
 
       context 'when registrations count is less than player cap' do
-        it 'returns true' do
+        it RETURNS_TRUE do
           player = build(:tournament_player, tournament:, user: create(:user))
           tournament.register!(player:)
           expect(tournament).to be_open_for_registration
@@ -142,7 +143,7 @@ RSpec.describe Tournament::Tournament do
       let(:phase) { create(:swiss_phase, tournament:) }
 
       context 'when first phase is valid' do
-        it 'returns true' do
+        it RETURNS_TRUE do
           tournament.players = create_list(:player, 5)
           tournament.phases << phase
           tournament.save!

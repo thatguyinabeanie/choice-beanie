@@ -3,7 +3,7 @@ require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
 GAME_DETAIL_SCHEMA = '#/components/schemas/GameDetail'.freeze
-
+NOT_FOUND = 'not found'.freeze
 RSpec.describe 'api/v1/games' do
   path('/api/v1/games') do
     get('List Games') do
@@ -82,7 +82,7 @@ RSpec.describe 'api/v1/games' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' } # Define the id parameter here
 
         OpenApi::Response.set_example_response_metadata
@@ -123,7 +123,7 @@ RSpec.describe 'api/v1/games' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
         let(:game) { { game: { name: 'Updated Game' } } }
 
@@ -148,7 +148,7 @@ RSpec.describe 'api/v1/games' do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND) do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
