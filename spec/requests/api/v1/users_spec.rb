@@ -2,6 +2,8 @@ require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
+PASSWORD = 'a_whole_new_world_1!'.freeze
+USER_DETAILS_SCHEMA = '#/components/schemas/UserDetails'.freeze
 RSpec.describe 'api/v1/users' do
   path('/api/v1/users') do
     get('List Users') do
@@ -57,13 +59,13 @@ RSpec.describe 'api/v1/users' do
               first_name: 'New ',
               last_name: 'User',
               pronouns: 'he/him',
-              password: 'a_whole_new_world_1!',
-              password_confirmation: 'a_whole_new_world_1!'
+              password: PASSWORD,
+              password_confirmation: PASSWORD
             }
           }
         end
 
-        schema '$ref' => '#/components/schemas/UserDetails'
+        schema '$ref' => USER_DETAILS_SCHEMA
 
         OpenApi::Response.set_example_response_metadata
 
@@ -79,8 +81,8 @@ RSpec.describe 'api/v1/users' do
               first_name: 'New ',
               last_name: 'User',
               pronouns: 'he/him',
-              password: 'a_whole_new_world_1!',
-              password_confirmation: 'a_whole_new_world_1!'
+              password: PASSWORD,
+              password_confirmation: PASSWORD
             }
           }
         end
@@ -104,7 +106,7 @@ RSpec.describe 'api/v1/users' do
       response(200, 'successful') do
         let(:id) { create(:user, first_name: 'Existing', last_name: 'User').id }
 
-        schema '$ref' => '#/components/schemas/UserDetails'
+        schema '$ref' => USER_DETAILS_SCHEMA
 
         run_test!
       end
@@ -154,12 +156,12 @@ RSpec.describe 'api/v1/users' do
               pronouns: 'they/them',
               email: 'updateduser@example.com',
               first_name: 'Updated', last_name: 'Userrrrr',
-              password: 'a_whole_new_world_1!', password_confirmation: 'a_whole_new_world_1!'
+              password: PASSWORD, password_confirmation: PASSWORD
             }
           }
         end
 
-        schema '$ref' => '#/components/schemas/UserDetails'
+        schema '$ref' => USER_DETAILS_SCHEMA
 
         OpenApi::Response.set_example_response_metadata
 
