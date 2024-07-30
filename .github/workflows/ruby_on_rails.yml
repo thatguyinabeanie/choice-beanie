@@ -52,16 +52,15 @@ jobs:
     - name: Run RSpec tests
       env:
         DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
-      run: |
-        mkdir -p test-results/rspec
-        bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+      run: bundle exec rspec
+      # run: bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
 
-    - name: Upload RSpec results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: rspec-results
-        path: test-results/rspec/results.xml
+    # - name: Upload RSpec results
+    #   uses: actions/upload-artifact@v4
+    #   if: always()
+    #   with:
+    #     name: rspec-results
+    #     path: test-results/rspec/results.xml
 
     # - name: Upload coverage reports to Codecov
     #   uses: codecov/codecov-action@v4.0.1

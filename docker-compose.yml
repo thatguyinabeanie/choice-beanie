@@ -4,8 +4,10 @@ services:
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    env_file:
-      - .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fuecoco-db-development
     ports:
       - "5432:5432"
 
@@ -48,6 +50,7 @@ services:
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
+    # command: npm install && (npm run dev & ) && sleep infinity
     tty: true
     ports:
       - 8080:8080

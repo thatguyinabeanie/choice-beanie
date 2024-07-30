@@ -7,7 +7,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 # Load .env file in development and test environments
-Dotenv::Railtie.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
+Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
 
 module BattleStadium
   class Application < Rails::Application
@@ -19,6 +19,8 @@ module BattleStadium
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
     config.autoload_paths << Rails.root.join('lib')
+    # config.autoload_paths += %W[#{config.root}/app/serializers]
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

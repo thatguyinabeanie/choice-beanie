@@ -29,15 +29,15 @@ Rails.application.routes.draw do
       get '/auth/:provider/callback', to: 'sessions#create'
 
       resources :matches, only: %i[index show update]
-      resources :users, only: %i[index show update]
+      resources :users, only: %i[index show create update destroy]
 
-      resources :organizations, only: %i[index show create update] do
+      resources :organizations, only: %i[index show create update destroy staff] do
         member do
           get 'staff', to: 'organizations#staff'
         end
       end
       resources :games, only: %i[index show create update destroy]
-      resources :tournaments do
+      resources :tournaments, only: %i[index show create update destroy] do
         resources :players, only: %i[create destroy index], controller: 'tournament/players'
         resources :matches, only: %i[index create update]
       end

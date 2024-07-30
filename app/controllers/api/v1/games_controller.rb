@@ -1,20 +1,23 @@
+require_relative '../../../serializers/game_serializer'
+
 module Api
   module V1
     class GamesController < ApplicationController
       GAME_NOT_FOUND = 'Game not found'.freeze
+
       before_action :set_game, only: %i[show update destroy]
 
       # GET /api/v1/games
       # GET /api/v1/games.json
       def index
         @games = Game.all
-        render json: @games
+        render json: @games, each_serializer: ::GameSerializer, status: :ok
       end
 
       # GET /api/v1/games/:id
       # GET /api/v1/games/:id.json
       def show
-        render json: @game.as_json(only: %i[id name slug])
+        render json: serialize_game_detail, status: :ok
       rescue ActiveRecord::RecordNotFound
         render json: { error: GAME_NOT_FOUND }, status: :not_found
       end
@@ -25,7 +28,7 @@ module Api
         @game = Game.new(game_params)
 
         if @game.save
-          render json: @game, status: :created
+          render json: serialize_game_detail, status: :created
         else
           render json: @game.errors, status: :unprocessable_entity
         end
@@ -37,7 +40,7 @@ module Api
       # PATCH/PUT /api/v1/games/:id.json
       def update
         if @game.update(game_params)
-          render json: @game
+          render json: serialize_game_detail, status: :ok
         else
           render json: { error: @game.errors.full_messages }, status: :unprocessable_entity
         end
@@ -55,6 +58,10 @@ module Api
       end
 
       private
+
+      def serialize_game_detail
+        ::GameDetailSerializer.new(@game).attributes
+      end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_game
