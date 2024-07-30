@@ -2,6 +2,7 @@ require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
+ORGANIZATION_DETAIL_SCHEMA = '#/components/schemas/OrganizationDetails'.freeze
 RSpec.describe 'api/v1/organizations' do
   path('/api/v1/organizations') do
     get('List Organizations') do
@@ -53,7 +54,7 @@ RSpec.describe 'api/v1/organizations' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/OrganizationDetails'
+        schema '$ref' => ORGANIZATION_DETAIL_SCHEMA
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
@@ -73,7 +74,7 @@ RSpec.describe 'api/v1/organizations' do
         let(:organization) { create(:organization) }
         let(:id) { organization.id }
 
-        schema '$ref' => '#/components/schemas/OrganizationDetails'
+        schema '$ref' => ORGANIZATION_DETAIL_SCHEMA
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
@@ -121,7 +122,7 @@ RSpec.describe 'api/v1/organizations' do
           }
         end
 
-        schema '$ref' => '#/components/schemas/OrganizationDetails'
+        schema '$ref' => ORGANIZATION_DETAIL_SCHEMA
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
