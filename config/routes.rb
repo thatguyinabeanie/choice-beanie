@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
 
+      resources :games, only: %i[index show create update destroy]
+
       resources :matches, only: %i[index show update create destroy]
       resources :users, only: %i[index show create update destroy]
 
@@ -35,10 +37,12 @@ Rails.application.routes.draw do
         member do
           get 'staff', to: 'organizations#staff'
         end
+        resources :tournaments, only: %i[index show create update destroy] do
+          resources :players, only: %i[index show create update destroy], controller: 'tournament/players'
+        end
       end
-      resources :games, only: %i[index show create update destroy]
-      resources :tournaments, only: %i[index show create update destroy] do
-        resources :players, only: %i[index show create update destroy], controller: 'tournament/players'
+
+      resources :tournaments do
         resources :phases, only: %i[index show create update destroy], controller: 'tournament/phases'
         resources :matches, only: %i[index create update]
       end

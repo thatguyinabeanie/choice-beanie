@@ -3,6 +3,7 @@ require_relative 'user_serializer'
 class PlayerSerializer < ActiveModel::Serializer
   belongs_to :user, serializer: UserSerializer
 
+  attributes :id
   attributes :in_game_name, :checked_in_at, :checked_in
   attributes :team_sheet_submitted, :team_sheet_submitted_at
 

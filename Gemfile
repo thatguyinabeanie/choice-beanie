@@ -60,6 +60,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'faker', '~> 3'
   gem 'listen', '~> 3.3'
+  gem 'rspec-json_expectations'
   gem 'rspec-rails'
   gem 'rswag-specs'
   gem 'ruby-lsp', '~> 0.17.9'

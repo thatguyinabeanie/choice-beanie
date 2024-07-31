@@ -1,8 +1,8 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :name, :slug
+  attributes :id, :name
 end
 
 class GameDetailsSerializer < GameSerializer
-  attributes :id, :name, :slug, :formats
+  attributes :formats
   has_many :formats, serializer: FormatSerializer
 end

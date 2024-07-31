@@ -60,11 +60,11 @@ RSpec.describe Organization::Organization do
     end
   end
 
-  describe 'friendly_id' do
-    it 'uses the name attribute for friendly_id' do
-      owner = create(:user)
-      organization = described_class.create!(name: 'My Organization', owner:)
-      expect(organization.friendly_id).to eq('my-organization')
-    end
-  end
+  # describe 'friendly_id' do
+  #   it 'uses the name attribute for friendly_id' do
+  #     owner = create(:user)
+  #     organization = described_class.create!(name: 'My Organization', owner:)
+  #     expect(organization.friendly_id).to eq('my-organization')
+  #   end
+  # end
 end

@@ -33,4 +33,18 @@
     "includedPatterns": ["rake"],
     "excludedMagicComments": ["compiled:true"],
   },
+  "terminal.integrated.cursorBlinking": true,
+  "git.terminalGitEditor": true,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.defaultColorDecorators": true,
+  "editor.inlayHints.padding": true,
+
+  "testExplorer.codeLens": true,
+  "testExplorer.gutterDecoration": true,
+  "testExplorer.onStart": "none",
+  "testExplorer.onReload": "none",
+  "cSpell.words": [
+    "vscodeintellicode"
+  ],
+
 }

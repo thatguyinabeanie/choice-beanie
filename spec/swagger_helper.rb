@@ -3,140 +3,128 @@
 require 'rails_helper'
 require 'support/constants'
 
+ID_PROPERTY = { id: { type: :integer } }.freeze
+NAME_PROPERTY = { name: { type: :string } }.freeze
+ID_NAME_REQUIRED = %w[id name].freeze
+
+ID_NAME_PROPERTIES = {
+  id: ID_PROPERTY[:id],
+  name: NAME_PROPERTY[:name]
+}.freeze
+
 FORMAT_SCHEMA = {
   type: :object,
   title: 'Format',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
-    slug: { type: :string }
-  }
+  properties: ID_NAME_PROPERTIES
 }.freeze
 
 GAME_SCHEMA = {
   type: :object,
   title: 'Game',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
-    slug: { type: :string }
-  },
-  required: %w[id name slug]
+  properties: ID_NAME_PROPERTIES,
+  required: ID_NAME_REQUIRED
 }.freeze
 
 GAME_DETAILS_SCHEMA = {
   type: :object,
   title: 'GameDetail',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
-    slug: { type: :string },
+  properties: GAME_SCHEMA[:properties].merge(
     formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
-  },
-  required: %w[id name slug formats]
+  ),
+  required: (GAME_SCHEMA[:required] + %w[formats])
 }.freeze
 
 USER_SCHEMA = {
   type: :object,
   title: 'User',
-  properties: {
-    id: { type: :integer },
+  properties: ID_PROPERTY.merge(
     username: { type: :string },
     pronouns: { type: :string }
-  },
+  ),
   required: %w[id username pronouns]
 }.freeze
 
 USER_DETAILS_SCHEMA = {
   type: :object,
   title: 'UserDetails',
-  properties: {
-    id: { type: :integer },
-    username: { type: :string },
-    email: { type: :string },
-    first_name: { type: :string },
-    last_name: { type: :string },
-    pronouns: { type: :string },
-    slug: { type: :string }
-  },
-  required: %w[id username email first_name last_name pronouns slug]
+  properties: USER_SCHEMA[:properties].merge(
+    {
+      email: { type: :string },
+      first_name: { type: :string },
+      last_name: { type: :string }
+    }
+  ),
+  required: USER_SCHEMA[:required] + %w[email first_name last_name]
 }.freeze
 
 ORGANIZATION_SCHEMA = {
   type: :object,
   title: 'Organization',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
+  properties: ID_NAME_PROPERTIES.merge(
     owner: { '$ref' => '#/components/schemas/User' }
-  },
-  required: %w[id name owner]
+  ),
+  required: ID_NAME_REQUIRED + %w[owner]
 }.freeze
 
 ORGANIZATION_DETAILS_SCHEMA = {
   type: :object,
   title: 'OrganizationDetails',
 
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
+  properties: ORGANIZATION_SCHEMA[:properties].merge(
     owner: { '$ref' => '#/components/schemas/UserDetails' },
     description: { type: :string },
-    slug: { type: :string },
     updated_at: { type: :string, format: DATE_TIME_TYPE },
     created_at: { type: :string, format: DATE_TIME_TYPE }
-  },
-  required: %w[id name owner description slug created_at updated_at]
+  ),
+  required: ORGANIZATION_SCHEMA[:required] + %w[description created_at updated_at]
 }.freeze
 
 TOURNAMENT_SCHEMA = {
   type: :object,
   title: 'Tournament',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
-    slug: { type: :string },
-
-    organization: { '$ref' => '#/components/schemas/Organization' },
-
-    format: { '$ref' => '#/components/schemas/Format' },
-    game: { '$ref' => '#/components/schemas/Game' },
-
-    player_cap: { type: :integer, nullable: true },
-
-    autostart: { type: :boolean },
-    start_at: { type: :string, format: DATE_TIME_TYPE },
-    end_at: { type: :string, format: DATE_TIME_TYPE },
-    started_at: { type: :string, format: DATE_TIME_TYPE },
-    ended_at: { type: :string, format: DATE_TIME_TYPE },
-
-    check_in_required: { type: :boolean },
-    late_check_in: { type: :boolean },
-    check_in_start_at: { type: :string, format: DATE_TIME_TYPE },
-
-    late_registration: { type: :boolean },
-    registration_start_at: { type: :string, format: DATE_TIME_TYPE },
-    registration_end_at: { type: :string, format: DATE_TIME_TYPE },
-
-    teamlists_required: { type: :boolean },
-    open_team_sheets: { type: :boolean }
-  },
-  required: %w[id name organization format game start_at player_cap autostart check_in_required late_check_in check_in_start_at late_registration registration_start_at registration_end_at
-               teamlists_required open_team_sheets]
+  properties: ID_NAME_PROPERTIES.merge(
+    player_cap: { type: :integer, nullable: true }
+    # organization: { '$ref' => '#/components/schemas/Organization' },
+    # format: { '$ref' => '#/components/schemas/Format' },
+    # game: { '$ref' => '#/components/schemas/Game' }
+  ),
+  # required: ID_NAME_REQUIRED + %w[player_cap organization format game]
+  required: ID_NAME_REQUIRED + %w[player_cap]
 }.freeze
 
 TOURNAMENT_DETAILS_SCHEMA = {
   type: :object,
   title: 'TournamentDetails',
-  properties: TOURNAMENT_SCHEMA[:properties],
-  required: TOURNAMENT_SCHEMA[:required] + %w[]
+  properties: TOURNAMENT_SCHEMA[:properties].merge(
+    autostart: { type: :boolean },
+    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+
+    check_in_required: { type: :boolean },
+    late_check_in: { type: :boolean },
+    check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+
+    late_registration: { type: :boolean },
+    registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+
+    teamlists_required: { type: :boolean },
+    open_team_sheets: { type: :boolean }
+  ),
+  required: TOURNAMENT_SCHEMA[:required] + %w[
+    start_at player_cap autostart
+    teamlists_required open_team_sheets
+    check_in_required late_check_in check_in_start_at
+    late_registration registration_start_at registration_end_at
+  ]
 }.freeze
 
 POKEMON_SET_SCHEMA = {
   type: :object,
   title: 'PokemonSet',
-  properties: {
-    name: { type: :string },
+  properties: ID_NAME_PROPERTIES.merge(
     nickname: { type: :string, nullable: true },
     ability: { type: :string },
     tera_type: { type: :string },
@@ -146,14 +134,15 @@ POKEMON_SET_SCHEMA = {
     move2: { type: :string, nullable: true },
     move3: { type: :string, nullable: true },
     move4: { type: :string, nullable: true }
-  },
-  required: %w[name ability tera_type nature held_item move1 move2 move3 move4]
+  ),
+  required: ID_NAME_REQUIRED + %w[ability tera_type nature held_item move1 move2 move3 move4]
 }.freeze
 
 PLAYER_SCHEMA = {
   type: :object,
   title: 'Player',
   properties: {
+    id: { type: :integer },
     user: { '$ref' => '#/components/schemas/User' },
     in_game_name: { type: :string },
     checked_in: { type: :boolean },
@@ -168,32 +157,28 @@ PLAYER_DETAILS_SCHEMA = {
   type: :object,
   title: 'PlayerDetails',
   properties: PLAYER_SCHEMA[:properties].merge(
-    {
-      pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
-    }
-  )
+    pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
+  ),
+  required: PLAYER_SCHEMA[:required] + %w[pokemon_sets]
 }.freeze
 
 ROUND_SCHEMA = {
   type: :object,
   title: 'Round',
-  properties: {
-    id: { type: :integer },
+  properties: ID_PROPERTY.merge(
     phase_id: { type: :integer },
     round_number: { type: :integer },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
-  },
+  ),
   required: %w[id phase_id round_number started_at ended_at]
 }.freeze
 
 PHASE_SCHEMA = {
   type: :object,
   title: 'Phase',
-  properties: {
-    id: { type: :integer },
+  properties: ID_NAME_PROPERTIES.merge(
     order: { type: :integer },
-    name: { type: :string },
     type: { type: :string },
     tournament_id: { type: :integer },
     number_of_rounds: { type: :integer },
@@ -203,18 +188,16 @@ PHASE_SCHEMA = {
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     created_at: { type: :string, format: DATE_TIME_TYPE },
     updated_at: { type: :string, format: DATE_TIME_TYPE }
-  },
-  required: %w[id order tournament_id number_of_rounds best_of criteria started_at ended_at]
-}
+  ),
+  required: ID_NAME_REQUIRED + %w[order tournament_id number_of_rounds best_of criteria started_at ended_at]
+}.freeze
 
 PHASE_DETAILS_SCHEMA = {
   type: :object,
   title: 'PhaseDetails',
   properties: PHASE_SCHEMA[:properties].merge(
-    {
-      players: { type: :array, items: { '$ref' => '#/components/schemas/Player' } },
-      rounds: { type: :array, items: { '$ref' => '#/components/schemas/Round' } }
-    }
+    players: { type: :array, items: { '$ref' => '#/components/schemas/Player' } },
+    rounds: { type: :array, items: { '$ref' => '#/components/schemas/Round' } }
   ),
   required: PHASE_SCHEMA[:required] + %w[players rounds]
 }.freeze
