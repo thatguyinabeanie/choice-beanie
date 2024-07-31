@@ -40,13 +40,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: postGame
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/Game"
   "/api/v1/games/{id}":
     parameters:
     - name: id
@@ -90,12 +84,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required:
-              - name
+              "$ref": "#/components/schemas/Game"
     delete:
       summary: Delete Game
       tags:
@@ -140,21 +129,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                organization:
-                  type: object
-                  title: postOrganization
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    owner_id:
-                      type: integer
-                  required:
-                  - name
-                  - description
+              "$ref": "#/components/schemas/Organization"
   "/api/v1/organizations/{id}":
     parameters:
     - name: id
@@ -197,21 +172,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                organization:
-                  type: object
-                  title: patchOrganization
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    owner_id:
-                      type: integer
-                  required:
-                  - name
-                  - description
+              "$ref": "#/components/schemas/Organization"
     delete:
       summary: Delete Organization
       tags:
@@ -292,22 +253,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: postPhase
-              properties:
-                number_of_rounds:
-                  type: integer
-                best_of:
-                  type: integer
-                type:
-                  type: string
-                  enum:
-                  - Phase::Swiss
-                  - Phase::SingleElimination
-              required:
-              - number_of_rounds
-              - best_of
-              - type
+              "$ref": "#/components/schemas/Phase"
   "/api/v1/tournaments/{tournament_id}/phases/{id}":
     parameters:
     - name: tournament_id
@@ -357,20 +303,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: putPhase
-              properties:
-                name:
-                  type: string
-                number_of_rounds:
-                  type: integer
-                best_of:
-                  type: integer
-                type:
-                  type: string
-                  enum:
-                  - Phase::Swiss
-                  - Phase::SingleElimination
+              "$ref": "#/components/schemas/Phase"
     delete:
       summary: Delete Tournament Phase
       tags:
@@ -547,51 +480,68 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: postTournament
-              properties:
-                name:
-                  type: string
-                start_at:
-                  type: string
-                  format: date-time
-                end_at:
-                  type: string
-                  format: date-time
-                game_id:
-                  type: integer
-                format_id:
-                  type: integer
-                auto_start:
-                  type: boolean
-                player_cap:
-                  type: integer
-                registration_start_at:
-                  type: string
-                  format: date-time
-                registration_end_at:
-                  type: string
-                  format: date-time
-                late_registration:
-                  type: boolean
-                check_in_required:
-                  type: boolean
-                late_check_in:
-                  type: boolean
-                check_in_start_at:
-                  type: string
-                  format: date-time
-                check_in_end_at:
-                  type: string
-                  format: date-time
-                open_team_sheets:
-                  type: boolean
-                teamlists_required:
-                  type: boolean
-              required:
-              - name
-              - game_id
-              - format_id
+              "$ref": "#/components/schemas/TournamentDetails"
+  "/api/v1/organizations/{organization_id}/tournaments/{id}":
+    parameters:
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
+    - name: id
+      in: path
+      description: ID of the Tournament
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Show Tournament
+      tags:
+      - Tournaments
+      description: Retrieves a specific Tournament.
+      operationId: getTournament
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TournamentDetails"
+        '404':
+          description: not found
+    put:
+      summary: Update Tournament
+      tags:
+      - Tournaments
+      description: Updates a Tournament.
+      operationId: putTournament
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TournamentDetails"
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TournamentDetails"
+    delete:
+      summary: Delete Tournament
+      tags:
+      - Tournaments
+      description: Deletes a Tournament.
+      operationId: deleteTournament
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
   "/api/v1/users":
     get:
       summary: List Users
@@ -757,7 +707,7 @@ components:
       - name
     GameDetail:
       type: object
-      title: GameDetail
+      title: Game Details
       properties:
         id:
           type: integer
@@ -787,7 +737,7 @@ components:
       - pronouns
     UserDetails:
       type: object
-      title: UserDetails
+      title: User Details
       properties:
         id:
           type: integer
@@ -824,7 +774,7 @@ components:
       - owner
     OrganizationDetails:
       type: object
-      title: OrganizationDetails
+      title: Organization Details
       properties:
         id:
           type: integer
@@ -864,7 +814,7 @@ components:
       - player_cap
     TournamentDetails:
       type: object
-      title: TournamentDetails
+      title: Tournament Details
       properties:
         id:
           type: integer
@@ -930,7 +880,7 @@ components:
       - registration_end_at
     PokemonSet:
       type: object
-      title: PokemonSet
+      title: Pokemon Set
       properties:
         id:
           type: integer
@@ -1002,7 +952,7 @@ components:
       - team_sheet_submitted_at
     PlayerDetails:
       type: object
-      title: PlayerDetails
+      title: Player Details
       properties:
         id:
           type: integer
@@ -1105,7 +1055,7 @@ components:
       - ended_at
     PhaseDetails:
       type: object
-      title: PhaseDetails
+      title: Phase Details
       properties:
         id:
           type: integer
@@ -1158,3 +1108,11 @@ components:
       - ended_at
       - players
       - rounds
+    GameRequest:
+      type: object
+      title: GameRequest
+      properties:
+        name:
+          type: string
+      required:
+      - name

@@ -1,6 +1,7 @@
 module OpenApi
   module Response
     JSON_CONTENT_TYPE = 'application/json'.freeze
+    NOT_FOUND = 'not found'.freeze
     def self.set_example_response_metadata
       lambda {
         after do |example|

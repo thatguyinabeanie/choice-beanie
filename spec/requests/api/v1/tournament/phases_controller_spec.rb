@@ -40,16 +40,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
       description 'Creates a new Tournament Phase.'
       operationId 'postTournamentPhase'
 
-      parameter name: :phase, in: :body, schema: {
-        type: :object,
-        title: 'postPhase',
-        properties: {
-          number_of_rounds: { type: :integer },
-          best_of: { type: :integer },
-          type: { type: :string, enum: PHASES_ENUM }
-        },
-        required: %w[number_of_rounds best_of type]
-      }
+      parameter name: :phase, in: :body, schema: { '$ref' => '#/components/schemas/Phase' }
 
       response(201, 'created') do
         let(:phase) do
@@ -124,16 +115,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
       description 'Updates a Tournament Phase.'
       operationId 'putTournamentPhase'
 
-      parameter name: :phase, in: :body, schema: {
-        type: :object,
-        title: 'putPhase',
-        properties: {
-          name: { type: :string },
-          number_of_rounds: { type: :integer },
-          best_of: { type: :integer },
-          type: { type: :string, enum: PHASES_ENUM }
-        }
-      }
+      parameter name: :phase, in: :body, schema: { '$ref' => '#/components/schemas/Phase' }
 
       response(200, 'successful') do
         let(:phase) do

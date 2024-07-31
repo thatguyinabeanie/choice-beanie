@@ -27,7 +27,7 @@ GAME_SCHEMA = {
 
 GAME_DETAILS_SCHEMA = {
   type: :object,
-  title: 'GameDetail',
+  title: 'Game Details',
   properties: GAME_SCHEMA[:properties].merge(
     formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
   ),
@@ -46,7 +46,7 @@ USER_SCHEMA = {
 
 USER_DETAILS_SCHEMA = {
   type: :object,
-  title: 'UserDetails',
+  title: 'User Details',
   properties: USER_SCHEMA[:properties].merge(
     {
       email: { type: :string },
@@ -68,7 +68,7 @@ ORGANIZATION_SCHEMA = {
 
 ORGANIZATION_DETAILS_SCHEMA = {
   type: :object,
-  title: 'OrganizationDetails',
+  title: 'Organization Details',
 
   properties: ORGANIZATION_SCHEMA[:properties].merge(
     owner: { '$ref' => '#/components/schemas/UserDetails' },
@@ -94,7 +94,7 @@ TOURNAMENT_SCHEMA = {
 
 TOURNAMENT_DETAILS_SCHEMA = {
   type: :object,
-  title: 'TournamentDetails',
+  title: 'Tournament Details',
   properties: TOURNAMENT_SCHEMA[:properties].merge(
     autostart: { type: :boolean },
     start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
@@ -123,7 +123,7 @@ TOURNAMENT_DETAILS_SCHEMA = {
 
 POKEMON_SET_SCHEMA = {
   type: :object,
-  title: 'PokemonSet',
+  title: 'Pokemon Set',
   properties: ID_NAME_PROPERTIES.merge(
     nickname: { type: :string, nullable: true },
     ability: { type: :string },
@@ -155,7 +155,7 @@ PLAYER_SCHEMA = {
 
 PLAYER_DETAILS_SCHEMA = {
   type: :object,
-  title: 'PlayerDetails',
+  title: 'Player Details',
   properties: PLAYER_SCHEMA[:properties].merge(
     pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
   ),
@@ -194,7 +194,7 @@ PHASE_SCHEMA = {
 
 PHASE_DETAILS_SCHEMA = {
   type: :object,
-  title: 'PhaseDetails',
+  title: 'Phase Details',
   properties: PHASE_SCHEMA[:properties].merge(
     players: { type: :array, items: { '$ref' => '#/components/schemas/Player' } },
     rounds: { type: :array, items: { '$ref' => '#/components/schemas/Round' } }
@@ -257,7 +257,15 @@ RSpec.configure do |config|
           PlayerDetails: PLAYER_DETAILS_SCHEMA,
           Round: ROUND_SCHEMA,
           Phase: PHASE_SCHEMA,
-          PhaseDetails: PHASE_DETAILS_SCHEMA
+          PhaseDetails: PHASE_DETAILS_SCHEMA,
+          GameRequest: {
+            type: :object,
+            title: 'GameRequest',
+            properties: {
+              name: { type: :string }
+            },
+            required: %w[name]
+          }
         }
       }
     }
