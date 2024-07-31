@@ -83,8 +83,8 @@ ORGANIZATION_DETAILS_SCHEMA = {
     owner: { '$ref' => '#/components/schemas/UserDetails' },
     description: { type: :string },
     slug: { type: :string },
-    updated_at: { type: :string, format: 'date-time' },
-    created_at: { type: :string, format: 'date-time' }
+    updated_at: { type: :string, format: DATE_TIME_TYPE },
+    created_at: { type: :string, format: DATE_TIME_TYPE }
   },
   required: %w[id name owner description slug created_at updated_at]
 }.freeze
@@ -105,18 +105,18 @@ TOURNAMENT_SCHEMA = {
     player_cap: { type: :integer, nullable: true },
 
     autostart: { type: :boolean },
-    start_at: { type: :string, format: 'date-time' },
-    end_at: { type: :string, format: 'date-time' },
-    started_at: { type: :string, format: 'date-time' },
-    ended_at: { type: :string, format: 'date-time' },
+    start_at: { type: :string, format: DATE_TIME_TYPE },
+    end_at: { type: :string, format: DATE_TIME_TYPE },
+    started_at: { type: :string, format: DATE_TIME_TYPE },
+    ended_at: { type: :string, format: DATE_TIME_TYPE },
 
     check_in_required: { type: :boolean },
     late_check_in: { type: :boolean },
-    check_in_start_at: { type: :string, format: 'date-time' },
+    check_in_start_at: { type: :string, format: DATE_TIME_TYPE },
 
     late_registration: { type: :boolean },
-    registration_start_at: { type: :string, format: 'date-time' },
-    registration_end_at: { type: :string, format: 'date-time' },
+    registration_start_at: { type: :string, format: DATE_TIME_TYPE },
+    registration_end_at: { type: :string, format: DATE_TIME_TYPE },
 
     teamlists_required: { type: :boolean },
     open_team_sheets: { type: :boolean }
@@ -173,23 +173,14 @@ RSpec.configure do |config|
         },
 
         schemas: {
-
           Format: FORMAT_SCHEMA,
-
           Game: GAME_SCHEMA,
-
           GameDetail: GAME_DETAILS_SCHEMA,
-
           User: USER_SCHEMA,
-
           UserDetails: USER_DETAILS_SCHEMA,
-
           Organization: ORGANIZATION_SCHEMA,
-
           OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
-
           Tournament: TOURNAMENT_SCHEMA,
-
           TournamentDetails: TOURNAMENT_DETAILS_SCHEMA
         }
       }
