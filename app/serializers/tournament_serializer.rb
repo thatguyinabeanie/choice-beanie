@@ -7,7 +7,7 @@ class TournamentSerializer < ActiveModel::Serializer
   # has_many :players, serializer: PlayerSerializer
 end
 
-class TournamentDetailSerializer < ActiveModel::Serializer
+class TournamentDetailSerializer < TournamentSerializer
   attributes :id, :name, :player_cap
   attributes :check_in_required, :late_registration
   attributes :registration_start_at, :registration_end_at

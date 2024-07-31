@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/auth/:provider/callback', to: 'sessions#create'
 
-      resources :matches, only: %i[index show update]
+      resources :matches, only: %i[index show update create destroy]
       resources :users, only: %i[index show create update destroy]
 
       resources :organizations, only: %i[index show create update destroy staff] do

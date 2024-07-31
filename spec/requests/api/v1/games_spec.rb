@@ -52,7 +52,7 @@ RSpec.describe 'api/v1/games' do
         run_test!
       end
 
-      response(422, 'unprocessable entity') do
+      response(400, 'bad reqiest') do
         let(:game) { { title: '', genre: '' } }
 
         OpenApi::Response.set_example_response_metadata
