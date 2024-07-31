@@ -4,6 +4,7 @@ require_relative '../../../../support/openapi/response_helper'
 
 PHASES_ENUM = %w[Phase::Swiss Phase::SingleElimination].freeze
 
+PHASE_SWISS = 'Phase::Swiss'.freeze
 RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
   path('/api/v1/tournaments/{tournament_id}/phases') do
     parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
@@ -65,7 +66,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
               name: 'Swiss Round',
               number_of_rounds: 3,
               best_of: 3,
-              type: 'Phase::Swiss'
+              type: PHASE_SWISS
             }
           }
         end
@@ -83,7 +84,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
             phase: {
               number_of_rounds: 3,
               best_of: 3,
-              type: 'Phase::Swiss'
+              type: PHASE_SWISS
             }
           }
         end
@@ -164,7 +165,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
               name: 'Swiss Round',
               number_of_rounds: 3,
               best_of: 3,
-              type: 'Phase::Swiss'
+              type: PHASE_SWISS
             }
           }
         end
@@ -183,7 +184,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
                 name: 'Swiss Round',
                 number_of_rounds: 3,
                 best_of: 3,
-                type: 'Phase::Swiss'
+                type: PHASE_SWISS
               }
             }
           end
