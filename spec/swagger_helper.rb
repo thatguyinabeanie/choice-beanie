@@ -154,6 +154,7 @@ PLAYER_SCHEMA = {
   title: 'Player',
   properties: {
     user: { '$ref' => '#/components/schemas/User' },
+    in_game_name: { type: :string },
     checked_in: { type: :boolean },
     checked_in_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     team_sheet_submitted: { type: :boolean },

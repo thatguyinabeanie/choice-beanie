@@ -377,12 +377,8 @@ paths:
                   type: object
                   title: putPlayer
                   properties:
-                    user_id:
-                      type: integer
                     team_sheet_submitted:
                       type: boolean
-                    tournament_id:
-                      type: integer
                   required:
                   - user_id
                   - team_sheet_submitted
@@ -862,6 +858,8 @@ components:
       properties:
         user:
           "$ref": "#/components/schemas/User"
+        in_game_name:
+          type: string
         checked_in:
           type: boolean
         checked_in_at:
@@ -887,6 +885,8 @@ components:
       properties:
         user:
           "$ref": "#/components/schemas/User"
+        in_game_name:
+          type: string
         checked_in:
           type: boolean
         checked_in_at:
