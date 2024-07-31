@@ -2,75 +2,24 @@ require_relative '../../../serializers/game_serializer'
 
 module Api
   module V1
-    class GamesController < ApplicationController
-      GAME_NOT_FOUND = 'Game not found'.freeze
+    class GamesController < AbstractApplicationController
+      before_action :set_game, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
 
-      before_action :set_game, only: %i[show update destroy]
+      self.klass = ::Game
+      self.serializer_klass = ::GameSerializer
+      self.detail_serializer_klass = ::GameDetailSerializer
 
-      # GET /api/v1/games
-      # GET /api/v1/games.json
-      def index
-        @games = Game.all
-        render json: @games, each_serializer: ::GameSerializer, status: :ok
-      end
+      protected
 
-      # GET /api/v1/games/:id
-      # GET /api/v1/games/:id.json
-      def show
-        render json: serialize_game_detail, status: :ok
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: GAME_NOT_FOUND }, status: :not_found
-      end
-
-      # POST /api/v1/games
-      # POST /api/v1/games.json
-      def create
-        @game = Game.new(game_params)
-
-        if @game.save
-          render json: serialize_game_detail, status: :created
-        else
-          render json: @game.errors, status: :unprocessable_entity
-        end
-      rescue ActionController::ParameterMissing => e
-        render json: { error: e.message }, status: :unprocessable_entity
-      end
-
-      # PATCH/PUT /api/v1/games/:id
-      # PATCH/PUT /api/v1/games/:id.json
-      def update
-        if @game.update(game_params)
-          render json: serialize_game_detail, status: :ok
-        else
-          render json: { error: @game.errors.full_messages }, status: :unprocessable_entity
-        end
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: GAME_NOT_FOUND }, status: :not_found
-      end
-
-      # DELETE /api/v1/games/:id
-      # DELETE /api/v1/games/:id.json
-      def destroy
-        @game.destroy!
-        render json: { message: 'Game deleted' }, status: :ok
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: GAME_NOT_FOUND }, status: :not_found
+      def permitted_params
+        params.require(:game).permit(:name)
       end
 
       private
 
-      def serialize_game_detail
-        ::GameDetailSerializer.new(@game).attributes
-      end
-
       # Use callbacks to share common setup or constraints between actions.
       def set_game
-        @game = Game.find(params[:id])
-      end
-
-      # Only allow a list of trusted parameters through.
-      def game_params
-        params.require(:game).permit(:name)
+        @game = set_object
       end
     end
   end

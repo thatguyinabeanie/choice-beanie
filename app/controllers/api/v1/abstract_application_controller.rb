@@ -6,15 +6,21 @@ module Api
       class_attribute :index_serializer_klass
       class_attribute :detail_serializer_klass
 
+      # GET /api/v1/:klass
+      # GET /api/v1/:klass.json
       def index
         @objects = klass.all
         render json: @objects, each_serializer: index_serializer, status: :ok
       end
 
+      # GET /api/v1/:klass/:id
+      # GET /api/v1/:klass/:id.json
       def show
         render json: serialize_details, status: :ok
       end
 
+      # POST /api/v1/:klass
+      # POST /api/v1/:klass.json
       def create
         @object = klass.new permitted_params
         if @object.save
@@ -26,6 +32,8 @@ module Api
         render json: { error: e.message }, status: :bad_request
       end
 
+      # PATCH/PUT /api/v1/:klass/:id
+      # PATCH/PUT /api/v1/:klass/:id.json
       def update
         if @object.update(permitted_params)
           render json: serialize_details, status: :ok
@@ -34,6 +42,8 @@ module Api
         end
       end
 
+      # DELETE /api/v1/:klass/:id
+      # DELETE /api/v1/:klass/:id.json
       def destroy
         @object.destroy
         render json: { message: "#{klass} deleted" }, status: :ok
@@ -46,7 +56,12 @@ module Api
       end
 
       def set_object
-        @object = klass.find(params[:id])
+        @object = if klass.respond_to?(:friendly)
+                    klass.friendly.find(params[:id])
+                  else
+                    klass.find(params[:id])
+                  end
+
         @object
       rescue ActiveRecord::RecordNotFound
         render json: { error: "#{klass} not found" }, status: :not_found

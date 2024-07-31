@@ -1,51 +1,21 @@
 module Api
   module V1
-    class MatchesController < ApplicationController
-      before_action :set_match, only: %i[show update destroy]
+    class MatchesController < AbstractApplicationController
+      before_action :set_match, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
+      self.klass = ::Tournament::Match
+      self.serializer_klass = ::MatchSerializer
+      self.detail_serializer_klass = ::MatchDetailSerializer
 
-      def index
-        @matches = ::Tournament::Match.all
-        render json: @matches
-      end
+      protected
 
-      def show
-        render json: @match
-      end
-
-      def create
-        @match = ::Tournament::Match.new(match_params)
-        if @match.save
-          render json: @match, status: :created
-        else
-          render json: @match.errors, status: :unprocessable_entity
-        end
-      end
-
-      def update
-        if @match.update(match_params)
-          render json: @match
-        else
-          render json: @match.errors, status: :unprocessable_entity
-        end
-      end
-
-      def destroy
-        @match.destroy
-        render json: { message: 'Match deleted' }, status: :ok
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: 'Match not found' }, status: :not_found
+      def permitted_params
+        params.require(:match).permit(:round_id, :tournament_id, :table_number, :player1_id, :player2_id, :winner_id, :loser_id, :player_one_check_in, :player_two_check_in)
       end
 
       private
 
       def set_match
-        @match = ::Tournament::Match.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: 'User not found' }, status: :not_found
-      end
-
-      def match_params
-        params.require(:match).permit(:round_id, :tournament_id, :table_number, :player1_id, :player2_id, :winner_id, :loser_id, :player_one_check_in, :player_two_check_in)
+        @match = set_object
       end
     end
   end
