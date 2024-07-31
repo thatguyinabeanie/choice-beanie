@@ -4,7 +4,7 @@ require_relative '../../../serializers/user_serializer'
 module Api
   module V1
     class OrganizationsController < AbstractApplicationController
-      before_action :set_organization, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
+      before_action :set_organization, only: %i[show update destroy staff] # rubocop:disable Rails/LexicallyScopedActionFilter
 
       self.klass = ::Organization::Organization
       self.serializer_klass = ::OrganizationSerializer
