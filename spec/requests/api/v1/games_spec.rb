@@ -29,17 +29,11 @@ RSpec.describe 'api/v1/games' do
 
       parameter name: :game, in: :body, schema: {
         type: :object,
+        title: 'postGame',
         properties: {
-          game: {
-            type: :object,
-            title: 'postGame',
-            properties: {
-              name: { type: :string }
-            },
-            required: %w[name]
-          }
+          name: { type: :string }
         },
-        required: %w[game]
+        required: %w[name]
       }
 
       response(201, 'created') do
@@ -64,7 +58,9 @@ RSpec.describe 'api/v1/games' do
 
   path('/api/v1/games/{id}') do
     # You'll want to customize the parameter types...
-    parameter name: :id, in: :path, type: :string, description: 'ID of the game'
+    parameter name: :id, in: :path, type: :integer, description: 'ID of the game', required: true
+    let(:test_game) { create(:game, name: 'Test Game') }
+    let(:id) { test_game.id }
 
     get('Show Game') do
       tags 'Games'
@@ -73,12 +69,8 @@ RSpec.describe 'api/v1/games' do
       operationId 'getGame'
 
       response(200, 'successful') do
-        let(:id) { Game.create(name: 'Existing Game').id }
-
         schema '$ref' => GAME_DETAIL_SCHEMA
-
         OpenApi::Response.set_example_response_metadata
-
         run_test!
       end
 
@@ -101,19 +93,12 @@ RSpec.describe 'api/v1/games' do
       parameter name: :game, in: :body, schema: {
         type: :object,
         properties: {
-          game: {
-            type: :object,
-            properties: {
-              name: { type: :string }
-            },
-            required: %w[name]
-          }
+          name: { type: :string }
         },
-        required: %w[game]
+        required: %w[name]
       }
 
       response(200, 'successful') do
-        let(:id) { Game.create(name: 'Existing Game').id }
         let(:game) { { game: { name: 'Updated Game' } } }
 
         schema '$ref' => GAME_DETAIL_SCHEMA
@@ -140,9 +125,6 @@ RSpec.describe 'api/v1/games' do
       operationId 'deleteGame'
 
       response(200, 'successful') do
-        let(:game) { create(:game, name: 'Test Game') }
-        let(:id) { game.id }
-
         OpenApi::Response.set_example_response_metadata
 
         run_test!

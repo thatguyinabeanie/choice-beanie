@@ -33,22 +33,17 @@ RSpec.describe 'api/v1/users' do
 
       parameter name: :user, in: :body, schema: {
         type: :object,
+        title: 'postUser',
         properties: {
-          user: {
-            type: :object,
-            title: 'postUser',
-            properties: {
-              username: { type: :string },
-              email: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              pronouns: { type: :string },
-              password: { type: :string },
-              password_confirmation: { type: :string }
-            },
-            required: %w[username email first_name last_name password password_confirmation]
-          }
-        }
+          username: { type: :string },
+          email: { type: :string },
+          first_name: { type: :string },
+          last_name: { type: :string },
+          pronouns: { type: :string },
+          password: { type: :string },
+          password_confirmation: { type: :string }
+        },
+        required: %w[username email first_name last_name password password_confirmation]
       }
 
       response(201, 'created') do
@@ -130,22 +125,16 @@ RSpec.describe 'api/v1/users' do
 
       parameter name: :user, in: :body, schema: {
         type: :object,
+        title: 'patchUser',
         properties: {
-          user: {
-            type: :object,
-            title: 'patchUser',
-            properties: {
-              username: { type: :string },
-              email: { type: :string },
-              password: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              pronouns: { type: :string }
-            },
-            required: %w[username email password first_name last_name]
-          }
+          username: { type: :string },
+          email: { type: :string },
+          password: { type: :string },
+          first_name: { type: :string },
+          last_name: { type: :string },
+          pronouns: { type: :string }
         },
-        required: %w[user]
+        required: %w[username email password first_name last_name]
       }
 
       response(200, 'successful') do

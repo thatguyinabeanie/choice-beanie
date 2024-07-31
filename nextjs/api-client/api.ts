@@ -74,12 +74,6 @@ export interface Format {
    * @memberof Format
    */
   name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Format
-   */
-  slug?: string;
 }
 /**
  *
@@ -99,12 +93,6 @@ export interface Game {
    * @memberof Game
    */
   name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Game
-   */
-  slug: string;
 }
 /**
  *
@@ -124,12 +112,6 @@ export interface GameDetail {
    * @memberof GameDetail
    */
   name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof GameDetail
-   */
-  slug: string;
   /**
    *
    * @type {Array<Format>}
@@ -192,12 +174,6 @@ export interface OrganizationDetails {
    * @memberof OrganizationDetails
    */
   description: string;
-  /**
-   *
-   * @type {string}
-   * @memberof OrganizationDetails
-   */
-  slug: string;
   /**
    *
    * @type {string}
@@ -321,19 +297,6 @@ export interface PatchUser {
 /**
  *
  * @export
- * @interface PatchUserRequest
- */
-export interface PatchUserRequest {
-  /**
-   *
-   * @type {PatchUser}
-   * @memberof PatchUserRequest
-   */
-  user: PatchUser;
-}
-/**
- *
- * @export
  * @interface Phase
  */
 export interface Phase {
@@ -345,16 +308,16 @@ export interface Phase {
   id: number;
   /**
    *
+   * @type {string}
+   * @memberof Phase
+   */
+  name: string;
+  /**
+   *
    * @type {number}
    * @memberof Phase
    */
   order: number;
-  /**
-   *
-   * @type {string}
-   * @memberof Phase
-   */
-  name?: string;
   /**
    *
    * @type {string}
@@ -424,16 +387,16 @@ export interface PhaseDetails {
   id: number;
   /**
    *
+   * @type {string}
+   * @memberof PhaseDetails
+   */
+  name: string;
+  /**
+   *
    * @type {number}
    * @memberof PhaseDetails
    */
   order: number;
-  /**
-   *
-   * @type {string}
-   * @memberof PhaseDetails
-   */
-  name?: string;
   /**
    *
    * @type {string}
@@ -509,6 +472,12 @@ export interface PhaseDetails {
 export interface Player {
   /**
    *
+   * @type {number}
+   * @memberof Player
+   */
+  id: number;
+  /**
+   *
    * @type {User}
    * @memberof Player
    */
@@ -552,10 +521,16 @@ export interface Player {
 export interface PlayerDetails {
   /**
    *
+   * @type {number}
+   * @memberof PlayerDetails
+   */
+  id: number;
+  /**
+   *
    * @type {User}
    * @memberof PlayerDetails
    */
-  user?: User;
+  user: User;
   /**
    *
    * @type {string}
@@ -567,31 +542,31 @@ export interface PlayerDetails {
    * @type {boolean}
    * @memberof PlayerDetails
    */
-  checked_in?: boolean;
+  checked_in: boolean;
   /**
    *
    * @type {string}
    * @memberof PlayerDetails
    */
-  checked_in_at?: string | null;
+  checked_in_at: string | null;
   /**
    *
    * @type {boolean}
    * @memberof PlayerDetails
    */
-  team_sheet_submitted?: boolean;
+  team_sheet_submitted: boolean;
   /**
    *
    * @type {string}
    * @memberof PlayerDetails
    */
-  team_sheet_submitted_at?: string | null;
+  team_sheet_submitted_at: string | null;
   /**
    *
    * @type {Array<PokemonSet>}
    * @memberof PlayerDetails
    */
-  pokemon_sets?: Array<PokemonSet>;
+  pokemon_sets: Array<PokemonSet>;
 }
 /**
  *
@@ -599,6 +574,12 @@ export interface PlayerDetails {
  * @interface PokemonSet
  */
 export interface PokemonSet {
+  /**
+   *
+   * @type {number}
+   * @memberof PokemonSet
+   */
+  id: number;
   /**
    *
    * @type {string}
@@ -780,6 +761,109 @@ export interface PostPlayer {
 /**
  *
  * @export
+ * @interface PostTournament
+ */
+export interface PostTournament {
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  start_at?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  end_at?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof PostTournament
+   */
+  game_id: number;
+  /**
+   *
+   * @type {number}
+   * @memberof PostTournament
+   */
+  format_id: number;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  auto_start?: boolean;
+  /**
+   *
+   * @type {number}
+   * @memberof PostTournament
+   */
+  player_cap?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  registration_start_at?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  registration_end_at?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  late_registration?: boolean;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  check_in_required?: boolean;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  late_check_in?: boolean;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  check_in_start_at?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PostTournament
+   */
+  check_in_end_at?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  open_team_sheets?: boolean;
+  /**
+   *
+   * @type {boolean}
+   * @memberof PostTournament
+   */
+  teamlists_required?: boolean;
+}
+/**
+ *
+ * @export
  * @interface PostTournamentPhaseRequest
  */
 export interface PostTournamentPhaseRequest {
@@ -851,19 +935,6 @@ export interface PostUser {
    * @memberof PostUser
    */
   password_confirmation: string;
-}
-/**
- *
- * @export
- * @interface PostUserRequest
- */
-export interface PostUserRequest {
-  /**
-   *
-   * @type {PostUser}
-   * @memberof PostUserRequest
-   */
-  user?: PostUser;
 }
 /**
  *
@@ -1001,112 +1072,10 @@ export interface Tournament {
   name: string;
   /**
    *
-   * @type {string}
-   * @memberof Tournament
-   */
-  slug?: string;
-  /**
-   *
-   * @type {Organization}
-   * @memberof Tournament
-   */
-  organization: Organization;
-  /**
-   *
-   * @type {Format}
-   * @memberof Tournament
-   */
-  format: Format;
-  /**
-   *
-   * @type {Game}
-   * @memberof Tournament
-   */
-  game: Game;
-  /**
-   *
    * @type {number}
    * @memberof Tournament
    */
   player_cap: number | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  autostart: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  start_at: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  end_at?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  started_at?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  ended_at?: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  check_in_required: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  late_check_in: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  check_in_start_at: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  late_registration: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  registration_start_at: string;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  registration_end_at: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  teamlists_required: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Tournament
-   */
-  open_team_sheets: boolean;
 }
 /**
  *
@@ -1128,30 +1097,6 @@ export interface TournamentDetails {
   name: string;
   /**
    *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  slug?: string;
-  /**
-   *
-   * @type {Organization}
-   * @memberof TournamentDetails
-   */
-  organization: Organization;
-  /**
-   *
-   * @type {Format}
-   * @memberof TournamentDetails
-   */
-  format: Format;
-  /**
-   *
-   * @type {Game}
-   * @memberof TournamentDetails
-   */
-  game: Game;
-  /**
-   *
    * @type {number}
    * @memberof TournamentDetails
    */
@@ -1167,25 +1112,25 @@ export interface TournamentDetails {
    * @type {string}
    * @memberof TournamentDetails
    */
-  start_at: string;
+  start_at: string | null;
   /**
    *
    * @type {string}
    * @memberof TournamentDetails
    */
-  end_at?: string;
+  end_at?: string | null;
   /**
    *
    * @type {string}
    * @memberof TournamentDetails
    */
-  started_at?: string;
+  started_at?: string | null;
   /**
    *
    * @type {string}
    * @memberof TournamentDetails
    */
-  ended_at?: string;
+  ended_at?: string | null;
   /**
    *
    * @type {boolean}
@@ -1203,7 +1148,7 @@ export interface TournamentDetails {
    * @type {string}
    * @memberof TournamentDetails
    */
-  check_in_start_at: string;
+  check_in_start_at: string | null;
   /**
    *
    * @type {boolean}
@@ -1215,13 +1160,13 @@ export interface TournamentDetails {
    * @type {string}
    * @memberof TournamentDetails
    */
-  registration_start_at: string;
+  registration_start_at: string | null;
   /**
    *
    * @type {string}
    * @memberof TournamentDetails
    */
-  registration_end_at: string;
+  registration_end_at: string | null;
   /**
    *
    * @type {boolean}
@@ -1283,6 +1228,12 @@ export interface UserDetails {
    * @type {string}
    * @memberof UserDetails
    */
+  pronouns: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDetails
+   */
   email: string;
   /**
    *
@@ -1296,18 +1247,6 @@ export interface UserDetails {
    * @memberof UserDetails
    */
   last_name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UserDetails
-   */
-  pronouns: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UserDetails
-   */
-  slug: string;
 }
 
 /**
@@ -3298,7 +3237,7 @@ export const PlayersApiAxiosParamCreator = function (
     /**
      * Retrieves a list of all Players
      * @summary List Tournament Players
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -3344,22 +3283,34 @@ export const PlayersApiAxiosParamCreator = function (
     /**
      * Creates a new Player.
      * @summary Create Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
+     * @param {number} organizationId ID of the Organization
      * @param {PostTournamentPlayerRequest} [postTournamentPlayerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postTournamentPlayer: async (
       tournamentId: number,
+      organizationId: number,
       postTournamentPlayerRequest?: PostTournamentPlayerRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'tournamentId' is not null or undefined
       assertParamExists("postTournamentPlayer", "tournamentId", tournamentId);
-      const localVarPath =
-        `/api/v1/tournaments/{tournament_id}/players`.replace(
+      // verify required parameter 'organizationId' is not null or undefined
+      assertParamExists(
+        "postTournamentPlayer",
+        "organizationId",
+        organizationId,
+      );
+      const localVarPath = `/api/v1/tournaments/{tournament_id}/players`
+        .replace(
           `{${"tournament_id"}}`,
           encodeURIComponent(String(tournamentId)),
+        )
+        .replace(
+          `{${"organization_id"}}`,
+          encodeURIComponent(String(organizationId)),
         );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3459,7 +3410,7 @@ export const PlayersApiAxiosParamCreator = function (
     /**
      * Retrieves a Player
      * @summary Show Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {number} id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3554,7 +3505,7 @@ export const PlayersApiFp = function (configuration?: Configuration) {
     /**
      * Retrieves a list of all Players
      * @summary List Tournament Players
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -3584,13 +3535,15 @@ export const PlayersApiFp = function (configuration?: Configuration) {
     /**
      * Creates a new Player.
      * @summary Create Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
+     * @param {number} organizationId ID of the Organization
      * @param {PostTournamentPlayerRequest} [postTournamentPlayerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postTournamentPlayer(
       tournamentId: number,
+      organizationId: number,
       postTournamentPlayerRequest?: PostTournamentPlayerRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
@@ -3599,6 +3552,7 @@ export const PlayersApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.postTournamentPlayer(
           tournamentId,
+          organizationId,
           postTournamentPlayerRequest,
           options,
         );
@@ -3655,7 +3609,7 @@ export const PlayersApiFp = function (configuration?: Configuration) {
     /**
      * Retrieves a Player
      * @summary Show Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {number} id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3720,7 +3674,7 @@ export const PlayersApiFactory = function (
     /**
      * Retrieves a list of all Players
      * @summary List Tournament Players
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -3735,19 +3689,22 @@ export const PlayersApiFactory = function (
     /**
      * Creates a new Player.
      * @summary Create Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
+     * @param {number} organizationId ID of the Organization
      * @param {PostTournamentPlayerRequest} [postTournamentPlayerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postTournamentPlayer(
       tournamentId: number,
+      organizationId: number,
       postTournamentPlayerRequest?: PostTournamentPlayerRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<PlayerDetails> {
       return localVarFp
         .postTournamentPlayer(
           tournamentId,
+          organizationId,
           postTournamentPlayerRequest,
           options,
         )
@@ -3780,7 +3737,7 @@ export const PlayersApiFactory = function (
     /**
      * Retrieves a Player
      * @summary Show Tournament Player
-     * @param {number} tournamentId ID of the tournament
+     * @param {number} tournamentId ID of the Tournament
      * @param {number} id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3826,7 +3783,7 @@ export class PlayersApi extends BaseAPI {
   /**
    * Retrieves a list of all Players
    * @summary List Tournament Players
-   * @param {number} tournamentId ID of the tournament
+   * @param {number} tournamentId ID of the Tournament
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof PlayersApi
@@ -3840,7 +3797,8 @@ export class PlayersApi extends BaseAPI {
   /**
    * Creates a new Player.
    * @summary Create Tournament Player
-   * @param {number} tournamentId ID of the tournament
+   * @param {number} tournamentId ID of the Tournament
+   * @param {number} organizationId ID of the Organization
    * @param {PostTournamentPlayerRequest} [postTournamentPlayerRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -3848,11 +3806,17 @@ export class PlayersApi extends BaseAPI {
    */
   public postTournamentPlayer(
     tournamentId: number,
+    organizationId: number,
     postTournamentPlayerRequest?: PostTournamentPlayerRequest,
     options?: RawAxiosRequestConfig,
   ) {
     return PlayersApiFp(this.configuration)
-      .postTournamentPlayer(tournamentId, postTournamentPlayerRequest, options)
+      .postTournamentPlayer(
+        tournamentId,
+        organizationId,
+        postTournamentPlayerRequest,
+        options,
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -3885,7 +3849,7 @@ export class PlayersApi extends BaseAPI {
   /**
    * Retrieves a Player
    * @summary Show Tournament Player
-   * @param {number} tournamentId ID of the tournament
+   * @param {number} tournamentId ID of the Tournament
    * @param {number} id
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -3898,6 +3862,288 @@ export class PlayersApi extends BaseAPI {
   ) {
     return PlayersApiFp(this.configuration)
       .showTournamentPlayer(tournamentId, id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * TournamentsApi - axios parameter creator
+ * @export
+ */
+export const TournamentsApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     * Retrieves a list of all Tournaments
+     * @summary List Tournaments
+     * @param {number} organizationId ID of the Organization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listTournaments: async (
+      organizationId: number,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'organizationId' is not null or undefined
+      assertParamExists("listTournaments", "organizationId", organizationId);
+      const localVarPath =
+        `/api/v1/organizations/{organization_id}/tournaments`.replace(
+          `{${"organization_id"}}`,
+          encodeURIComponent(String(organizationId)),
+        );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Creates a new Tournament.
+     * @summary Create Tournament
+     * @param {number} organizationId ID of the Organization
+     * @param {PostTournament} [postTournament]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postTournament: async (
+      organizationId: number,
+      postTournament?: PostTournament,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'organizationId' is not null or undefined
+      assertParamExists("postTournament", "organizationId", organizationId);
+      const localVarPath =
+        `/api/v1/organizations/{organization_id}/tournaments`.replace(
+          `{${"organization_id"}}`,
+          encodeURIComponent(String(organizationId)),
+        );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        postTournament,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * TournamentsApi - functional programming interface
+ * @export
+ */
+export const TournamentsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    TournamentsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     * Retrieves a list of all Tournaments
+     * @summary List Tournaments
+     * @param {number} organizationId ID of the Organization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listTournaments(
+      organizationId: number,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string,
+      ) => AxiosPromise<Array<Tournament>>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.listTournaments(
+        organizationId,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["TournamentsApi.listTournaments"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+    /**
+     * Creates a new Tournament.
+     * @summary Create Tournament
+     * @param {number} organizationId ID of the Organization
+     * @param {PostTournament} [postTournament]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async postTournament(
+      organizationId: number,
+      postTournament?: PostTournament,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string,
+      ) => AxiosPromise<TournamentDetails>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.postTournament(
+        organizationId,
+        postTournament,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["TournamentsApi.postTournament"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * TournamentsApi - factory interface
+ * @export
+ */
+export const TournamentsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = TournamentsApiFp(configuration);
+  return {
+    /**
+     * Retrieves a list of all Tournaments
+     * @summary List Tournaments
+     * @param {number} organizationId ID of the Organization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listTournaments(
+      organizationId: number,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<Array<Tournament>> {
+      return localVarFp
+        .listTournaments(organizationId, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Creates a new Tournament.
+     * @summary Create Tournament
+     * @param {number} organizationId ID of the Organization
+     * @param {PostTournament} [postTournament]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    postTournament(
+      organizationId: number,
+      postTournament?: PostTournament,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<TournamentDetails> {
+      return localVarFp
+        .postTournament(organizationId, postTournament, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * TournamentsApi - object-oriented interface
+ * @export
+ * @class TournamentsApi
+ * @extends {BaseAPI}
+ */
+export class TournamentsApi extends BaseAPI {
+  /**
+   * Retrieves a list of all Tournaments
+   * @summary List Tournaments
+   * @param {number} organizationId ID of the Organization
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TournamentsApi
+   */
+  public listTournaments(
+    organizationId: number,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return TournamentsApiFp(this.configuration)
+      .listTournaments(organizationId, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Creates a new Tournament.
+   * @summary Create Tournament
+   * @param {number} organizationId ID of the Organization
+   * @param {PostTournament} [postTournament]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof TournamentsApi
+   */
+  public postTournament(
+    organizationId: number,
+    postTournament?: PostTournament,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return TournamentsApiFp(this.configuration)
+      .postTournament(organizationId, postTournament, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }
@@ -4042,13 +4288,13 @@ export const UsersApiAxiosParamCreator = function (
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {PatchUser} [patchUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     patchUser: async (
       id: number,
-      patchUserRequest?: PatchUserRequest,
+      patchUser?: PatchUser,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
@@ -4082,7 +4328,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        patchUserRequest,
+        patchUser,
         localVarRequestOptions,
         configuration,
       );
@@ -4095,12 +4341,12 @@ export const UsersApiAxiosParamCreator = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUserRequest} [postUserRequest]
+     * @param {PostUser} [postUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser: async (
-      postUserRequest?: PostUserRequest,
+      postUser?: PostUser,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/users`;
@@ -4129,7 +4375,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        postUserRequest,
+        postUser,
         localVarRequestOptions,
         configuration,
       );
@@ -4237,20 +4483,20 @@ export const UsersApiFp = function (configuration?: Configuration) {
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {PatchUser} [patchUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async patchUser(
       id: number,
-      patchUserRequest?: PatchUserRequest,
+      patchUser?: PatchUser,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(
         id,
-        patchUserRequest,
+        patchUser,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4268,18 +4514,18 @@ export const UsersApiFp = function (configuration?: Configuration) {
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUserRequest} [postUserRequest]
+     * @param {PostUser} [postUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postUser(
-      postUserRequest?: PostUserRequest,
+      postUser?: PostUser,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.postUser(
-        postUserRequest,
+        postUser,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4353,32 +4599,32 @@ export const UsersApiFactory = function (
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUserRequest} [patchUserRequest]
+     * @param {PatchUser} [patchUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     patchUser(
       id: number,
-      patchUserRequest?: PatchUserRequest,
+      patchUser?: PatchUser,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .patchUser(id, patchUserRequest, options)
+        .patchUser(id, patchUser, options)
         .then((request) => request(axios, basePath));
     },
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUserRequest} [postUserRequest]
+     * @param {PostUser} [postUser]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser(
-      postUserRequest?: PostUserRequest,
+      postUser?: PostUser,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .postUser(postUserRequest, options)
+        .postUser(postUser, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -4436,35 +4682,32 @@ export class UsersApi extends BaseAPI {
    * Updates an existing User.
    * @summary Update User
    * @param {number} id ID of the User
-   * @param {PatchUserRequest} [patchUserRequest]
+   * @param {PatchUser} [patchUser]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
   public patchUser(
     id: number,
-    patchUserRequest?: PatchUserRequest,
+    patchUser?: PatchUser,
     options?: RawAxiosRequestConfig,
   ) {
     return UsersApiFp(this.configuration)
-      .patchUser(id, patchUserRequest, options)
+      .patchUser(id, patchUser, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    * Creates a new User.
    * @summary Create User
-   * @param {PostUserRequest} [postUserRequest]
+   * @param {PostUser} [postUser]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
-  public postUser(
-    postUserRequest?: PostUserRequest,
-    options?: RawAxiosRequestConfig,
-  ) {
+  public postUser(postUser?: PostUser, options?: RawAxiosRequestConfig) {
     return UsersApiFp(this.configuration)
-      .postUser(postUserRequest, options)
+      .postUser(postUser, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

@@ -6,6 +6,8 @@ TOURNAMENT_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/TournamentDetails'.f
 RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
   path('/api/v1/organizations/{organization_id}/tournaments') do
     parameter name: :organization_id, in: :path, type: :integer, description: 'ID of the Organization', required: true
+    let(:organization) { create(:organization) }
+    let(:organization_id) { organization.id }
 
     get('List Tournaments') do
       tags 'Tournaments'
@@ -34,36 +36,29 @@ RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
 
       parameter name: :tournament, in: :body, schema: {
         type: :object,
+        title: 'postTournament',
         properties: {
-          tournament: {
-            type: :object,
-            title: 'postTournament',
-            properties: {
-              name: { type: :string, required: true },
-              start_at: { type: :string, format: DATE_TIME_TYPE },
-              end_at: { type: :string, format: DATE_TIME_TYPE },
-              game_id: { type: :integer, required: true },
-              format_id: { type: :integer, required: true },
-              auto_start: { type: :boolean },
-              player_cap: { type: :integer },
-              registration_start_at: { type: :string, format: DATE_TIME_TYPE },
-              registration_end_at: { type: :string, format: DATE_TIME_TYPE },
-              late_registration: { type: :boolean },
-              check_in_required: { type: :boolean },
-              late_check_in: { type: :boolean },
-              check_in_start_at: { type: :string, format: DATE_TIME_TYPE },
-              check_in_end_at: { type: :string, format: DATE_TIME_TYPE },
-              open_team_sheets: { type: :boolean },
-              teamlists_required: { type: :boolean }
-            },
-            required: %w[name game_id format_id]
-          }
-        }
+          name: { type: :string },
+          start_at: { type: :string, format: DATE_TIME_TYPE },
+          end_at: { type: :string, format: DATE_TIME_TYPE },
+          game_id: { type: :integer },
+          format_id: { type: :integer },
+          auto_start: { type: :boolean },
+          player_cap: { type: :integer },
+          registration_start_at: { type: :string, format: DATE_TIME_TYPE },
+          registration_end_at: { type: :string, format: DATE_TIME_TYPE },
+          late_registration: { type: :boolean },
+          check_in_required: { type: :boolean },
+          late_check_in: { type: :boolean },
+          check_in_start_at: { type: :string, format: DATE_TIME_TYPE },
+          check_in_end_at: { type: :string, format: DATE_TIME_TYPE },
+          open_team_sheets: { type: :boolean },
+          teamlists_required: { type: :boolean }
+        },
+        required: %w[name game_id format_id]
       }
 
       response(201, 'created') do
-        let(:organization) { create(:organization) }
-        let(:organization_id) { organization.id }
         let(:game) { create(:game) }
         let(:format) { create(:format, game:) }
         let(:tournament) do
@@ -83,8 +78,6 @@ RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
       end
 
       response(422, 'unprocessable entity') do
-        let(:organization) { create(:organization) }
-        let(:organization_id) { organization.id }
         let(:tournament) do
           {
             tournament: {
