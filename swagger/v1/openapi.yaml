@@ -479,9 +479,8 @@ paths:
                       type: string
                   required:
                   - user_id
-                  - tournament_id
                   - in_game_name
-  "/api/v1/tournaments/{tournament_id}/players/{id}":
+  "/api/v1/organizations/{organization_id}/tournaments/{tournament_id}/players/{id}":
     parameters:
     - name: organization_id
       in: path
