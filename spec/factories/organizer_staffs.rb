@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :organization_membership, class: 'Organization::StaffMember' do
+  factory :organization_staff_member, class: 'Organization::StaffMember' do
     organization
-    user
+    user factory: :user
   end
 end

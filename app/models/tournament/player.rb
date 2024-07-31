@@ -17,6 +17,8 @@ module Tournament
 
     validate :pokemon_sets_count_within_limit
 
+    delegate :username, to: :user
+
     def add_pokemon_sets!(pokemon_sets = [])
       pokemon_sets.each { |pokemon_set| add_pokemon_set!(pokemon_set, skip_save: true) }
       save!

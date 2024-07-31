@@ -4,10 +4,9 @@ class TournamentSerializer < ActiveModel::Serializer
   attributes :registration_start_at, :registration_end_at
   attributes :start_at, :started_at, :end_at, :ended_at
   attributes :autostart
-  # has_many :players, serializer: PlayerSerializer
 end
 
-class TournamentDetailSerializer < TournamentSerializer
+class TournamentDetailSerializer < ActiveModel::Serializer
   attributes :id, :name, :player_cap
   attributes :check_in_required, :late_registration
   attributes :registration_start_at, :registration_end_at

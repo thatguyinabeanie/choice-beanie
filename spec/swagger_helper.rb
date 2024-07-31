@@ -3,6 +3,135 @@
 require 'rails_helper'
 require 'support/constants'
 
+FORMAT_SCHEMA = {
+  type: :object,
+  title: 'Format',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    slug: { type: :string }
+  }
+}.freeze
+
+GAME_SCHEMA = {
+  type: :object,
+  title: 'Game',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    slug: { type: :string }
+  },
+  required: %w[id name slug]
+}.freeze
+
+GAME_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'GameDetail',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    slug: { type: :string },
+    formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
+  },
+  required: %w[id name slug formats]
+}.freeze
+
+USER_SCHEMA = {
+  type: :object,
+  title: 'User',
+  properties: {
+    id: { type: :integer },
+    username: { type: :string },
+    pronouns: { type: :string }
+  },
+  required: %w[id username pronouns]
+}.freeze
+
+USER_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'UserDetails',
+  properties: {
+    id: { type: :integer },
+    username: { type: :string },
+    email: { type: :string },
+    first_name: { type: :string },
+    last_name: { type: :string },
+    pronouns: { type: :string },
+    slug: { type: :string }
+  },
+  required: %w[id username email first_name last_name pronouns slug]
+}.freeze
+
+ORGANIZATION_SCHEMA = {
+  type: :object,
+  title: 'Organization',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    owner: { '$ref' => '#/components/schemas/User' }
+  },
+  required: %w[id name owner]
+}.freeze
+
+ORGANIZATION_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'OrganizationDetails',
+
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    owner: { '$ref' => '#/components/schemas/UserDetails' },
+    description: { type: :string },
+    slug: { type: :string },
+    updated_at: { type: :string, format: 'date-time' },
+    created_at: { type: :string, format: 'date-time' }
+  },
+  required: %w[id name owner description slug created_at updated_at]
+}.freeze
+
+TOURNAMENT_SCHEMA = {
+  type: :object,
+  title: 'Tournament',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    slug: { type: :string },
+
+    organization: { '$ref' => '#/components/schemas/Organization' },
+
+    format: { '$ref' => '#/components/schemas/Format' },
+    game: { '$ref' => '#/components/schemas/Game' },
+
+    player_cap: { type: :integer, nullable: true },
+
+    autostart: { type: :boolean },
+    start_at: { type: :string, format: 'date-time' },
+    end_at: { type: :string, format: 'date-time' },
+    started_at: { type: :string, format: 'date-time' },
+    ended_at: { type: :string, format: 'date-time' },
+
+    check_in_required: { type: :boolean },
+    late_check_in: { type: :boolean },
+    check_in_start_at: { type: :string, format: 'date-time' },
+
+    late_registration: { type: :boolean },
+    registration_start_at: { type: :string, format: 'date-time' },
+    registration_end_at: { type: :string, format: 'date-time' },
+
+    teamlists_required: { type: :boolean },
+    open_team_sheets: { type: :boolean }
+  },
+  required: %w[id name organization format game start_at player_cap autostart check_in_required late_check_in check_in_start_at late_registration registration_start_at registration_end_at
+               teamlists_required open_team_sheets]
+}.freeze
+
+TOURNAMENT_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'TournamentDetails',
+  properties: TOURNAMENT_SCHEMA[:properties],
+  required: TOURNAMENT_SCHEMA[:required] + %w[]
+}.freeze
+
 RSpec.configure do |config|
   # config.include SwaggerHelper
   # Specify a root folder where Swagger JSON files are generated
@@ -44,91 +173,24 @@ RSpec.configure do |config|
         },
 
         schemas: {
-          Format: {
-            type: :object,
-            title: 'Format',
-            properties: {
-              id: { type: :integer },
-              name: { type: :string },
-              slug: { type: :string }
-            }
-          },
 
-          Game: {
-            type: :object,
-            title: 'Game',
-            properties: {
-              id: { type: :integer },
-              name: { type: :string },
-              slug: { type: :string }
-            },
-            required: %w[id name slug]
-          },
+          Format: FORMAT_SCHEMA,
 
-          GameDetail: {
-            type: :object,
-            title: 'GameDetail',
-            properties: {
-              id: { type: :integer },
-              name: { type: :string },
-              slug: { type: :string },
-              formats: { type: :array, items: { '$ref' => '#/components/schemas/Format' } }
-            },
-            required: %w[id name slug formats]
-          },
+          Game: GAME_SCHEMA,
 
-          User: {
-            type: :object,
-            title: 'User',
-            properties: {
-              id: { type: :integer },
-              username: { type: :string },
-              pronouns: { type: :string }
-            },
-            required: %w[id username pronouns]
-          },
+          GameDetail: GAME_DETAILS_SCHEMA,
 
-          UserDetails: {
-            type: :object,
-            title: 'UserDetails',
-            properties: {
-              id: { type: :integer },
-              username: { type: :string },
-              email: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              pronouns: { type: :string },
-              slug: { type: :string }
-            },
-            required: %w[id username email first_name last_name pronouns slug]
-          },
+          User: USER_SCHEMA,
 
-          Organization: {
-            type: :object,
-            title: 'Organization',
-            properties: {
-              id: { type: :integer },
-              name: { type: :string },
-              owner: { '$ref' => '#/components/schemas/User' }
-            },
-            required: %w[id name owner]
-          },
+          UserDetails: USER_DETAILS_SCHEMA,
 
-          OrganizationDetails: {
-            type: :object,
-            title: 'OrganizationDetails',
+          Organization: ORGANIZATION_SCHEMA,
 
-            properties: {
-              id: { type: :integer },
-              name: { type: :string },
-              owner: { '$ref' => '#/components/schemas/UserDetails' },
-              description: { type: :string },
-              slug: { type: :string },
-              updated_at: { type: :string, format: 'date-time' },
-              created_at: { type: :string, format: 'date-time' }
-            },
-            required: %w[id name owner description slug created_at updated_at]
-          }
+          OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
+
+          Tournament: TOURNAMENT_SCHEMA,
+
+          TournamentDetails: TOURNAMENT_DETAILS_SCHEMA
         }
       }
     }

@@ -1,7 +1,6 @@
 require_relative 'boot'
 
 require 'rails/all'
-ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -9,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 # Load .env file in development and test environments
 Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
+ENV['DB_HOST'] ||= ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
 
 module BattleStadium
   class Application < Rails::Application
@@ -41,6 +41,5 @@ module BattleStadium
     #     resource '*', headers: :any, methods: %i[get post put patch delete]
     #   end
     # end
-    #
   end
 end

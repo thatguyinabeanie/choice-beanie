@@ -22,7 +22,7 @@ module Api
       # POST /api/v1/:klass
       # POST /api/v1/:klass.json
       def create
-        @object = klass.new permitted_params
+        @object = klass.create! permitted_params
         if @object.save
           render json: serialize_details, status: :created
         else
@@ -35,7 +35,7 @@ module Api
       # PATCH/PUT /api/v1/:klass/:id
       # PATCH/PUT /api/v1/:klass/:id.json
       def update
-        if @object.update(permitted_params)
+        if @object.update! permitted_params
           render json: serialize_details, status: :ok
         else
           render json: @object.errors, status: :unprocessable_entity
@@ -45,7 +45,7 @@ module Api
       # DELETE /api/v1/:klass/:id
       # DELETE /api/v1/:klass/:id.json
       def destroy
-        @object.destroy
+        @object.destroy!
         render json: { message: "#{klass} deleted" }, status: :ok
       end
 

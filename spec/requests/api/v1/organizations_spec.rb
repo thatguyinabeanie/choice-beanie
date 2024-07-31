@@ -169,4 +169,33 @@ RSpec.describe 'api/v1/organizations' do
       end
     end
   end
+
+  path('/api/v1/organizations/{id}/staff') do
+    parameter name: :id, in: :path, type: :string, required: true
+
+    get('List Organization Staff') do
+      tags 'Organizations'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
+      description 'Retrieves a list of staff members for a specific organization.'
+      operationId 'getOrganizationStaff'
+
+      response(200, 'successful') do
+        let(:organization) { create(:organization_with_staff, staff_count: 5) }
+        let(:id) { organization.id }
+
+        schema type: :array, items: { '$ref' => '#/components/schemas/User' }
+        OpenApi::Response.set_example_response_metadata
+
+        run_test!
+      end
+
+      response(404, NOT_FOUND) do
+        let(:id) { 'invalid' }
+
+        OpenApi::Response.set_example_response_metadata
+
+        run_test!
+      end
+    end
+  end
 end
