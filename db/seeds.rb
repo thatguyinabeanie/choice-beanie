@@ -10,6 +10,11 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+if Rails.env.production?
+  Rails.logger.info('Seeding is disabled in production.')
+  exit
+end
+
 def create_user(username: nil, email: nil)
   username ||= "regular_user_#{Faker::Internet.unique.username}"
   email ||= "#{username}@battle-stadium-regular-users.com"
@@ -42,10 +47,13 @@ def generate_pokemon_set(player:)
   )
 end
 
-def create_tournament(attributes)
-  Tournament::Tournament.create!(attributes)
-rescue ActiveRecord::RecordInvalid => e
-  Rails.logger.debug { "Failed to create tournament: #{e.record.errors.full_messages.join(', ')}" }
+def create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+  Tournament::Tournament.find_or_create_by!(name:, organization:, format:, game:) do |tournament|
+    tournament.start_at = start_at
+    tournament.end_at = end_at
+    tournament.check_in_start_at = check_in_start_at
+    tournament.registration_start_at = registration_start_at
+  end
 end
 
 def create_format(name:, game:)
@@ -84,7 +92,7 @@ rescue ActiveRecord::RecordNotFound
   Organization::Organization.create!(name:, owner:, description:, staff:)
 end.compact
 
-orgs.flat_map do |organization|
+tournaments = orgs.flat_map do |organization|
   formats.map.with_index do |format, index|
     name = "#{organization.name} #{format.name} Tournament #{index + 1}"
     start_at = Time.zone.today
@@ -93,32 +101,32 @@ orgs.flat_map do |organization|
     game = format.game
     registration_start_at = 1.week.ago
 
-    create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
 
-    # swiss = Phase::Swiss.build(
-    #   name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
-    #   tournament: tour,
-    #   number_of_rounds: 5
-    # )
+    swiss = Phase::Swiss.build(
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
+      tournament: tour,
+      number_of_rounds: 5
+    )
 
-    # bracket = Phase::SingleEliminationBracket.build(
-    #   name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
-    #   tournament: tour,
-    #   criteria: 'Top 8'
-    # )
+    bracket = Phase::SingleEliminationBracket.build(
+      name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
+      tournament: tour,
+      criteria: 'Top 8'
+    )
 
-    # tour.add_phase!(phase: swiss)
-    # tour.add_phase!(phase: bracket)
-    # tour
+    tour.add_phase!(phase: swiss)
+    tour.add_phase!(phase: bracket)
+    tour
   end
 end
 
-# players = (1..10).to_a.map { create_user }
+players = (1..10).to_a.map { create_user }
 
-# tournaments.flat_map do |tournament|
-#   players.sample(rand(1..10)).map do |user|
-#     player = Tournament::Player.new(user:)
-#     player.add_pokemon_sets(Array.new(6) { generate_pokemon_set(player:) })
-#     tournament.register!(player:)
-#   end
-# end
+tournaments.flat_map do |tournament|
+  players.sample(rand(1..10)).map do |user|
+    player = Tournament::Player.new(user:)
+    player.add_pokemon_sets(Array.new(6) { generate_pokemon_set(player:) })
+    tournament.register!(player:)
+  end
+end
