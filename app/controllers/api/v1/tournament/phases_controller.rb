@@ -16,8 +16,14 @@ module Api
           render json: serialize_phase_details, status: :ok
         end
 
-        def create
-          @phase = params[:phase][:type].constantize.create! permitted_params.merge(tournament_id: @tournament.id)
+        def create # rubocop:disable Metrics/AbcSize
+          klass = case params[:phase][:type]
+                  when Phase::Swiss.to_s
+                    Phase::Swiss
+                  when Phase::SingleElimination.to_s
+                    Phase::SingleElimination
+                  end
+          @phase = klass.create! permitted_params.merge(tournament_id: @tournament.id)
           @phases << @phase
           if @phase.save
             render json: serialize_phase_details, status: :created
