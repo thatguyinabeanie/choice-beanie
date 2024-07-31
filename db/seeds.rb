@@ -121,11 +121,11 @@ tournaments = orgs.flat_map do |organization|
   end
 end
 
-players = (1..10).to_a.map { create_user }
+players = (1..50).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
   players.sample(rand(1..10)).map do |user|
     player = Tournament::Player.create!(user:, tournament:)
-    player.add_pokemon_sets!(Array.new(6) { generate_pokemon_set(player:) })
+    player.add_pokemon_sets!(Array.new(rand(0..6)) { generate_pokemon_set(player:) })
   end
 end

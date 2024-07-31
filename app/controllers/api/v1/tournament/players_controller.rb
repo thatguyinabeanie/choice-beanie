@@ -17,14 +17,14 @@ module Api
         # GET /api/v1/tournaments/:tournament_id/players/:id
         # GET /api/v1/tournaments/:tournament_id/players/:id.json
         def show
-          render json: @player, status: :ok
+          render json: serialize_player_details, status: :ok
         end
 
         # POST /api/v1/tournaments/:tournament_id/players
         def create
-          @player = @players.create! permitted_params
+          @player = @players.create! permitted_params.merge(tournament_id: @tournament.id)
           if @player.save
-            render json: @player, status: :created
+            render json: serialize_player_details, status: :created
           else
             render json: @player.errors, status: :unprocessable_entity
           end
@@ -36,7 +36,7 @@ module Api
         # PATCH/PUT /api/v1/tournaments/:tournament_id/players/:id.json
         def update
           if @player.update! permitted_params
-            render json: @player, status: :ok
+            render json: serialize_player_details, status: :ok
           else
             render json: @player.errors, status: :unprocessable_entity
           end
@@ -51,27 +51,34 @@ module Api
 
         private
 
+        def serialize_player_details
+          ::PlayerDetailsSerializer.new(@player).serializable_hash
+        end
+
         def set_tournament
           @tournament = ::Tournament::Tournament.find(params[:tournament_id])
+          @tournament
         rescue ActiveRecord::RecordNotFound
           render json: { error: 'Tournament not found' }, status: :not_found
         end
 
         def set_players
+          @tournament ||= set_tournament
           @players = @tournament.players
+          @players
         rescue ActiveRecord::RecordNotFound
           render json: { error: 'Tournament not found' }, status: :not_found
         end
 
         def set_player
-          set_players
-          @player = @players.find_by(user_id: params[:id])
+          @players ||= set_players
+          @player = @players.find_by!(user_id: params[:id])
         rescue ActiveRecord::RecordNotFound
           render json: { error: 'Player not found' }, status: :not_found
         end
 
         def permitted_params
-          params.require(:player).permit(:user_id, :team_sheet_submitted, :checked_in, :tournament_id, :id, :username)
+          params.require(:player).permit(:user_id, :team_sheet_submitted, :tournament_id, :id, :username)
         end
       end
     end

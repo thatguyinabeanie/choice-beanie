@@ -19,6 +19,10 @@ module Tournament
 
     delegate :username, to: :user
 
+    def checked_in?
+      checked_in_at.present?
+    end
+
     def add_pokemon_sets!(pokemon_sets = [])
       pokemon_sets.each { |pokemon_set| add_pokemon_set!(pokemon_set, skip_save: true) }
       save!

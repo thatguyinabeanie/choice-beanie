@@ -257,6 +257,158 @@ paths:
                   "$ref": "#/components/schemas/User"
         '404':
           description: not found
+  "/api/v1/tournaments/{tournament_id}/players":
+    parameters:
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Players
+      tags:
+      - Players
+      description: Retrieves a list of all Players
+      operationId: listPlayers
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Player"
+        '404':
+          description: not found
+    post:
+      summary: Create Player
+      tags:
+      - Players
+      description: Creates a new Player.
+      operationId: postPlayer
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PlayerDetails"
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                player:
+                  type: object
+                  title: postPlayer
+                  properties:
+                    user_id:
+                      type: integer
+                    team_sheet_submitted:
+                      type: boolean
+                    tournament_id:
+                      type: integer
+                  required:
+                  - user_id
+                  - team_sheet_submitted
+                  - tournament_id
+  "/api/v1/tournaments/{tournament_id}/players/{id}":
+    get:
+      summary: Show Player
+      tags:
+      - Players
+      description: Retrieves a Player
+      operationId: showPlayer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: tournament_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PlayerDetails"
+    put:
+      summary: Update Player
+      tags:
+      - Players
+      description: Updates a Player.
+      operationId: putPlayer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: tournament_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PlayerDetails"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                player:
+                  type: object
+                  title: putPlayer
+                  properties:
+                    user_id:
+                      type: integer
+                    team_sheet_submitted:
+                      type: boolean
+                    tournament_id:
+                      type: integer
+                  required:
+                  - user_id
+                  - team_sheet_submitted
+                  - tournament_id
+    delete:
+      summary: Delete Player
+      tags:
+      - Players
+      description: Deletes a Player.
+      operationId: deletePlayer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: tournament_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
   "/api/v1/users":
     get:
       summary: List Users
@@ -672,3 +824,82 @@ components:
       - registration_end_at
       - teamlists_required
       - open_team_sheets
+    PokemonSet:
+      type: object
+      title: PokemonSet
+      properties:
+        name:
+          type: string
+        ability:
+          type: string
+        tera_type:
+          type: string
+        nature:
+          type: string
+        held_item:
+          type: string
+        move1:
+          type: string
+        move2:
+          type: string
+        move3:
+          type: string
+        move4:
+          type: string
+      required:
+      - name
+      - ability
+      - tera_type
+      - nature
+      - held_item
+      - move1
+      - move2
+      - move3
+      - move4
+    Player:
+      type: object
+      title: Player
+      properties:
+        user:
+          "$ref": "#/components/schemas/User"
+        checked_in:
+          type: boolean
+        checked_in_at:
+          type: string
+          format: date-time
+          nullable: true
+        team_sheet_submitted:
+          type: boolean
+        team_sheet_submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - id
+      - user
+      - checked_in
+      - checked_in_at
+      - team_sheet_submitted
+      - team_sheet_submitted_at
+    PlayerDetails:
+      type: object
+      title: PlayerDetails
+      properties:
+        user:
+          "$ref": "#/components/schemas/User"
+        checked_in:
+          type: boolean
+        checked_in_at:
+          type: string
+          format: date-time
+          nullable: true
+        team_sheet_submitted:
+          type: boolean
+        team_sheet_submitted_at:
+          type: string
+          format: date-time
+          nullable: true
+        pokemon_sets:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PokemonSet"

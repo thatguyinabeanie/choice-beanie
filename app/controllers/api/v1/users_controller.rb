@@ -6,7 +6,7 @@ module Api
       before_action :set_user, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
       self.klass = User
       self.serializer_klass = ::UserSerializer
-      self.detail_serializer_klass = ::UserDetailSerializer
+      self.detail_serializer_klass = ::UserDetailsSerializer
 
       protected
 

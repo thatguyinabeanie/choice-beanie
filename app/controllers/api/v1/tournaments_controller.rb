@@ -6,7 +6,7 @@ module Api
 
       self.klass = ::Tournament::Tournament
       self.serializer_klass = ::TournamentSerializer
-      self.detail_serializer_klass = ::TournamentDetailSerializer
+      self.detail_serializer_klass = ::TournamentDetailsSerializer
 
       # TODO: Implement the following actions
       # GET /api/v1/tournaments/:id/players
