@@ -3,7 +3,7 @@ require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
 PASSWORD = 'a_whole_new_world_1!'.freeze
-USER_DETAILS_SCHEMA = '#/components/schemas/UserDetails'.freeze
+USER_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/UserDetails'.freeze
 
 RSpec.describe 'api/v1/users' do
   path('/api/v1/users') do
@@ -66,7 +66,7 @@ RSpec.describe 'api/v1/users' do
           }
         end
 
-        schema '$ref' => USER_DETAILS_SCHEMA
+        schema '$ref' => USER_DETAILS_SCHEMA_COMPONENT
 
         OpenApi::Response.set_example_response_metadata
 
@@ -107,7 +107,7 @@ RSpec.describe 'api/v1/users' do
       response(200, 'successful') do
         let(:id) { create(:user, first_name: 'Existing', last_name: 'User').id }
 
-        schema '$ref' => USER_DETAILS_SCHEMA
+        schema '$ref' => USER_DETAILS_SCHEMA_COMPONENT
 
         run_test!
       end
@@ -162,7 +162,7 @@ RSpec.describe 'api/v1/users' do
           }
         end
 
-        schema '$ref' => USER_DETAILS_SCHEMA
+        schema '$ref' => USER_DETAILS_SCHEMA_COMPONENT
 
         OpenApi::Response.set_example_response_metadata
 

@@ -1,6 +1,7 @@
 module Phase
   class BasePhase < ApplicationRecord
     self.table_name = 'phases'
+    self.inheritance_column = 'type'
     self.abstract_class = true
 
     belongs_to :tournament, class_name: 'Tournament::Tournament'
@@ -15,7 +16,7 @@ module Phase
     validates :best_of, numericality: { greater_than: 0, only_integer: true }, presence: true
 
     validate :best_of_must_be_odd
-
+    validates :type, presence: true
     validates :tournament, presence: true
 
     def accept_players(players:)

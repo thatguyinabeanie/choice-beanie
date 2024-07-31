@@ -137,14 +137,15 @@ POKEMON_SET_SCHEMA = {
   title: 'PokemonSet',
   properties: {
     name: { type: :string },
+    nickname: { type: :string, nullable: true },
     ability: { type: :string },
     tera_type: { type: :string },
     nature: { type: :string },
-    held_item: { type: :string },
-    move1: { type: :string },
-    move2: { type: :string },
-    move3: { type: :string },
-    move4: { type: :string }
+    held_item: { type: :string, nullable: true },
+    move1: { type: :string, nullable: true },
+    move2: { type: :string, nullable: true },
+    move3: { type: :string, nullable: true },
+    move4: { type: :string, nullable: true }
   },
   required: %w[name ability tera_type nature held_item move1 move2 move3 move4]
 }.freeze
@@ -171,6 +172,51 @@ PLAYER_DETAILS_SCHEMA = {
       pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
     }
   )
+}.freeze
+
+ROUND_SCHEMA = {
+  type: :object,
+  title: 'Round',
+  properties: {
+    id: { type: :integer },
+    phase_id: { type: :integer },
+    round_number: { type: :integer },
+    started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
+  },
+  required: %w[id phase_id round_number started_at ended_at]
+}.freeze
+
+PHASE_SCHEMA = {
+  type: :object,
+  title: 'Phase',
+  properties: {
+    id: { type: :integer },
+    order: { type: :integer },
+    name: { type: :string },
+    type: { type: :string },
+    tournament_id: { type: :integer },
+    number_of_rounds: { type: :integer },
+    best_of: { type: :integer },
+    criteria: { type: :string, nullable: true },
+    started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    created_at: { type: :string, format: DATE_TIME_TYPE },
+    updated_at: { type: :string, format: DATE_TIME_TYPE }
+  },
+  required: %w[id order tournament_id number_of_rounds best_of criteria started_at ended_at]
+}
+
+PHASE_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'PhaseDetails',
+  properties: PHASE_SCHEMA[:properties].merge(
+    {
+      players: { type: :array, items: { '$ref' => '#/components/schemas/Player' } },
+      rounds: { type: :array, items: { '$ref' => '#/components/schemas/Round' } }
+    }
+  ),
+  required: PHASE_SCHEMA[:required] + %w[players rounds]
 }.freeze
 
 RSpec.configure do |config|
@@ -225,7 +271,10 @@ RSpec.configure do |config|
           TournamentDetails: TOURNAMENT_DETAILS_SCHEMA,
           PokemonSet: POKEMON_SET_SCHEMA,
           Player: PLAYER_SCHEMA,
-          PlayerDetails: PLAYER_DETAILS_SCHEMA
+          PlayerDetails: PLAYER_DETAILS_SCHEMA,
+          Round: ROUND_SCHEMA,
+          Phase: PHASE_SCHEMA,
+          PhaseDetails: PHASE_DETAILS_SCHEMA
         }
       }
     }

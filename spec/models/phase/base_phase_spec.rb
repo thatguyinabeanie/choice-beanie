@@ -33,7 +33,7 @@ RSpec.describe Phase::BasePhase do
   end
 
   describe 'additional validation' do
-    subject(:phase) { TestPhase.new(best_of:, tournament:, name: 'BassFace') }
+    subject(:phase) { TestPhase.new(best_of:, tournament:, name: 'BassFace', type: 'TestPhase') }
 
     let(:tournament) { create(:tournament) }
 

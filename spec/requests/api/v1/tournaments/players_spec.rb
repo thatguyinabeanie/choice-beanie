@@ -6,7 +6,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
   path('/api/v1/tournaments/{tournament_id}/players') do
     parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
 
-    get('List Players') do
+    get('List Tournament Players') do
       tags 'Players'
       produces 'application/json'
       description 'Retrieves a list of all Players'
@@ -19,7 +19,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
         let(:players) { create_list(:player, 10, tournament:) }
 
         schema type: :array, items: { '$ref' => '#/components/schemas/Player' }
-
+        OpenApi::Response.set_example_response_metadata
         run_test!
       end
 
@@ -31,12 +31,12 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
       end
     end
 
-    post('Create Player') do
+    post('Create Tournament Player') do
       tags 'Players'
       produces 'application/json'
       consumes 'application/json'
       description 'Creates a new Player.'
-      operationId 'postPlayer'
+      operationId 'postTournamentPlayer'
 
       parameter name: :player, in: :body, schema: {
         type: :object,
@@ -106,14 +106,15 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
   end
 
   path('/api/v1/tournaments/{tournament_id}/players/{id}') do
-    get('Show Player') do
+    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
+
+    get('Show Tournament Player') do
       tags 'Players'
       produces 'application/json'
       description 'Retrieves a Player'
-      operationId 'showPlayer'
+      operationId 'showTournamentPlayer'
 
       parameter name: :id, in: :path, type: :integer
-      parameter name: :tournament_id, in: :path, type: :integer
 
       response(200, 'successful') do
         let(:tournament) { create(:tournament) }
@@ -128,12 +129,12 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
       end
     end
 
-    put('Update Player') do
+    put('Update Tournament Player') do
       tags 'Players'
       produces 'application/json'
       consumes 'application/json'
       description 'Updates a Player.'
-      operationId 'putPlayer'
+      operationId 'putTournamentPlayer'
 
       parameter name: :id, in: :path, type: :integer
       parameter name: :tournament_id, in: :path, type: :integer
@@ -173,11 +174,11 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
       end
     end
 
-    delete('Delete Player') do
+    delete('Delete Tournament Player') do
       tags 'Players'
       produces 'application/json'
       description 'Deletes a Player.'
-      operationId 'deletePlayer'
+      operationId 'deleteTournamentPlayer'
 
       parameter name: :id, in: :path, type: :integer
       parameter name: :tournament_id, in: :path, type: :integer

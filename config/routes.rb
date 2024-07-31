@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       resources :games, only: %i[index show create update destroy]
       resources :tournaments, only: %i[index show create update destroy] do
         resources :players, only: %i[index show create update destroy], controller: 'tournament/players'
+        resources :phases, only: %i[index show create update destroy], controller: 'tournament/phases'
         resources :matches, only: %i[index create update]
       end
     end
