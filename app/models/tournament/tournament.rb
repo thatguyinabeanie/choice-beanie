@@ -17,12 +17,11 @@ module Tournament
     has_many :phases, class_name: 'Phase::BasePhase', dependent: :destroy_async
 
     # Tournament Logistics Information
-    validates :start_at, presence: true
+    # validates :start_at, presence: true
     # validates :end_at, presence: true
     # validates :registration_start_at, presence: true
     # validates :registration_end_at
 
-    validates :start_at, presence: true
     validates :started_at, presence: true, allow_nil: true
 
     validates :check_in_required, presence: true, inclusion: { in: [true, false] }

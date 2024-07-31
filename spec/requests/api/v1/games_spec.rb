@@ -140,7 +140,7 @@ RSpec.describe 'api/v1/games' do
       operationId 'deleteGame'
 
       response(200, 'successful') do
-        let(:game) { create(:game, name: 'Test Game', slug: 'test-game') }
+        let(:game) { create(:game, name: 'Test Game') }
         let(:id) { game.id }
 
         OpenApi::Response.set_example_response_metadata

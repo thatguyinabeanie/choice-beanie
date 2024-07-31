@@ -4,6 +4,7 @@ module Api
   module V1
     module Tournament
       class PlayersController < ApplicationController
+        before_action :set_organization
         before_action :set_tournament
         before_action :set_players, only: %i[index create]
         before_action :set_player, only: %i[show update destroy]
@@ -55,13 +56,6 @@ module Api
           ::PlayerDetailsSerializer.new(@player).serializable_hash
         end
 
-        def set_tournament
-          @tournament = ::Tournament::Tournament.find(params[:tournament_id])
-          @tournament
-        rescue ActiveRecord::RecordNotFound
-          render json: { error: 'Tournament not found' }, status: :not_found
-        end
-
         def set_players
           @tournament ||= set_tournament
           @players = @tournament.players
@@ -75,6 +69,21 @@ module Api
           @player = @players.find_by!(user_id: params[:id])
         rescue ActiveRecord::RecordNotFound
           render json: { error: 'Player not found' }, status: :not_found
+        end
+
+        def set_tournament
+          @organization ||= set_organization
+          @tournament = @organization.tournaments.find(params[:tournament_id])
+          @tournament
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'Tournament not found' }, status: :not_found
+        end
+
+        def set_organization
+          @organization = ::Organization::Organization.find(params[:organization_id])
+          @organization
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'Organization not found' }, status: :not_found
         end
 
         def permitted_params

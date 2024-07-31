@@ -2,19 +2,21 @@ require 'swagger_helper'
 require_relative '../../../../support/openapi/schema_helper'
 require_relative '../../../../support/openapi/response_helper'
 
-RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
-  path('/api/v1/tournaments/{tournament_id}/players') do
-    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
+RSpec.describe 'api/v1/organizations/:organization_id/tournaments/:tournament_id/players' do
+  path('/api/v1/organizations/{organization_id}/tournaments/{tournament_id}/players') do
+    parameter name: :organization_id, in: :path, type: :integer, description: 'ID of the Organization', required: true
+    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the Tournament', required: true
 
     get('List Tournament Players') do
       tags 'Players'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all Players'
       operationId 'listPlayers'
 
       response(200, 'successful') do
-        let(:tournament) { create(:tournament) }
-
+        let(:organization) { create(:organization) }
+        let(:organization_id) { organization.id }
+        let(:tournament) { create(:tournament, organization:) }
         let(:tournament_id) { tournament.id }
         let(:players) { create_list(:player, 10, tournament:) }
 
@@ -106,7 +108,8 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
   end
 
   path('/api/v1/tournaments/{tournament_id}/players/{id}') do
-    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
+    parameter name: :organization_id, in: :path, type: :integer, description: 'ID of the Organization', required: true
+    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the Tournament', required: true
 
     get('Show Tournament Player') do
       tags 'Players'

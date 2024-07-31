@@ -3,8 +3,8 @@
 module Organization
   class Organization < ApplicationRecord
     self.table_name = 'organizations'
-    extend FriendlyId
-    friendly_id :name, use: :slugged
+    # extend FriendlyId
+    # friendly_id :name, use: :slugged
 
     belongs_to :owner, class_name: 'User', optional: false
 

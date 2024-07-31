@@ -19,6 +19,7 @@
     "imgildev.vscode-mustache-snippets",
     "mutantdino.resourcemonitor",
     "ms-vscode.test-adapter-converter",
-    "hbenl.vscode-test-explorer"
+    "hbenl.vscode-test-explorer",
+    "visualstudioexptteam.vscodeintellicode"
   ]
 }

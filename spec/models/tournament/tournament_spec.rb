@@ -27,13 +27,13 @@ RSpec.describe Tournament::Tournament do
       expect(tournament).to be_valid
     end
 
-    it 'is not valid without a name' do
-      tournament = described_class.new(start_at:, organization:, game:, format:)
-      expect(tournament).not_to be_valid
+    it 'is valid without a start_at' do
+      tournament = described_class.new(name:, organization:, game:, format:)
+      expect(tournament).to be_valid
     end
 
-    it 'is not valid without a start_at' do
-      tournament = described_class.new(name:, organization:, game:, format:)
+    it 'is not valid without a name' do
+      tournament = described_class.new(start_at:, organization:, game:, format:)
       expect(tournament).not_to be_valid
     end
 

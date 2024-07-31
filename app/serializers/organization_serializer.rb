@@ -8,8 +8,8 @@ class OrganizationSerializer < ActiveModel::Serializer
   end
 end
 
-class OrganizationDetailsSerializer < OrganizationSerializer
-  attributes :id, :name, :owner, :updated_at, :created_at, :slug, :description, :slug
+class OrganizationDetailsSerializer < ActiveModel::Serializer
+  attributes :id, :name, :owner, :updated_at, :created_at, :description
 
   def owner
     ::UserDetailsSerializer.new(object.owner).attributes

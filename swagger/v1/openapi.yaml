@@ -414,11 +414,17 @@ paths:
           description: successful
         '404':
           description: not found
-  "/api/v1/tournaments/{tournament_id}/players":
+  "/api/v1/organizations/{organization_id}/tournaments/{tournament_id}/players":
     parameters:
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
     - name: tournament_id
       in: path
-      description: ID of the tournament
+      description: ID of the Tournament
       required: true
       schema:
         type: integer
@@ -477,9 +483,15 @@ paths:
                   - in_game_name
   "/api/v1/tournaments/{tournament_id}/players/{id}":
     parameters:
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
     - name: tournament_id
       in: path
-      description: ID of the tournament
+      description: ID of the Tournament
       required: true
       schema:
         type: integer
@@ -564,6 +576,100 @@ paths:
           description: successful
         '404':
           description: not found
+  "/api/v1/organizations/{organization_id}/tournaments":
+    parameters:
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Tournaments
+      tags:
+      - Tournaments
+      description: Retrieves a list of all Tournaments
+      operationId: listTournaments
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Tournament"
+    post:
+      summary: Create Tournament
+      tags:
+      - Tournaments
+      description: Creates a new Tournament.
+      operationId: postTournament
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TournamentDetails"
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tournament:
+                  type: object
+                  title: postTournament
+                  properties:
+                    name:
+                      type: string
+                      required: true
+                    start_at:
+                      type: string
+                      format: date-time
+                    end_at:
+                      type: string
+                      format: date-time
+                    game_id:
+                      type: integer
+                      required: true
+                    format_id:
+                      type: integer
+                      required: true
+                    auto_start:
+                      type: boolean
+                    player_cap:
+                      type: integer
+                    registration_start_at:
+                      type: string
+                      format: date-time
+                    registration_end_at:
+                      type: string
+                      format: date-time
+                    late_registration:
+                      type: boolean
+                    check_in_required:
+                      type: boolean
+                    late_check_in:
+                      type: boolean
+                    check_in_start_at:
+                      type: string
+                      format: date-time
+                    check_in_end_at:
+                      type: string
+                      format: date-time
+                    open_team_sheets:
+                      type: boolean
+                    teamlists_required:
+                      type: boolean
+                  required:
+                  - name
+                  - game_id
+                  - format_id
   "/api/v1/users":
     get:
       summary: List Users
@@ -724,8 +830,6 @@ components:
           type: integer
         name:
           type: string
-        slug:
-          type: string
     Game:
       type: object
       title: Game
@@ -734,12 +838,9 @@ components:
           type: integer
         name:
           type: string
-        slug:
-          type: string
       required:
       - id
       - name
-      - slug
     GameDetail:
       type: object
       title: GameDetail
@@ -748,8 +849,6 @@ components:
           type: integer
         name:
           type: string
-        slug:
-          type: string
         formats:
           type: array
           items:
@@ -757,7 +856,6 @@ components:
       required:
       - id
       - name
-      - slug
       - formats
     User:
       type: object
@@ -781,24 +879,21 @@ components:
           type: integer
         username:
           type: string
+        pronouns:
+          type: string
         email:
           type: string
         first_name:
           type: string
         last_name:
           type: string
-        pronouns:
-          type: string
-        slug:
-          type: string
       required:
       - id
       - username
+      - pronouns
       - email
       - first_name
       - last_name
-      - pronouns
-      - slug
     Organization:
       type: object
       title: Organization
@@ -825,8 +920,6 @@ components:
           "$ref": "#/components/schemas/UserDetails"
         description:
           type: string
-        slug:
-          type: string
         updated_at:
           type: string
           format: date-time
@@ -838,7 +931,6 @@ components:
       - name
       - owner
       - description
-      - slug
       - created_at
       - updated_at
     Tournament:
@@ -849,67 +941,13 @@ components:
           type: integer
         name:
           type: string
-        slug:
-          type: string
-        organization:
-          "$ref": "#/components/schemas/Organization"
-        format:
-          "$ref": "#/components/schemas/Format"
-        game:
-          "$ref": "#/components/schemas/Game"
         player_cap:
           type: integer
           nullable: true
-        autostart:
-          type: boolean
-        start_at:
-          type: string
-          format: date-time
-        end_at:
-          type: string
-          format: date-time
-        started_at:
-          type: string
-          format: date-time
-        ended_at:
-          type: string
-          format: date-time
-        check_in_required:
-          type: boolean
-        late_check_in:
-          type: boolean
-        check_in_start_at:
-          type: string
-          format: date-time
-        late_registration:
-          type: boolean
-        registration_start_at:
-          type: string
-          format: date-time
-        registration_end_at:
-          type: string
-          format: date-time
-        teamlists_required:
-          type: boolean
-        open_team_sheets:
-          type: boolean
       required:
       - id
       - name
-      - organization
-      - format
-      - game
-      - start_at
       - player_cap
-      - autostart
-      - check_in_required
-      - late_check_in
-      - check_in_start_at
-      - late_registration
-      - registration_start_at
-      - registration_end_at
-      - teamlists_required
-      - open_team_sheets
     TournamentDetails:
       type: object
       title: TournamentDetails
@@ -918,14 +956,6 @@ components:
           type: integer
         name:
           type: string
-        slug:
-          type: string
-        organization:
-          "$ref": "#/components/schemas/Organization"
-        format:
-          "$ref": "#/components/schemas/Format"
-        game:
-          "$ref": "#/components/schemas/Game"
         player_cap:
           type: integer
           nullable: true
@@ -934,15 +964,19 @@ components:
         start_at:
           type: string
           format: date-time
+          nullable: true
         end_at:
           type: string
           format: date-time
+          nullable: true
         started_at:
           type: string
           format: date-time
+          nullable: true
         ended_at:
           type: string
           format: date-time
+          nullable: true
         check_in_required:
           type: boolean
         late_check_in:
@@ -950,14 +984,17 @@ components:
         check_in_start_at:
           type: string
           format: date-time
+          nullable: true
         late_registration:
           type: boolean
         registration_start_at:
           type: string
           format: date-time
+          nullable: true
         registration_end_at:
           type: string
           format: date-time
+          nullable: true
         teamlists_required:
           type: boolean
         open_team_sheets:
@@ -965,24 +1002,24 @@ components:
       required:
       - id
       - name
-      - organization
-      - format
-      - game
+      - player_cap
       - start_at
       - player_cap
       - autostart
+      - teamlists_required
+      - open_team_sheets
       - check_in_required
       - late_check_in
       - check_in_start_at
       - late_registration
       - registration_start_at
       - registration_end_at
-      - teamlists_required
-      - open_team_sheets
     PokemonSet:
       type: object
       title: PokemonSet
       properties:
+        id:
+          type: integer
         name:
           type: string
         nickname:
@@ -1010,6 +1047,7 @@ components:
           type: string
           nullable: true
       required:
+      - id
       - name
       - ability
       - tera_type
@@ -1023,6 +1061,8 @@ components:
       type: object
       title: Player
       properties:
+        id:
+          type: integer
         user:
           "$ref": "#/components/schemas/User"
         in_game_name:
@@ -1050,6 +1090,8 @@ components:
       type: object
       title: PlayerDetails
       properties:
+        id:
+          type: integer
         user:
           "$ref": "#/components/schemas/User"
         in_game_name:
@@ -1070,6 +1112,14 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/PokemonSet"
+      required:
+      - id
+      - user
+      - checked_in
+      - checked_in_at
+      - team_sheet_submitted
+      - team_sheet_submitted_at
+      - pokemon_sets
     Round:
       type: object
       title: Round
@@ -1100,10 +1150,10 @@ components:
       properties:
         id:
           type: integer
-        order:
-          type: integer
         name:
           type: string
+        order:
+          type: integer
         type:
           type: string
         tournament_id:
@@ -1131,6 +1181,7 @@ components:
           format: date-time
       required:
       - id
+      - name
       - order
       - tournament_id
       - number_of_rounds
@@ -1144,10 +1195,10 @@ components:
       properties:
         id:
           type: integer
-        order:
-          type: integer
         name:
           type: string
+        order:
+          type: integer
         type:
           type: string
         tournament_id:
@@ -1183,6 +1234,7 @@ components:
             "$ref": "#/components/schemas/Round"
       required:
       - id
+      - name
       - order
       - tournament_id
       - number_of_rounds
