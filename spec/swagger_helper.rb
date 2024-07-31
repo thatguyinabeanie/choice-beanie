@@ -132,6 +132,47 @@ TOURNAMENT_DETAILS_SCHEMA = {
   required: TOURNAMENT_SCHEMA[:required] + %w[]
 }.freeze
 
+POKEMON_SET_SCHEMA = {
+  type: :object,
+  title: 'PokemonSet',
+  properties: {
+    name: { type: :string },
+    ability: { type: :string },
+    tera_type: { type: :string },
+    nature: { type: :string },
+    held_item: { type: :string },
+    move1: { type: :string },
+    move2: { type: :string },
+    move3: { type: :string },
+    move4: { type: :string }
+  },
+  required: %w[name ability tera_type nature held_item move1 move2 move3 move4]
+}.freeze
+
+PLAYER_SCHEMA = {
+  type: :object,
+  title: 'Player',
+  properties: {
+    user: { '$ref' => '#/components/schemas/User' },
+    in_game_name: { type: :string },
+    checked_in: { type: :boolean },
+    checked_in_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    team_sheet_submitted: { type: :boolean },
+    team_sheet_submitted_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
+  },
+  required: %w[id user checked_in checked_in_at team_sheet_submitted team_sheet_submitted_at]
+}.freeze
+
+PLAYER_DETAILS_SCHEMA = {
+  type: :object,
+  title: 'PlayerDetails',
+  properties: PLAYER_SCHEMA[:properties].merge(
+    {
+      pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
+    }
+  )
+}.freeze
+
 RSpec.configure do |config|
   # config.include SwaggerHelper
   # Specify a root folder where Swagger JSON files are generated
@@ -181,7 +222,10 @@ RSpec.configure do |config|
           Organization: ORGANIZATION_SCHEMA,
           OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
           Tournament: TOURNAMENT_SCHEMA,
-          TournamentDetails: TOURNAMENT_DETAILS_SCHEMA
+          TournamentDetails: TOURNAMENT_DETAILS_SCHEMA,
+          PokemonSet: POKEMON_SET_SCHEMA,
+          Player: PLAYER_SCHEMA,
+          PlayerDetails: PLAYER_DETAILS_SCHEMA
         }
       }
     }

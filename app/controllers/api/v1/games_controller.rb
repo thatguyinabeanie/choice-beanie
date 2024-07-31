@@ -7,7 +7,7 @@ module Api
 
       self.klass = ::Game
       self.serializer_klass = ::GameSerializer
-      self.detail_serializer_klass = ::GameDetailSerializer
+      self.detail_serializer_klass = ::GameDetailsSerializer
 
       protected
 

@@ -8,7 +8,7 @@ module Api
 
       self.klass = ::Organization::Organization
       self.serializer_klass = ::OrganizationSerializer
-      self.detail_serializer_klass = ::OrganizationDetailSerializer
+      self.detail_serializer_klass = ::OrganizationDetailsSerializer
 
       def staff
         # Assuming there's an association called `staff_members` you can directly use it

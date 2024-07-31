@@ -4,7 +4,7 @@ module Api
       before_action :set_match, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
       self.klass = ::Tournament::Match
       self.serializer_klass = ::MatchSerializer
-      self.detail_serializer_klass = ::MatchDetailSerializer
+      self.detail_serializer_klass = ::MatchDetailsSerializer
 
       protected
 

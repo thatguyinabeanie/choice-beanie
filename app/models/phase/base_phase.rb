@@ -23,19 +23,27 @@ module Phase
     end
 
     def players_ready
-      players.where(check_in: true, team_sheet_submitted: true)
+      players_checked_in.where(team_sheet_submitted: true)
     end
 
-    def players_checked_in_no_team_sheet
-      players.where(check_in: true, team_sheet_submitted: false)
+    def players_checked_in
+      players.where(checked_in_at: nil)
     end
 
     def players_not_checked_in_has_team_sheet
-      players.where(check_in: false, team_sheet_submitted: true)
+      players_not_checked_in.where(team_sheet_submitted: true)
+    end
+
+    def players_not_checked_in
+      players.where.not(checked_in_at: nil)
+    end
+
+    def players_checked_in_no_team_sheet
+      players_checked_in.where(team_sheet_submitted: false)
     end
 
     def players_not_checked_in_or_no_team_sheet
-      players.where(check_in: false, team_sheet_submitted: false)
+      players_not_checked_in.where(team_sheet_submitted: false)
     end
 
     private
