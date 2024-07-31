@@ -1,7 +1,7 @@
 module Phase
   class Swiss < Phase::BasePhase
-    self.table_name = 'phases'
     validates :number_of_rounds, numericality: { greater_than: 0, only_integer: true }, presence: true
+    validates :type, equality: { value: 'Phase::Swiss' }
 
     def create_initial_round
       rounds.create(round_number: 1)

@@ -103,16 +103,18 @@ tournaments = orgs.flat_map do |organization|
 
     tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
 
-    swiss = Phase::Swiss.build(
+    swiss = Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
-      number_of_rounds: 5
+      number_of_rounds: 5,
+      type: 'Phase::Swiss'
     )
 
-    bracket = Phase::SingleEliminationBracket.build(
+    bracket = Phase::SingleEliminationBracket.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
-      criteria: 'Top 8'
+      criteria: 'Top 8',
+      type: 'Phase::SingleEliminationBracket'
     )
 
     tour.add_phase!(phase: swiss)

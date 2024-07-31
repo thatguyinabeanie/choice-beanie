@@ -257,6 +257,163 @@ paths:
                   "$ref": "#/components/schemas/User"
         '404':
           description: not found
+  "/api/v1/tournaments/{tournament_id}/phases":
+    parameters:
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Tournament Phases
+      tags:
+      - Phases
+      description: Retrieves a list of all Phases
+      operationId: listTournamentPhases
+      responses:
+        '404':
+          description: not found
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Phase"
+    post:
+      summary: Create Tournament Phase
+      tags:
+      - Phases
+      description: Creates a new Tournament Phase.
+      operationId: postTournamentPhase
+      parameters: []
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PhaseDetails"
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phase:
+                  type: object
+                  title: postPhase
+                  properties:
+                    number_of_rounds:
+                      type: integer
+                    best_of:
+                      type: integer
+                    type:
+                      type: string
+                      enum:
+                      - Phase::Swiss
+                      - Phase::SingleElimination
+                  required:
+                  - number_of_rounds
+                  - best_of
+                  - type
+        required: true
+  "/api/v1/tournaments/{tournament_id}/phases/{id}":
+    parameters:
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Show Tournament Phase
+      tags:
+      - Phases
+      description: Retrieves a Tournament Phase
+      operationId: showTournamentPhase
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the Phase
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: not found
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PhaseDetails"
+    put:
+      summary: Update Tournament Phase
+      tags:
+      - Phases
+      description: Updates a Tournament Phase.
+      operationId: putTournamentPhase
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the Phase
+        schema:
+          type: integer
+      responses:
+        '404':
+          description: not found
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PhaseDetails"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phase:
+                  type: object
+                  title: putPhase
+                  properties:
+                    name:
+                      type: string
+                    number_of_rounds:
+                      type: integer
+                    best_of:
+                      type: integer
+                    type:
+                      type: string
+                      enum:
+                      - Phase::Swiss
+                      - Phase::SingleElimination
+        required: true
+    delete:
+      summary: Delete Tournament Phase
+      tags:
+      - Phases
+      description: Deletes a Tournament Phase.
+      operationId: deleteTournamentPhase
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the Phase
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: not found
   "/api/v1/tournaments/{tournament_id}/players":
     parameters:
     - name: tournament_id
@@ -266,7 +423,7 @@ paths:
       schema:
         type: integer
     get:
-      summary: List Players
+      summary: List Tournament Players
       tags:
       - Players
       description: Retrieves a list of all Players
@@ -283,11 +440,11 @@ paths:
         '404':
           description: not found
     post:
-      summary: Create Player
+      summary: Create Tournament Player
       tags:
       - Players
       description: Creates a new Player.
-      operationId: postPlayer
+      operationId: postTournamentPlayer
       parameters: []
       responses:
         '201':
@@ -319,19 +476,21 @@ paths:
                   - tournament_id
                   - in_game_name
   "/api/v1/tournaments/{tournament_id}/players/{id}":
+    parameters:
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
     get:
-      summary: Show Player
+      summary: Show Tournament Player
       tags:
       - Players
       description: Retrieves a Player
-      operationId: showPlayer
+      operationId: showTournamentPlayer
       parameters:
       - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      - name: tournament_id
         in: path
         required: true
         schema:
@@ -344,11 +503,11 @@ paths:
               schema:
                 "$ref": "#/components/schemas/PlayerDetails"
     put:
-      summary: Update Player
+      summary: Update Tournament Player
       tags:
       - Players
       description: Updates a Player.
-      operationId: putPlayer
+      operationId: putTournamentPlayer
       parameters:
       - name: id
         in: path
@@ -384,11 +543,11 @@ paths:
                   - team_sheet_submitted
                   - tournament_id
     delete:
-      summary: Delete Player
+      summary: Delete Tournament Player
       tags:
       - Players
       description: Deletes a Player.
-      operationId: deletePlayer
+      operationId: deleteTournamentPlayer
       parameters:
       - name: id
         in: path
@@ -826,6 +985,9 @@ components:
       properties:
         name:
           type: string
+        nickname:
+          type: string
+          nullable: true
         ability:
           type: string
         tera_type:
@@ -834,14 +996,19 @@ components:
           type: string
         held_item:
           type: string
+          nullable: true
         move1:
           type: string
+          nullable: true
         move2:
           type: string
+          nullable: true
         move3:
           type: string
+          nullable: true
         move4:
           type: string
+          nullable: true
       required:
       - name
       - ability
@@ -903,3 +1070,125 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/PokemonSet"
+    Round:
+      type: object
+      title: Round
+      properties:
+        id:
+          type: integer
+        phase_id:
+          type: integer
+        round_number:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        ended_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - id
+      - phase_id
+      - round_number
+      - started_at
+      - ended_at
+    Phase:
+      type: object
+      title: Phase
+      properties:
+        id:
+          type: integer
+        order:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        tournament_id:
+          type: integer
+        number_of_rounds:
+          type: integer
+        best_of:
+          type: integer
+        criteria:
+          type: string
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        ended_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - order
+      - tournament_id
+      - number_of_rounds
+      - best_of
+      - criteria
+      - started_at
+      - ended_at
+    PhaseDetails:
+      type: object
+      title: PhaseDetails
+      properties:
+        id:
+          type: integer
+        order:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+        tournament_id:
+          type: integer
+        number_of_rounds:
+          type: integer
+        best_of:
+          type: integer
+        criteria:
+          type: string
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        ended_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        players:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Player"
+        rounds:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Round"
+      required:
+      - id
+      - order
+      - tournament_id
+      - number_of_rounds
+      - best_of
+      - criteria
+      - started_at
+      - ended_at
+      - players
+      - rounds
