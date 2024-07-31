@@ -125,7 +125,7 @@ players = (1..50).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
   players.sample(rand(1..10)).map do |user|
-    player = Tournament::Player.create!(user:, tournament:)
+    player = Tournament::Player.create!(user:, tournament:, in_game_name: Faker::Games::Pokemon.name)
     player.add_pokemon_sets!(Array.new(rand(0..6)) { generate_pokemon_set(player:) })
   end
 end

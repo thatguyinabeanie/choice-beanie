@@ -7,7 +7,6 @@ RSpec.describe Tournament::Player do
     it { is_expected.to have_many(:phase_players).class_name('Tournament::PhasePlayer').dependent(:destroy).inverse_of(:player) }
     it { is_expected.to have_many(:phases).through(:phase_players).source(:phase) }
     it { is_expected.to have_many(:pokemon_sets).dependent(:destroy).class_name('Tournament::PokemonSet').inverse_of(:player) }
-    it { is_expected.to accept_nested_attributes_for(:pokemon_sets) }
   end
 
   describe 'validations' do

@@ -296,6 +296,8 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PlayerDetails"
+        '422':
+          description: unprocessable entity
         '404':
           description: not found
       requestBody:
@@ -310,14 +312,12 @@ paths:
                   properties:
                     user_id:
                       type: integer
-                    team_sheet_submitted:
-                      type: boolean
-                    tournament_id:
-                      type: integer
+                    in_game_name:
+                      type: string
                   required:
                   - user_id
-                  - team_sheet_submitted
                   - tournament_id
+                  - in_game_name
   "/api/v1/tournaments/{tournament_id}/players/{id}":
     get:
       summary: Show Player

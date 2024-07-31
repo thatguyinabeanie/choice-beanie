@@ -78,7 +78,7 @@ module Api
         end
 
         def permitted_params
-          params.require(:player).permit(:user_id, :team_sheet_submitted, :tournament_id, :id, :username)
+          params.require(:player).permit(:user_id, :username, :in_game_name)
         end
       end
     end

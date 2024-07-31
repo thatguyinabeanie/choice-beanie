@@ -4,7 +4,7 @@ require_relative '../../../../support/openapi/response_helper'
 
 RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
   path('/api/v1/tournaments/{tournament_id}/players') do
-    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament'
+    parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
 
     get('List Players') do
       tags 'Players'
@@ -46,10 +46,9 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
             title: 'postPlayer',
             properties: {
               user_id: { type: :integer },
-              team_sheet_submitted: { type: :boolean },
-              tournament_id: { type: :integer }
+              in_game_name: { type: :string }
             },
-            required: %w[user_id team_sheet_submitted tournament_id]
+            required: %w[user_id tournament_id in_game_name]
           }
         }
       }
@@ -62,7 +61,8 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
             player: {
               user_id: create(:user).id,
               team_sheet_submitted: false,
-              tournament_id: tournament.id
+              tournament_id: tournament.id,
+              in_game_name: 'fuecocos-strongest-soldier'
             }
           }
         end
@@ -70,6 +70,22 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/players' do
         schema '$ref' => '#/components/schemas/PlayerDetails'
         OpenApi::Response.set_example_response_metadata
 
+        run_test!
+      end
+
+      response(422, 'unprocessable entity') do
+        let(:tournament) { create(:tournament) }
+        let(:tournament_id) { tournament.id }
+        let(:player) do
+          {
+            player: {
+              user_id: create(:user).id,
+              team_sheet_submitted: false
+            }
+          }
+        end
+
+        OpenApi::Response.set_example_response_metadata
         run_test!
       end
 

@@ -16,6 +16,8 @@ module Tournament
     has_many :pokemon_sets, dependent: :destroy, class_name: 'Tournament::PokemonSet', inverse_of: :player
     validate :pokemon_sets_count_within_limit
 
+    # accepts_nested_attributes_for :pokemon_sets
+
     delegate :username, to: :user
 
     def checked_in?
