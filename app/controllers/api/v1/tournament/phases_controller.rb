@@ -22,7 +22,10 @@ module Api
                     Phase::Swiss
                   when Phase::SingleElimination.to_s
                     Phase::SingleElimination
+                  else
+                    raise ActionController::BadRequest, 'Invalid phase type'
                   end
+
           @phase = klass.create! permitted_params.merge(tournament_id: @tournament.id)
           @phases << @phase
           if @phase.save

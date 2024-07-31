@@ -157,7 +157,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
         let(:tour_phase) { create(:swiss_phase, tournament:) }
 
         let(:tournament_id) { tournament.id }
-        let(:id) { phase.id }
+        let(:id) { tour_phase.id }
         let(:phase) do
           {
             phase: {
@@ -215,6 +215,7 @@ RSpec.describe 'api/v1/tournaments/:tournament_id/phases' do
 
       response(404, 'not found') do
         let(:tournament) { create(:tournament) }
+        let(:tournament_id) { tournament.id }
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
