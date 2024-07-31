@@ -69,6 +69,7 @@ module Tournament
       return if player_cap.blank?
 
       if players.count < player_cap
+        player.tournament_id = id
         players << player
         save!
       else

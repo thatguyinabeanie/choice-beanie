@@ -34,8 +34,8 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
-        '422':
-          description: unprocessable entity
+        '400':
+          description: bad reqiest
       requestBody:
         content:
           application/json:
@@ -231,6 +231,30 @@ paths:
       responses:
         '200':
           description: Organization deleted
+        '404':
+          description: not found
+  "/api/v1/organizations/{id}/staff":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      summary: List Organization Staff
+      tags:
+      - Organizations
+      description: Retrieves a list of staff members for a specific organization.
+      operationId: getOrganizationStaff
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/User"
         '404':
           description: not found
   "/api/v1/users":
@@ -510,3 +534,141 @@ components:
       - slug
       - created_at
       - updated_at
+    Tournament:
+      type: object
+      title: Tournament
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        organization:
+          "$ref": "#/components/schemas/Organization"
+        format:
+          "$ref": "#/components/schemas/Format"
+        game:
+          "$ref": "#/components/schemas/Game"
+        player_cap:
+          type: integer
+          nullable: true
+        autostart:
+          type: boolean
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        ended_at:
+          type: string
+          format: date-time
+        check_in_required:
+          type: boolean
+        late_check_in:
+          type: boolean
+        check_in_start_at:
+          type: string
+          format: date-time
+        late_registration:
+          type: boolean
+        registration_start_at:
+          type: string
+          format: date-time
+        registration_end_at:
+          type: string
+          format: date-time
+        teamlists_required:
+          type: boolean
+        open_team_sheets:
+          type: boolean
+      required:
+      - id
+      - name
+      - organization
+      - format
+      - game
+      - start_at
+      - player_cap
+      - autostart
+      - check_in_required
+      - late_check_in
+      - check_in_start_at
+      - late_registration
+      - registration_start_at
+      - registration_end_at
+      - teamlists_required
+      - open_team_sheets
+    TournamentDetails:
+      type: object
+      title: TournamentDetails
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        organization:
+          "$ref": "#/components/schemas/Organization"
+        format:
+          "$ref": "#/components/schemas/Format"
+        game:
+          "$ref": "#/components/schemas/Game"
+        player_cap:
+          type: integer
+          nullable: true
+        autostart:
+          type: boolean
+        start_at:
+          type: string
+          format: date-time
+        end_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        ended_at:
+          type: string
+          format: date-time
+        check_in_required:
+          type: boolean
+        late_check_in:
+          type: boolean
+        check_in_start_at:
+          type: string
+          format: date-time
+        late_registration:
+          type: boolean
+        registration_start_at:
+          type: string
+          format: date-time
+        registration_end_at:
+          type: string
+          format: date-time
+        teamlists_required:
+          type: boolean
+        open_team_sheets:
+          type: boolean
+      required:
+      - id
+      - name
+      - organization
+      - format
+      - game
+      - start_at
+      - player_cap
+      - autostart
+      - check_in_required
+      - late_check_in
+      - check_in_start_at
+      - late_registration
+      - registration_start_at
+      - registration_end_at
+      - teamlists_required
+      - open_team_sheets
