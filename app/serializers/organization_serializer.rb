@@ -8,7 +8,7 @@ class OrganizationSerializer < ActiveModel::Serializer
   end
 end
 
-class OrganizationDetailSerializer < ActiveModel::Serializer
+class OrganizationDetailSerializer < OrganizationSerializer
   attributes :id, :name, :owner, :updated_at, :created_at, :slug, :description, :slug
 
   def owner
