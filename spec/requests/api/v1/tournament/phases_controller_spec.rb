@@ -24,7 +24,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
         run_test!
 
-        response(404, 'not found') do
+        response(404, NOT_FOUND do
           let(:tournament_id) { 'invalid' }
 
           OpenApi::Response.set_example_response_metadata
@@ -98,7 +98,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
@@ -130,7 +130,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
         run_test!
 
-        response(404, 'not found') do
+        response(404, NOT_FOUND do
           let(:id) { 'invalid' }
           let(:phase) do
             {
@@ -158,7 +158,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata

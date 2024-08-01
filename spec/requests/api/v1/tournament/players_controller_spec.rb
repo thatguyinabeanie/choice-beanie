@@ -25,7 +25,7 @@ RSpec.describe Api::V1::Tournament::PlayersController do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND do
         let(:tournament_id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
@@ -68,7 +68,7 @@ RSpec.describe Api::V1::Tournament::PlayersController do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND do
         let(:tournament_id) { 'invalid' }
         let(:player) { { user_id: create(:user).id } }
 
@@ -134,7 +134,7 @@ RSpec.describe Api::V1::Tournament::PlayersController do
         run_test!
       end
 
-      response(404, 'not found') do
+      response(404, NOT_FOUND do
         let(:id) { 'invalid' }
 
         OpenApi::Response.set_example_response_metadata
