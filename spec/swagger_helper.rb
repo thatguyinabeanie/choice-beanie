@@ -6,6 +6,7 @@ require 'support/constants'
 ID_PROPERTY = { id: { type: :integer } }.freeze
 NAME_PROPERTY = { name: { type: :string } }.freeze
 ID_NAME_REQUIRED = %w[id name].freeze
+PASSWORD_STRING_TYPE = { type: :string, minLength: 8, format: 'password' }.freeze
 
 ID_NAME_PROPERTIES = {
   id: ID_PROPERTY[:id],
@@ -56,6 +57,17 @@ USER_DETAILS_SCHEMA = {
   ),
   required: USER_SCHEMA[:required] + %w[email first_name last_name]
 }.freeze
+
+USER_REQUEST = USER_DETAILS_SCHEMA.deep_merge(
+  {
+    title: 'User Details with Password',
+    properties: {
+      password: PASSWORD_STRING_TYPE.merge(title: 'Password', description: 'Must be at least 8 characters'),
+      password_confirmation: PASSWORD_STRING_TYPE.merge(title: 'Password Confirmation', description: 'Must match the password.')
+    },
+    required: USER_DETAILS_SCHEMA[:required] + %w[password password_confirmation]
+  }
+)
 
 ORGANIZATION_SCHEMA = {
   type: :object,
@@ -138,6 +150,16 @@ POKEMON_SET_SCHEMA = {
   required: ID_NAME_REQUIRED + %w[ability tera_type nature held_item move1 move2 move3 move4]
 }.freeze
 
+PLAYER_REQUEST = {
+  type: :object,
+  title: 'Player Request',
+  properties: {
+    user_id: { type: :integer },
+    in_game_name: { type: :string }
+  },
+  required: %w[user_id in_game_name]
+}
+
 PLAYER_SCHEMA = {
   type: :object,
   title: 'Player',
@@ -150,7 +172,7 @@ PLAYER_SCHEMA = {
     team_sheet_submitted: { type: :boolean },
     team_sheet_submitted_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
   },
-  required: %w[id user checked_in checked_in_at team_sheet_submitted team_sheet_submitted_at]
+  required: %w[id user in_game_name checked_in checked_in_at team_sheet_submitted team_sheet_submitted_at]
 }.freeze
 
 PLAYER_DETAILS_SCHEMA = {
@@ -248,11 +270,13 @@ RSpec.configure do |config|
           GameDetail: GAME_DETAILS_SCHEMA,
           User: USER_SCHEMA,
           UserDetails: USER_DETAILS_SCHEMA,
+          UserRequest: USER_REQUEST,
           Organization: ORGANIZATION_SCHEMA,
           OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
           Tournament: TOURNAMENT_SCHEMA,
           TournamentDetails: TOURNAMENT_DETAILS_SCHEMA,
           PokemonSet: POKEMON_SET_SCHEMA,
+          PlayerRequest: PLAYER_REQUEST,
           Player: PLAYER_SCHEMA,
           PlayerDetails: PLAYER_DETAILS_SCHEMA,
           Round: ROUND_SCHEMA,

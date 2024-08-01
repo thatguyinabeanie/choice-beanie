@@ -13,7 +13,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
     parameter name: :tournament_id, in: :path, type: :integer, description: 'ID of the tournament', required: true
     get('List Tournament Phases') do
       tags 'Phases'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all Phases'
       operationId 'listTournamentPhases'
 
@@ -35,8 +35,8 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
     post('Create Tournament Phase') do
       tags 'Phases'
-      produces 'application/json'
-      consumes 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
+      consumes OpenApi::Response::JSON_CONTENT_TYPE
       description 'Creates a new Tournament Phase.'
       operationId 'postTournamentPhase'
 
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
     get('Show Tournament Phase') do
       tags 'Phases'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a Tournament Phase'
       operationId 'showTournamentPhase'
 
@@ -108,8 +108,8 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
     put('Update Tournament Phase') do
       tags 'Phases'
-      produces 'application/json'
-      consumes 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
+      consumes OpenApi::Response::JSON_CONTENT_TYPE
       description 'Updates a Tournament Phase.'
       operationId 'putTournamentPhase'
 
@@ -149,7 +149,7 @@ RSpec.describe Api::V1::Tournament::PhasesController do
 
     delete('Delete Tournament Phase') do
       tags 'Phases'
-      produces 'application/json'
+      produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Deletes a Tournament Phase.'
       operationId 'deleteTournamentPhase'
 

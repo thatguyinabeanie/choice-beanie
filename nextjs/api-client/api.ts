@@ -203,49 +203,6 @@ export interface OrganizationDetails {
 /**
  *
  * @export
- * @interface PatchUser
- */
-export interface PatchUser {
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  username: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  email: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  password: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  first_name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  last_name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PatchUser
-   */
-  pronouns?: string;
-}
-/**
- *
- * @export
  * @interface Phase
  */
 export interface Phase {
@@ -436,7 +393,7 @@ export interface Player {
    * @type {string}
    * @memberof Player
    */
-  in_game_name?: string;
+  in_game_name: string;
   /**
    *
    * @type {boolean}
@@ -485,7 +442,7 @@ export interface PlayerDetails {
    * @type {string}
    * @memberof PlayerDetails
    */
-  in_game_name?: string;
+  in_game_name: string;
   /**
    *
    * @type {boolean}
@@ -516,6 +473,25 @@ export interface PlayerDetails {
    * @memberof PlayerDetails
    */
   pokemon_sets: Array<PokemonSet>;
+}
+/**
+ *
+ * @export
+ * @interface PlayerRequest
+ */
+export interface PlayerRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof PlayerRequest
+   */
+  user_id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof PlayerRequest
+   */
+  in_game_name: string;
 }
 /**
  *
@@ -589,87 +565,6 @@ export interface PokemonSet {
    * @memberof PokemonSet
    */
   move4: string | null;
-}
-/**
- *
- * @export
- * @interface PostPlayer
- */
-export interface PostPlayer {
-  /**
-   *
-   * @type {number}
-   * @memberof PostPlayer
-   */
-  user_id: number;
-  /**
-   *
-   * @type {string}
-   * @memberof PostPlayer
-   */
-  in_game_name: string;
-}
-/**
- *
- * @export
- * @interface PostUser
- */
-export interface PostUser {
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  username: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  email: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  first_name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  last_name: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  pronouns?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  password: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PostUser
-   */
-  password_confirmation: string;
-}
-/**
- *
- * @export
- * @interface PutPlayer
- */
-export interface PutPlayer {
-  /**
-   *
-   * @type {boolean}
-   * @memberof PutPlayer
-   */
-  team_sheet_submitted: boolean;
 }
 /**
  *
@@ -903,6 +798,61 @@ export interface UserDetails {
    * @memberof UserDetails
    */
   last_name: string;
+}
+/**
+ *
+ * @export
+ * @interface UserRequest
+ */
+export interface UserRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof UserRequest
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UserRequest
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserRequest
+   */
+  pronouns: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserRequest
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserRequest
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserRequest
+   */
+  last_name: string;
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof UserRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof UserRequest
+   */
+  password_confirmation: string;
 }
 
 /**
@@ -2913,13 +2863,13 @@ export const PlayersApiAxiosParamCreator = function (
      * Creates a new Player.
      * @summary Create Tournament Player
      * @param {number} tournamentId ID of the Tournament
-     * @param {PostPlayer} [postPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postTournamentPlayer: async (
       tournamentId: number,
-      postPlayer?: PostPlayer,
+      playerRequest?: PlayerRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'tournamentId' is not null or undefined
@@ -2954,7 +2904,7 @@ export const PlayersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        postPlayer,
+        playerRequest,
         localVarRequestOptions,
         configuration,
       );
@@ -2969,14 +2919,14 @@ export const PlayersApiAxiosParamCreator = function (
      * @summary Update Tournament Player
      * @param {number} tournamentId ID of the Tournament
      * @param {number} id ID of the Player
-     * @param {PutPlayer} [putPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     putTournamentPlayer: async (
       tournamentId: number,
       id: number,
-      putPlayer?: PutPlayer,
+      playerRequest?: PlayerRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'tournamentId' is not null or undefined
@@ -2997,7 +2947,7 @@ export const PlayersApiAxiosParamCreator = function (
       }
 
       const localVarRequestOptions = {
-        method: "PUT",
+        method: "PATCH",
         ...baseOptions,
         ...options,
       };
@@ -3014,7 +2964,7 @@ export const PlayersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        putPlayer,
+        playerRequest,
         localVarRequestOptions,
         configuration,
       );
@@ -3153,13 +3103,13 @@ export const PlayersApiFp = function (configuration?: Configuration) {
      * Creates a new Player.
      * @summary Create Tournament Player
      * @param {number} tournamentId ID of the Tournament
-     * @param {PostPlayer} [postPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postTournamentPlayer(
       tournamentId: number,
-      postPlayer?: PostPlayer,
+      playerRequest?: PlayerRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerDetails>
@@ -3167,7 +3117,7 @@ export const PlayersApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.postTournamentPlayer(
           tournamentId,
-          postPlayer,
+          playerRequest,
           options,
         );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3188,14 +3138,14 @@ export const PlayersApiFp = function (configuration?: Configuration) {
      * @summary Update Tournament Player
      * @param {number} tournamentId ID of the Tournament
      * @param {number} id ID of the Player
-     * @param {PutPlayer} [putPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async putTournamentPlayer(
       tournamentId: number,
       id: number,
-      putPlayer?: PutPlayer,
+      playerRequest?: PlayerRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerDetails>
@@ -3204,7 +3154,7 @@ export const PlayersApiFp = function (configuration?: Configuration) {
         await localVarAxiosParamCreator.putTournamentPlayer(
           tournamentId,
           id,
-          putPlayer,
+          playerRequest,
           options,
         );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3304,17 +3254,17 @@ export const PlayersApiFactory = function (
      * Creates a new Player.
      * @summary Create Tournament Player
      * @param {number} tournamentId ID of the Tournament
-     * @param {PostPlayer} [postPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postTournamentPlayer(
       tournamentId: number,
-      postPlayer?: PostPlayer,
+      playerRequest?: PlayerRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<PlayerDetails> {
       return localVarFp
-        .postTournamentPlayer(tournamentId, postPlayer, options)
+        .postTournamentPlayer(tournamentId, playerRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -3322,18 +3272,18 @@ export const PlayersApiFactory = function (
      * @summary Update Tournament Player
      * @param {number} tournamentId ID of the Tournament
      * @param {number} id ID of the Player
-     * @param {PutPlayer} [putPlayer]
+     * @param {PlayerRequest} [playerRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     putTournamentPlayer(
       tournamentId: number,
       id: number,
-      putPlayer?: PutPlayer,
+      playerRequest?: PlayerRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<PlayerDetails> {
       return localVarFp
-        .putTournamentPlayer(tournamentId, id, putPlayer, options)
+        .putTournamentPlayer(tournamentId, id, playerRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -3400,18 +3350,18 @@ export class PlayersApi extends BaseAPI {
    * Creates a new Player.
    * @summary Create Tournament Player
    * @param {number} tournamentId ID of the Tournament
-   * @param {PostPlayer} [postPlayer]
+   * @param {PlayerRequest} [playerRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof PlayersApi
    */
   public postTournamentPlayer(
     tournamentId: number,
-    postPlayer?: PostPlayer,
+    playerRequest?: PlayerRequest,
     options?: RawAxiosRequestConfig,
   ) {
     return PlayersApiFp(this.configuration)
-      .postTournamentPlayer(tournamentId, postPlayer, options)
+      .postTournamentPlayer(tournamentId, playerRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -3420,7 +3370,7 @@ export class PlayersApi extends BaseAPI {
    * @summary Update Tournament Player
    * @param {number} tournamentId ID of the Tournament
    * @param {number} id ID of the Player
-   * @param {PutPlayer} [putPlayer]
+   * @param {PlayerRequest} [playerRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof PlayersApi
@@ -3428,11 +3378,11 @@ export class PlayersApi extends BaseAPI {
   public putTournamentPlayer(
     tournamentId: number,
     id: number,
-    putPlayer?: PutPlayer,
+    playerRequest?: PlayerRequest,
     options?: RawAxiosRequestConfig,
   ) {
     return PlayersApiFp(this.configuration)
-      .putTournamentPlayer(tournamentId, id, putPlayer, options)
+      .putTournamentPlayer(tournamentId, id, playerRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -4264,13 +4214,13 @@ export const UsersApiAxiosParamCreator = function (
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUser} [patchUser]
+     * @param {UserDetails} [userDetails]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     patchUser: async (
       id: number,
-      patchUser?: PatchUser,
+      userDetails?: UserDetails,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
@@ -4304,7 +4254,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        patchUser,
+        userDetails,
         localVarRequestOptions,
         configuration,
       );
@@ -4317,12 +4267,12 @@ export const UsersApiAxiosParamCreator = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUser} [postUser]
+     * @param {UserRequest} [userRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser: async (
-      postUser?: PostUser,
+      userRequest?: UserRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/users`;
@@ -4351,7 +4301,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        postUser,
+        userRequest,
         localVarRequestOptions,
         configuration,
       );
@@ -4459,20 +4409,20 @@ export const UsersApiFp = function (configuration?: Configuration) {
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUser} [patchUser]
+     * @param {UserDetails} [userDetails]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async patchUser(
       id: number,
-      patchUser?: PatchUser,
+      userDetails?: UserDetails,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(
         id,
-        patchUser,
+        userDetails,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4490,18 +4440,18 @@ export const UsersApiFp = function (configuration?: Configuration) {
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUser} [postUser]
+     * @param {UserRequest} [userRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postUser(
-      postUser?: PostUser,
+      userRequest?: UserRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.postUser(
-        postUser,
+        userRequest,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4575,32 +4525,32 @@ export const UsersApiFactory = function (
      * Updates an existing User.
      * @summary Update User
      * @param {number} id ID of the User
-     * @param {PatchUser} [patchUser]
+     * @param {UserDetails} [userDetails]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     patchUser(
       id: number,
-      patchUser?: PatchUser,
+      userDetails?: UserDetails,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .patchUser(id, patchUser, options)
+        .patchUser(id, userDetails, options)
         .then((request) => request(axios, basePath));
     },
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {PostUser} [postUser]
+     * @param {UserRequest} [userRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser(
-      postUser?: PostUser,
+      userRequest?: UserRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .postUser(postUser, options)
+        .postUser(userRequest, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -4658,32 +4608,32 @@ export class UsersApi extends BaseAPI {
    * Updates an existing User.
    * @summary Update User
    * @param {number} id ID of the User
-   * @param {PatchUser} [patchUser]
+   * @param {UserDetails} [userDetails]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
   public patchUser(
     id: number,
-    patchUser?: PatchUser,
+    userDetails?: UserDetails,
     options?: RawAxiosRequestConfig,
   ) {
     return UsersApiFp(this.configuration)
-      .patchUser(id, patchUser, options)
+      .patchUser(id, userDetails, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    * Creates a new User.
    * @summary Create User
-   * @param {PostUser} [postUser]
+   * @param {UserRequest} [userRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
-  public postUser(postUser?: PostUser, options?: RawAxiosRequestConfig) {
+  public postUser(userRequest?: UserRequest, options?: RawAxiosRequestConfig) {
     return UsersApiFp(this.configuration)
-      .postUser(postUser, options)
+      .postUser(userRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

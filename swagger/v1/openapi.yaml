@@ -362,16 +362,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: postPlayer
-              properties:
-                user_id:
-                  type: integer
-                in_game_name:
-                  type: string
-              required:
-              - user_id
-              - in_game_name
+              "$ref": "#/components/schemas/PlayerRequest"
   "/api/v1/tournaments/{tournament_id}/players/{id}":
     parameters:
     - name: tournament_id
@@ -399,7 +390,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PlayerDetails"
-    put:
+    patch:
       summary: Update Tournament Player
       tags:
       - Players
@@ -417,15 +408,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: putPlayer
-              properties:
-                team_sheet_submitted:
-                  type: boolean
-              required:
-              - user_id
-              - team_sheet_submitted
-              - tournament_id
+              "$ref": "#/components/schemas/PlayerRequest"
     delete:
       summary: Delete Tournament Player
       tags:
@@ -578,30 +561,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: postUser
-              properties:
-                username:
-                  type: string
-                email:
-                  type: string
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                pronouns:
-                  type: string
-                password:
-                  type: string
-                password_confirmation:
-                  type: string
-              required:
-              - username
-              - email
-              - first_name
-              - last_name
-              - password
-              - password_confirmation
+              "$ref": "#/components/schemas/UserRequest"
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -645,27 +605,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              title: patchUser
-              properties:
-                username:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                pronouns:
-                  type: string
-              required:
-              - username
-              - email
-              - password
-              - first_name
-              - last_name
+              "$ref": "#/components/schemas/UserDetails"
     delete:
       summary: Delete User
       tags:
@@ -758,6 +698,43 @@ components:
       - email
       - first_name
       - last_name
+    UserRequest:
+      type: object
+      title: User Details with Password
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        password:
+          type: string
+          minLength: 8
+          format: password
+          title: Password
+          description: Must be at least 8 characters
+        password_confirmation:
+          type: string
+          minLength: 8
+          format: password
+          title: Password Confirmation
+          description: Must match the password.
+      required:
+      - id
+      - username
+      - pronouns
+      - email
+      - first_name
+      - last_name
+      - password
+      - password_confirmation
     Organization:
       type: object
       title: Organization
@@ -921,6 +898,17 @@ components:
       - move2
       - move3
       - move4
+    PlayerRequest:
+      type: object
+      title: Player Request
+      properties:
+        user_id:
+          type: integer
+        in_game_name:
+          type: string
+      required:
+      - user_id
+      - in_game_name
     Player:
       type: object
       title: Player
@@ -946,6 +934,7 @@ components:
       required:
       - id
       - user
+      - in_game_name
       - checked_in
       - checked_in_at
       - team_sheet_submitted
@@ -979,6 +968,7 @@ components:
       required:
       - id
       - user
+      - in_game_name
       - checked_in
       - checked_in_at
       - team_sheet_submitted

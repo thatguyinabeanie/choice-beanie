@@ -31,30 +31,17 @@ RSpec.describe Api::V1::UsersController do
       description 'Creates a new User.'
       operationId 'postUser'
 
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        title: 'postUser',
-        properties: {
-          username: { type: :string },
-          email: { type: :string },
-          first_name: { type: :string },
-          last_name: { type: :string },
-          pronouns: { type: :string },
-          password: { type: :string, minLength: 8 },
-          password_confirmation: { type: :string }
-        },
-        required: %w[username email first_name last_name password password_confirmation]
-      }
+      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserRequest' }
 
       response(201, 'created') do
         let(:user) do
           {
             user: {
               username: 'new_user',
+              pronouns: 'he/him',
               email: 'new_user@example.com',
               first_name: 'New ',
               last_name: 'User',
-              pronouns: 'he/him',
               password: PASSWORD,
               password_confirmation: PASSWORD
             }
@@ -123,19 +110,7 @@ RSpec.describe Api::V1::UsersController do
       description 'Updates an existing User.'
       operationId 'patchUser'
 
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        title: 'patchUser',
-        properties: {
-          username: { type: :string },
-          email: { type: :string },
-          password: { type: :string },
-          first_name: { type: :string },
-          last_name: { type: :string },
-          pronouns: { type: :string }
-        },
-        required: %w[username email password first_name last_name]
-      }
+      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserDetails' }
 
       response(200, 'successful') do
         let(:id) { create(:user).id }
