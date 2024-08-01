@@ -23,7 +23,7 @@ module Serializer
 
   class OrganizationDetails < ActiveModel::Serializer
     include OrganizationMixin
-    include TimestampMixin
+    include Serializer::Mixin::Timestamp
     attributes :description
     self.owner_serializer = Serializer::UserDetails
   end
