@@ -38,7 +38,7 @@ module Users
     private
 
     def find_user_from_jwt
-      jwt_payload = Helpers::Jwt::TokenHandler.jwt_payload(request)
+      jwt_payload = Helpers::JWT::TokenHandler.jwt_payload(request)
       return nil unless jwt_payload
 
       User.find_by(id: jwt_payload['sub'])

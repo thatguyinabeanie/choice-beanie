@@ -1,5 +1,5 @@
 module Helpers
-  module Jwt
+  module JWT
     class TokenHandler
       def jwt_payload!(request)
         return nil if request.headers['Authorization'].blank?
