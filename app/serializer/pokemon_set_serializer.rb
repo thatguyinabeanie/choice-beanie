@@ -1,4 +1,4 @@
-require_relative serializer_mixin
+require_relative 'serializer_mixin'
 module Serializer
   class PokemonSet < ActiveModel::Serializer
     include SerializerMixin::Id

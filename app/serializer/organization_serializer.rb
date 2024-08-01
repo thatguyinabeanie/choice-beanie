@@ -1,5 +1,5 @@
 require_relative 'user_serializer'
-require_relative serializer_mixin
+require_relative 'serializer_mixin'
 
 module Serializer
   module OrganizationMixin
