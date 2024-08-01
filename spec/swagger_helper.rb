@@ -260,7 +260,7 @@ RSpec.configure do |config|
       components: {
         responses: {
           NotFound: {
-            description: 'Not found'
+            description: NOT_FOUND
           }
         },
 

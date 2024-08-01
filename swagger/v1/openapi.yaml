@@ -624,7 +624,7 @@ servers:
 components:
   responses:
     NotFound:
-      description: Not found
+      description: not found
   schemas:
     Format:
       type: object
