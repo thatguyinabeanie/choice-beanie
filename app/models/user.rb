@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   validates :password, presence: true, length: { minimum: 8 }, if: :password_required?
+  validate :password_complexity, if: :password_required?
+
   validates :username, presence: true, uniqueness: true, allow_blank: false
   validates :pronouns, length: { maximum: 50 }, allow_blank: true
   validates :first_name, length: { maximum: 50 }, presence: true
@@ -32,5 +34,13 @@ class User < ApplicationRecord
 
   def password_required?
     new_record? || password.present?
+  end
+
+  def password_complexity
+    return if password.blank?
+
+    return if password.match?(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/)
+
+    errors.add :password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character'
   end
 end

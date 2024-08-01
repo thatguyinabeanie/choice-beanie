@@ -1,3 +1,5 @@
+# file deepcode ignore HardcodedCredential: <please specify a reason of ignoring this>
+
 require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
