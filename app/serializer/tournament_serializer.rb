@@ -1,10 +1,10 @@
-require_relative 'serializer_mixins'
+require_relative 'mixin_serializer'
 module Serializer
   module TournamentMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::IdMixin
-      include ::Serializer::NameMixin
+      include ::Serializer::Mixin::Id
+      include ::Serializer::Mixin::Name
       attributes :player_cap
       # attributes :game, :format, :organization
       # belongs_to :game, serializer: GameSerializer

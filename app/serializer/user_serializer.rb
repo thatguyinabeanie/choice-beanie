@@ -1,10 +1,9 @@
-require_relative 'serializer_mixins'
+require_relative 'mixin_serializer'
 module Serializer
   module UserMixin
     extend ActiveSupport::Concern
     included do
-      include IdMixin
-
+      include ::Serializer::Mixin::Id
       attributes :username, :pronouns
     end
   end

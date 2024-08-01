@@ -1,5 +1,5 @@
 require_relative 'user_serializer'
-require_relative 'serializer_mixins'
+require_relative 'mixin_serializer'
 
 module Serializer
   module OrganizationMixin
@@ -7,8 +7,8 @@ module Serializer
     included do
       class_attribute :owner_serializer
       attributes :owner
-      include IdMixin
-      include NameMixin
+      include ::Serializer::Mixin::Id
+      include ::Serializer::Mixin::Name
     end
 
     def owner
