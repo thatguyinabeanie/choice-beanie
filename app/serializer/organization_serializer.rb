@@ -7,8 +7,8 @@ module Serializer
     included do
       class_attribute :owner_serializer
       attributes :owner
-      include Serializer::Mixin::Id
-      include Serializer::Mixin::Name
+      include SerializerMixin::Id
+      include SerializerMixin::Name
     end
 
     def owner
@@ -23,7 +23,7 @@ module Serializer
 
   class OrganizationDetails < ActiveModel::Serializer
     include OrganizationMixin
-    include Serializer::Mixin::Timestamp
+    include SerializerMixin::Timestamp
     attributes :description
     self.owner_serializer = Serializer::UserDetails
   end

@@ -5,7 +5,7 @@ module Serializer
   module PlayerMixin
     extend ActiveSupport::Concern
     included do
-      include Serializer::Mixin::Id
+      include SerializerMixin::Id
 
       attributes :in_game_name, :checked_in_at, :checked_in
       attributes :team_sheet_submitted, :team_sheet_submitted_at
