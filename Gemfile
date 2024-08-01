@@ -42,6 +42,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'versionist', '~> 2'
 
 group :development do
+  gem 'rails-erd'
   gem 'web-console', '~> 4'
 end
 
