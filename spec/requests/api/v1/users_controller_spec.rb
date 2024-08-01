@@ -1,11 +1,10 @@
-# file deepcode ignore HardcodedCredential: <please specify a reason of ignoring this>
-
 require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
+require_relative '../../../../app/models/concerns/secure_password'
 
-PASSWORD = 'a_whole_new_world_1!'.freeze
 USER_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/UserDetails'.freeze
+PASSWORD = SecurePassword.generate_secure_password
 
 RSpec.describe Api::V1::UsersController do
   path('/api/v1/users') do

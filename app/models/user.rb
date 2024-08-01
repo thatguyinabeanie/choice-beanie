@@ -1,18 +1,19 @@
 require 'devise'
-# app/models/user.rb
+require 'faker'
+
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::JTIMatcher
-  # extend FriendlyId
-  # friendly_id :username, use: :slugged
 
-  validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
-  validates :password, presence: true, length: { minimum: 8 }, if: :password_required?
+  MIN_PASSWORD_LENGTH = 8
+  MAX_CHARACTER_LENGTH = 50
+
+  validates :password, presence: true, length: { minimum: MIN_PASSWORD_LENGTH, maximum: MAX_CHARACTER_LENGTH }, if: :password_required?
   validate :password_complexity, if: :password_required?
-
   validates :username, presence: true, uniqueness: true, allow_blank: false
-  validates :pronouns, length: { maximum: 50 }, allow_blank: true
-  validates :first_name, length: { maximum: 50 }, presence: true
-  validates :last_name, length: { maximum: 50 }, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :pronouns, length: { maximum: MAX_CHARACTER_LENGTH }, allow_blank: true
+  validates :first_name, length: { maximum: MAX_CHARACTER_LENGTH }, presence: true
+  validates :last_name, length: { maximum: MAX_CHARACTER_LENGTH }, presence: true
 
   # Include default devise modules. Others available are:
   #
@@ -30,8 +31,6 @@ class User < ApplicationRecord
     organization.staff.exists?(id:)
   end
 
-  private
-
   def password_required?
     new_record? || password.present?
   end
@@ -39,7 +38,7 @@ class User < ApplicationRecord
   def password_complexity
     return if password.blank?
 
-    return if password.match?(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/)
+    return if SecurePassword.complexity_check(password)
 
     errors.add :password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character'
   end

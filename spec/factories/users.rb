@@ -5,7 +5,7 @@ FactoryBot.define do
     username { Faker::Internet.unique.username(specifier: 5..16) }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
-    password {  Faker::Internet.password }
+    password { SecurePassword.generate_secure_password }
     password_confirmation { password }
     pronouns { 'they/them' }
   end

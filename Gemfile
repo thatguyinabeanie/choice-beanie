@@ -13,6 +13,7 @@ gem 'cancancan', '~> 3'
 gem 'devise', '~> 4.9'
 gem 'devise-jwt', '~> 0'
 gem 'devise_token_auth', '~> 1'
+gem 'faker', '~> 3'
 gem 'friendly_id', '~> 5.5.0'
 gem 'hirb'
 gem 'importmap-rails', '~> 2'
@@ -60,7 +61,7 @@ end
 group :development, :test do
   gem 'debug', '~> 1'
   gem 'dotenv-rails'
-  gem 'faker', '~> 3'
+
   gem 'listen', '~> 3.3'
   gem 'rspec-json_expectations'
   gem 'rspec-rails'

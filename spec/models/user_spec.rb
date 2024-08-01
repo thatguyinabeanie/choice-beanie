@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../../app/models/concerns/secure_password'
 
 RSpec.describe User do
   describe 'validations' do
@@ -7,7 +8,7 @@ RSpec.describe User do
     let(:pronouns) { 'he/him' }
     let(:email) { 'fuecoco@example.com' }
     let(:username) { 'fuecoco_number_1' }
-    let(:password) { '12345678' }
+    let(:password) { SecurePassword.generate_secure_password }
     let(:password_confirmation) { password }
 
     it 'is valid with valid attributes' do
