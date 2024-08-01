@@ -1,4 +1,4 @@
-require_relative '../../../../serializers/player_serializer'
+require_relative '../../../../serializer/player_serializer'
 
 module Api
   module V1

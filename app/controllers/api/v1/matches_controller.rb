@@ -1,4 +1,4 @@
-require_relative '../../../serializers/match_serializer'
+require_relative '../../../serializer/match_serializer'
 
 module Api
   module V1

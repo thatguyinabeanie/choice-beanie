@@ -1,4 +1,4 @@
-require_relative '../../../../serializers/phase_serializer'
+require_relative '../../../../serializer/phase_serializer'
 
 module Api
   module V1

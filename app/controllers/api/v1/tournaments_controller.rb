@@ -1,4 +1,4 @@
-require_relative '../../../serializers/tournament_serializer'
+require_relative '../../../serializer/tournament_serializer'
 module Api
   module V1
     class TournamentsController < ApplicationController

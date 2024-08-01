@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../serializers/user_serializer'
+require_relative '../../serializer/user_serializer'
 
 module Users
   class RegistrationsController < Devise::RegistrationsController
