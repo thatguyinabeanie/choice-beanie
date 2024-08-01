@@ -23,7 +23,7 @@ def create_user(username: nil, email: nil)
   # Check if user already exists
   User.find_or_create_by!(username:) do |the_user|
     the_user.email = email
-    the_user.password = Faker::Internet.password
+    the_user.password = SecurePassword.generate_secure_password
     the_user.password_confirmation = the_user.password
     the_user.pronouns = 'they/them'
     the_user.first_name = Faker::Name.first_name

@@ -9,7 +9,7 @@ module Api
         before_action :set_player, only: %i[show update destroy]
 
         def index
-          render json: @players, each_serializer: ::Serializer::Player, status: :ok
+          render json: @players, each_serializer: Serializer::Player, status: :ok
         end
 
         def show
