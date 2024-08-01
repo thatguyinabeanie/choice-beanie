@@ -1,4 +1,5 @@
 require_relative 'mixin_serializer'
+
 module Serializer
   module TournamentMixin
     extend ActiveSupport::Concern

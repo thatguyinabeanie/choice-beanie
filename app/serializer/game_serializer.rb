@@ -17,6 +17,6 @@ module Serializer
   class GameDetails < ActiveModel::Serializer
     include GameMixin
     attributes :formats
-    has_many :formats, serializer: Format
+    has_many :formats, serializer: Serializer::Format
   end
 end
