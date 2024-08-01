@@ -1,4 +1,4 @@
-require_relative 'mixin_serializer'
+require_relative serializer_mixin
 
 module Serializer
   module TournamentMixin
