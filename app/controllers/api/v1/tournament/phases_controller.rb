@@ -1,4 +1,4 @@
-require_relative '../../../../serializers/phase_serializer'
+require_relative '../../../../serializer/phase_serializer'
 
 module Api
   module V1
@@ -9,7 +9,7 @@ module Api
         before_action :set_phase, only: %i[show update destroy]
 
         def index
-          render json: @phases, each_serializer: ::PhaseSerializer, status: :ok
+          render json: @phases, each_serializer: Serializer::Phase, status: :ok
         end
 
         def show
@@ -26,8 +26,7 @@ module Api
                     raise ActionController::BadRequest, 'Invalid phase type'
                   end
 
-          @phase = klass.create! permitted_params.merge(tournament_id: @tournament.id)
-          @phases << @phase
+          @phase = klass.new permitted_params.merge(tournament_id: @tournament.id)
           if @phase.save
             render json: serialize_phase_details, status: :created
           else
@@ -53,7 +52,7 @@ module Api
         private
 
         def serialize_phase_details
-          ::PhaseDetailsSerializer.new(@phase).serializable_hash
+          Serializer::PhaseDetails.new(@phase).serializable_hash
         end
 
         def set_tournament

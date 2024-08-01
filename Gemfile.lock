@@ -151,7 +151,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.10.0)
+    faraday (2.10.1)
       faraday-net_http (>= 2.0, < 3.2)
       logger
     faraday-net_http (3.1.1)
@@ -261,7 +261,7 @@ GEM
     public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (3.1.7)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
@@ -330,7 +330,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.2)
+    rexml (3.3.3)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -426,9 +426,11 @@ GEM
       rubocop-rspec (~> 3, >= 3.0.1)
     rubocop-rubycw (0.1.6)
       rubocop (~> 1.0)
+    rubocop-shopify (2.15.1)
+      rubocop (~> 1.51)
     rubocop-thread_safety (0.5.1)
       rubocop (>= 0.90.0)
-    ruby-lsp (0.17.9)
+    ruby-lsp (0.17.10)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
       rbs (>= 3, < 4)
@@ -459,12 +461,17 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet-runtime (0.5.11495)
+    sorbet (0.5.11501)
+      sorbet-static (= 0.5.11501)
+    sorbet-runtime (0.5.11501)
+    sorbet-static (0.5.11501-aarch64-linux)
+    sorbet-static (0.5.11501-universal-darwin)
+    sorbet-static (0.5.11501-x86_64-linux)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.1)
+    sprockets-rails (3.5.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
@@ -512,7 +519,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     yard (0.9.36)
-    zeitwerk (2.6.16)
+    zeitwerk (2.6.17)
 
 PLATFORMS
   aarch64-linux
@@ -568,6 +575,7 @@ DEPENDENCIES
   rubocop-junit-formatter
   rubocop-md
   rubocop-migrations
+  rubocop-packaging
   rubocop-performance
   rubocop-rails
   rubocop-rails_config
@@ -576,14 +584,16 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   rubocop-rubycw
+  rubocop-shopify
   rubocop-thread_safety
-  ruby-lsp (~> 0.17.9)
+  ruby-lsp
   ruby-lsp-rails (~> 0.3.11)
   ruby-lsp-rspec
   ruby_audit (~> 2)
   selenium-webdriver (~> 4)
   shoulda-matchers (~> 6)
   sidekiq (~> 7)
+  sorbet
   spring (~> 4)
   sprockets-rails
   stimulus-rails (~> 1)

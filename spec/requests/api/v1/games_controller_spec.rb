@@ -4,13 +4,14 @@ require_relative '../../../support/openapi/response_helper'
 
 GAME_DETAIL_SCHEMA = '#/components/schemas/GameDetail'.freeze
 
-RSpec.describe 'api/v1/games' do
+RSpec.describe Api::V1::GamesController do
   path('/api/v1/games') do
     get('List Games') do
       tags 'Games'
       produces OpenApi::Response::JSON_CONTENT_TYPE
       description 'Retrieves a list of all games'
       operationId 'listGames'
+
       response(200, 'successful') do
         schema type: :array, items: { '$ref' => '#/components/schemas/Game' }
 
@@ -27,20 +28,7 @@ RSpec.describe 'api/v1/games' do
       description 'Creates a new game.'
       operationId 'postGame'
 
-      parameter name: :game, in: :body, schema: {
-        type: :object,
-        properties: {
-          game: {
-            type: :object,
-            title: 'postGame',
-            properties: {
-              name: { type: :string }
-            },
-            required: %w[name]
-          }
-        },
-        required: %w[game]
-      }
+      parameter name: :game, in: :body, schema: { '$ref' => '#/components/schemas/Game' }
 
       response(201, 'created') do
         let(:game) { { game: { name: 'New Game' } } }
@@ -64,7 +52,9 @@ RSpec.describe 'api/v1/games' do
 
   path('/api/v1/games/{id}') do
     # You'll want to customize the parameter types...
-    parameter name: :id, in: :path, type: :string, description: 'ID of the game'
+    parameter name: :id, in: :path, type: :integer, description: 'ID of the game', required: true
+    let(:test_game) { create(:game, name: 'Test Game') }
+    let(:id) { test_game.id }
 
     get('Show Game') do
       tags 'Games'
@@ -73,12 +63,8 @@ RSpec.describe 'api/v1/games' do
       operationId 'getGame'
 
       response(200, 'successful') do
-        let(:id) { Game.create(name: 'Existing Game').id }
-
         schema '$ref' => GAME_DETAIL_SCHEMA
-
         OpenApi::Response.set_example_response_metadata
-
         run_test!
       end
 
@@ -98,22 +84,9 @@ RSpec.describe 'api/v1/games' do
       description 'Updates a game by ID.'
       operationId 'patchGame'
 
-      parameter name: :game, in: :body, schema: {
-        type: :object,
-        properties: {
-          game: {
-            type: :object,
-            properties: {
-              name: { type: :string }
-            },
-            required: %w[name]
-          }
-        },
-        required: %w[game]
-      }
+      parameter name: :game, in: :body, schema: { '$ref' => '#/components/schemas/Game' }
 
       response(200, 'successful') do
-        let(:id) { Game.create(name: 'Existing Game').id }
         let(:game) { { game: { name: 'Updated Game' } } }
 
         schema '$ref' => GAME_DETAIL_SCHEMA
@@ -140,9 +113,6 @@ RSpec.describe 'api/v1/games' do
       operationId 'deleteGame'
 
       response(200, 'successful') do
-        let(:game) { create(:game, name: 'Test Game') }
-        let(:id) { game.id }
-
         OpenApi::Response.set_example_response_metadata
 
         run_test!

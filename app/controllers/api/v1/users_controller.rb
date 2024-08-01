@@ -1,12 +1,12 @@
-require_relative '../../../serializers/user_serializer'
+require_relative '../../../serializer/user_serializer'
 
 module Api
   module V1
     class UsersController < AbstractApplicationController
       before_action :set_user, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
       self.klass = User
-      self.serializer_klass = ::UserSerializer
-      self.detail_serializer_klass = ::UserDetailsSerializer
+      self.serializer_klass = Serializer::User
+      self.detail_serializer_klass = Serializer::UserDetails
 
       protected
 

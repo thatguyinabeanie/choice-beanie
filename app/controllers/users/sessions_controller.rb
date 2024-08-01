@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../../../lib/helpers/JWT/token_handler'
+
 module Users
   class SessionsController < Devise::SessionsController
     include RackSessionsFix
@@ -18,7 +20,7 @@ module Users
       render json: {
         status: {
           code: 200, message: 'Logged in successfully.',
-          data: { user: UserSerializer.new(current_user).serializable_hash[:data][:attributes] }
+          data: { user: Serializer::User.new(current_user).serializable_hash[:data][:attributes] }
         }
       }, status: :ok
     end
@@ -36,7 +38,7 @@ module Users
     private
 
     def find_user_from_jwt
-      jwt_payload = Helpers::Jwt::TokenHandler.jwt_payload(request)
+      jwt_payload = Helpers::JWT::TokenHandler.jwt_payload(request)
       return nil unless jwt_payload
 
       User.find_by(id: jwt_payload['sub'])

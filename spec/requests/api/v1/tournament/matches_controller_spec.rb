@@ -1,5 +1,5 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/matches' do
+RSpec.describe Api::V1::Tournament::MatchesController do
   pending 'add some tests'
 end

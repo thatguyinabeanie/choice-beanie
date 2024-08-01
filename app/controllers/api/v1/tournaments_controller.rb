@@ -1,4 +1,4 @@
-require_relative '../../../serializers/tournament_serializer'
+require_relative '../../../serializer/tournament_serializer'
 module Api
   module V1
     class TournamentsController < ApplicationController
@@ -7,7 +7,7 @@ module Api
       before_action :set_tournament, only: %i[show update destroy]
 
       def index
-        render json: @tournaments, each_serializer: ::TournamentSerializer, status: :ok
+        render json: @tournaments, each_serializer: Serializer::Tournament, status: :ok
       end
 
       def show
@@ -66,11 +66,11 @@ module Api
         @organization = ::Organization::Organization.find(params[:organization_id])
         @organization
       rescue ActiveRecord::RecordNotFound
-        render json: { error: ORGANIZATION_NOT_FOUND }, status: :not_found
+        render json: { error: 'Organization not found' }, status: :not_found
       end
 
       def serialize_details
-        ::TournamentDetailsSerializer.new(@tournament).serializable_hash
+        Serializer::TournamentDetails.new(@tournament).serializable_hash
       end
 
       # Only allow a list of trusted parameters through.

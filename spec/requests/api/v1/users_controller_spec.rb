@@ -1,11 +1,12 @@
 require 'swagger_helper'
 require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
+require_relative '../../../../app/models/concerns/secure_password'
 
-PASSWORD = 'a_whole_new_world_1!'.freeze
 USER_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/UserDetails'.freeze
+PASSWORD = SecurePassword.generate_secure_password
 
-RSpec.describe 'api/v1/users' do
+RSpec.describe Api::V1::UsersController do
   path('/api/v1/users') do
     get('List Users') do
       tags 'Users'
@@ -31,35 +32,17 @@ RSpec.describe 'api/v1/users' do
       description 'Creates a new User.'
       operationId 'postUser'
 
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        properties: {
-          user: {
-            type: :object,
-            title: 'postUser',
-            properties: {
-              username: { type: :string },
-              email: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              pronouns: { type: :string },
-              password: { type: :string },
-              password_confirmation: { type: :string }
-            },
-            required: %w[username email first_name last_name password password_confirmation]
-          }
-        }
-      }
+      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserRequest' }
 
       response(201, 'created') do
         let(:user) do
           {
             user: {
               username: 'new_user',
+              pronouns: 'he/him',
               email: 'new_user@example.com',
               first_name: 'New ',
               last_name: 'User',
-              pronouns: 'he/him',
               password: PASSWORD,
               password_confirmation: PASSWORD
             }
@@ -128,37 +111,17 @@ RSpec.describe 'api/v1/users' do
       description 'Updates an existing User.'
       operationId 'patchUser'
 
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        properties: {
-          user: {
-            type: :object,
-            title: 'patchUser',
-            properties: {
-              username: { type: :string },
-              email: { type: :string },
-              password: { type: :string },
-              first_name: { type: :string },
-              last_name: { type: :string },
-              pronouns: { type: :string }
-            },
-            required: %w[username email password first_name last_name]
-          }
-        },
-        required: %w[user]
-      }
+      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserDetails' }
 
       response(200, 'successful') do
         let(:id) { create(:user).id }
         let(:user) do
           {
-            user: {
-              username: 'updated_user',
-              pronouns: 'they/them',
-              email: 'updateduser@example.com',
-              first_name: 'Updated', last_name: 'Userrrrr',
-              password: PASSWORD, password_confirmation: PASSWORD
-            }
+            username: 'updated_user',
+            pronouns: 'they/them',
+            email: 'updateduser@example.com',
+            first_name: 'Updated', last_name: 'Userrrrr',
+            password: PASSWORD, password_confirmation: PASSWORD
           }
         end
 
@@ -173,9 +136,7 @@ RSpec.describe 'api/v1/users' do
         let(:id) { 'invalid' }
         let(:user) do
           {
-            user: {
-              first_name: 'Updated', last_name: 'Userrrrr'
-            }
+            first_name: 'Updated', last_name: 'Userrrrr'
           }
         end
 

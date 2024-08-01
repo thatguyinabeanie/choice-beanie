@@ -4,7 +4,8 @@ require_relative '../../../support/openapi/response_helper'
 
 ORGANIZATION_DETAIL_SCHEMA = '#/components/schemas/OrganizationDetails'.freeze
 DESCRIPTION = 'the bomb dot com'.freeze
-RSpec.describe 'api/v1/organizations' do
+
+RSpec.describe Api::V1::OrganizationsController do
   path('/api/v1/organizations') do
     get('List Organizations') do
       tags 'Organizations'
@@ -27,31 +28,15 @@ RSpec.describe 'api/v1/organizations' do
       description 'Creates a new organization.'
       operationId 'postOrganization'
 
-      parameter name: :organization, in: :body, schema: {
-        type: :object,
-        properties: {
-          organization: {
-            type: :object,
-            title: 'postOrganization',
-            properties: {
-              name: { type: :string },
-              description: { type: :string },
-              owner_id: { type: :integer }
-            },
-            required: %w[name description]
-          }
-        }
-      }
+      parameter name: :organization, in: :body, schema: { '$ref' => '#/components/schemas/Organization' }
 
       response(201, 'created') do
         let(:owner) { create(:user) }
         let(:organization) do
           {
-            organization: {
-              name: 'New Organization',
-              description: DESCRIPTION,
-              owner_id: owner.id
-            }
+            name: 'New Organization',
+            description: DESCRIPTION,
+            owner_id: owner.id
           }
         end
 
@@ -64,6 +49,8 @@ RSpec.describe 'api/v1/organizations' do
 
   path('/api/v1/organizations/{id}') do
     parameter name: :id, in: :path, type: :string, required: true
+    let(:org) { create(:organization) }
+    let(:id) { org.id }
 
     get('Show Organization') do
       tags 'Organizations'
@@ -72,9 +59,6 @@ RSpec.describe 'api/v1/organizations' do
       operationId 'getOrganization'
 
       response(200, 'successful') do
-        let(:organization) { create(:organization) }
-        let(:id) { organization.id }
-
         schema '$ref' => ORGANIZATION_DETAIL_SCHEMA
         OpenApi::Response.set_example_response_metadata
         run_test!
@@ -96,30 +80,14 @@ RSpec.describe 'api/v1/organizations' do
       description 'Updates an existing organization.'
       operationId 'patchOrganization'
 
-      parameter name: :organization, in: :body, schema: {
-        type: :object,
-        properties: {
-          organization: {
-            type: :object,
-            title: 'patchOrganization',
-            properties: {
-              name: { type: :string },
-              description: { type: :string },
-              owner_id: { type: :integer }
-            },
-            required: %w[name description]
-          }
-        }
-      }
+      parameter name: :organization, in: :body, schema: { '$ref' => '#/components/schemas/Organization' }
 
       response(200, 'successful') do
         let(:id) { create(:organization).id }
         let(:organization) do
           {
-            organization: {
-              name: 'Updated Organization',
-              description: DESCRIPTION
-            }
+            name: 'Updated Organization',
+            description: DESCRIPTION
           }
         end
 
@@ -132,10 +100,8 @@ RSpec.describe 'api/v1/organizations' do
         let(:id) { -1 }
         let(:organization) do
           {
-            organization: {
-              name: 'Updated Organization',
-              description: DESCRIPTION
-            }
+            name: 'Updated Organization',
+            description: DESCRIPTION
           }
         end
 
@@ -152,11 +118,7 @@ RSpec.describe 'api/v1/organizations' do
       operationId 'deleteOrganization'
 
       response(200, 'Organization deleted') do
-        let(:organization) { create(:organization) }
-        let(:id) { organization.id }
-
         OpenApi::Response.set_example_response_metadata
-
         run_test!
       end
 
@@ -172,6 +134,8 @@ RSpec.describe 'api/v1/organizations' do
 
   path('/api/v1/organizations/{id}/staff') do
     parameter name: :id, in: :path, type: :string, required: true
+    let(:org) { create(:organization_with_staff, staff_count: 5) }
+    let(:id) { org.id }
 
     get('List Organization Staff') do
       tags 'Organizations'
@@ -180,9 +144,6 @@ RSpec.describe 'api/v1/organizations' do
       operationId 'getOrganizationStaff'
 
       response(200, 'successful') do
-        let(:organization) { create(:organization_with_staff, staff_count: 5) }
-        let(:id) { organization.id }
-
         schema type: :array, items: { '$ref' => '#/components/schemas/User' }
         OpenApi::Response.set_example_response_metadata
 
