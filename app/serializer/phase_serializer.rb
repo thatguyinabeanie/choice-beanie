@@ -21,7 +21,7 @@ module Serializer
 
   class PhaseDetails < ActiveModel::Serializer
     include PhaseMixin
-    attribute :players, serializer: Player
-    attribute :rounds, serializer: Round
+    attribute :players, serializer: Serializer::Player
+    attribute :rounds, serializer: Serializer::Round
   end
 end

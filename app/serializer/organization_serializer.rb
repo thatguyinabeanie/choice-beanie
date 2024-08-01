@@ -18,13 +18,13 @@ module Serializer
 
   class Organization < ActiveModel::Serializer
     include OrganizationMixin
-    self.owner_serializer = User
+    self.owner_serializer = Serializer::User
   end
 
   class OrganizationDetails < ActiveModel::Serializer
     include OrganizationMixin
     include TimestampMixin
     attributes :description
-    self.owner_serializer = UserDetails
+    self.owner_serializer = Serializer::UserDetails
   end
 end

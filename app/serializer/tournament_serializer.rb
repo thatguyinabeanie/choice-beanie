@@ -3,8 +3,8 @@ module Serializer
   module TournamentMixin
     extend ActiveSupport::Concern
     included do
-      include IdMixin
-      include NameMixin
+      include ::Serializer::IdMixin
+      include ::Serializer::NameMixin
       attributes :player_cap
       # attributes :game, :format, :organization
       # belongs_to :game, serializer: GameSerializer

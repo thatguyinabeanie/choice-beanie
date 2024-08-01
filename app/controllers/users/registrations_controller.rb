@@ -13,7 +13,7 @@ module Users
       if resource.persisted?
         render json: {
           status: { code: 200, message: 'Signed up successfully.' },
-          data: Serializer::User.new(current_user).serializable_hash[:data][:attributes]
+          data: ::Serializer::User.new(current_user).serializable_hash[:data][:attributes]
         }
       else
         render json: {

@@ -10,7 +10,7 @@ module Serializer
       attributes :in_game_name, :checked_in_at, :checked_in
       attributes :team_sheet_submitted, :team_sheet_submitted_at
 
-      belongs_to :user, serializer: User
+      belongs_to :user, serializer: Serializer::User
 
       def checked_in
         object.checked_in_at.present?
@@ -32,6 +32,6 @@ module Serializer
 
   class PlayerDetails < ActiveModel::Serializer
     include PlayerMixin
-    has_many :pokemon_sets, serializer: PokemonSet
+    has_many :pokemon_sets, serializer: Serializer::PokemonSet
   end
 end
