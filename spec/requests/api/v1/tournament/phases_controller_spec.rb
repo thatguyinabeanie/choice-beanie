@@ -45,12 +45,10 @@ RSpec.describe Api::V1::Tournament::PhasesController do
       response(201, 'created') do
         let(:phase) do
           {
-            phase: {
-              name: 'Swiss Round',
-              number_of_rounds: 3,
-              best_of: 3,
-              type: PHASE_SWISS
-            }
+            name: 'Swiss Round',
+            number_of_rounds: 3,
+            best_of: 3,
+            type: PHASE_SWISS
           }
         end
 

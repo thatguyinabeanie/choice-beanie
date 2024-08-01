@@ -3,7 +3,7 @@ require_relative '../../../support/openapi/schema_helper'
 require_relative '../../../support/openapi/response_helper'
 
 TOURNAMENT_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/TournamentDetails'.freeze
-RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
+RSpec.describe Api::V1::TournamentsController do
   path('/api/v1/organizations/{organization_id}/tournaments') do
     parameter name: :organization_id, in: :path, type: :integer, description: 'ID of the Organization', required: true
     let(:organization) { create(:organization) }
@@ -78,8 +78,8 @@ RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
 
     let(:organization) { create(:organization) }
     let(:organization_id) { organization.id }
-    let(:tournament) { create(:tournament, organization:) }
-    let(:id) { tournament.id }
+    let(:org_tournament) { create(:tournament, organization:) }
+    let(:id) { org_tournament.id }
 
     get('Show Tournament') do
       tags 'Tournaments'
@@ -130,7 +130,7 @@ RSpec.describe 'api/v1/organizations/:organization_id/tournaments' do
       response(422, 'unprocessable entity') do
         let(:tournament) do
           {
-            name: 'new_tournament',
+            name: nil,
             start_at: Time.zone.now,
             end_date: 1.week.ago
           }

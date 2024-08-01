@@ -5,7 +5,7 @@ require_relative '../../../support/openapi/response_helper'
 PASSWORD = 'a_whole_new_world_1!'.freeze
 USER_DETAILS_SCHEMA_COMPONENT = '#/components/schemas/UserDetails'.freeze
 
-RSpec.describe 'api/v1/users' do
+RSpec.describe Api::V1::UsersController do
   path('/api/v1/users') do
     get('List Users') do
       tags 'Users'
@@ -40,7 +40,7 @@ RSpec.describe 'api/v1/users' do
           first_name: { type: :string },
           last_name: { type: :string },
           pronouns: { type: :string },
-          password: { type: :string },
+          password: { type: :string, minLength: 8 },
           password_confirmation: { type: :string }
         },
         required: %w[username email first_name last_name password password_confirmation]
@@ -141,13 +141,11 @@ RSpec.describe 'api/v1/users' do
         let(:id) { create(:user).id }
         let(:user) do
           {
-            user: {
-              username: 'updated_user',
-              pronouns: 'they/them',
-              email: 'updateduser@example.com',
-              first_name: 'Updated', last_name: 'Userrrrr',
-              password: PASSWORD, password_confirmation: PASSWORD
-            }
+            username: 'updated_user',
+            pronouns: 'they/them',
+            email: 'updateduser@example.com',
+            first_name: 'Updated', last_name: 'Userrrrr',
+            password: PASSWORD, password_confirmation: PASSWORD
           }
         end
 
@@ -162,9 +160,7 @@ RSpec.describe 'api/v1/users' do
         let(:id) { 'invalid' }
         let(:user) do
           {
-            user: {
-              first_name: 'Updated', last_name: 'Userrrrr'
-            }
+            first_name: 'Updated', last_name: 'Userrrrr'
           }
         end
 
