@@ -6,8 +6,8 @@ module Serializer
   module PhaseMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::Mixin::Id
-      include ::Serializer::Mixin::Name
+      include Serializer::Mixin::Id
+      include Serializer::Mixin::Name
       attributes :type
       attributes :best_of, :number_of_rounds, :criteria, :order
       attributes :started_at, :ended_at, :created_at, :updated_at

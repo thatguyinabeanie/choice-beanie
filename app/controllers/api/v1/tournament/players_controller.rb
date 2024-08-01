@@ -43,7 +43,7 @@ module Api
         private
 
         def serialize_player_details
-          ::Serializer::PlayerDetails.new(@player).serializable_hash
+          Serializer::PlayerDetails.new(@player).serializable_hash
         end
 
         def set_players

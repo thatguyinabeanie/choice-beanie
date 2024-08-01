@@ -5,12 +5,12 @@ module Serializer
   module PlayerMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::Mixin::Id
+      include Serializer::Mixin::Id
 
       attributes :in_game_name, :checked_in_at, :checked_in
       attributes :team_sheet_submitted, :team_sheet_submitted_at
 
-      belongs_to :user, serializer: ::Serializer::User
+      belongs_to :user, serializer: Serializer::User
 
       def checked_in
         object.checked_in_at.present?

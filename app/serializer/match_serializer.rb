@@ -4,7 +4,7 @@ module Serializer
   module MatchMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::Mixin::Id
+      include Serializer::Mixin::Id
       attributes :round_id, :tournament_id, :table_number, :player1_id, :player2_id
     end
   end

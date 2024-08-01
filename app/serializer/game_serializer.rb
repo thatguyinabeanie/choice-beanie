@@ -5,8 +5,8 @@ module Serializer
   module GameMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::Mixin::Id
-      include ::Serializer::Mixin::Name
+      include Serializer::Mixin::Id
+      include Serializer::Mixin::Name
     end
   end
 

@@ -7,7 +7,7 @@ module Api
       before_action :set_tournament, only: %i[show update destroy]
 
       def index
-        render json: @tournaments, each_serializer: ::Serializer::Tournament, status: :ok
+        render json: @tournaments, each_serializer: Serializer::Tournament, status: :ok
       end
 
       def show
@@ -70,7 +70,7 @@ module Api
       end
 
       def serialize_details
-        ::Serializer::TournamentDetails.new(@tournament).serializable_hash
+        Serializer::TournamentDetails.new(@tournament).serializable_hash
       end
 
       # Only allow a list of trusted parameters through.

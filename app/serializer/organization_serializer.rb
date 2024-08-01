@@ -7,8 +7,8 @@ module Serializer
     included do
       class_attribute :owner_serializer
       attributes :owner
-      include ::Serializer::Mixin::Id
-      include ::Serializer::Mixin::Name
+      include Serializer::Mixin::Id
+      include Serializer::Mixin::Name
     end
 
     def owner

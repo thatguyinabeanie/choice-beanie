@@ -3,7 +3,7 @@ module Serializer
   module UserMixin
     extend ActiveSupport::Concern
     included do
-      include ::Serializer::Mixin::Id
+      include Serializer::Mixin::Id
       attributes :username, :pronouns
     end
   end
