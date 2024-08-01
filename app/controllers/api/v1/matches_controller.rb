@@ -1,10 +1,12 @@
+require_relative '../../../serializers/match_serializer'
+
 module Api
   module V1
     class MatchesController < AbstractApplicationController
       before_action :set_match, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
       self.klass = ::Tournament::Match
-      self.serializer_klass = ::MatchSerializer
-      self.detail_serializer_klass = ::MatchDetailsSerializer
+      self.serializer_klass = ::Serializer::Match
+      self.detail_serializer_klass = ::Serializer::MatchDetails
 
       protected
 

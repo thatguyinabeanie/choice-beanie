@@ -6,8 +6,8 @@ module Api
       before_action :set_game, only: %i[show update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
 
       self.klass = ::Game
-      self.serializer_klass = ::GameSerializer
-      self.detail_serializer_klass = ::GameDetailsSerializer
+      self.serializer_klass = ::Serializer::Game
+      self.detail_serializer_klass = ::Serializer::GameDetails
 
       protected
 

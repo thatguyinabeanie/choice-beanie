@@ -9,7 +9,7 @@ module Api
         before_action :set_phase, only: %i[show update destroy]
 
         def index
-          render json: @phases, each_serializer: ::PhaseSerializer, status: :ok
+          render json: @phases, each_serializer: ::Serializer::Phase, status: :ok
         end
 
         def show
@@ -53,7 +53,7 @@ module Api
         private
 
         def serialize_phase_details
-          ::PhaseDetailsSerializer.new(@phase).serializable_hash
+          ::Serializer::PhaseDetails.new(@phase).serializable_hash
         end
 
         def set_tournament

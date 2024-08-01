@@ -1,17 +1,30 @@
 require_relative 'user_serializer'
+require_relative 'serializer_mixins'
 
-class OrganizationSerializer < ActiveModel::Serializer
-  attributes :id, :name, :owner
+module Serializer
+  module OrganizationMixin
+    extend ActiveSupport::Concern
+    included do
+      class_attribute :owner_serializer
+      attributes :owner
+      include IdMixin
+      include NameMixin
+    end
 
-  def owner
-    ::UserSerializer.new(object.owner).attributes
+    def owner
+      owner_serializer.new(object.owner).attributes
+    end
   end
-end
 
-class OrganizationDetailsSerializer < ActiveModel::Serializer
-  attributes :id, :name, :owner, :updated_at, :created_at, :description
+  class Organization < ActiveModel::Serializer
+    include OrganizationMixin
+    self.owner_serializer = User
+  end
 
-  def owner
-    ::UserDetailsSerializer.new(object.owner).attributes
+  class OrganizationDetails < ActiveModel::Serializer
+    include OrganizationMixin
+    include TimestampMixin
+    attributes :description
+    self.owner_serializer = UserDetails
   end
 end

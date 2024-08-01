@@ -1,25 +1,37 @@
 require_relative 'user_serializer'
+require_relative 'pokemon_set_serializer'
 
-class PlayerSerializer < ActiveModel::Serializer
-  belongs_to :user, serializer: UserSerializer
+module Serializer
+  module PlayerMixin
+    extend ActiveSupport::Concern
+    included do
+      include IdMixin
 
-  attributes :id
-  attributes :in_game_name, :checked_in_at, :checked_in
-  attributes :team_sheet_submitted, :team_sheet_submitted_at
+      attributes :in_game_name, :checked_in_at, :checked_in
+      attributes :team_sheet_submitted, :team_sheet_submitted_at
 
-  def checked_in
-    object.checked_in_at.present?
+      belongs_to :user, serializer: User
+
+      def checked_in
+        object.checked_in_at.present?
+      end
+
+      def team_sheet_submitted
+        object.pokemon_sets.present? || object.pokemon_sets.any?
+      end
+
+      def team_sheet_submitted_at
+        object.pokemon_sets.maximum(:updated_at) || object.pokemon_sets.maximum(:created_at)
+      end
+    end
   end
 
-  def team_sheet_submitted
-    object.pokemon_sets.present? || object.pokemon_sets.any?
+  class Player < ActiveModel::Serializer
+    include PlayerMixin
   end
 
-  def team_sheet_submitted_at
-    object.pokemon_sets.maximum(:updated_at) || object.pokemon_sets.maximum(:created_at)
+  class PlayerDetails < ActiveModel::Serializer
+    include PlayerMixin
+    has_many :pokemon_sets, serializer: PokemonSet
   end
-end
-
-class PlayerDetailsSerializer < PlayerSerializer
-  has_many :pokemon_sets, serializer: PokemonSetSerializer
 end

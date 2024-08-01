@@ -1,11 +1,27 @@
-class PhaseSerializer < ActiveModel::Serializer
-  attributes :id, :name, :type
-  attributes :best_of, :number_of_rounds, :criteria, :order
-  attributes :started_at, :ended_at, :created_at, :updated_at
-  attributes :tournament_id
-end
+require_relative 'serializer_mixins'
+require_relative 'round_serializer'
+require_relative 'player_serializer'
 
-class PhaseDetailsSerializer < PhaseSerializer
-  attribute :players, serializer: PlayerSerializer
-  attribute :rounds, serializer: RoundSerializer
+module Serializer
+  module PhaseMixin
+    extend ActiveSupport::Concern
+    included do
+      include IdMixin
+      include NameMixin
+      attributes :type
+      attributes :best_of, :number_of_rounds, :criteria, :order
+      attributes :started_at, :ended_at, :created_at, :updated_at
+      attributes :tournament_id
+    end
+  end
+
+  class Phase < ActiveModel::Serializer
+    include PhaseMixin
+  end
+
+  class PhaseDetails < ActiveModel::Serializer
+    include PhaseMixin
+    attribute :players, serializer: Player
+    attribute :rounds, serializer: Round
+  end
 end
