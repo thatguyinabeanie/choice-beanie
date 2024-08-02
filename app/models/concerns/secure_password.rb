@@ -1,8 +1,16 @@
 module SecurePassword
   extend ActiveSupport::Concern
 
+  MIN_CHARACTER_LENGTH = 8
   MAX_CHARACTER_LENGTH = 50
-  SPECIAL_CHARACTERS = %w[! @ # $ % ^ & * ( ) - _ = + \] ? / < >].freeze
+  LENGTH_REGEX = /.{#{MIN_CHARACTER_LENGTH},#{MAX_CHARACTER_LENGTH}}/
+
+  LOWERCASE_REGEX = /[a-z]/
+  UPPERCASE_REGEX = /[A-Z]/
+  DIGIT_REGEX = /\d/
+
+  SPECIAL_CHARACTERS = %w[@ $ ! % * ? & - , . < > # ^ ( ) _ + = { } | : ; ' " \\ / ~].freeze
+  SPECIAL_CHAR_REGEX = /[#{Regexp.escape(SPECIAL_CHARACTERS.join)}]/
 
   def self.generate_secure_password(max_length: MAX_CHARACTER_LENGTH) # rubocop:disable Metrics/AbcSize
     min_length = 8
@@ -24,6 +32,31 @@ module SecurePassword
   end
 
   def self.complexity_check(password)
-    password.match?(/\A(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/)
+    password.present? &&
+      lowercase?(password) &&
+      uppercase?(password) &&
+      digit?(password) &&
+      special_char?(password) &&
+      required_length?(password)
+  end
+
+  def self.lowercase?(password)
+    password.match?(LOWERCASE_REGEX)
+  end
+
+  def self.uppercase?(password)
+    password.match?(UPPERCASE_REGEX)
+  end
+
+  def self.digit?(password)
+    password.match?(DIGIT_REGEX)
+  end
+
+  def self.special_char?(password)
+    password.match?(SPECIAL_CHAR_REGEX)
+  end
+
+  def self.required_length?(password)
+    password.match?(LENGTH_REGEX)
   end
 end
