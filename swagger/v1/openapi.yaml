@@ -616,6 +616,24 @@ paths:
           description: successful
         '404':
           description: not found
+  "/login":
+    post:
+      summary: Login
+      tags:
+      - Sessions
+      description: Logs in a User.
+      operationId: login
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserLoginRequest"
 servers:
 - url: https://{defaultHost}
   variables:
@@ -1136,3 +1154,19 @@ components:
           type: string
       required:
       - name
+    UserLoginRequest:
+      type: object
+      title: User Login Request
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          format: password
+          title: Password
+          description: Must be at least 8 characters
+      required:
+      - email
+      - password

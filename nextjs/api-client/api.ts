@@ -798,6 +798,25 @@ export interface UserDetails {
 /**
  *
  * @export
+ * @interface UserLoginRequest
+ */
+export interface UserLoginRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof UserLoginRequest
+   */
+  email: string;
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof UserLoginRequest
+   */
+  password: string;
+}
+/**
+ *
+ * @export
  * @interface UserPostRequest
  */
 export interface UserPostRequest {
@@ -3447,6 +3466,157 @@ export class PlayersApi extends BaseAPI {
   ) {
     return PlayersApiFp(this.configuration)
       .showTournamentPlayer(tournamentId, id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * SessionsApi - axios parameter creator
+ * @export
+ */
+export const SessionsApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    login: async (
+      userLoginRequest?: UserLoginRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/login`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        userLoginRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * SessionsApi - functional programming interface
+ * @export
+ */
+export const SessionsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = SessionsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async login(
+      userLoginRequest?: UserLoginRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.login(
+        userLoginRequest,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["SessionsApi.login"]?.[localVarOperationServerIndex]
+          ?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * SessionsApi - factory interface
+ * @export
+ */
+export const SessionsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = SessionsApiFp(configuration);
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    login(
+      userLoginRequest?: UserLoginRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<void> {
+      return localVarFp
+        .login(userLoginRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * SessionsApi - object-oriented interface
+ * @export
+ * @class SessionsApi
+ * @extends {BaseAPI}
+ */
+export class SessionsApi extends BaseAPI {
+  /**
+   * Logs in a User.
+   * @summary Login
+   * @param {UserLoginRequest} [userLoginRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SessionsApi
+   */
+  public login(
+    userLoginRequest?: UserLoginRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return SessionsApiFp(this.configuration)
+      .login(userLoginRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

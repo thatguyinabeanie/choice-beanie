@@ -288,6 +288,17 @@ PHASE_DETAILS_SCHEMA = {
   required: PHASE_SCHEMA[:required] + %w[players rounds]
 }.freeze
 
+USER_LOGIN_REQUEST = {
+  type: :object,
+  title: 'User Login Request',
+  properties: {
+
+    email: { type: :string, format: 'email' },
+    password: PASSWORD_STRING_TYPE.merge(title: 'Password', description: 'Must be at least 8 characters')
+  },
+  required: %w[email password]
+}.freeze
+
 RSpec.configure do |config|
   # config.include SwaggerHelper
   # Specify a root folder where Swagger JSON files are generated
@@ -349,7 +360,8 @@ RSpec.configure do |config|
           Round: ROUND_SCHEMA,
           Phase: PHASE_SCHEMA,
           PhaseDetails: PHASE_DETAILS_SCHEMA,
-          GameRequest: GAME_REQUEST
+          GameRequest: GAME_REQUEST,
+          UserLoginRequest: USER_LOGIN_REQUEST
         }
       }
     }
