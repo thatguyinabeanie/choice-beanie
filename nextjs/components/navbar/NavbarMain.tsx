@@ -7,29 +7,27 @@ import {
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 
-import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon
-} from "@/components/icons";
 import { NavbarBrandComponent } from "./NavbarBrand";
 import { NavbarSiteList } from "./NavbarSiteList";
 import { NavbarSearch } from "./NavbarSearch";
 import { NavbarMenu } from "./NavbarMenu";
 
-export const NavbarMain = () => {
+import {
+  TwitterIcon,
+  GithubIcon,
+  DiscordIcon,
+  HeartFilledIcon,
+} from "@/components/icons";
+import { ThemeSwitch } from "@/components/theme-switch";
+import { siteConfig } from "@/config/site";
 
+export const NavbarMain = () => {
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrandComponent />
         <NavbarSiteList />
       </NavbarContent>
-
 
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
@@ -66,7 +64,6 @@ export const NavbarMain = () => {
         </NavbarItem>
       </NavbarContent>
 
-
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal aria-label="Github" href={ siteConfig.links.github }>
           <GithubIcon className="text-default-500" />
@@ -76,7 +73,6 @@ export const NavbarMain = () => {
       </NavbarContent>
 
       <NavbarMenu />
-
     </NextUINavbar>
   );
 };

@@ -1,8 +1,9 @@
-import { siteConfig } from "@/config/site";
 import { NavbarItem } from "@nextui-org/navbar";
 import clsx from "clsx";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
+
+import { siteConfig } from "@/config/site";
 
 export function NavbarSiteList () {
   return (
@@ -22,5 +23,5 @@ export function NavbarSiteList () {
         </NavbarItem>
       )) }
     </ul>
-  )
+  );
 }
