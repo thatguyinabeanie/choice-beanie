@@ -7,16 +7,7 @@ module Api
       self.klass = User
       self.serializer_klass = Serializer::User
       self.detail_serializer_klass = Serializer::UserDetails
-
-      # PATCH/PUT /api/v1/users/:id
-      # PATCH/PUT /api/v1/users/:id.json
-      def update
-        if @user.update permitted_params.except(:password, :password_confirmation)
-          render json: serialize_details, status: :ok
-        else
-          render json: @user.errors, status: :unprocessable_entity
-        end
-      end
+      self.update_params_except = %i[password password_confirmation]
 
       # PATCH /api/v1/users/:id/password
       # PATCH /api/v1/users/:id/password.json
