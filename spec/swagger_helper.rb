@@ -166,22 +166,27 @@ PLAYER_SCHEMA = {
   properties: {
     id: { type: :integer },
     user: { '$ref' => '#/components/schemas/User' },
-    in_game_name: { type: :string },
-    checked_in: { type: :boolean },
-    checked_in_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-    team_sheet_submitted: { type: :boolean },
-    team_sheet_submitted_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
+    in_game_name: { type: :string }
+    # checked_in: { type: :boolean },
+    # checked_in_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    # team_sheet_submitted: { type: :boolean },
+    # team_sheet_submitted_at: { type: :string, format: DATE_TIME_TYPE, nullable: true }
   },
-  required: %w[id user in_game_name checked_in checked_in_at team_sheet_submitted team_sheet_submitted_at]
+  # required: %w[id user in_game_name checked_in checked_in_at team_sheet_submitted team_sheet_submitted_at]
+  required: %w[id user in_game_name]
 }.freeze
 
 PLAYER_DETAILS_SCHEMA = {
   type: :object,
   title: 'Player Details',
   properties: PLAYER_SCHEMA[:properties].merge(
-    pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
+    {
+      # pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
+      #
+    }
   ),
-  required: PLAYER_SCHEMA[:required] + %w[pokemon_sets]
+  # required: PLAYER_SCHEMA[:required] + %w[pokemon_sets]
+  required: PLAYER_SCHEMA[:required]
 }.freeze
 
 ROUND_SCHEMA = {

@@ -17,6 +17,8 @@ if Rails.env.production?
   exit
 end
 
+# require 'factory_bot'
+
 def create_user(username: nil, email: nil)
   username ||= "regular_user_#{Faker::Internet.unique.username}"
   email ||= "#{username}@battle-stadium-regular-users.com"
@@ -29,24 +31,6 @@ def create_user(username: nil, email: nil)
     the_user.first_name = Faker::Name.first_name
     the_user.last_name = Faker::Name.last_name
   end
-end
-
-def generate_pokemon_set(player:)
-  Tournament::PokemonSet.new(
-    player:,
-
-    name: Faker::Games::Pokemon.name,
-    ability: "ability_#{rand(1..3)}", # This is a placeholder for the ability
-    tera_type: "type_#{rand(1..18)}", # This is a placeholder for the tera_type
-    nature: "nature_#{rand(1..25)}", # This is a placeholder for the nature
-
-    held_item: "item_#{rand(1..10)}", # This is a placeholder for the held_item
-
-    move1: Faker::Games::Pokemon.move,
-    move2: Faker::Games::Pokemon.move,
-    move3: Faker::Games::Pokemon.move,
-    move4: Faker::Games::Pokemon.move
-  )
 end
 
 def create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
@@ -125,11 +109,13 @@ tournaments = orgs.flat_map do |organization|
   end
 end
 
-players = (1..50).to_a.map { create_user }
+users = (1..50).to_a.map { create_user }
 
 tournaments.flat_map do |tournament|
-  players.sample(rand(1..10)).map do |user|
-    player = Tournament::Player.create!(user:, tournament:, in_game_name: Faker::Games::Pokemon.name)
-    player.add_pokemon_sets!(Array.new(rand(0..6)) { generate_pokemon_set(player:) })
+  users.sample(rand(1..10)).map do |user|
+    pokemon_team = PokemonTeam.create(user:)
+    (1..6).to_a.map { PokemonSet.create(pokemon_team:) }
+
+    Tournament::Player.create!(user:, tournament:, in_game_name: Faker::Games::Pokemon.name, pokemon_team:)
   end
 end
