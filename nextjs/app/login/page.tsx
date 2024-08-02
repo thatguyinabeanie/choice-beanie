@@ -1,7 +1,8 @@
+"use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { UsersApi } from "@/api-client/api"; // Adjust the import based on your OpenAPI client setup
+import { SessionsApi } from "@/api-client/api"; // Adjust the import based on your OpenAPI client setup
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +22,9 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const userApi = new UsersApi();
+      const sessionsApi = new SessionsApi();
 
-      await userApi.loginUser({
+      await sessionsApi.loginUser({
         email: formData.email,
         password: formData.password,
       });

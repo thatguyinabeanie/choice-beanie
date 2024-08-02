@@ -622,7 +622,7 @@ paths:
       tags:
       - Sessions
       description: Logs in a User.
-      operationId: login
+      operationId: loginUser
       parameters: []
       responses:
         '201':

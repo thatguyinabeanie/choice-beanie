@@ -64,11 +64,11 @@ module Users
     #   User.find_by(id: jwt_payload['sub'])
     # end
 
-    # def render_unauthorized
-    #   render json: {
-    #     status: 401,
-    #     message: "Couldn't find an active session."
-    #   }, status: :unauthorized
-    # end
+    def render_unauthorized
+      render json: {
+        status: 401,
+        message: "Couldn't find an active session."
+      }, status: :unauthorized
+    end
   end
 end

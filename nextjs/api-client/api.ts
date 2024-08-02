@@ -3485,7 +3485,7 @@ export const SessionsApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    login: async (
+    loginUser: async (
       userLoginRequest?: UserLoginRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
@@ -3542,20 +3542,21 @@ export const SessionsApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async login(
+    async loginUser(
       userLoginRequest?: UserLoginRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.login(
+      const localVarAxiosArgs = await localVarAxiosParamCreator.loginUser(
         userLoginRequest,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
-        operationServerMap["SessionsApi.login"]?.[localVarOperationServerIndex]
-          ?.url;
+        operationServerMap["SessionsApi.loginUser"]?.[
+          localVarOperationServerIndex
+        ]?.url;
       return (axios, basePath) =>
         createRequestFunction(
           localVarAxiosArgs,
@@ -3585,12 +3586,12 @@ export const SessionsApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    login(
+    loginUser(
       userLoginRequest?: UserLoginRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<void> {
       return localVarFp
-        .login(userLoginRequest, options)
+        .loginUser(userLoginRequest, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -3611,12 +3612,12 @@ export class SessionsApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof SessionsApi
    */
-  public login(
+  public loginUser(
     userLoginRequest?: UserLoginRequest,
     options?: RawAxiosRequestConfig,
   ) {
     return SessionsApiFp(this.configuration)
-      .login(userLoginRequest, options)
+      .loginUser(userLoginRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

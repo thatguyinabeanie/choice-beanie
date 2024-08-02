@@ -10,7 +10,7 @@ RSpec.describe Users::SessionsController do
       produces 'application/json'
       consumes 'application/json'
       description 'Logs in a User.'
-      operationId 'login'
+      operationId 'loginUser'
 
       parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserLoginRequest' }
 
