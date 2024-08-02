@@ -5,6 +5,7 @@ module Api
       class_attribute :serializer_klass
       class_attribute :index_serializer_klass
       class_attribute :detail_serializer_klass
+      class_attribute :update_params_except
 
       # GET /api/v1/:klass
       # GET /api/v1/:klass.json
@@ -35,7 +36,7 @@ module Api
       # PATCH/PUT /api/v1/:klass/:id
       # PATCH/PUT /api/v1/:klass/:id.json
       def update
-        if @object.update! permitted_params
+        if @object.update permitted_params
           render json: serialize_details, status: :ok
         else
           render json: @object.errors, status: :unprocessable_entity
@@ -56,12 +57,7 @@ module Api
       end
 
       def set_object
-        @object = if klass.respond_to?(:friendly)
-                    klass.friendly.find(params[:id])
-                  else
-                    klass.find(params[:id])
-                  end
-
+        @object = klass.find(params[:id])
         @object
       rescue ActiveRecord::RecordNotFound
         render json: { error: "#{klass} not found" }, status: :not_found

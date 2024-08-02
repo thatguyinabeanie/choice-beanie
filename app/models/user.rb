@@ -8,7 +8,8 @@ class User < ApplicationRecord
   MAX_CHARACTER_LENGTH = 50
 
   validates :password, presence: true, length: { minimum: MIN_PASSWORD_LENGTH, maximum: MAX_CHARACTER_LENGTH }, if: :password_required?
-  validate :password_complexity, if: :password_required?
+  validate  :password_complexity, if: :password_required?
+
   validates :username, presence: true, uniqueness: true, allow_blank: false
   validates :email, presence: true, uniqueness: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   validates :pronouns, length: { maximum: MAX_CHARACTER_LENGTH }, allow_blank: true
@@ -36,9 +37,7 @@ class User < ApplicationRecord
   end
 
   def password_complexity
-    return if password.blank?
-
-    return if SecurePassword.complexity_check(password)
+    return if SecurePassword.complexity_check password
 
     errors.add :password, 'must include at least one lowercase letter, one uppercase letter, one digit, and one special character'
   end

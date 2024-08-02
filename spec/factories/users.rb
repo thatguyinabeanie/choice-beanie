@@ -1,3 +1,5 @@
+require_relative '../../app/models/concerns/secure_password'
+
 FactoryBot.define do
   factory :user do
     email { Faker::Internet.unique.email }
