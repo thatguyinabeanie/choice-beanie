@@ -32,7 +32,7 @@ RSpec.describe Api::V1::UsersController do
       description 'Creates a new User.'
       operationId 'postUser'
 
-      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserRequest' }
+      parameter name: :user, in: :body, schema: { '$ref' => '#/components/schemas/UserPostRequest' }
 
       response(201, 'created') do
         let(:user) do

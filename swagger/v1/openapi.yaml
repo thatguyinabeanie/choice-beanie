@@ -561,7 +561,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UserRequest"
+              "$ref": "#/components/schemas/UserPostRequest"
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -661,59 +661,10 @@ components:
       - id
       - name
       - formats
-    User:
+    PasswordRequest:
       type: object
-      title: User
+      title: Password Request
       properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-      required:
-      - id
-      - username
-      - pronouns
-    UserDetails:
-      type: object
-      title: User Details
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-        email:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-      required:
-      - id
-      - username
-      - pronouns
-      - email
-      - first_name
-      - last_name
-    UserRequest:
-      type: object
-      title: User Details with Password
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-        email:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
         password:
           type: string
           minLength: 8
@@ -727,14 +678,128 @@ components:
           title: Password Confirmation
           description: Must match the password.
       required:
+      - password
+      - password_confirmation
+    ChangePasswordRequest:
+      allOf:
+      - "$ref": "#/components/schemas/PasswordRequest"
+      - title: Change Password Request
+        properties:
+          current_password:
+            type: string
+            minLength: 8
+            format: password
+            title: Current Password
+            description: Your current password.
+        required:
+        - current_password
+    User:
+      type: object
+      title: User
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        id:
+          type: integer
+      required:
+      - username
+      - pronouns
       - id
       - username
       - pronouns
+    UserDetails:
+      type: object
+      title: User Details
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+      required:
+      - id
       - email
       - first_name
       - last_name
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
+    UserPostRequest:
+      type: object
+      title: User Request
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+        password:
+          type: string
+          minLength: 8
+          format: password
+          title: Password
+          description: Must be at least 8 characters
+        password_confirmation:
+          type: string
+          minLength: 8
+          format: password
+          title: Password Confirmation
+          description: Must match the password.
+      required:
       - password
       - password_confirmation
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
+    UserRequest:
+      type: object
+      title: User Request
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+        current_password:
+          type: string
+          minLength: 8
+          format: password
+          title: Current Password
+          description: Your current password.
+      required:
+      - current_password
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
     Organization:
       type: object
       title: Organization
@@ -1065,6 +1130,8 @@ components:
       type: object
       title: GameRequest
       properties:
+        id:
+          type: integer
         name:
           type: string
       required:

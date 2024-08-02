@@ -59,6 +59,31 @@ import {
 /**
  *
  * @export
+ * @interface ChangePasswordRequest
+ */
+export interface ChangePasswordRequest {
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  password_confirmation: string;
+  /**
+   * Your current password.
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  current_password: string;
+}
+/**
+ *
+ * @export
  * @interface Format
  */
 export interface Format {
@@ -125,6 +150,12 @@ export interface GameDetail {
  * @interface GameRequest
  */
 export interface GameRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof GameRequest
+   */
+  id?: number;
   /**
    *
    * @type {string}
@@ -199,6 +230,25 @@ export interface OrganizationDetails {
    * @memberof OrganizationDetails
    */
   created_at: string;
+}
+/**
+ *
+ * @export
+ * @interface PasswordRequest
+ */
+export interface PasswordRequest {
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof PasswordRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof PasswordRequest
+   */
+  password_confirmation: string;
 }
 /**
  *
@@ -685,12 +735,6 @@ export interface TournamentDetails {
 export interface User {
   /**
    *
-   * @type {number}
-   * @memberof User
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof User
    */
@@ -701,6 +745,12 @@ export interface User {
    * @memberof User
    */
   pronouns: string;
+  /**
+   *
+   * @type {number}
+   * @memberof User
+   */
+  id: number;
 }
 /**
  *
@@ -710,12 +760,6 @@ export interface User {
 export interface UserDetails {
   /**
    *
-   * @type {number}
-   * @memberof UserDetails
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof UserDetails
    */
@@ -744,6 +788,67 @@ export interface UserDetails {
    * @memberof UserDetails
    */
   last_name: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UserDetails
+   */
+  id: number;
+}
+/**
+ *
+ * @export
+ * @interface UserPostRequest
+ */
+export interface UserPostRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  pronouns: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  last_name: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UserPostRequest
+   */
+  id?: number;
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  password_confirmation: string;
 }
 /**
  *
@@ -753,12 +858,6 @@ export interface UserDetails {
 export interface UserRequest {
   /**
    *
-   * @type {number}
-   * @memberof UserRequest
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof UserRequest
    */
@@ -788,17 +887,17 @@ export interface UserRequest {
    */
   last_name: string;
   /**
-   * Must be at least 8 characters
-   * @type {string}
+   *
+   * @type {number}
    * @memberof UserRequest
    */
-  password: string;
+  id?: number;
   /**
-   * Must match the password.
+   * Your current password.
    * @type {string}
    * @memberof UserRequest
    */
-  password_confirmation: string;
+  current_password: string;
 }
 
 /**
@@ -4213,12 +4312,12 @@ export const UsersApiAxiosParamCreator = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser: async (
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/users`;
@@ -4247,7 +4346,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        userRequest,
+        userPostRequest,
         localVarRequestOptions,
         configuration,
       );
@@ -4386,18 +4485,18 @@ export const UsersApiFp = function (configuration?: Configuration) {
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postUser(
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.postUser(
-        userRequest,
+        userPostRequest,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4487,16 +4586,16 @@ export const UsersApiFactory = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser(
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .postUser(userRequest, options)
+        .postUser(userPostRequest, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -4572,14 +4671,17 @@ export class UsersApi extends BaseAPI {
   /**
    * Creates a new User.
    * @summary Create User
-   * @param {UserRequest} [userRequest]
+   * @param {UserPostRequest} [userPostRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
-  public postUser(userRequest?: UserRequest, options?: RawAxiosRequestConfig) {
+  public postUser(
+    userPostRequest?: UserPostRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
     return UsersApiFp(this.configuration)
-      .postUser(userRequest, options)
+      .postUser(userPostRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

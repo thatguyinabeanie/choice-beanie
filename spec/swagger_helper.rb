@@ -26,6 +26,13 @@ GAME_SCHEMA = {
   required: ID_NAME_REQUIRED
 }.freeze
 
+GAME_REQUEST = {
+  type: :object,
+  title: 'GameRequest',
+  properties: ID_NAME_PROPERTIES,
+  required: %w[name]
+}.freeze
+
 GAME_DETAILS_SCHEMA = {
   type: :object,
   title: 'Game Details',
@@ -35,39 +42,91 @@ GAME_DETAILS_SCHEMA = {
   required: (GAME_SCHEMA[:required] + %w[formats])
 }.freeze
 
-USER_SCHEMA = {
+PASSWORD_REQUEST = {
   type: :object,
-  title: 'User',
-  properties: ID_PROPERTY.merge(
-    username: { type: :string },
-    pronouns: { type: :string }
-  ),
-  required: %w[id username pronouns]
+  title: 'Password Request',
+  properties: {
+    password: PASSWORD_STRING_TYPE.merge(title: 'Password', description: 'Must be at least 8 characters'),
+    password_confirmation: PASSWORD_STRING_TYPE.merge(title: 'Password Confirmation', description: 'Must match the password.')
+  },
+  required: %w[password password_confirmation]
 }.freeze
 
-USER_DETAILS_SCHEMA = {
-  type: :object,
-  title: 'User Details',
-  properties: USER_SCHEMA[:properties].merge(
+CHANGE_PASSWORD_REQUEST = {
+  allOf: [
+    { '$ref' => '#/components/schemas/PasswordRequest' },
     {
+      title: 'Change Password Request',
+      properties: {
+        current_password: PASSWORD_STRING_TYPE.merge(title: 'Current Password', description: 'Your current password.')
+      },
+      required: %w[current_password]
+    }
+  ]
+}.freeze
+
+SIMPLE_USER_SCHEMA = {
+  type: :object,
+  title: 'Simple User',
+  properties: {
+    username: { type: :string },
+    pronouns: { type: :string }
+  },
+  required: %w[username pronouns]
+}.freeze
+
+USER_SCHEMA = SIMPLE_USER_SCHEMA.deep_merge(
+  {
+    title: 'User',
+    properties: ID_PROPERTY,
+    required: %w[username pronouns id] + SIMPLE_USER_SCHEMA[:required]
+  }
+)
+
+SIMPLE_USER_DETAILS_SCHEMA = SIMPLE_USER_SCHEMA.deep_merge(
+  {
+    type: :object,
+    title: 'Simple User Details',
+    properties: {
       email: { type: :string },
       first_name: { type: :string },
       last_name: { type: :string }
-    }
-  ),
-  required: USER_SCHEMA[:required] + %w[email first_name last_name]
-}.freeze
+    },
+    required: %w[email first_name last_name] + SIMPLE_USER_SCHEMA[:required]
+  }
+).freeze
 
-USER_REQUEST = USER_DETAILS_SCHEMA.deep_merge(
+USER_DETAILS_SCHEMA = SIMPLE_USER_DETAILS_SCHEMA.deep_merge(
   {
-    title: 'User Details with Password',
-    properties: {
+    type: :object,
+    title: 'User Details',
+    properties: ID_PROPERTY,
+    required: %w[id email first_name last_name] + SIMPLE_USER_DETAILS_SCHEMA[:required]
+  }
+).freeze
+
+USER_REQUEST = SIMPLE_USER_DETAILS_SCHEMA.deep_merge(
+  {
+    type: :object,
+    title: 'User Request',
+    properties: ID_PROPERTY.merge(
+      current_password: PASSWORD_STRING_TYPE.merge(title: 'Current Password', description: 'Your current password.')
+    ),
+    required: %w[current_password] + SIMPLE_USER_DETAILS_SCHEMA[:required]
+  }
+).freeze
+
+USER_POST_REQUEST = SIMPLE_USER_DETAILS_SCHEMA.deep_merge(
+  {
+    type: :object,
+    title: 'User Request',
+    properties: ID_PROPERTY.merge(
       password: PASSWORD_STRING_TYPE.merge(title: 'Password', description: 'Must be at least 8 characters'),
       password_confirmation: PASSWORD_STRING_TYPE.merge(title: 'Password Confirmation', description: 'Must match the password.')
-    },
-    required: USER_DETAILS_SCHEMA[:required] + %w[password password_confirmation]
+    ),
+    required: %w[password password_confirmation] + SIMPLE_USER_DETAILS_SCHEMA[:required]
   }
-)
+).freeze
 
 ORGANIZATION_SCHEMA = {
   type: :object,
@@ -158,7 +217,7 @@ PLAYER_REQUEST = {
     in_game_name: { type: :string }
   },
   required: %w[user_id in_game_name]
-}
+}.freeze
 
 PLAYER_SCHEMA = {
   type: :object,
@@ -273,8 +332,11 @@ RSpec.configure do |config|
           Format: FORMAT_SCHEMA,
           Game: GAME_SCHEMA,
           GameDetail: GAME_DETAILS_SCHEMA,
+          PasswordRequest: PASSWORD_REQUEST,
+          ChangePasswordRequest: CHANGE_PASSWORD_REQUEST,
           User: USER_SCHEMA,
           UserDetails: USER_DETAILS_SCHEMA,
+          UserPostRequest: USER_POST_REQUEST,
           UserRequest: USER_REQUEST,
           Organization: ORGANIZATION_SCHEMA,
           OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
@@ -287,14 +349,7 @@ RSpec.configure do |config|
           Round: ROUND_SCHEMA,
           Phase: PHASE_SCHEMA,
           PhaseDetails: PHASE_DETAILS_SCHEMA,
-          GameRequest: {
-            type: :object,
-            title: 'GameRequest',
-            properties: {
-              name: { type: :string }
-            },
-            required: %w[name]
-          }
+          GameRequest: GAME_REQUEST
         }
       }
     }
