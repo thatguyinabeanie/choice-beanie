@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_062805) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_02_013630) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -132,6 +132,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_062805) do
     t.boolean "team_sheet_submitted", default: false, null: false
     t.datetime "checked_in_at", precision: nil
     t.string "in_game_name", default: "", null: false
+    t.bigint "pokemon_team_id"
+    t.index ["pokemon_team_id"], name: "index_players_on_pokemon_team_id"
     t.index ["tournament_id"], name: "index_players_on_tournament_id"
     t.index ["user_id", "tournament_id"], name: "index_on_user_id_and_tournament_id", unique: true
     t.index ["user_id"], name: "index_players_on_user_id"
@@ -149,9 +151,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_062805) do
     t.string "move4"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "player_id"
     t.string "nickname"
-    t.index ["player_id"], name: "index_pokemon_sets_on_player_id"
+    t.bigint "pokemon_team_id", null: false
+    t.index ["pokemon_team_id"], name: "index_pokemon_sets_on_pokemon_team_id"
+  end
+
+  create_table "pokemon_teams", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pokemon_teams_on_user_id"
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -252,9 +261,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_062805) do
   add_foreign_key "organizations", "users", column: "owner_id"
   add_foreign_key "phase_players", "players"
   add_foreign_key "phases", "tournaments"
+  add_foreign_key "players", "pokemon_teams"
   add_foreign_key "players", "tournaments"
   add_foreign_key "players", "users"
-  add_foreign_key "pokemon_sets", "players"
+  add_foreign_key "pokemon_sets", "pokemon_teams"
+  add_foreign_key "pokemon_teams", "users"
   add_foreign_key "tournament_formats", "formats"
   add_foreign_key "tournament_formats", "tournaments"
   add_foreign_key "tournaments", "games"
