@@ -919,26 +919,10 @@ components:
           "$ref": "#/components/schemas/User"
         in_game_name:
           type: string
-        checked_in:
-          type: boolean
-        checked_in_at:
-          type: string
-          format: date-time
-          nullable: true
-        team_sheet_submitted:
-          type: boolean
-        team_sheet_submitted_at:
-          type: string
-          format: date-time
-          nullable: true
       required:
       - id
       - user
       - in_game_name
-      - checked_in
-      - checked_in_at
-      - team_sheet_submitted
-      - team_sheet_submitted_at
     PlayerDetails:
       type: object
       title: Player Details
@@ -949,31 +933,10 @@ components:
           "$ref": "#/components/schemas/User"
         in_game_name:
           type: string
-        checked_in:
-          type: boolean
-        checked_in_at:
-          type: string
-          format: date-time
-          nullable: true
-        team_sheet_submitted:
-          type: boolean
-        team_sheet_submitted_at:
-          type: string
-          format: date-time
-          nullable: true
-        pokemon_sets:
-          type: array
-          items:
-            "$ref": "#/components/schemas/PokemonSet"
       required:
       - id
       - user
       - in_game_name
-      - checked_in
-      - checked_in_at
-      - team_sheet_submitted
-      - team_sheet_submitted_at
-      - pokemon_sets
     Round:
       type: object
       title: Round

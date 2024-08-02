@@ -394,30 +394,6 @@ export interface Player {
    * @memberof Player
    */
   in_game_name: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Player
-   */
-  checked_in: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Player
-   */
-  checked_in_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Player
-   */
-  team_sheet_submitted: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Player
-   */
-  team_sheet_submitted_at: string | null;
 }
 /**
  *
@@ -443,36 +419,6 @@ export interface PlayerDetails {
    * @memberof PlayerDetails
    */
   in_game_name: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof PlayerDetails
-   */
-  checked_in: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof PlayerDetails
-   */
-  checked_in_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof PlayerDetails
-   */
-  team_sheet_submitted: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof PlayerDetails
-   */
-  team_sheet_submitted_at: string | null;
-  /**
-   *
-   * @type {Array<PokemonSet>}
-   * @memberof PlayerDetails
-   */
-  pokemon_sets: Array<PokemonSet>;
 }
 /**
  *
