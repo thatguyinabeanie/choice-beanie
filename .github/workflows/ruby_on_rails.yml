@@ -116,6 +116,7 @@ jobs:
       - name: Run RuboCop with Reviewdog
         uses: reviewdog/action-rubocop@v2
         with:
+          workdir: ./backend
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-rspec:gemfile
           only_changed: true

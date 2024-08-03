@@ -22,10 +22,6 @@ jobs:
       packages: write
       id-token: write
 
-    defaults:
-      run:
-        working-directory: ./backend
-
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
