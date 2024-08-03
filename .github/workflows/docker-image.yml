@@ -49,7 +49,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           push: true
           cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest
-          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-${{ github.ref }},mode=max
+          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-${{ github.head_ref }},mode=max
           tags: |
             ${{ github.repository }}:dev-${{ github.head_ref}}
             ghcr.io/${{ github.repository }}:dev-${{ github.head_ref}}
