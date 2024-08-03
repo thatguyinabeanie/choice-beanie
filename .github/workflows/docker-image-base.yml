@@ -62,8 +62,8 @@ jobs:
           target: base-image
           platforms: ${{ matrix.platform }}
           push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:backend-base-buildcache
+          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:backend-base-buildcache,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:backend-base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:backend-base-${{ env.VERSION_MAJOR }}
