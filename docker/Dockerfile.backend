@@ -26,7 +26,8 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSIO
 ##
 ## BASE IMAGE WITH MORE DEV DEPENDENCIES
 ##
-FROM asdf-ruby AS linux-base-image
+
+FROM asdf-ruby AS base-image
 # INSTALL DEPENDENCIES
 RUN apt-get update -qq  && apt-get --no-install-recommends install -y -q  \
     default-jre postgresql-client openssl wget  watchman  ruby-dev && \
@@ -53,7 +54,8 @@ RUN ARCH=$(dpkg --print-architecture) && \
 ##
 ## DEVELOPMENT IMAGE
 ##
-FROM linux-base-image AS development
+ARG BACKEND_BASE_VERSION=latest
+FROM thatguyinabeanie/battle-stadium:backend-base-${BACKEND_BASE_VERSION} AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
