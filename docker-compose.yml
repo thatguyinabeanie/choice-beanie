@@ -43,7 +43,7 @@ services:
     volumes:
       - ./backend:/battle-stadium
       - ./backend/tmp:/tmp
-      - ./backend/.zshrc:/root/.zshrc
+      - .zshrc:/root/.zshrc
 
   nextjs:
     image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
@@ -60,7 +60,7 @@ services:
     volumes:
       - ./frontend:/nextjs
       - ./frontend/tmp:/tmp
-      # - .zshrc:/root/.zshrc
+      - .zshrc:/root/.zshrc
       - node_modules:/nextjs/node_modules
     command: >
       bash -c "
