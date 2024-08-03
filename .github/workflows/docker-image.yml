@@ -58,7 +58,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: "{{defaultContext}}:backend"
-          file: Dockerfile.backend
+          file: Dockerfile
           target: development
           platforms: ${{ matrix.platform }}
           push: false
