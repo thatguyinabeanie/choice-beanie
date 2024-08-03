@@ -9,7 +9,7 @@ module Users
     private
 
     def respond_with(resource, _opts = {})
-      render json: { token: current_token }, status: :ok
+      render json: { token: current_token }, status: :created
     end
 
     def respond_to_on_destroy

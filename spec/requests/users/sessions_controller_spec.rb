@@ -35,7 +35,7 @@ RSpec.describe Users::SessionsController do
           {
             user: {
               email: 'wrong@example.com',
-              password: 'wrongpassword'
+              password: SecurePassword.generate_secure_password
             }
           }
         end
