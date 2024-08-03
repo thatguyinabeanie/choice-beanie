@@ -38,7 +38,7 @@ RSpec.describe Api::V1::UsersController do
         let(:user) do
           {
             user: {
-              username: 'new_user',
+              username: Faker::Internet.unique.username,
               pronouns: 'he/him',
               email: 'new_user@example.com',
               first_name: 'New ',
