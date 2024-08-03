@@ -27,11 +27,9 @@
   "shutdownAction": "none",
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /battle-stadium ",
+  "postCreateCommand": "git config --global --add safe.directory /battle-stadium ",
 
-  // "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /battle-stadium && echo 'export PATH=\"$PATH:/root/.vscode-server/bin/$(ls /root/.vscode-server/bin)\"' >> ~/.bashrc && source ~/.bashrc && gem install bundler && bundle install",
 
-  // && sudo chown -r battle-stadium:battle-stadium /battle-stadium
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "root",

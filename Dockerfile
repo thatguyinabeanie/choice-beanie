@@ -2,49 +2,53 @@
 ## BASE IMAGE WITH ASDF AND RUBY
 ##
 FROM mcr.microsoft.com/devcontainers/ruby:3 AS asdf-ruby
-ARG BATTLE_STADIUM=battle-stadium
-RUN \
-  mkdir -p /${BATTLE_STADIUM} && \
-  apt-get update -qq && \
-  apt-get --no-install-recommends install -y -q \
-  curl \
-  git \
-  build-essential \
-  libssl-dev \
-  libreadline-dev \
-  zlib1g-dev \
-  libpq-dev \
-  && curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - \
-  && apt-get --no-install-recommends install -y nodejs \
-  && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Install asdf
 ARG ASDF_VERSION=v0.14.0
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION}
 ENV PATH="/root/.asdf/bin:/root/.asdf/shims:$PATH"
-
-# Install asdf-ruby plugin
-RUN asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-
 WORKDIR /battle-stadium
-# Copy .ruby-version file to the container
 COPY .tool-versions .
-
-# Install Ruby using asdf based on .ruby-version
-RUN asdf install
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION} && \
+    apt-get update -qq && \
+    apt-get --no-install-recommends install -y -q \
+    curl \
+    git \
+    build-essential \
+    libssl-dev \
+    libreadline-dev \
+    libc6 \
+    zlib1g-dev \
+    libpq-dev \
+    && curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get --no-install-recommends install -y nodejs \
+    && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git && \
+    asdf install
 
 ##
 ## BASE IMAGE WITH MORE DEV DEPENDENCIES
 ##
 FROM asdf-ruby AS linux-base-image
+# INSTALL DEPENDENCIES
+RUN apt-get update -qq  && apt-get --no-install-recommends install -y -q  \
+    default-jre postgresql-client openssl wget  watchman  ruby-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN \
-  # INSTALL DEPENDENCIES
-  apt-get update -qq  && apt-get --no-install-recommends install -y -q  \
-  default-jre postgresql-client openssl wget  watchman  ruby-dev && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+# Determine architecture and download the appropriate 1Password CLI
+RUN ARCH=$(dpkg --print-architecture) && \
+    if [ "$ARCH" = "amd64" ]; then \
+        curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_amd64_v1.12.3.zip -o op_linux_amd64_v1.12.3.zip && \
+        unzip op_linux_amd64_v1.12.3.zip -d op-extract && \
+        mv op-extract/op /usr/local/bin/op && \
+        rm -rf op_linux_amd64_v1.12.3.zip op-extract; \
+    elif [ "$ARCH" = "arm64" ]; then \
+        curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_arm64_v1.12.3.zip -o op_linux_arm64_v1.12.3.zip && \
+        unzip op_linux_arm64_v1.12.3.zip -d op-extract && \
+        mv op-extract/op /usr/local/bin/op && \
+        rm -rf op_linux_arm64_v1.12.3.zip op-extract; \
+    else \
+        echo "Unsupported architecture: $ARCH"; \
+        exit 1; \
+    fi
 
 ##
 ## DEVELOPMENT IMAGE
