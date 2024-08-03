@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "bundle:install": "bundle check || bundle install",
+    "bundle:install": "sh -c 'bundle check || bundle install'",
     "build": "bundle exec rails assets:precompile",
-    "dev": "rm -f tmp/pids/server.pid && pnpm run bundle:install && bundle exec rails server -b 0.0.0.0 -p 3000",
+    "start:db": "sh -c 'docker compose up -d db'",
+    "dev": "rm -f tmp/pids/server.pid && pnpm run bundle:install && pnpm start:db && bundle exec rails server -b 0.0.0.0 -p 3000",
     "lint": "bundle exec rubocop -A --force-exclusion",
     "test": "bundle exec rspec"
   }
