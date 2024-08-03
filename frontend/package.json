@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+    "jest": "jest --passWithNoTests",
     "test": "jest --passWithNoTests",
     "codegen": "openapi-rq -i ../backend/swagger/v1/openapi.yaml -c axios -o api --format prettier --operationId   --serviceResponse response --enums typescript --useDateType --schemaType form",
 

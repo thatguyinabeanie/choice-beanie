@@ -21,8 +21,7 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSIO
     && apt-get --no-install-recommends install -y nodejs \
     && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git && \
-    asdf install && \
-    npm install  --ignore-scripts -g pnpm --silent
+    asdf install
 
 
 ##
@@ -70,8 +69,9 @@ COPY pnpm-workspace.yaml .
 COPY openapitools.json .
 COPY turbo.json .
 
-RUN bundle install
-RUN pnpm install --ignore-scripts --silent
+RUN npm install  --ignore-scripts -g pnpm --silent && \
+    pnpm install --ignore-scripts --silent && \
+    bundle install
 
 EXPOSE 3000
 WORKDIR /$BATTLE_STADIUM
