@@ -74,5 +74,7 @@ RUN npm install  --ignore-scripts -g pnpm --silent && \
     bundle install
 
 EXPOSE 3000
+EXPOSE 8080
+
 WORKDIR /$BATTLE_STADIUM
 CMD ["pnpm", "dev"]

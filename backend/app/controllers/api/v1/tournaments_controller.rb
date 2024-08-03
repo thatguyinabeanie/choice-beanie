@@ -63,7 +63,11 @@ module Api
       end
 
       def set_organization
-        @organization = ::Organization::Organization.find(params[:organization_id])
+        @organization = if params[:organization_id].present?
+                          ::Organization::Organization.find(params[:organization_id])
+                        else
+                          ::Tournament::Tournament.find(params[:id]).organization
+                        end
         @organization
       rescue ActiveRecord::RecordNotFound
         render json: { error: 'Organization not found' }, status: :not_found

@@ -8,6 +8,7 @@
     "start:db": "sh -c 'command -v docker >/dev/null 2>&1 && docker compose up -d db || echo \"Docker is not installed or not in PATH\"' ",
     "dev": "rm -f tmp/pids/server.pid && pnpm run bundle:install && pnpm start:db && bundle exec rails server -b 0.0.0.0 -p 3000",
     "lint": "bundle exec rubocop -A --force-exclusion",
+    "rubocop": "pnpm run lint",
     "test": "bundle exec rspec"
   }
 }

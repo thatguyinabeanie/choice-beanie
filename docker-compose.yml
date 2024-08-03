@@ -12,6 +12,7 @@ services:
       - 5432:5432
 
   backend_base_image:
+    image: thatguyinabeanie/battle-stadium:backend-base-latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -40,6 +41,7 @@ services:
     tty: true
     ports:
       - 3000:3000
+      - 8080:8080
     depends_on:
       - db
       - backend_base_image
