@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AbstractApplicationController < ApplicationController
+    class AbstractApplicationController < ApiController
       class_attribute :klass
       class_attribute :serializer_klass
       class_attribute :index_serializer_klass

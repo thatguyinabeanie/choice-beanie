@@ -1,7 +1,7 @@
 require_relative '../../../serializer/tournament_serializer'
 module Api
   module V1
-    class TournamentsController < ApplicationController
+    class TournamentsController < ApiController
       before_action :set_organization
       before_action :set_tournaments, only: %i[index show]
       before_action :set_tournament, only: %i[show update destroy]

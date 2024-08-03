@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 
-import { Organization, OrganizationsApi } from "@/api-client";
+import { Organization, OrganizationsApi } from "@/api";
 import { title } from "@/components/primitives";
 
 const useOrganizations = () => {
