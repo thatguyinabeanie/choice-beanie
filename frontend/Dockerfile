@@ -9,39 +9,34 @@ WORKDIR /nextjs
 # Install pnpm globally
 RUN npm install  --ignore-scripts -g pnpm --silent
 
-# Install dependencies
-COPY package.json .
-# COPY pnpm-lock.yaml .
-COPY package-lock.json .
-
-# RUN pnpm install --silent
-RUN npm install --silent --ignore-scripts
-
 WORKDIR /nextjs
 
-# Copy the source code
-COPY app .
-COPY components .
-COPY config .
-COPY lib .
-COPY openapi-templates .
-COPY public .
-COPY styles .
-COPY types .
-COPY .eslintignore .
-COPY .eslintrc.json .
-COPY components.json .
-COPY next-env.d.ts .
-COPY next.config.js .
-COPY openapitools.json .
-COPY package-lock.json .
-COPY package.json .
+# Install dependencies
+COPY frontend/package.json .
 COPY pnpm-lock.yaml .
-COPY postcss.config.js .
-COPY tailwind.config.js .
-COPY tailwind.config.ts .
-COPY tsconfig.json .
 
+RUN pnpm install --silent --ignore-scripts
+
+# Copy the source code
+COPY frontend/app .
+COPY frontend/components .
+COPY frontend/config .
+COPY frontend/lib .
+COPY frontend/openapi-templates .
+COPY frontend/public .
+COPY frontend/styles .
+COPY frontend/types .
+COPY frontend/.eslintignore .
+COPY frontend/.eslintrc.json .
+COPY frontend/components.json .
+COPY frontend/next-env.d.ts .
+COPY frontend/next.config.js .
+COPY frontend/openapitools.json .
+COPY frontend/package.json .
+COPY frontend/postcss.config.js .
+COPY frontend/tailwind.config.js .
+COPY frontend/tailwind.config.ts .
+COPY frontend/tsconfig.json .
 
 # Expose the Next.js development server port
 EXPOSE 8080

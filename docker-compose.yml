@@ -13,29 +13,28 @@ services:
 
   backend_base_image:
     build:
-      context: backend
-      dockerfile: Dockerfile.backend
+      context: .
+      dockerfile: Dockerfile
       target: base-image
       tags:
         - thatguyinabeanie/battle-stadium:backend-base-latest
 
   # BATTLE STADIUM RAILS APP CONTAINER
-  rails_api:
+  dev:
     image: thatguyinabeanie/battle-stadium:backend-dev-latest
     environment:
       DEV_ENVIRONMENT: devcontainer
     build:
-      context: backend
+      context: .
       target: development
-      args:
-        BACKEND_BASE_VERSION: latest
+      dockerfile: Dockerfile
       tags:
         - thatguyinabeanie/battle-stadium:backend-dev-latest
     command: >
       bash -c "
         rm -f tmp/pids/server.pid && \
-        (bundle check || bundle install) && \
-        (bundle exec rails server -b 0.0.0.0 -p 3000 & ) && \
+        pnpm install --silent && \
+        pnpm dev && \
         sleep infinity
       "
     tty: true
@@ -51,30 +50,8 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - ./backend:/battle-stadium
+      - ./:/battle-stadium
       - .zshrc:/root/.zshrc
-
-  nextjs:
-    image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
-    build:
-      context: frontend
-      target: nextjs
-      tags:
-        - thatguyinabeanie/battle-stadium/nextjs:dev-latest
-    tty: true
-    ports:
-      - 8080:8080
-    volumes:
-      - ./frontend:/nextjs
-      - ./frontend/tmp:/tmp
-      - .zshrc:/root/.zshrc
-      - node_modules:/nextjs/node_modules
-    command: >
-      bash -c "
-        rm -f tmp/pids/server.pid && \
-        (npm ci && npm run dev & ) && \
-        sleep infinity
-      "
 volumes:
   postgres-data:
   node_modules:

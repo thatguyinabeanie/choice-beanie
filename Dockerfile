@@ -21,7 +21,9 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSIO
     && apt-get --no-install-recommends install -y nodejs \
     && apt-get clean &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git && \
-    asdf install
+    asdf install && \
+    npm install  --ignore-scripts -g pnpm --silent
+
 
 ##
 ## BASE IMAGE WITH MORE DEV DEPENDENCIES
@@ -54,25 +56,23 @@ RUN ARCH=$(dpkg --print-architecture) && \
 ##
 ## DEVELOPMENT IMAGE
 ##
-FROM thatguyinabeanie/battle-stadium:backend-base-0 AS development
+FROM thatguyinabeanie/battle-stadium:backend-base-latest AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
 ENV DEV_ENVIRONMENT=devcontainer
 
-COPY app ./app
-COPY bin/* ./bin/
-COPY config ./config
-COPY db ./db
-COPY lib ./lib
-COPY public ./public
-COPY storage ./storage
-COPY Rakefile ./Rakefile
-COPY vendor ./vendor
-COPY config.ru ./config.ru
-COPY Gemfile Gemfile.lock /$BATTLE_STADIUM/
+COPY backend .
+COPY frontend .
+COPY package.json .
+COPY pnpm-lock.yaml .
+COPY pnpm-workspace.yaml .
+COPY openapitools.json .
+COPY turbo.json .
 
 RUN bundle install
+RUN pnpm install --ignore-scripts --silent
+
 EXPOSE 3000
 WORKDIR /$BATTLE_STADIUM
-ENTRYPOINT [ "./bin/docker-entrypoint" ]
+CMD ["pnpm", "dev"]
