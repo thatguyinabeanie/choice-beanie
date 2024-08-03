@@ -11,16 +11,26 @@ services:
     ports:
       - 5432:5432
 
+  backend_base_image:
+    build:
+      context: backend
+      dockerfile: Dockerfile.backend
+      target: base-image
+      tags:
+        - thatguyinabeanie/battle-stadium:backend-base-latest
+
   # BATTLE STADIUM RAILS APP CONTAINER
   rails_api:
-    image: thatguyinabeanie/battle-stadium/rails:dev-latest
+    image: thatguyinabeanie/battle-stadium:backend-dev-latest
     environment:
       DEV_ENVIRONMENT: devcontainer
     build:
       context: backend
       target: development
+      args:
+        BACKEND_BASE_VERSION: latest
       tags:
-        - thatguyinabeanie/battle-stadium/rails:dev-latest
+        - thatguyinabeanie/battle-stadium:backend-dev-latest
     command: >
       bash -c "
         rm -f tmp/pids/server.pid && \
@@ -33,6 +43,7 @@ services:
       - 3000:3000
     depends_on:
       - db
+      - backend_base_image
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
@@ -51,7 +62,6 @@ services:
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
-    # command: npm install && (npm run dev & ) && sleep infinity
     tty: true
     ports:
       - 8080:8080
@@ -69,4 +79,3 @@ services:
 volumes:
   postgres-data:
   node_modules:
-  home:
