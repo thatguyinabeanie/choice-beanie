@@ -26,7 +26,6 @@ services:
       DEV_ENVIRONMENT: devcontainer
     build:
       context: backend
-      dockerfile: Dockerfile.backend
       target: development
       args:
         BACKEND_BASE_VERSION: latest
@@ -60,7 +59,6 @@ services:
     image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
     build:
       context: frontend
-      dockerfile: Dockerfile.frontend
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest

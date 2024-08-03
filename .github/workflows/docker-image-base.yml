@@ -56,7 +56,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: "{{defaultContext}}:backend"
-          file: Dockerfile
           target: base-image
           platforms: ${{ matrix.platform }}
           push: true
