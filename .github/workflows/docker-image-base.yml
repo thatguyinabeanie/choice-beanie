@@ -58,8 +58,6 @@ jobs:
         if: github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: Dockerfile
           target: base-image
           platforms: ${{ matrix.platform }}
           push: true
