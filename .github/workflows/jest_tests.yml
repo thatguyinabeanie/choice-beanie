@@ -10,20 +10,25 @@ jobs:
         working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: Prepare Jest
         run: |
           mkdir -p frontend/test-results/jest
 
+      - name: Install Dependencies
+        run: pnpm install --silent
+
       - name: Run Jest tests
         env:
           CI: true
-        run: pnpm install --silent && pnpm jest"
+        run: pnpm jest"
 
       - name: Upload Jest results
         if: always()
