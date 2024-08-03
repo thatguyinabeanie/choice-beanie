@@ -43,7 +43,6 @@ jobs:
 
       - name: Build ${{ matrix.platform }} Docker Image
         uses: docker/build-push-action@v6
-        if: github.ref == 'eatmyvenom:dev'
         with:
           target: development
           platforms: ${{ matrix.platform }}
