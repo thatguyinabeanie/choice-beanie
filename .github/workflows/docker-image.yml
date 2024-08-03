@@ -41,13 +41,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract version from tag
-        if: github.event_name == 'release'
-        id: extract_version
-        run: |
-          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
-          echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
-
       - name: Build ${{ matrix.platform }} Docker Image
         uses: docker/build-push-action@v6
         with:
@@ -58,6 +51,6 @@ jobs:
           cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest
           cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-${{ github.ref }},mode=max
           tags: |
-            ${{ github.repository }}:dev-${{ github.ref_name}}
-            ghcr.io/${{ github.repository }}:dev-${{ github.ref_name}}
+            ${{ github.repository }}:dev-${{ github.head_ref}}
+            ghcr.io/${{ github.repository }}:dev-${{ github.head_ref}}
 
