@@ -16,7 +16,7 @@ COPY package-lock.json .
 COPY ../.zshrc /root/.zshrc
 
 # RUN pnpm install --silent
-RUN npm install --silent
+RUN npm install --silent --ignore-scripts
 
 # Copy the source code
 COPY nextjs /nextjs
