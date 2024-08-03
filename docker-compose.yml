@@ -24,6 +24,7 @@ services:
   dev:
     image: thatguyinabeanie/battle-stadium:backend-dev-latest
     environment:
+      DB_HOST: db
       DEV_ENVIRONMENT: devcontainer
     build:
       context: .
@@ -52,8 +53,33 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - ./:/battle-stadium
+      - ./backend/:/battle-stadium/backend
+      - ./frontend/:/battle-stadium/frontend
+      - ./devcontainer/:/battle-stadium/devcontainer
+      - ./github/:/battle-stadium/github
+      - ./.sonarlint/:/battle-stadium/.sonarlint
+      - ./.vscode/:/battle-stadium/.vscode
+      - ./.gitignore:/battle-stadium/.gitignore
+      - ./.node-version:/battle-stadium/.node-version
+      - ./.nvmrc:/battle-stadium/.nvmrc
+      - ./.tool-versions:/battle-stadium/.tool-versions
+      - ./CODE_OF_CONDUCT.md:/battle-stadium/CODE_OF_CONDUCT.md
+      - ./CONTRIBUTING.md:/battle-stadium/CONTRIBUTING.md
+      - ./Dockerfile:/battle-stadium/Dockerfile
+      - ./docker-compose.yml:/battle-stadium/docker-compose.yml
+      - ./LICENSE:/battle-stadium/LICENSE
+      - ./openapitools.json:/battle-stadium/openapitools.json
+      - ./package.json:/battle-stadium/package.json
+      - ./pnpm-workspace.yaml:/battle-stadium/pnpm-workspace.yaml
+      - ./pnpm-lock.yaml:/battle-stadium/pnpm-lock.yaml
+      - ./README.md:/battle-stadium/README.md
+      - ./SECURITY.md:/battle-stadium/SECURITY.md
+      - ./turbo.json:/battle-stadium/turbo.json
       - .zshrc:/root/.zshrc
+      - turbo:/battle-stadium/.turbo
+      - pnpm-store:/battle-stadium/.pnpm-store
 volumes:
   postgres-data:
   node_modules:
+  turbo:
+  pnpm-store:
