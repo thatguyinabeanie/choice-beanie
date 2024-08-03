@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/devcontainers/ruby:3 AS asdf-ruby
 ARG ASDF_VERSION=v0.14.0
 ENV PATH="/root/.asdf/bin:/root/.asdf/shims:$PATH"
 WORKDIR /battle-stadium
-COPY ../.tool-versions .
+COPY .tool-versions .
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION} && \
     apt-get update -qq && \
     apt-get --no-install-recommends install -y -q \
@@ -26,7 +26,8 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSIO
 ##
 ## BASE IMAGE WITH MORE DEV DEPENDENCIES
 ##
-FROM asdf-ruby AS linux-base-image
+
+FROM asdf-ruby AS base-image
 # INSTALL DEPENDENCIES
 RUN apt-get update -qq  && apt-get --no-install-recommends install -y -q  \
     default-jre postgresql-client openssl wget  watchman  ruby-dev && \
@@ -53,13 +54,12 @@ RUN ARCH=$(dpkg --print-architecture) && \
 ##
 ## DEVELOPMENT IMAGE
 ##
-FROM linux-base-image AS development
+FROM thatguyinabeanie/battle-stadium:backend-base-0 AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
 ENV DEV_ENVIRONMENT=devcontainer
 
-COPY .zshrc /root/.zshrc
 COPY app ./app
 COPY bin/* ./bin/
 COPY config ./config
