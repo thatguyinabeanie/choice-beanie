@@ -62,5 +62,4 @@ jobs:
           target: development
           platforms: ${{ matrix.platform }}
           push: false
-          build-args: |
-            BACKEND_BASE_VERSION=latest
+          build-args: BACKEND_BASE_VERSION=latest
