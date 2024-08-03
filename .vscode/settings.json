@@ -17,12 +17,7 @@
   ],
 
   "terminal.integrated.suggest.enabled": true,
-  "sonarlint.connectedMode.project": {
-    "connectionId": "thatguyinabeanie",
-    "projectKey": "thatguyinabeanie_battle-stadium"
-  },
   "testing.coverageToolbarEnabled": true,
-  "coverage-gutters.coverageBaseDir": "coverage/*",
 
   "terminal.integrated.cursorBlinking": true,
   "git.terminalGitEditor": true,
@@ -40,14 +35,19 @@
     "identifier": "custom"
   },
   // Adding a custom Ruby bin folder to the PATH
-  "rubyLsp.customRubyCommand": "(frum local || rbenv global || asdf current ruby || which ruby)",
+  "rubyLsp.customRubyCommand": "(frum local || asdf current ruby || which ruby)",
   "rubyLsp.useBundler": true,
   "rubyLsp.diagnostics": true,
   "rubyLsp.formatting": true,
   "rubyLsp.hover": true,
   "rubyLsp.completion": true,
   "rubyLsp.codeActions": true,
-  "rubyLsp.symbols": true
+  "rubyLsp.symbols": true,
+  "cSpell.words": [
+    "clsx",
+    "nextui",
+    "thatguyinabeanie"
+  ]
 
 
 }
