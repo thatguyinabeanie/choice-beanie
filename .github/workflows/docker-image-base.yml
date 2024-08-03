@@ -5,7 +5,8 @@ on:
     paths:
       - docker/docker/BACKEND_BASE_IMAGE_VERSION
     branches:
-      - main
+      # - main
+      - "**"
 
 jobs:
   build-base-image:
