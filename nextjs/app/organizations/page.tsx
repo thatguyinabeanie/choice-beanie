@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { Organization, OrganizationsApi } from "@/api-client";
-import { title } from "@/components/primitives";
 import {
   Table,
   TableHeader,
   TableBody,
   TableColumn,
   TableRow,
-  TableCell
+  TableCell,
 } from "@nextui-org/react";
 import React from "react";
 
+import { Organization, OrganizationsApi } from "@/api-client";
+import { title } from "@/components/primitives";
 
 const useOrganizations = () => {
   const [organizations, setOrganizations] = React.useState<Organization[]>([]);
@@ -19,28 +19,26 @@ const useOrganizations = () => {
   React.useEffect(() => {
     const fetchOrganizations = async () => {
       const orgApi = new OrganizationsApi();
-      const orgs = await orgApi.listOrganizations()
+      const orgs = await orgApi.listOrganizations();
 
       console.log(orgs.data);
       setOrganizations(orgs.data);
     };
+
     fetchOrganizations();
   }, []);
+
   return organizations;
-}
+};
 
 export default function OrganizationsPage () {
-
   const organizations = useOrganizations();
 
   return (
     <div>
       <h1 className={ title() }>Organizations</h1>
 
-      <Table
-        aria-label="Example table with dynamic content"
-
-      >
+      <Table aria-label="Example table with dynamic content">
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>Name</TableColumn>

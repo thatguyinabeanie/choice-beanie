@@ -59,6 +59,31 @@ import {
 /**
  *
  * @export
+ * @interface ChangePasswordRequest
+ */
+export interface ChangePasswordRequest {
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  password_confirmation: string;
+  /**
+   * Your current password.
+   * @type {string}
+   * @memberof ChangePasswordRequest
+   */
+  current_password: string;
+}
+/**
+ *
+ * @export
  * @interface Format
  */
 export interface Format {
@@ -125,6 +150,12 @@ export interface GameDetail {
  * @interface GameRequest
  */
 export interface GameRequest {
+  /**
+   *
+   * @type {number}
+   * @memberof GameRequest
+   */
+  id?: number;
   /**
    *
    * @type {string}
@@ -199,6 +230,25 @@ export interface OrganizationDetails {
    * @memberof OrganizationDetails
    */
   created_at: string;
+}
+/**
+ *
+ * @export
+ * @interface PasswordRequest
+ */
+export interface PasswordRequest {
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof PasswordRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof PasswordRequest
+   */
+  password_confirmation: string;
 }
 /**
  *
@@ -394,30 +444,6 @@ export interface Player {
    * @memberof Player
    */
   in_game_name: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Player
-   */
-  checked_in: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Player
-   */
-  checked_in_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof Player
-   */
-  team_sheet_submitted: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof Player
-   */
-  team_sheet_submitted_at: string | null;
 }
 /**
  *
@@ -443,36 +469,6 @@ export interface PlayerDetails {
    * @memberof PlayerDetails
    */
   in_game_name: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof PlayerDetails
-   */
-  checked_in: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof PlayerDetails
-   */
-  checked_in_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof PlayerDetails
-   */
-  team_sheet_submitted: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof PlayerDetails
-   */
-  team_sheet_submitted_at: string | null;
-  /**
-   *
-   * @type {Array<PokemonSet>}
-   * @memberof PlayerDetails
-   */
-  pokemon_sets: Array<PokemonSet>;
 }
 /**
  *
@@ -739,12 +735,6 @@ export interface TournamentDetails {
 export interface User {
   /**
    *
-   * @type {number}
-   * @memberof User
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof User
    */
@@ -755,6 +745,12 @@ export interface User {
    * @memberof User
    */
   pronouns: string;
+  /**
+   *
+   * @type {number}
+   * @memberof User
+   */
+  id: number;
 }
 /**
  *
@@ -764,12 +760,6 @@ export interface User {
 export interface UserDetails {
   /**
    *
-   * @type {number}
-   * @memberof UserDetails
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof UserDetails
    */
@@ -798,6 +788,86 @@ export interface UserDetails {
    * @memberof UserDetails
    */
   last_name: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UserDetails
+   */
+  id: number;
+}
+/**
+ *
+ * @export
+ * @interface UserLoginRequest
+ */
+export interface UserLoginRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof UserLoginRequest
+   */
+  email: string;
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof UserLoginRequest
+   */
+  password: string;
+}
+/**
+ *
+ * @export
+ * @interface UserPostRequest
+ */
+export interface UserPostRequest {
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  username: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  pronouns: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  email: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  first_name: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  last_name: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UserPostRequest
+   */
+  id?: number;
+  /**
+   * Must be at least 8 characters
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  password: string;
+  /**
+   * Must match the password.
+   * @type {string}
+   * @memberof UserPostRequest
+   */
+  password_confirmation: string;
 }
 /**
  *
@@ -807,12 +877,6 @@ export interface UserDetails {
 export interface UserRequest {
   /**
    *
-   * @type {number}
-   * @memberof UserRequest
-   */
-  id: number;
-  /**
-   *
    * @type {string}
    * @memberof UserRequest
    */
@@ -842,17 +906,17 @@ export interface UserRequest {
    */
   last_name: string;
   /**
-   * Must be at least 8 characters
-   * @type {string}
+   *
+   * @type {number}
    * @memberof UserRequest
    */
-  password: string;
+  id?: number;
   /**
-   * Must match the password.
+   * Your current password.
    * @type {string}
    * @memberof UserRequest
    */
-  password_confirmation: string;
+  current_password: string;
 }
 
 /**
@@ -3407,6 +3471,158 @@ export class PlayersApi extends BaseAPI {
 }
 
 /**
+ * SessionsApi - axios parameter creator
+ * @export
+ */
+export const SessionsApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    loginUser: async (
+      userLoginRequest?: UserLoginRequest,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/login`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions?.headers ?? {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        userLoginRequest,
+        localVarRequestOptions,
+        configuration,
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * SessionsApi - functional programming interface
+ * @export
+ */
+export const SessionsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = SessionsApiAxiosParamCreator(configuration);
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async loginUser(
+      userLoginRequest?: UserLoginRequest,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.loginUser(
+        userLoginRequest,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["SessionsApi.loginUser"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * SessionsApi - factory interface
+ * @export
+ */
+export const SessionsApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = SessionsApiFp(configuration);
+  return {
+    /**
+     * Logs in a User.
+     * @summary Login
+     * @param {UserLoginRequest} [userLoginRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    loginUser(
+      userLoginRequest?: UserLoginRequest,
+      options?: RawAxiosRequestConfig,
+    ): AxiosPromise<void> {
+      return localVarFp
+        .loginUser(userLoginRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * SessionsApi - object-oriented interface
+ * @export
+ * @class SessionsApi
+ * @extends {BaseAPI}
+ */
+export class SessionsApi extends BaseAPI {
+  /**
+   * Logs in a User.
+   * @summary Login
+   * @param {UserLoginRequest} [userLoginRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SessionsApi
+   */
+  public loginUser(
+    userLoginRequest?: UserLoginRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return SessionsApiFp(this.configuration)
+      .loginUser(userLoginRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
  * TournamentsApi - axios parameter creator
  * @export
  */
@@ -4267,12 +4483,12 @@ export const UsersApiAxiosParamCreator = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser: async (
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/users`;
@@ -4301,7 +4517,7 @@ export const UsersApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        userRequest,
+        userPostRequest,
         localVarRequestOptions,
         configuration,
       );
@@ -4440,18 +4656,18 @@ export const UsersApiFp = function (configuration?: Configuration) {
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async postUser(
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options?: RawAxiosRequestConfig,
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetails>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.postUser(
-        userRequest,
+        userPostRequest,
         options,
       );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -4541,16 +4757,16 @@ export const UsersApiFactory = function (
     /**
      * Creates a new User.
      * @summary Create User
-     * @param {UserRequest} [userRequest]
+     * @param {UserPostRequest} [userPostRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     postUser(
-      userRequest?: UserRequest,
+      userPostRequest?: UserPostRequest,
       options?: RawAxiosRequestConfig,
     ): AxiosPromise<UserDetails> {
       return localVarFp
-        .postUser(userRequest, options)
+        .postUser(userPostRequest, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -4626,14 +4842,17 @@ export class UsersApi extends BaseAPI {
   /**
    * Creates a new User.
    * @summary Create User
-   * @param {UserRequest} [userRequest]
+   * @param {UserPostRequest} [userPostRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof UsersApi
    */
-  public postUser(userRequest?: UserRequest, options?: RawAxiosRequestConfig) {
+  public postUser(
+    userPostRequest?: UserPostRequest,
+    options?: RawAxiosRequestConfig,
+  ) {
     return UsersApiFp(this.configuration)
-      .postUser(userRequest, options)
+      .postUser(userPostRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

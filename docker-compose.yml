@@ -40,7 +40,7 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - .:/workspaces/battle-stadium
+      - .:/battle-stadium
       - ./tmp:/tmp
       - .zsh/.zshrc:/root/.zshrc
 
@@ -57,10 +57,10 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./nextjs:/workspaces/nextjs
+      - ./nextjs:/nextjs
       - ./tmp:/tmp
       - .zsh/.zshrc:/root/.zshrc
-      - node_modules:/workspaces/nextjs/node_modules
+      - node_modules:/nextjs/node_modules
 volumes:
   postgres-data:
   node_modules:

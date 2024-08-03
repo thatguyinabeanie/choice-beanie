@@ -36,7 +36,7 @@ module Api
       # PATCH/PUT /api/v1/:klass/:id
       # PATCH/PUT /api/v1/:klass/:id.json
       def update
-        if @object.update permitted_params
+        if @object.update permitted_params.except(update_params_except)
           render json: serialize_details, status: :ok
         else
           render json: @object.errors, status: :unprocessable_entity

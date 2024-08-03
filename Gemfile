@@ -34,7 +34,6 @@ gem 'rswag-api'
 gem 'rswag-ui'
 gem 'ruby-lsp'
 gem 'sidekiq', '~> 7'
-gem 'sorbet'
 gem 'sprockets-rails'
 gem 'stimulus-rails', '~> 1'
 gem 'turbo-rails', '~> 2'
@@ -62,12 +61,10 @@ end
 group :development, :test do
   gem 'debug', '~> 1'
   gem 'dotenv-rails'
-
   gem 'listen', '~> 3.3'
   gem 'rspec-json_expectations'
   gem 'rspec-rails'
   gem 'rswag-specs'
-
   gem 'ruby-lsp-rails', '~> 0.3.11'
   gem 'ruby-lsp-rspec'
   gem 'spring', '~> 4'

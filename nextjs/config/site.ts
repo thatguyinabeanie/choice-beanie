@@ -26,8 +26,16 @@ export const siteConfig = {
     },
     {
       label: "Organizations",
-      href: "organizations"
-    }
+      href: "organizations",
+    },
+    {
+      label: "Login",
+      href: "/login",
+    },
+    {
+      label: "Register",
+      href: "/register",
+    },
   ],
   navMenuItems: [
     {

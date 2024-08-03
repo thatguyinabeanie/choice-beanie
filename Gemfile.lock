@@ -164,7 +164,7 @@ GEM
       activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    hashdiff (1.1.0)
+    hashdiff (1.1.1)
     hashie (5.0.0)
     hirb (0.7.3)
     i18n (1.14.5)
@@ -336,7 +336,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    rexml (3.3.3)
+    rexml (3.3.4)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -369,7 +369,7 @@ GEM
     rswag-ui (2.13.0)
       actionpack (>= 3.1, < 7.2)
       railties (>= 3.1, < 7.2)
-    rubocop (1.65.0)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -438,7 +438,7 @@ GEM
       rubocop (>= 0.90.0)
     ruby-graphviz (1.2.5)
       rexml
-    ruby-lsp (0.17.10)
+    ruby-lsp (0.17.11)
       language_server-protocol (~> 3.17.0)
       prism (>= 0.29.0, < 0.31)
       rbs (>= 3, < 4)
@@ -469,12 +469,7 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet (0.5.11501)
-      sorbet-static (= 0.5.11501)
-    sorbet-runtime (0.5.11501)
-    sorbet-static (0.5.11501-aarch64-linux)
-    sorbet-static (0.5.11501-universal-darwin)
-    sorbet-static (0.5.11501-x86_64-linux)
+    sorbet-runtime (0.5.11504)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -602,7 +597,6 @@ DEPENDENCIES
   selenium-webdriver (~> 4)
   shoulda-matchers (~> 6)
   sidekiq (~> 7)
-  sorbet
   spring (~> 4)
   sprockets-rails
   stimulus-rails (~> 1)

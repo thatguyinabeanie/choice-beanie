@@ -40,7 +40,7 @@ RSpec.describe Api::V1::GamesController do
         run_test!
       end
 
-      response(400, 'bad reqiest') do
+      response(400, 'bad request') do
         let(:game) { { title: '', genre: '' } }
 
         OpenApi::Response.set_example_response_metadata

@@ -1,10 +1,10 @@
 # nosonar
 FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:22 AS nextjs
 
-RUN mkdir -p /workspaces/nextjs
+RUN mkdir -p /nextjs
 
 # Set the working directory
-WORKDIR /workspaces/nextjs
+WORKDIR /nextjs
 
 # Install dependencies
 COPY nextjs/package.json .
@@ -13,9 +13,9 @@ COPY nextjs/package-lock.json .
 RUN npm ci --silent --ignore-scripts
 
 # Copy the source code
-COPY nextjs /workspaces/nextjs
+COPY nextjs /nextjs
 
-WORKDIR /workspaces/nextjs
+WORKDIR /nextjs
 # Expose the Next.js development server port
 
 EXPOSE 8080

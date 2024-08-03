@@ -35,7 +35,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
         '400':
-          description: bad reqiest
+          description: bad request
       requestBody:
         content:
           application/json:
@@ -561,7 +561,7 @@ paths:
         content:
           application/json:
             schema:
-              "$ref": "#/components/schemas/UserRequest"
+              "$ref": "#/components/schemas/UserPostRequest"
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -616,6 +616,24 @@ paths:
           description: successful
         '404':
           description: not found
+  "/login":
+    post:
+      summary: Login
+      tags:
+      - Sessions
+      description: Logs in a User.
+      operationId: loginUser
+      parameters: []
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserLoginRequest"
 servers:
 - url: https://{defaultHost}
   variables:
@@ -661,59 +679,10 @@ components:
       - id
       - name
       - formats
-    User:
+    PasswordRequest:
       type: object
-      title: User
+      title: Password Request
       properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-      required:
-      - id
-      - username
-      - pronouns
-    UserDetails:
-      type: object
-      title: User Details
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-        email:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-      required:
-      - id
-      - username
-      - pronouns
-      - email
-      - first_name
-      - last_name
-    UserRequest:
-      type: object
-      title: User Details with Password
-      properties:
-        id:
-          type: integer
-        username:
-          type: string
-        pronouns:
-          type: string
-        email:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
         password:
           type: string
           minLength: 8
@@ -727,14 +696,128 @@ components:
           title: Password Confirmation
           description: Must match the password.
       required:
+      - password
+      - password_confirmation
+    ChangePasswordRequest:
+      allOf:
+      - "$ref": "#/components/schemas/PasswordRequest"
+      - title: Change Password Request
+        properties:
+          current_password:
+            type: string
+            minLength: 8
+            format: password
+            title: Current Password
+            description: Your current password.
+        required:
+        - current_password
+    User:
+      type: object
+      title: User
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        id:
+          type: integer
+      required:
+      - username
+      - pronouns
       - id
       - username
       - pronouns
+    UserDetails:
+      type: object
+      title: User Details
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+      required:
+      - id
       - email
       - first_name
       - last_name
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
+    UserPostRequest:
+      type: object
+      title: User Request
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+        password:
+          type: string
+          minLength: 8
+          format: password
+          title: Password
+          description: Must be at least 8 characters
+        password_confirmation:
+          type: string
+          minLength: 8
+          format: password
+          title: Password Confirmation
+          description: Must match the password.
+      required:
       - password
       - password_confirmation
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
+    UserRequest:
+      type: object
+      title: User Request
+      properties:
+        username:
+          type: string
+        pronouns:
+          type: string
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        id:
+          type: integer
+        current_password:
+          type: string
+          minLength: 8
+          format: password
+          title: Current Password
+          description: Your current password.
+      required:
+      - current_password
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
     Organization:
       type: object
       title: Organization
@@ -919,26 +1002,10 @@ components:
           "$ref": "#/components/schemas/User"
         in_game_name:
           type: string
-        checked_in:
-          type: boolean
-        checked_in_at:
-          type: string
-          format: date-time
-          nullable: true
-        team_sheet_submitted:
-          type: boolean
-        team_sheet_submitted_at:
-          type: string
-          format: date-time
-          nullable: true
       required:
       - id
       - user
       - in_game_name
-      - checked_in
-      - checked_in_at
-      - team_sheet_submitted
-      - team_sheet_submitted_at
     PlayerDetails:
       type: object
       title: Player Details
@@ -949,31 +1016,10 @@ components:
           "$ref": "#/components/schemas/User"
         in_game_name:
           type: string
-        checked_in:
-          type: boolean
-        checked_in_at:
-          type: string
-          format: date-time
-          nullable: true
-        team_sheet_submitted:
-          type: boolean
-        team_sheet_submitted_at:
-          type: string
-          format: date-time
-          nullable: true
-        pokemon_sets:
-          type: array
-          items:
-            "$ref": "#/components/schemas/PokemonSet"
       required:
       - id
       - user
       - in_game_name
-      - checked_in
-      - checked_in_at
-      - team_sheet_submitted
-      - team_sheet_submitted_at
-      - pokemon_sets
     Round:
       type: object
       title: Round
@@ -1102,7 +1148,25 @@ components:
       type: object
       title: GameRequest
       properties:
+        id:
+          type: integer
         name:
           type: string
       required:
       - name
+    UserLoginRequest:
+      type: object
+      title: User Login Request
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          format: password
+          title: Password
+          description: Must be at least 8 characters
+      required:
+      - email
+      - password
