@@ -59,7 +59,7 @@ ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
 ENV DEV_ENVIRONMENT=devcontainer
 
-COPY ../.zshrc /root/.zshrc
+COPY .zshrc /root/.zshrc
 COPY app ./app
 COPY bin/* ./bin/
 COPY config ./config
