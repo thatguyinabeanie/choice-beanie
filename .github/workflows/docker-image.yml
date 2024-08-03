@@ -12,7 +12,6 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/arm64
 
     permissions:
       contents: read
@@ -21,7 +20,7 @@ jobs:
 
     steps:
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: all
 
@@ -43,7 +42,6 @@ jobs:
 
       - name: Build ${{ matrix.platform }} Docker Image
         uses: docker/build-push-action@v6
-        if: github.ref == 'eatmyvenom:dev'
         with:
           target: development
           platforms: ${{ matrix.platform }}
