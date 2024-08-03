@@ -36,18 +36,18 @@ RUN apt-get update -qq  && apt-get --no-install-recommends install -y -q  \
 # Determine architecture and download the appropriate 1Password CLI
 RUN ARCH=$(dpkg --print-architecture) && \
     if [ "$ARCH" = "amd64" ]; then \
-        curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_amd64_v1.12.3.zip -o op_linux_amd64_v1.12.3.zip && \
-        unzip op_linux_amd64_v1.12.3.zip -d op-extract && \
-        mv op-extract/op /usr/local/bin/op && \
-        rm -rf op_linux_amd64_v1.12.3.zip op-extract; \
+    curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_amd64_v1.12.3.zip -o op_linux_amd64_v1.12.3.zip && \
+    unzip op_linux_amd64_v1.12.3.zip -d op-extract && \
+    mv op-extract/op /usr/local/bin/op && \
+    rm -rf op_linux_amd64_v1.12.3.zip op-extract; \
     elif [ "$ARCH" = "arm64" ]; then \
-        curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_arm64_v1.12.3.zip -o op_linux_arm64_v1.12.3.zip && \
-        unzip op_linux_arm64_v1.12.3.zip -d op-extract && \
-        mv op-extract/op /usr/local/bin/op && \
-        rm -rf op_linux_arm64_v1.12.3.zip op-extract; \
+    curl -sS https://cache.agilebits.com/dist/1P/op/pkg/v1.12.3/op_linux_arm64_v1.12.3.zip -o op_linux_arm64_v1.12.3.zip && \
+    unzip op_linux_arm64_v1.12.3.zip -d op-extract && \
+    mv op-extract/op /usr/local/bin/op && \
+    rm -rf op_linux_arm64_v1.12.3.zip op-extract; \
     else \
-        echo "Unsupported architecture: $ARCH"; \
-        exit 1; \
+    echo "Unsupported architecture: $ARCH"; \
+    exit 1; \
     fi
 
 ##
@@ -59,7 +59,7 @@ ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
 ENV DEV_ENVIRONMENT=devcontainer
 
-COPY .zsh/.zshrc /root/.zshrc
+COPY ../.zshrc /root/.zshrc
 COPY app ./app
 COPY bin/* ./bin/
 COPY config ./config

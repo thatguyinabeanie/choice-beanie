@@ -10,11 +10,13 @@ WORKDIR /nextjs
 RUN npm install -g pnpm
 
 # Install dependencies
-COPY nextjs/package.json .
-COPY nextjs/pnpm-lock.yaml .
-COPY .zsh/.zshrc /root/.zshrc
+COPY package.json .
+# COPY pnpm-lock.yaml .
+COPY package-lock.json .
+COPY ../.zshrc /root/.zshrc
 
-RUN pnpm install --silent
+# RUN pnpm install --silent
+RUN npm install --silent
 
 # Copy the source code
 COPY nextjs /nextjs
@@ -25,4 +27,4 @@ WORKDIR /nextjs
 EXPOSE 8080
 
 # Start the development server
-CMD ["pnpm", "dev"]
+CMD ["npm", "dev"]
