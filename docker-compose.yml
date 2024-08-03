@@ -18,7 +18,6 @@ services:
       DEV_ENVIRONMENT: devcontainer
     build:
       context: backend
-      dockerfile: Dockerfile
       target: development
       tags:
         - thatguyinabeanie/battle-stadium/rails:dev-latest
@@ -46,10 +45,9 @@ services:
       - .zshrc:/root/.zshrc
 
   nextjs:
-    image: thatguyinabeanie/battle-stadium/nextjs:dev-latest
+    image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
     build:
-      context: .
-      dockerfile: Dockerfile.nextjs
+      context: frontend
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
@@ -58,8 +56,8 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./nextjs:/nextjs
-      - ./nextjs/tmp:/tmp
+      - ./frontend:/nextjs
+      - ./frontend/tmp:/tmp
       - .zshrc:/root/.zshrc
       - node_modules:/nextjs/node_modules
     command: >

@@ -31,5 +31,5 @@ npm run generate:api
 # Copy frontend build output to Rails public directory
 # echo "Copying nextjs build output to Rails public directory..."
 # cd $current_dir
-# cp -r nextjs/dist/* rails_app/public/
+# cp -r frontend/dist/* rails_app/public/
 

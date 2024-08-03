@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/devcontainers/ruby:3 AS asdf-ruby
 ARG ASDF_VERSION=v0.14.0
 ENV PATH="/root/.asdf/bin:/root/.asdf/shims:$PATH"
 WORKDIR /battle-stadium
-COPY .tool-versions .
+COPY ../.tool-versions .
 RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch ${ASDF_VERSION} && \
     apt-get update -qq && \
     apt-get --no-install-recommends install -y -q \

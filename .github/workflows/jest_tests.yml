@@ -7,27 +7,27 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./nextjs
+        working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
-          cache-dependency-path: nextjs/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Prepare Jest
         run: |
-          mkdir -p nextjs/test-results/jest
+          mkdir -p frontend/test-results/jest
 
       - name: Run Jest tests
         env:
           CI: true
-        run: cd nextjs && npm ci && npm test -- --ci --passWithNoTests --reporters=default --reporters=jest-junit
+        run: cd frontend && npm ci && npm test -- --ci --passWithNoTests --reporters=default --reporters=jest-junit
 
       - name: Upload Jest results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jest-results
-          path: nextjs/test-results/jest/results.xml
+          path: frontend/test-results/jest/results.xml
