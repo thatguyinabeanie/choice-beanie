@@ -64,11 +64,11 @@ jobs:
           platforms: ${{ matrix.platform }}
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium/backend-base:latest
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium/backend-base:${{ env.VERSION_MAJOR }}
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium/backend-base:${{ env.VERSION_MINOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:backend-base-latest
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:backend-base-${{ env.VERSION_MAJOR }}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:backend-base-${{ env.VERSION_MINOR }}
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium-base:${{ env.VERSION }}
-            ghcr.io/${{ github.repository }}/battle-stadium-base:latest
-            ghcr.io/${{ github.repository }}/backend-base:${{ env.VERSION_MAJOR }}
-            ghcr.io/${{ github.repository }}/backend-base:${{ env.VERSION_MINOR }}
-            ghcr.io/${{ github.repository }}/backend-base:${{ env.VERSION }}
+            ghcr.io/${{ github.repository }}:backend-base-latest
+            ghcr.io/${{ github.repository }}:backend-base-${{ env.VERSION_MAJOR }}
+            ghcr.io/${{ github.repository }}:backend-base-${{ env.VERSION_MINOR }}
+            ghcr.io/${{ github.repository }}:backend-base-${{ env.VERSION }}
