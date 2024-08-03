@@ -3,7 +3,7 @@ name: Docker Images
 on:
   push:
     branches:
-      - '**'
+      - "**"
   release:
     types:
       - published
@@ -21,6 +21,10 @@ jobs:
       contents: read
       packages: write
       id-token: write
+
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
       - name: Set up QEMU
@@ -52,10 +56,10 @@ jobs:
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
       - name: Build ${{ matrix.platform }} Docker Image
-        if:  github.ref != 'refs/heads/main' && github.event_name != 'release'
+        if: github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v6
         with:
+          context: backend
           target: development
           platforms: ${{ matrix.platform }}
           push: false
-
