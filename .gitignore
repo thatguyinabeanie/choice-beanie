@@ -69,3 +69,4 @@ rails_api
 rails_api/tmp/*
 *.pdf
 .turbo/
+frontend/junit.xml
