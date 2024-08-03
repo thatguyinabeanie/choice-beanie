@@ -1,4 +1,4 @@
-name: Docker Images
+name: Base Docker Image
 
 on:
   push:
