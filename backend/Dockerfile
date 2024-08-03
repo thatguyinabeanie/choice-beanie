@@ -54,8 +54,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
 ##
 ## DEVELOPMENT IMAGE
 ##
-ARG BACKEND_BASE_VERSION=latest
-FROM thatguyinabeanie/battle-stadium:backend-base-${BACKEND_BASE_VERSION} AS development
+FROM thatguyinabeanie/battle-stadium:backend-base-0 AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
