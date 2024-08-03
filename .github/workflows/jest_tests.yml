@@ -28,7 +28,7 @@ jobs:
       - name: Run Jest tests
         env:
           CI: true
-        run: pnpm jest"
+        run: pnpm jest
 
       - name: Upload Jest results
         if: always()
