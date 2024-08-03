@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - "**"
-  # release:
-  #   types:
-  #     - published
-  # pull_request_target:
-  #   types: [labeled]
+  release:
+    types:
+      - published
+  pull_request_target:
+    types: [labeled]
 
 jobs:
   build-docker:
