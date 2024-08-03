@@ -35,7 +35,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
         '400':
-          description: bad reqiest
+          description: bad request
       requestBody:
         content:
           application/json:
