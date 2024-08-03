@@ -1,9 +1,9 @@
 name: Build Docker Image
 
 on:
-  pull_request:
-  pull_request_target:
-    types: [labeled]
+  push:
+    branches:
+      - main
 
 jobs:
   build-docker:
@@ -57,8 +57,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           push: true
           cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest
-          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-${{ github.ref }},mode=max
+          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest,mode=max
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:dev-${{ github.ref}}
-            ghcr.io/${{ github.repository }}:dev-${{ github.ref}}
+            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:dev-latest
+            ghcr.io/${{ github.repository }}:dev-latest
 
