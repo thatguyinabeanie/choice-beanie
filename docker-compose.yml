@@ -12,17 +12,17 @@ services:
       - 5432:5432
 
   backend_base_image:
-    image: thatguyinabeanie/battle-stadium:backend-base-latest
+    image: thatguyinabeanie/battle-stadium:base-latest
     build:
       context: .
       dockerfile: Dockerfile
       target: base-image
       tags:
-        - thatguyinabeanie/battle-stadium:backend-base-latest
+        - thatguyinabeanie/battle-stadium:base-latest
 
   # BATTLE STADIUM RAILS APP CONTAINER
   dev:
-    image: thatguyinabeanie/battle-stadium:backend-dev-latest
+    image: thatguyinabeanie/battle-stadium:dev-latest
     environment:
       DB_HOST: db
       DEV_ENVIRONMENT: devcontainer
@@ -31,7 +31,7 @@ services:
       target: development
       dockerfile: Dockerfile
       tags:
-        - thatguyinabeanie/battle-stadium:backend-dev-latest
+        - thatguyinabeanie/battle-stadium:dev-latest
     command: >
       bash -c "
         rm -f tmp/pids/server.pid && \
