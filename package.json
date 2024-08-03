@@ -1,0 +1,19 @@
+{
+  "name": "Battle Stadium",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo lint",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.11"
+  },
+  "packageManager": "pnpm@8.15.6",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
