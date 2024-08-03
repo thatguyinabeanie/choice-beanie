@@ -47,7 +47,8 @@
     "clsx",
     "nextui",
     "thatguyinabeanie"
-  ]
+  ],
+  "editor.formatOnSave": true
 
 
 }

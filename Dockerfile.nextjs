@@ -6,19 +6,22 @@ RUN mkdir -p /nextjs
 # Set the working directory
 WORKDIR /nextjs
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
 # Install dependencies
 COPY nextjs/package.json .
-COPY nextjs/package-lock.json .
+COPY nextjs/pnpm-lock.yaml .
 
-RUN npm ci --silent --ignore-scripts
+RUN pnpm install --silent
 
 # Copy the source code
 COPY nextjs /nextjs
 
 WORKDIR /nextjs
-# Expose the Next.js development server port
 
+# Expose the Next.js development server port
 EXPOSE 8080
 
 # Start the development server
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]

@@ -62,6 +62,12 @@ services:
       - ./tmp:/tmp
       - .zsh/.zshrc:/root/.zshrc
       - node_modules:/nextjs/node_modules
+    command: >
+      bash -c "
+        rm -f tmp/pids/server.pid && \
+        (npm ci && npm run dev & ) && \
+        sleep infinity
+      "
 volumes:
   postgres-data:
   node_modules:

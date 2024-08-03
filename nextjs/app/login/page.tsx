@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { SessionsApi } from "@/api/api"; // Adjust the import based on your OpenAPI client setup
+import { SessionsApi } from "@/openapi/api"; // Adjust the import based on your OpenAPI client setup
 
 const Login = () => {
   const [formData, setFormData] = useState({
