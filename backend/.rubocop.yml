@@ -18,7 +18,7 @@ AllCops:
     - "sorbet/**"
     - "sorbet/**/*"
     - "vendir/bundle/**"
-    - "nextjs/**"
+    - "frontend/**"
 Style/Documentation:
   Enabled: false
 Rails/BulkChangeTable:
