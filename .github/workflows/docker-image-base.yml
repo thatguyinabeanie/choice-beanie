@@ -55,7 +55,7 @@ jobs:
           echo "VERSION_MINOR=${VERSION%.*}" >> $GITHUB_ENV
 
       - name: Build ${{ matrix.platform }} Docker Image
-        if: false
+        if: github.ref == 'non-existant'
         uses: docker/build-push-action@v6
         with:
           target: base-image
