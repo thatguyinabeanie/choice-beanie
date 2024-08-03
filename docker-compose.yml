@@ -18,6 +18,7 @@ services:
       DEV_ENVIRONMENT: devcontainer
     build:
       context: backend
+      dockerfile: ../docker/Dockerfile.backend
       target: development
       tags:
         - thatguyinabeanie/battle-stadium/rails:dev-latest
@@ -42,12 +43,13 @@ services:
     volumes:
       - ./backend:/battle-stadium
       - ./backend/tmp:/tmp
-      - .zshrc:/root/.zshrc
+      - ./backend/.zshrc:/root/.zshrc
 
   nextjs:
     image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
     build:
       context: frontend
+      dockerfile: ../docker/Dockerfile.frontend
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
@@ -58,7 +60,7 @@ services:
     volumes:
       - ./frontend:/nextjs
       - ./frontend/tmp:/tmp
-      - .zshrc:/root/.zshrc
+      # - .zshrc:/root/.zshrc
       - node_modules:/nextjs/node_modules
     command: >
       bash -c "

@@ -13,13 +13,13 @@ RUN npm install  --ignore-scripts -g pnpm --silent
 COPY package.json .
 # COPY pnpm-lock.yaml .
 COPY package-lock.json .
-COPY ../.zshrc /root/.zshrc
+# COPY ../.zshrc /root/.zshrc
 
 # RUN pnpm install --silent
 RUN npm install --silent --ignore-scripts
 
 # Copy the source code
-COPY nextjs /nextjs
+COPY . /nextjs
 
 WORKDIR /nextjs
 
