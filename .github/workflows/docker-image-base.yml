@@ -2,8 +2,8 @@ name: Docker Images
 
 on:
   push:
-    paths:
-      - docker/docker/BACKEND_BASE_IMAGE_VERSION
+    # paths:
+    #   - docker/docker/BACKEND_BASE_IMAGE_VERSION
     branches:
       # - main
       - "**"
