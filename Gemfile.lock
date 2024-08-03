@@ -113,9 +113,6 @@ GEM
       rexml
     crass (1.0.6)
     date (3.3.4)
-    debase (0.2.4.1)
-      debase-ruby_core_source (>= 0.10.2)
-    debase-ruby_core_source (3.3.1)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -439,8 +436,6 @@ GEM
       rubocop (~> 1.51)
     rubocop-thread_safety (0.5.1)
       rubocop (>= 0.90.0)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-graphviz (1.2.5)
       rexml
     ruby-lsp (0.17.11)
@@ -541,7 +536,6 @@ DEPENDENCIES
   brakeman (~> 6)
   bundler-audit (~> 0)
   cancancan (~> 3)
-  debase
   debug (~> 1)
   devise (~> 4.9)
   devise-jwt (~> 0)
@@ -596,7 +590,6 @@ DEPENDENCIES
   rubocop-rubycw
   rubocop-shopify
   rubocop-thread_safety
-  ruby-debug-ide
   ruby-lsp
   ruby-lsp-rails (~> 0.3.11)
   ruby-lsp-rspec
