@@ -1,0 +1,10 @@
+{
+  "name": "rails",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "bundle exec rails assets:precompile",
+    "dev": "bundle exec rails server -b 0.0.0.0 -p 3000",
+    "lint": "bundle exec rubocop -A --force-exclusion"
+  }
+}
