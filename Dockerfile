@@ -7,11 +7,13 @@ RUN \
   # INSTALL DEPENDENCIES
   apt-get update -qq  \
   && apt-get --no-install-recommends install -y -q \
-  build-essential libreadline-dev  zlib1g-dev sudo \
+  build-essential libreadline-dev zlib1g-dev sudo \
   default-jre postgresql-client openssl libssl-dev libpq-dev wget git watchman curl \
   # INSTALL NODEJS
   && curl --proto "=https" --tlsv1.2 -sSf -L https://deb.nodesource.com/setup_20.x | bash - \
   && apt-get --no-install-recommends install -y nodejs \
+  # INSTALL RUBY HEADERS
+  && apt-get --no-install-recommends install -y ruby-dev \
   # CLEAN UP
   && apt-get clean \
   && mkdir -p /workspaces/battle-stadium \
