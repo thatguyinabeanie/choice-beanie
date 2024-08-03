@@ -34,7 +34,7 @@ services:
       bash -c "
         rm -f tmp/pids/server.pid && \
         pnpm install --silent && \
-        pnpm dev && \
+        (pnpm dev &) && \
         sleep infinity
       "
     tty: true
