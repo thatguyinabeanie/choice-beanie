@@ -11,24 +11,11 @@ import {
 import React from "react";
 
 import { title } from "@/components/primitives";
-import { Organization, OrganizationsService } from "@/api/requests";
 
 
 const useOrganizations = () => {
-  const [organizations, setOrganizations] = React.useState<Organization[]>([]);
 
-  React.useEffect(() => {
-    const fetchOrganizations = async () => {
-      const orgs: Organization[] = (await OrganizationsService.listOrganizations()).body;
-
-      console.log(orgs);
-      setOrganizations(orgs);
-    };
-
-    fetchOrganizations();
-  }, []);
-
-  return organizations;
+  return [];
 };
 
 export default function OrganizationsPage () {

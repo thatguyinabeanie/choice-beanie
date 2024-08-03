@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
+    "start": "pnpm run dev",
     "build": "turbo run build",
     "lint": "turbo lint",
-    "test": "turbo test"
+    "test": "turbo test",
+    "rubocop": "turbo rubocop",
+    "eslint": "turbo eslint",
+    "bundle:install": "turbo bundle:install"
   },
   "devDependencies": {
     "turbo": "^2.0.11"

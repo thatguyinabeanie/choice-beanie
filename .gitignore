@@ -70,3 +70,4 @@ rails_api/tmp/*
 *.pdf
 .turbo/
 frontend/junit.xml
+.pnpm-store

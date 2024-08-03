@@ -9,7 +9,7 @@
 
   // The 'service' property is the name of the service for the container that VS Code should
   // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-  "service": "rails_api",
+  "service": "dev",
 
   // The optional 'workspaceFolder' property is the path VS Code should open by default when
   // connected. This is typically a file mount in .devcontainer/docker-compose.yml
@@ -19,13 +19,13 @@
   "forwardPorts": [3000],
 
   // Uncomment the next line if you want start specific services in your Docker Compose config.
-  // "runServices": ["db", "rails_api", "],
+  "runServices": ["db", "dev"],
 
   // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
   "shutdownAction": "none",
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "git config --global --add safe.directory /battle-stadium ",
+  "postCreateCommand": "git config --global --add safe.directory /battle-stadium && pnpm install",
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "root",
@@ -66,7 +66,8 @@
         "iliazeus.vscode-ansi",
         "vscode-icons-team.vscode-icons",
         "streetsidesoftware.code-spell-checker",
-        "VisualStudioExptTeam.vscodeintellicode"
+        "VisualStudioExptTeam.vscodeintellicode",
+        "Jacano.vscode-pnpm"
       ],
       "settings": {
         "remote.containers.copyGitConfig": true,

@@ -34,6 +34,9 @@
   "rubyLsp.rubyVersionManager": {
     "identifier": "custom"
   },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "npm.packageManager": "pnpm",
   // Adding a custom Ruby bin folder to the PATH
   "rubyLsp.customRubyCommand": "(frum local || asdf current ruby || which ruby)",
   "rubyLsp.useBundler": true,
@@ -46,9 +49,12 @@
   "cSpell.words": [
     "clsx",
     "nextui",
+    "rubocop",
     "thatguyinabeanie"
   ],
-  "editor.formatOnSave": true
-
-
+  "editor.formatOnSave": true,
+  "sonarlint.connectedMode.project": {
+    "connectionId": "thatguyinabeanie",
+    "projectKey": "thatguyinabeanie_battle-stadium"
+  }
 }
