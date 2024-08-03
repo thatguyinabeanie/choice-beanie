@@ -54,6 +54,17 @@ jobs:
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
       - name: Build ${{ matrix.platform }} Docker Image
+        if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:backend"
+          target: development
+          platforms: ${{ matrix.platform }}
+          push: true
+          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:backend-dev-buildcache
+          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:backend-dev-buildcache,mode=max
+
+      - name: Build ${{ matrix.platform }} Docker Image
         if: github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v6
         with:
@@ -61,5 +72,4 @@ jobs:
           target: development
           platforms: ${{ matrix.platform }}
           push: false
-          cache-from: type=registry,ref=user/app:buildcache
-          cache-to: type=registry,ref=user/app:buildcache,mode=max
+          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:backend-dev-buildcache
