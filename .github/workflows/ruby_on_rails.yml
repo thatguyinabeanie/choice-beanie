@@ -7,6 +7,9 @@ on:
 jobs:
   rspec-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     env:
       RAILS_ENV: test
       DB_PORT: 5432
@@ -30,29 +33,29 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.3.4
-        bundler-cache: true
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.4
+          bundler-cache: true
 
-    - name: Install dependencies
-      run: bundle check || bundle install
+      - name: Install dependencies
+        run: bundle check || bundle install
 
-    - name: Prepare database
-      run: |
-        bundle exec rake db:create db:schema:load --trace
-      env:
-        DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
+      - name: Prepare database
+        run: |
+          bundle exec rake db:create db:schema:load --trace
+        env:
+          DATABASE_URL: "postgres://postgres:password@localhost:5432/fuecoco_db_test"
 
-    - name: Run RSpec tests
-      env:
-        DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
-      run: bundle exec rspec
-      # run: bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
+      - name: Run RSpec tests
+        env:
+          DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+        run: bundle exec rspec
+        # run: bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
 
     # - name: Upload RSpec results
     #   uses: actions/upload-artifact@v4
@@ -72,6 +75,9 @@ jobs:
     #     verbose: true
 
   ruby-audit:
+    defaults:
+      run:
+        working-directory: ./backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -90,6 +96,9 @@ jobs:
         run: bundle exec ruby-audit check
 
   rubocop-check:
+    defaults:
+      run:
+        working-directory: ./backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -107,6 +116,7 @@ jobs:
       - name: Run RuboCop with Reviewdog
         uses: reviewdog/action-rubocop@v2
         with:
+          workdir: ./backend
           rubocop_version: gemfile
           rubocop_extensions: rubocop-rails:gemfile rubocop-rspec:gemfile rubocop-performance:gemfile rubocop-rspec:gemfile
           only_changed: true

@@ -5,9 +5,7 @@
 
   // Update the 'dockerComposeFile' list if you have more compose files or use different names.
   // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "dockerComposeFile": ["../docker-compose.yml"],
 
   // The 'service' property is the name of the service for the container that VS Code should
   // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
@@ -17,7 +15,7 @@
   // connected. This is typically a file mount in .devcontainer/docker-compose.yml
   "workspaceFolder": "/battle-stadium",
 
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [3000],
 
   // Uncomment the next line if you want start specific services in your Docker Compose config.
@@ -27,11 +25,7 @@
   "shutdownAction": "none",
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /battle-stadium ",
-
-  // "postCreateCommand": "cat /etc/os-release && git config --global --add safe.directory /battle-stadium && echo 'export PATH=\"$PATH:/root/.vscode-server/bin/$(ls /root/.vscode-server/bin)\"' >> ~/.bashrc && source ~/.bashrc && gem install bundler && bundle install",
-
-  // && sudo chown -r battle-stadium:battle-stadium /battle-stadium
+  "postCreateCommand": "git config --global --add safe.directory /battle-stadium ",
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "root",
@@ -42,7 +36,7 @@
       "installDirectlyFromGitHubRelease": true,
       "version": "latest"
     },
-    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:1": {},
+    "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:1": {}
   },
 
   "mounts": [
@@ -85,9 +79,9 @@
           "tmux": {
             "path": "zsh",
             "icon": "terminal-zsh"
-          },
-        },
+          }
+        }
       }
     }
-  },
+  }
 }

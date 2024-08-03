@@ -28,25 +28,22 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout ({
-  children,
-}: Readonly<ChildrenProps>) {
+export default function RootLayout({ children }: Readonly<ChildrenProps>) {
   return (
     <html suppressHydrationWarning lang="en">
       <head />
       <body
-        className={ clsx(
+        className={clsx(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-        ) }
+        )}
       >
-        <Providers themeProps={ { attribute: "class", defaultTheme: "dark" } }>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-
             <Navbar />
 
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
-              { children }
+              {children}
             </main>
 
             <footer className="w-full flex items-center justify-center py-3">
@@ -60,7 +57,6 @@ export default function RootLayout ({
                 <p className="text-primary">NextUI</p>
               </Link>
             </footer>
-
           </div>
         </Providers>
       </body>

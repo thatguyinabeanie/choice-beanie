@@ -10,19 +10,19 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 
-import { Organization, OrganizationsApi } from "@/api-client";
 import { title } from "@/components/primitives";
+import { Organization, OrganizationsService } from "@/api/requests";
+
 
 const useOrganizations = () => {
   const [organizations, setOrganizations] = React.useState<Organization[]>([]);
 
   React.useEffect(() => {
     const fetchOrganizations = async () => {
-      const orgApi = new OrganizationsApi();
-      const orgs = await orgApi.listOrganizations();
+      const orgs: Organization[] = (await OrganizationsService.listOrganizations()).body;
 
-      console.log(orgs.data);
-      setOrganizations(orgs.data);
+      console.log(orgs);
+      setOrganizations(orgs);
     };
 
     fetchOrganizations();
