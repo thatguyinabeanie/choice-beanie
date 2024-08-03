@@ -57,9 +57,8 @@ jobs:
         if: github.ref != 'refs/heads/main' && github.event_name != 'release'
         uses: docker/build-push-action@v6
         with:
-          # context: "{{defaultContext}}:backend"
-          context: ./backend
-          file: docker/Dockerfile.backend
+          context: "{{defaultContext}}:backend"
+          file: Dockerfile.backend
           target: development
           platforms: ${{ matrix.platform }}
           push: false

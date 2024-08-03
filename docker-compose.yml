@@ -14,7 +14,7 @@ services:
   backend_base_image:
     build:
       context: backend
-      dockerfile: ../docker/Dockerfile.backend
+      dockerfile: Dockerfile.backend
       target: base-image
       tags:
         - thatguyinabeanie/battle-stadium:backend-base-latest
@@ -26,7 +26,7 @@ services:
       DEV_ENVIRONMENT: devcontainer
     build:
       context: backend
-      dockerfile: ../docker/Dockerfile.backend
+      dockerfile: Dockerfile.backend
       target: development
       args:
         BACKEND_BASE_VERSION: latest
@@ -60,7 +60,7 @@ services:
     image: thatguyinabeanie/battle-stadium/nextjs/dev:latest
     build:
       context: frontend
-      dockerfile: ../docker/Dockerfile.frontend
+      dockerfile: Dockerfile.frontend
       target: nextjs
       tags:
         - thatguyinabeanie/battle-stadium/nextjs:dev-latest
