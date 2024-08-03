@@ -43,12 +43,10 @@
   "rubyLsp.completion": true,
   "rubyLsp.codeActions": true,
   "rubyLsp.symbols": true,
-  "cSpell.words": [
-    "clsx",
-    "nextui",
-    "thatguyinabeanie"
-  ],
-  "editor.formatOnSave": true
-
-
+  "cSpell.words": ["clsx", "nextui", "thatguyinabeanie"],
+  "editor.formatOnSave": true,
+  "sonarlint.connectedMode.project": {
+    "connectionId": "thatguyinabeanie",
+    "projectKey": "thatguyinabeanie_battle-stadium"
+  }
 }
