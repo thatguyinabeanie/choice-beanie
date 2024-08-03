@@ -58,6 +58,6 @@ jobs:
           cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest
           cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-${{ github.ref }},mode=max
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/battle-stadium:dev-${{ github.ref}}
-            ghcr.io/${{ github.repository }}:dev-${{ github.ref}}
+            ${{ github.repository }}:dev-${{ github.ref_name}}
+            ghcr.io/${{ github.repository }}:dev-${{ github.ref_name}}
 
