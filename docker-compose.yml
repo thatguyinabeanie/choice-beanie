@@ -17,7 +17,7 @@ services:
     environment:
       DEV_ENVIRONMENT: devcontainer
     build:
-      context: .
+      context: backend
       dockerfile: Dockerfile
       target: development
       tags:
@@ -41,9 +41,9 @@ services:
       retries: 3
       start_period: 120s
     volumes:
-      - .:/battle-stadium
-      - ./tmp:/tmp
-      - .zsh/.zshrc:/root/.zshrc
+      - ./backend:/battle-stadium
+      - ./backend/tmp:/tmp
+      - .zshrc:/root/.zshrc
 
   nextjs:
     image: thatguyinabeanie/battle-stadium/nextjs:dev-latest
@@ -59,8 +59,8 @@ services:
       - 8080:8080
     volumes:
       - ./nextjs:/nextjs
-      - ./tmp:/tmp
-      - .zsh/.zshrc:/root/.zshrc
+      - ./nextjs/tmp:/tmp
+      - .zshrc:/root/.zshrc
       - node_modules:/nextjs/node_modules
     command: >
       bash -c "
