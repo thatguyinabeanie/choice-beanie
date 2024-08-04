@@ -11,15 +11,6 @@ services:
     ports:
       - 5432:5432
 
-  backend_base_image:
-    image: thatguyinabeanie/battle-stadium:base-latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base-image
-      tags:
-        - thatguyinabeanie/battle-stadium:base-latest
-
   # BATTLE STADIUM RAILS APP CONTAINER
   dev:
     image: thatguyinabeanie/battle-stadium:dev-latest
@@ -45,7 +36,6 @@ services:
       - 8080:8080
     depends_on:
       - db
-      - backend_base_image
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:3000/up" ]
       interval: 60s
