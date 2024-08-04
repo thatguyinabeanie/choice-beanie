@@ -1,3 +1,5 @@
 packages:
   - "backend"
   - "frontend"
+  - "packages/openapi"
+  - "packages/battle-stadium-api"
