@@ -10,11 +10,6 @@ on:
 jobs:
   build-base-image:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
 
     permissions:
       contents: read
@@ -58,10 +53,10 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           target: base-image
-          platforms: ${{ matrix.platform }}
+          platforms: "linux/amd64,linux/arm64"
           push: true
-          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:base-buildcache
-          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:base-buildcache,mode=max
+          cache-from: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:base-buildcache
+          cache-to: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:base-buildcache,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:base-${{ env.VERSION_MAJOR }}

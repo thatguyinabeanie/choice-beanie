@@ -8,11 +8,6 @@ on:
 jobs:
   build-docker:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64
 
     permissions:
       contents: read
@@ -20,11 +15,6 @@ jobs:
       id-token: write
 
     steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -48,15 +38,15 @@ jobs:
           echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
           echo "MAJOR=${GITHUB_REF#refs/tags/v}" | cut -d'.' -f1 >> $GITHUB_ENV
 
-      - name: Build ${{ matrix.platform }} Docker Image
+      - name: Build & Push Docker Image
         if: github.ref == 'refs/heads/main' || github.event_name == 'release'
         uses: docker/build-push-action@v6
         with:
           target: development
-          platforms: ${{ matrix.platform }}
-          push: true
-          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest
-          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:dev-latest,mode=max
+          platforms: linux/amd64
+          push: false
+          cache-from: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:dev-latest
+          cache-to: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:dev-latest,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:dev-latest
             ghcr.io/${{ github.repository }}:dev-latest
