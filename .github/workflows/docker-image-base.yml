@@ -55,8 +55,8 @@ jobs:
           target: base-image
           platforms: "linux/amd64,linux/arm64"
           push: true
-          cache-from: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:base-buildcache
-          cache-to: type=registry,ref=ghcr.io/thatguyinabeanie/battle-stadium:base-buildcache,mode=max
+          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:base-buildcache
+          cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:base-buildcache,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:base-latest
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:base-${{ env.VERSION_MAJOR }}
