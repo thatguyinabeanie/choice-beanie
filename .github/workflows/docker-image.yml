@@ -37,9 +37,8 @@ jobs:
           target: development
           platforms: "linux/amd64"
           push: true
-          cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:buildcache
-          cache-to: type=registry,ref=user/app:buildcache,mode=max
+          cache-from: type=registry,ref=${{ github.repository }}:buildcache
+          cache-to: type=registry,ref=${{ github.repository }}:buildcache,mode=max
           tags: |
-            ${{ github.repository }}:dev-${{ github.head_ref}}
-            ghcr.io/${{ github.repository }}:dev-${{ github.head_ref}}
-
+            ${{ github.repository }}:${{ github.head_ref}}
+            ghcr.io/${{ github.repository }}:${{ github.head_ref}}

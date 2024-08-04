@@ -43,11 +43,10 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           target: development
-          platforms: linux/amd64
+          platforms: "linux/amd64, linux/arm64"
           push: false
           cache-from: type=registry,ref=thatguyinabeanie/battle-stadium:buildcache
           cache-to: type=registry,ref=thatguyinabeanie/battle-stadium:buildcache,mode=max
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/battle-stadium:dev-latest
             ghcr.io/${{ github.repository }}:dev-latest
-
