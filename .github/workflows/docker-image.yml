@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           target: development
-          platforms: "linux/amd64 linux/arm64"
+          platforms: linux/amd64,linux/arm64
           push: true
           cache-from: type=registry,ref=${{ github.repository }}:buildcache
           cache-to: type=registry,ref=${{ github.repository }}:buildcache,mode=max
