@@ -1,6 +1,6 @@
 {
   "name": "nextjs",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo --port 8080",
@@ -10,9 +10,8 @@
     "eslint": "pnpm run lint",
     "jest": "jest --passWithNoTests",
     "test": "jest --passWithNoTests",
-    "codegen": "openapi-rq -i ../backend/swagger/v1/openapi.yaml -c axios -o api --format prettier --operationId   --serviceResponse response --enums typescript --useDateType --schemaType form",
-
-    "generate-api": "TS_POST_PROCESS_FILE='./node_modules/.bin/prettier --write' openapi-generator-cli generate -i ../backend/swagger/v1/openapi.yaml -g typescript-axios -o api-client --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true -t openapi-templates/typescript-axios --enable-post-process-file"
+    "react-query-api": "openapi-rq -i ../backend/swagger/v1/openapi.yaml -c axios -o ./react-query-api --format prettier --operationId --serviceResponse response --enums typescript --useDateType --schemaType form",
+    "generate-api": "TS_POST_PROCESS_FILE='./node_modules/.bin/prettier --write' openapi-generator-cli generate -i ../backend/swagger/v1/openapi.yaml -g typescript-axios -o ./api --skip-validate-spec --additional-properties=useSingleRequestParameter=true,withoutPrefixEnums=true,enumNameSuffix=,withSeparateModelsAndApi=true,apiPackage=server,modelPackage=model --openapi-normalizer REFACTOR_ALLOF_WITH_PROPERTIES_ONLY=true -t openapi-templates/typescript-axios --enable-post-process-file"
   },
   "dependencies": {
     "@nextui-org/button": "2.0.37",

@@ -213,6 +213,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0(eslint@8.57.0)(typescript@5.5.4)
 
+  packages/battle-stadium-api: {}
+
 packages:
 
   '@7nohe/openapi-react-query-codegen@1.4.1':
