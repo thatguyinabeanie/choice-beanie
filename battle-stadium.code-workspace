@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "backend",
+      "path": "backend",
+    },
+    {
+      "name": "frontend",
+      "path": "frontend",
+    },
+    {
+      "name": "battle-stadium",
+      "path": ".",
+    },
+  ],
+  "settings": {
+    // We don't want to show duplicates, so we hide the directories that are already showing up as workspaces
+    "files.exclude": {
+      "frontend": true,
+      "backend": true,
+    },
+  },
+}

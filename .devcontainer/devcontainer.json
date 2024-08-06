@@ -25,7 +25,7 @@
   "shutdownAction": "none",
 
   // Uncomment the next line to run commands after the container is created.
-  "postCreateCommand": "git config --global --add safe.directory /battle-stadium && pnpm install",
+  "postCreateCommand": "git config --global --add safe.directory /battle-stadium && pnpm install --force",
 
   // Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
   "remoteUser": "root",
