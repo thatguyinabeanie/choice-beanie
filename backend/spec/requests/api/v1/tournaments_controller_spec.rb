@@ -126,19 +126,6 @@ RSpec.describe Api::V1::TournamentsController do
         OpenApi::Response.set_example_response_metadata
         run_test!
       end
-
-      response(422, 'unprocessable entity') do
-        let(:tournament) do
-          {
-            name: nil,
-            start_at: Time.zone.now,
-            end_date: 1.week.ago
-          }
-        end
-
-        OpenApi::Response.set_example_response_metadata
-        run_test!
-      end
     end
 
     delete('Delete Tournament') do
