@@ -85,5 +85,18 @@ RSpec.describe Tournament::Tournament, type: :model do
 
   describe '#start_tournament!' do
 
+    context 'when the tournament is not ready to start' do
+      let(:tournament) { create(:tournament, :with_phases) }
+      it 'raises an error' do
+        expect { tournament.start_tournament! }.to raise_error(RuntimeError)
+      end
+    end
+
+    context 'when the tournament is ready to start' do
+      let(:tournament) { create(:tournament, :with_phases, :with_players) }
+      it 'starts the tournament' do
+        expect { tournament.start_tournament! }.to change { tournament.started_at }.from(nil)
+      end
+    end
   end
 end
