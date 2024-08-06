@@ -52,7 +52,7 @@ module Tournament
       cannot_start = 'Cannot start tournament.'
       raise "The tournament has no phases. #{cannot_start}" if phases.empty?
       raise "The tournament has no players. #{cannot_start}" if players.empty?
-    raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
+      raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
 
       update!(started_at: Time.current.utc)
 
