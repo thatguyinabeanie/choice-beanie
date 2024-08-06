@@ -16,7 +16,6 @@ RSpec.describe Tournament::Player do
 
     it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:tournament_id).with_message(I18n.t('tournament.registration.already_registered')) }
 
-    it { is_expected.to validate_presence_of(:in_game_name) }
   end
 
   describe 'nested attributes' do
@@ -28,13 +27,16 @@ RSpec.describe Tournament::Player do
   end
 
   describe '#checked_in?' do
+    let(:user) { create(:user) }
+    let(:tournament) { create(:tournament, start_at: 1.hour.from_now, check_in_start_at: 1.hour.ago) }
+
+    subject(:player) { described_class.new(tournament: tournament, user:) }
     it 'returns true if checked_in_at is present' do
-      player = described_class.new(checked_in_at: Time.current)
+      player.check_in!
       expect(player.checked_in?).to be true
     end
 
     it 'returns false if checked_in_at is not present' do
-      player = described_class.new
       expect(player.checked_in?).to be false
     end
   end

@@ -173,7 +173,6 @@ TOURNAMENT_DETAILS_SCHEMA = {
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
 
-    check_in_required: { type: :boolean },
     late_check_in: { type: :boolean },
     check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
 
@@ -187,7 +186,7 @@ TOURNAMENT_DETAILS_SCHEMA = {
   required: TOURNAMENT_SCHEMA[:required] + %w[
     start_at player_cap autostart
     teamlists_required open_team_sheets
-    check_in_required late_check_in check_in_start_at
+    late_check_in check_in_start_at
     late_registration registration_start_at registration_end_at
   ]
 }.freeze

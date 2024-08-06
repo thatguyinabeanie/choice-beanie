@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "rails:console": "turbo run rails:console",
     "dev": "turbo run dev",
     "start": "pnpm run dev",
     "build": "turbo run build",

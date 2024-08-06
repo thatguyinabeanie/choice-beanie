@@ -33,12 +33,10 @@ def create_user(username: nil, email: nil)
   end
 end
 
-def create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+def create_tournament(name:, organization:, format:, game:, start_at:, end_at:)
   Tournament::Tournament.find_or_create_by!(name:, organization:, format:, game:) do |tournament|
     tournament.start_at = start_at
     tournament.end_at = end_at
-    tournament.check_in_start_at = check_in_start_at
-    tournament.registration_start_at = registration_start_at
   end
 end
 
@@ -70,12 +68,12 @@ org_owners = [
 ].map { |user| create_user(username: user[:username]) }
 
 orgs = org_owners.map do |owner|
-  Organization::Organization.find_by!(owner:)
+  Organization.find_by!(owner:)
 rescue ActiveRecord::RecordNotFound
   description = 'This is an example organization.'
   staff = (1..5).to_a.map { create_user }
   name = "#{owner[:username].capitalize.gsub('_', ' ')}'s Organization"
-  Organization::Organization.create!(name:, owner:, description:, staff:)
+  Organization.create!(name:, owner:, description:, staff:)
 end.compact
 
 tournaments = orgs.flat_map do |organization|
@@ -83,11 +81,9 @@ tournaments = orgs.flat_map do |organization|
     name = "#{organization.name} #{format.name} Tournament #{index + 1}"
     start_at = Time.zone.today
     end_at = Time.zone.today + 1.week
-    check_in_start_at = 1.hour.ago
     game = format.game
-    registration_start_at = 1.week.ago
 
-    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:, check_in_start_at:, registration_start_at:)
+    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:,)
 
     swiss = Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",

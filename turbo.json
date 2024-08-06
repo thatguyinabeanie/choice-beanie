@@ -23,6 +23,9 @@
     },
     "bundle:install": {
       "dependsOn": ["^bundle:install"]
+    },
+    "rails:console": {
+      "dependsOn": ["^rails:console"]
     }
   }
 }

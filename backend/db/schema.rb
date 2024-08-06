@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_02_013630) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_05_234210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -200,7 +200,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_02_013630) do
     t.datetime "started_at"
     t.boolean "late_registration", default: true, null: false
     t.boolean "late_check_in", default: true, null: false
-    t.boolean "check_in_required", default: true, null: false
     t.boolean "teamlists_required", default: true, null: false
     t.boolean "open_team_sheets", default: true, null: false
     t.datetime "end_at"

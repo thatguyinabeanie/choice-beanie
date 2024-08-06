@@ -64,7 +64,7 @@ module Api
 
       def set_organization
         @organization = if params[:organization_id].present?
-                          ::Organization::Organization.find(params[:organization_id])
+                          ::Organization.find(params[:organization_id])
                         else
                           ::Tournament::Tournament.find(params[:id]).organization
                         end
@@ -85,7 +85,7 @@ module Api
           :game_id, :format_id,
           :autostart, :player_cap,
           :registration_start_at, :registration_end_at, :late_registration,
-          :check_in_required, :late_check_in, :check_in_start_at, :check_in_end_at,
+          :late_check_in, :check_in_start_at, :check_in_end_at,
           :open_team_sheets, :teamlists_required
         )
       end

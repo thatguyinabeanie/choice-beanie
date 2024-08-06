@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "rails:console": "bundle exec rails console",
     "bundle:install": "sh -c 'bundle check || bundle install'",
     "build": "bundle exec rails assets:precompile",
     "start:db": "sh -c 'command -v docker >/dev/null 2>&1 && docker compose up -d db || echo \"Docker is not installed or not in PATH\"' ",

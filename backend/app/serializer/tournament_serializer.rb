@@ -26,7 +26,7 @@ module Serializer
     include TournamentMixin
 
     attributes :registration_start_at, :registration_end_at, :late_registration
-    attributes :check_in_required, :late_check_in, :check_in_start_at
+    attributes :late_check_in, :check_in_start_at
     attributes :start_at, :started_at, :end_at, :ended_at
     attributes :autostart
 
