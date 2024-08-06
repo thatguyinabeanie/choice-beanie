@@ -27,8 +27,8 @@ module Tournament
     end
 
     def ready?
-      return true unless !checked_in? || pokemon_team.blank?
-      false
+      return false if !checked_in? || pokemon_team.blank?
+      true
     end
 
     def check_in!
