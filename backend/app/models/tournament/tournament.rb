@@ -25,14 +25,16 @@ module Tournament
     has_many :players, class_name: 'Tournament::Player', dependent: :destroy_async
     validates :player_cap, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
 
-    before_save :ready_to_start?, if: -> { saved_change_to_started_at?(from: nil) }
     before_validation :set_defaults
+    before_save :ready_to_start?, if: -> { saved_change_to_started_at?(from: nil) }
 
     def not_ready_reasons
       reasons = []
-      reasons << "The tournament has no phases." if phases.empty?
-      reasons << "The tournament does not have the minimum required number of registered players that are checked in and submitted team sheets." if  players.empty? || players.count < MINIMUM_PLAYER_COUNT
-      reasons << "The tournament does not have any phases." if phases.empty?
+      reasons << 'The tournament has no phases.' if phases.empty?
+      if players.empty? || players.count < MINIMUM_PLAYER_COUNT
+        reasons << 'The tournament does not have the minimum required number of registered players that are checked in and submitted team sheets.'
+      end
+      reasons << 'The tournament does not have any phases.' if phases.empty?
       reasons << "The tournament's first phase is not valid." unless !phases.empty? && phases.order(order: :asc).first.valid?
       reasons
     end
@@ -41,11 +43,12 @@ module Tournament
       return true if not_ready_reasons.empty?
 
       raise "The tournament is not ready to start. #{not_ready_reasons.join(' ')}" if should_raise
+
       false
     end
 
     def check_in_start_at_before_start_at
-      errors.add(:check_in_start_at, "must be before start_at") unless check_in_start_at < start_at
+      errors.add(:check_in_start_at, 'must be before start_at') unless check_in_start_at < start_at
     end
 
     def start_tournament! # rubocop:disable Metrics/AbcSize
@@ -55,27 +58,27 @@ module Tournament
       raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
 
       update!(started_at: Time.current.utc)
-
-      # Assuming the first phase can accept players, you might have something like this:
-      first_phase = phases.order(order: :asc).first
-      first_phase.accept_players(players:)
+      phases.order(order: :asc).first.accept_players(players:)
     end
 
     def registration_open?
       return false if registration_start_at.blank?
-      check_registration_window = Time.current.utc >= registration_start_at && self.started_at.blank?
-      return  check_registration_window if player_cap.blank?
+
+      check_registration_window = Time.current.utc >= registration_start_at && started_at.blank?
+      return check_registration_window if player_cap.blank?
+
       players.count < player_cap && check_registration_window
     end
 
     def register_user(user:, pokemon_team: nil)
       return false if players.exists?(user_id: user.id)
       return false unless registration_open?
-      players.create(user: user, pokemon_team_id: pokemon_team&.id)
+
+      players.create(user:, pokemon_team_id: pokemon_team&.id)
     end
 
     def unregister_user(user:)
-      players.find_by(user: user)&.destroy
+      players.find_by(user:)&.destroy
     end
 
     private
@@ -86,10 +89,10 @@ module Tournament
       self.format ||= game.formats.last if game.present?
 
       return if start_at.blank?
+
       self.registration_start_at ||= start_at - 1.week
 
       self.check_in_start_at ||= start_at - 1.hour
     end
-
   end
 end

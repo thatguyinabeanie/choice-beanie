@@ -8,7 +8,7 @@ module Users
 
     private
 
-    def respond_with(resource, _opts = {})
+    def respond_with(_resource, _opts = {})
       render json: { token: current_token }, status: :created
     end
 

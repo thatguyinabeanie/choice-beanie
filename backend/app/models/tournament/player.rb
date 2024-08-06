@@ -21,13 +21,13 @@ module Tournament
     # end
 
     def self.checked_in_and_ready
-        where.not(pokemon_team_id: nil)
-        .where.not(checked_in_at: nil)
-        .where.not(in_game_name: nil)
+      where.not(pokemon_team_id: nil).where.not(checked_in_at: nil)
+      # .where.not(in_game_name: nil)
     end
 
     def ready?
       return false if !checked_in? || pokemon_team.blank?
+
       true
     end
 
