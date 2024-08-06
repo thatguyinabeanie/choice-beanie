@@ -1,6 +1,11 @@
 FactoryBot.define do
   factory :tournament, class: 'Tournament::Tournament' do
-    start_at   { 1.week.from_now }
+    sequence(:name) { |n| "#{organization.name} #{game.name} #{format.name} Tournament ##{n}" }
+    organization factory: :organization
+    game factory: :game
+    format { create(:format, game:) }
+
+    start_at   { 1.hour.from_now }
     started_at { start_at + 2.minutes }
 
     end_at { start_at + 1.day }
@@ -9,12 +14,6 @@ FactoryBot.define do
     registration_start_at { start_at - 1.week }
     registration_end_at { start_at }
 
-    check_in_start_at { start_at - 1.hour }
-
-    organization factory: :organization
-    game factory: :game
-    format { create(:format, game:) }
-
-    sequence(:name) { |n| "#{organization.name} #{game.name} #{format.name} Tournament ##{n}" }
+    check_in_start_at { start_at - 2.hour }
   end
 end

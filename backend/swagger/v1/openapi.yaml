@@ -8,11 +8,11 @@ paths:
     get:
       summary: List Games
       tags:
-        - Games
+      - Games
       description: Retrieves a list of all games
       operationId: listGames
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -23,18 +23,18 @@ paths:
     post:
       summary: Create Game
       tags:
-        - Games
+      - Games
       description: Creates a new game.
       operationId: postGame
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
-        "400":
+        '400':
           description: bad request
       requestBody:
         content:
@@ -43,42 +43,42 @@ paths:
               "$ref": "#/components/schemas/Game"
   "/api/v1/games/{id}":
     parameters:
-      - name: id
-        in: path
-        description: ID of the game
-        required: true
-        schema:
-          type: integer
+    - name: id
+      in: path
+      description: ID of the game
+      required: true
+      schema:
+        type: integer
     get:
       summary: Show Game
       tags:
-        - Games
+      - Games
       description: Retrieves a specific game by ID.
       operationId: getGame
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
-        "404":
+        '404':
           description: not found
     patch:
       summary: Update Game
       tags:
-        - Games
+      - Games
       description: Updates a game by ID.
       operationId: patchGame
       parameters: []
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/GameDetail"
-        "404":
+        '404':
           description: not found
       requestBody:
         content:
@@ -88,22 +88,22 @@ paths:
     delete:
       summary: Delete Game
       tags:
-        - Games
+      - Games
       description: Deletes a game by ID.
       operationId: deleteGame
       responses:
-        "200":
+        '200':
           description: successful
-        "404":
+        '404':
           description: not found
   "/api/v1/organizations":
     get:
       summary: List Organizations
       tags:
-        - Organizations
+      - Organizations
       operationId: listOrganizations
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -114,12 +114,12 @@ paths:
     post:
       summary: Create Organization
       tags:
-        - Organizations
+      - Organizations
       description: Creates a new organization.
       operationId: postOrganization
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
@@ -132,41 +132,41 @@ paths:
               "$ref": "#/components/schemas/Organization"
   "/api/v1/organizations/{id}":
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
       summary: Show Organization
       tags:
-        - Organizations
+      - Organizations
       description: Retrieves a specific organization.
       operationId: getOrganization
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/OrganizationDetails"
-        "404":
+        '404':
           description: not found
     patch:
       summary: Update Organization
       tags:
-        - Organizations
+      - Organizations
       description: Updates an existing organization.
       operationId: patchOrganization
       parameters: []
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/OrganizationDetails"
-        "404":
+        '404':
           description: not found
       requestBody:
         content:
@@ -176,29 +176,29 @@ paths:
     delete:
       summary: Delete Organization
       tags:
-        - Organizations
+      - Organizations
       description: Deletes an organization.
       operationId: deleteOrganization
       responses:
-        "200":
+        '200':
           description: Organization deleted
-        "404":
+        '404':
           description: not found
   "/api/v1/organizations/{id}/staff":
     parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
     get:
       summary: List Organization Staff
       tags:
-        - Organizations
+      - Organizations
       description: Retrieves a list of staff members for a specific organization.
       operationId: getOrganizationStaff
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -206,26 +206,26 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/User"
-        "404":
+        '404':
           description: not found
   "/api/v1/tournaments/{tournament_id}/phases":
     parameters:
-      - name: tournament_id
-        in: path
-        description: ID of the tournament
-        required: true
-        schema:
-          type: integer
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
     get:
       summary: List Tournament Phases
       tags:
-        - Phases
+      - Phases
       description: Retrieves a list of all Phases
       operationId: listTournamentPhases
       responses:
-        "404":
+        '404':
           description: not found
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -236,18 +236,18 @@ paths:
     post:
       summary: Create Tournament Phase
       tags:
-        - Phases
+      - Phases
       description: Creates a new Tournament Phase.
       operationId: postTournamentPhase
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PhaseDetails"
-        "404":
+        '404':
           description: not found
       requestBody:
         content:
@@ -256,44 +256,44 @@ paths:
               "$ref": "#/components/schemas/Phase"
   "/api/v1/tournaments/{tournament_id}/phases/{id}":
     parameters:
-      - name: tournament_id
-        in: path
-        description: ID of the tournament
-        required: true
-        schema:
-          type: integer
-      - name: id
-        in: path
-        required: true
-        description: ID of the Phase
-        schema:
-          type: integer
+    - name: tournament_id
+      in: path
+      description: ID of the tournament
+      required: true
+      schema:
+        type: integer
+    - name: id
+      in: path
+      required: true
+      description: ID of the Phase
+      schema:
+        type: integer
     get:
       summary: Show Tournament Phase
       tags:
-        - Phases
+      - Phases
       description: Retrieves a Tournament Phase
       operationId: showTournamentPhase
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PhaseDetails"
-        "404":
+        '404':
           description: not found
     put:
       summary: Update Tournament Phase
       tags:
-        - Phases
+      - Phases
       description: Updates a Tournament Phase.
       operationId: putTournamentPhase
       parameters: []
       responses:
-        "404":
+        '404':
           description: not found
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -307,30 +307,30 @@ paths:
     delete:
       summary: Delete Tournament Phase
       tags:
-        - Phases
+      - Phases
       description: Deletes a Tournament Phase.
       operationId: deleteTournamentPhase
       responses:
-        "200":
+        '200':
           description: successful
-        "404":
+        '404':
           description: not found
   "/api/v1/tournaments/{tournament_id}/players":
     parameters:
-      - name: tournament_id
-        in: path
-        description: ID of the Tournament
-        required: true
-        schema:
-          type: integer
+    - name: tournament_id
+      in: path
+      description: ID of the Tournament
+      required: true
+      schema:
+        type: integer
     get:
       summary: List Tournament Players
       tags:
-        - Players
+      - Players
       description: Retrieves a list of all Players
       operationId: listPlayers
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -338,25 +338,23 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Player"
-        "404":
+        '404':
           description: not found
     post:
       summary: Create Tournament Player
       tags:
-        - Players
+      - Players
       description: Creates a new Player.
       operationId: postTournamentPlayer
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/PlayerDetails"
-        "422":
-          description: unprocessable entity
-        "404":
+        '404':
           description: not found
       requestBody:
         content:
@@ -365,26 +363,26 @@ paths:
               "$ref": "#/components/schemas/PlayerRequest"
   "/api/v1/tournaments/{tournament_id}/players/{id}":
     parameters:
-      - name: tournament_id
-        in: path
-        description: ID of the Tournament
-        required: true
-        schema:
-          type: integer
-      - name: id
-        in: path
-        description: ID of the Player
-        required: true
-        schema:
-          type: integer
+    - name: tournament_id
+      in: path
+      description: ID of the Tournament
+      required: true
+      schema:
+        type: integer
+    - name: id
+      in: path
+      description: ID of the Player
+      required: true
+      schema:
+        type: integer
     get:
       summary: Show Tournament Player
       tags:
-        - Players
+      - Players
       description: Retrieves a Player
       operationId: showTournamentPlayer
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -393,12 +391,12 @@ paths:
     patch:
       summary: Update Tournament Player
       tags:
-        - Players
+      - Players
       description: Updates a Player.
       operationId: putTournamentPlayer
       parameters: []
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -412,30 +410,30 @@ paths:
     delete:
       summary: Delete Tournament Player
       tags:
-        - Players
+      - Players
       description: Deletes a Player.
       operationId: deleteTournamentPlayer
       responses:
-        "200":
+        '200':
           description: successful
-        "404":
+        '404':
           description: not found
   "/api/v1/organizations/{organization_id}/tournaments":
     parameters:
-      - name: organization_id
-        in: path
-        description: ID of the Organization
-        required: true
-        schema:
-          type: integer
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
     get:
       summary: List Tournaments
       tags:
-        - Tournaments
+      - Tournaments
       description: Retrieves a list of all Tournaments
       operationId: listTournaments
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -446,18 +444,18 @@ paths:
     post:
       summary: Create Tournament
       tags:
-        - Tournaments
+      - Tournaments
       description: Creates a new Tournament.
       operationId: postTournament
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/TournamentDetails"
-        "422":
+        '422':
           description: unprocessable entity
       requestBody:
         content:
@@ -466,49 +464,47 @@ paths:
               "$ref": "#/components/schemas/TournamentDetails"
   "/api/v1/organizations/{organization_id}/tournaments/{id}":
     parameters:
-      - name: organization_id
-        in: path
-        description: ID of the Organization
-        required: true
-        schema:
-          type: integer
-      - name: id
-        in: path
-        description: ID of the Tournament
-        required: true
-        schema:
-          type: integer
+    - name: organization_id
+      in: path
+      description: ID of the Organization
+      required: true
+      schema:
+        type: integer
+    - name: id
+      in: path
+      description: ID of the Tournament
+      required: true
+      schema:
+        type: integer
     get:
       summary: Show Tournament
       tags:
-        - Tournaments
+      - Tournaments
       description: Retrieves a specific Tournament.
       operationId: getTournament
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/TournamentDetails"
-        "404":
+        '404':
           description: not found
     put:
       summary: Update Tournament
       tags:
-        - Tournaments
+      - Tournaments
       description: Updates a Tournament.
       operationId: putTournament
       parameters: []
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/TournamentDetails"
-        "422":
-          description: unprocessable entity
       requestBody:
         content:
           application/json:
@@ -517,23 +513,23 @@ paths:
     delete:
       summary: Delete Tournament
       tags:
-        - Tournaments
+      - Tournaments
       description: Deletes a Tournament.
       operationId: deleteTournament
       responses:
-        "200":
+        '200':
           description: successful
-        "404":
+        '404':
           description: not found
   "/api/v1/users":
     get:
       summary: List Users
       tags:
-        - Users
+      - Users
       description: Retrieves a list of all Users
       operationId: listUsers
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
@@ -544,18 +540,18 @@ paths:
     post:
       summary: Create User
       tags:
-        - Users
+      - Users
       description: Creates a new User.
       operationId: postUser
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UserDetails"
-        "422":
+        '422':
           description: unprocessable entity
       requestBody:
         content:
@@ -564,42 +560,42 @@ paths:
               "$ref": "#/components/schemas/UserPostRequest"
   "/api/v1/users/{id}":
     parameters:
-      - name: id
-        in: path
-        description: ID of the User
-        required: true
-        schema:
-          type: integer
+    - name: id
+      in: path
+      description: ID of the User
+      required: true
+      schema:
+        type: integer
     get:
       summary: Show User
       tags:
-        - Users
+      - Users
       description: Retrieves a specific User by ID.
       operationId: getUser
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UserDetails"
-        "404":
+        '404':
           description: not found
     patch:
       summary: Update User
       tags:
-        - Users
+      - Users
       description: Updates an existing User.
       operationId: patchUser
       parameters: []
       responses:
-        "200":
+        '200':
           description: successful
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/UserDetails"
-        "404":
+        '404':
           description: not found
       requestBody:
         content:
@@ -609,25 +605,25 @@ paths:
     delete:
       summary: Delete User
       tags:
-        - Users
+      - Users
       operationId: deleteUser
       responses:
-        "200":
+        '200':
           description: successful
-        "404":
+        '404':
           description: not found
   "/login":
     post:
       summary: Login
       tags:
-        - Sessions
+      - Sessions
       description: Logs in a User.
       operationId: loginUser
       parameters: []
       responses:
-        "201":
+        '201':
           description: created
-        "401":
+        '401':
           description: unauthorized
       requestBody:
         content:
@@ -635,10 +631,10 @@ paths:
             schema:
               "$ref": "#/components/schemas/UserLoginRequest"
 servers:
-  - url: https://{defaultHost}
-    variables:
-      defaultHost:
-        default: 127.0.0.1
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1
 components:
   responses:
     NotFound:
@@ -661,8 +657,8 @@ components:
         name:
           type: string
       required:
-        - id
-        - name
+      - id
+      - name
     GameDetail:
       type: object
       title: Game Details
@@ -676,9 +672,9 @@ components:
           items:
             "$ref": "#/components/schemas/Format"
       required:
-        - id
-        - name
-        - formats
+      - id
+      - name
+      - formats
     PasswordRequest:
       type: object
       title: Password Request
@@ -696,21 +692,21 @@ components:
           title: Password Confirmation
           description: Must match the password.
       required:
-        - password
-        - password_confirmation
+      - password
+      - password_confirmation
     ChangePasswordRequest:
       allOf:
-        - "$ref": "#/components/schemas/PasswordRequest"
-        - title: Change Password Request
-          properties:
-            current_password:
-              type: string
-              minLength: 8
-              format: password
-              title: Current Password
-              description: Your current password.
-          required:
-            - current_password
+      - "$ref": "#/components/schemas/PasswordRequest"
+      - title: Change Password Request
+        properties:
+          current_password:
+            type: string
+            minLength: 8
+            format: password
+            title: Current Password
+            description: Your current password.
+        required:
+        - current_password
     User:
       type: object
       title: User
@@ -722,11 +718,11 @@ components:
         id:
           type: integer
       required:
-        - username
-        - pronouns
-        - id
-        - username
-        - pronouns
+      - username
+      - pronouns
+      - id
+      - username
+      - pronouns
     UserDetails:
       type: object
       title: User Details
@@ -744,15 +740,15 @@ components:
         id:
           type: integer
       required:
-        - id
-        - email
-        - first_name
-        - last_name
-        - email
-        - first_name
-        - last_name
-        - username
-        - pronouns
+      - id
+      - email
+      - first_name
+      - last_name
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
     UserPostRequest:
       type: object
       title: User Request
@@ -782,13 +778,13 @@ components:
           title: Password Confirmation
           description: Must match the password.
       required:
-        - password
-        - password_confirmation
-        - email
-        - first_name
-        - last_name
-        - username
-        - pronouns
+      - password
+      - password_confirmation
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
     UserRequest:
       type: object
       title: User Request
@@ -812,12 +808,12 @@ components:
           title: Current Password
           description: Your current password.
       required:
-        - current_password
-        - email
-        - first_name
-        - last_name
-        - username
-        - pronouns
+      - current_password
+      - email
+      - first_name
+      - last_name
+      - username
+      - pronouns
     Organization:
       type: object
       title: Organization
@@ -829,9 +825,9 @@ components:
         owner:
           "$ref": "#/components/schemas/User"
       required:
-        - id
-        - name
-        - owner
+      - id
+      - name
+      - owner
     OrganizationDetails:
       type: object
       title: Organization Details
@@ -851,12 +847,12 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - owner
-        - description
-        - created_at
-        - updated_at
+      - id
+      - name
+      - owner
+      - description
+      - created_at
+      - updated_at
     Tournament:
       type: object
       title: Tournament
@@ -869,9 +865,9 @@ components:
           type: integer
           nullable: true
       required:
-        - id
-        - name
-        - player_cap
+      - id
+      - name
+      - player_cap
     TournamentDetails:
       type: object
       title: Tournament Details
@@ -922,22 +918,22 @@ components:
         open_team_sheets:
           type: boolean
       required:
-        - id
-        - name
-        - player_cap
-        - start_at
-        - player_cap
-        - autostart
-        - teamlists_required
-        - open_team_sheets
-        - late_check_in
-        - check_in_start_at
-        - late_registration
-        - registration_start_at
-        - registration_end_at
+      - id
+      - name
+      - player_cap
+      - start_at
+      - player_cap
+      - autostart
+      - teamlists_required
+      - open_team_sheets
+      - late_check_in
+      - check_in_start_at
+      - late_registration
+      - registration_start_at
+      - registration_end_at
     Pokemon:
       type: object
-      title: Pokemon Set
+      title: Pokemon
       properties:
         id:
           type: integer
@@ -968,16 +964,16 @@ components:
           type: string
           nullable: true
       required:
-        - id
-        - name
-        - ability
-        - tera_type
-        - nature
-        - held_item
-        - move1
-        - move2
-        - move3
-        - move4
+      - id
+      - name
+      - ability
+      - tera_type
+      - nature
+      - held_item
+      - move1
+      - move2
+      - move3
+      - move4
     PlayerRequest:
       type: object
       title: Player Request
@@ -987,8 +983,8 @@ components:
         in_game_name:
           type: string
       required:
-        - user_id
-        - in_game_name
+      - user_id
+      - in_game_name
     Player:
       type: object
       title: Player
@@ -1000,9 +996,9 @@ components:
         in_game_name:
           type: string
       required:
-        - id
-        - user
-        - in_game_name
+      - id
+      - user
+      - in_game_name
     PlayerDetails:
       type: object
       title: Player Details
@@ -1014,9 +1010,9 @@ components:
         in_game_name:
           type: string
       required:
-        - id
-        - user
-        - in_game_name
+      - id
+      - user
+      - in_game_name
     Round:
       type: object
       title: Round
@@ -1036,11 +1032,11 @@ components:
           format: date-time
           nullable: true
       required:
-        - id
-        - phase_id
-        - round_number
-        - started_at
-        - ended_at
+      - id
+      - phase_id
+      - round_number
+      - started_at
+      - ended_at
     Phase:
       type: object
       title: Phase
@@ -1077,15 +1073,15 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - order
-        - tournament_id
-        - number_of_rounds
-        - best_of
-        - criteria
-        - started_at
-        - ended_at
+      - id
+      - name
+      - order
+      - tournament_id
+      - number_of_rounds
+      - best_of
+      - criteria
+      - started_at
+      - ended_at
     PhaseDetails:
       type: object
       title: Phase Details
@@ -1130,17 +1126,17 @@ components:
           items:
             "$ref": "#/components/schemas/Round"
       required:
-        - id
-        - name
-        - order
-        - tournament_id
-        - number_of_rounds
-        - best_of
-        - criteria
-        - started_at
-        - ended_at
-        - players
-        - rounds
+      - id
+      - name
+      - order
+      - tournament_id
+      - number_of_rounds
+      - best_of
+      - criteria
+      - started_at
+      - ended_at
+      - players
+      - rounds
     GameRequest:
       type: object
       title: GameRequest
@@ -1150,7 +1146,7 @@ components:
         name:
           type: string
       required:
-        - name
+      - name
     UserLoginRequest:
       type: object
       title: User Login Request
@@ -1165,5 +1161,5 @@ components:
           title: Password
           description: Must be at least 8 characters
       required:
-        - email
-        - password
+      - email
+      - password

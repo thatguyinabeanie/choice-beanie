@@ -303,9 +303,6 @@ export const $TournamentDetails = {
       format: "date-time",
       nullable: true,
     },
-    check_in_required: {
-      type: "boolean",
-    },
     late_check_in: {
       type: "boolean",
     },
@@ -343,7 +340,6 @@ export const $TournamentDetails = {
     "autostart",
     "teamlists_required",
     "open_team_sheets",
-    "check_in_required",
     "late_check_in",
     "check_in_start_at",
     "late_registration",

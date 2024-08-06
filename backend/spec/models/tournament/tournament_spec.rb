@@ -54,4 +54,36 @@ RSpec.describe Tournament::Tournament, type: :model do
     it { should have_many(:phases).class_name('Phase::BasePhase').dependent(:destroy_async) }
     it { should have_many(:players).class_name('Tournament::Player').dependent(:destroy_async) }
   end
+
+  describe '#ready_to_start?' do
+    let(:tournament) { create(:tournament) do |tournament| tournament.phases << create(:swiss_phase, tournament:) end }
+
+    context 'when the tournament is not ready to start' do
+      it 'returns false' do
+        expect(tournament.ready_to_start?).to be false
+      end
+    end
+
+    context 'when the tournament is ready to start' do
+      let(:pokemon_team) { create(:pokemon_team) }
+      let(:num_of_checked_in_players) { 5 }
+      let(:players_checked_in) do
+        create_list(:player_checked_in, num_of_checked_in_players, tournament: tournament)
+      end
+
+      let(:num_of_players_with_teams) { 5 }
+      let(:players_with_teams) {create_list(:player_with_team, num_of_players_with_teams, tournament: tournament)}
+
+      it 'returns true' do
+        players_with_teams.sample(2).each do |player| player.check_in! end
+        players_checked_in.sample(2).each do |player| player.submit_team!(pokemon_team:) end
+
+        expect(tournament.ready_to_start?).to be true
+      end
+    end
+  end
+
+  describe '#start_tournament!' do
+
+  end
 end

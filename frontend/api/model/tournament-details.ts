@@ -71,12 +71,6 @@ export interface TournamentDetails {
    * @type {boolean}
    * @memberof TournamentDetails
    */
-  check_in_required: boolean;
-  /**
-   *
-   * @type {boolean}
-   * @memberof TournamentDetails
-   */
   late_check_in: boolean;
   /**
    *

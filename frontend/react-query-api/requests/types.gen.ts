@@ -109,7 +109,6 @@ export type TournamentDetails = {
   end_at?: Date | null;
   started_at?: Date | null;
   ended_at?: Date | null;
-  check_in_required: boolean;
   late_check_in: boolean;
   check_in_start_at: Date | null;
   late_registration: boolean;
@@ -725,10 +724,6 @@ export type $OpenApiTs = {
          * not found
          */
         404: unknown;
-        /**
-         * unprocessable entity
-         */
-        422: unknown;
       };
     };
   };
@@ -810,10 +805,6 @@ export type $OpenApiTs = {
          * successful
          */
         200: TournamentDetails;
-        /**
-         * unprocessable entity
-         */
-        422: unknown;
       };
     };
     delete: {

@@ -11,7 +11,11 @@
     "test": "turbo test",
     "rubocop": "turbo rubocop",
     "eslint": "turbo eslint",
-    "bundle:install": "turbo bundle:install"
+    "bundle:install": "turbo bundle:install",
+    "rails:rswag": "cd backend && pnpm rails:rswag",
+    "generate:api": "pnpm rails:rswag && cd frontend && pnpm generate-api",
+    "generate:react-query-api": "pnpm rails:rswag && cd frontend && pnpm react-query-api",
+    "generate:both": "pnpm rails:rswag && cd frontend && pnpm generate-api && pnpm react-query-api"
   },
   "devDependencies": {
     "turbo": "^2.0.11"

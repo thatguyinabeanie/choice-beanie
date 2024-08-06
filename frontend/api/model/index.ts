@@ -11,7 +11,7 @@ export * from "./phase-details";
 export * from "./player";
 export * from "./player-details";
 export * from "./player-request";
-export * from "./pokemon-set";
+export * from "./pokemon";
 export * from "./round";
 export * from "./tournament";
 export * from "./tournament-details";

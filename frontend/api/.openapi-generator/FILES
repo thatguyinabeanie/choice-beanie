@@ -1,6 +1,5 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 api.ts
 base.ts
 common.ts
@@ -21,7 +20,7 @@ model/phase.ts
 model/player-details.ts
 model/player-request.ts
 model/player.ts
-model/pokemon-set.ts
+model/pokemon.ts
 model/round.ts
 model/tournament-details.ts
 model/tournament.ts

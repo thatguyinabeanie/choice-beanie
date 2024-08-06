@@ -3,9 +3,13 @@ FactoryBot.define do
     user factory: :user
     tournament factory: :tournament
     in_game_name { Faker::Name.name }
+    pokemon_team { nil }
+    checked_in_at { nil }
 
     trait :with_team do
-      pokemon_team factory: :pokemon_team
+      after(:build) do |player|
+        player.pokemon_team = build(:pokemon_team, user: player.user)
+      end
     end
 
     trait :checked_in do
@@ -14,6 +18,6 @@ FactoryBot.define do
 
     factory :player_checked_in, traits: [:checked_in]
     factory :player_with_team, traits: [:with_team]
-    factory :player_with_team_checked_in, traits: [:with_team, :checked_in]
+    factory :player_with_team_and_checked_in, traits: [:with_team, :checked_in]
   end
 end
