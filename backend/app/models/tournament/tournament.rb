@@ -68,16 +68,6 @@ module Tournament
       players.find_by(user: user)&.destroy
     end
 
-    def add_phase(phase:)
-      phases << phase
-      save
-    end
-
-    def add_phase!(phase:)
-      phases << phase
-      save!
-    end
-
     private
 
     def set_defaults
@@ -90,7 +80,6 @@ module Tournament
 
       self.check_in_start_at ||= start_at - 1.hour
     end
-
 
   end
 end
