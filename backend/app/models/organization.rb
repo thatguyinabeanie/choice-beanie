@@ -1,4 +1,5 @@
 # typed: true
+
 class Organization < ApplicationRecord
   self.table_name = 'organizations'
   # extend FriendlyId
