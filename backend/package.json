@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "rails:rswag": "bundle exec rails rswag:specs:swaggerize",
     "rails:console": "bundle exec rails console",
     "bundle:install": "sh -c 'bundle check || bundle install'",
     "build": "bundle exec rails assets:precompile",

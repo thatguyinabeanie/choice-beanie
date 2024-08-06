@@ -482,7 +482,6 @@ export class PlayersService {
       mediaType: "application/json",
       errors: {
         404: "not found",
-        422: "unprocessable entity",
       },
     });
   }
@@ -654,9 +653,6 @@ export class TournamentsService {
       },
       body: data.requestBody,
       mediaType: "application/json",
-      errors: {
-        422: "unprocessable entity",
-      },
     });
   }
 
