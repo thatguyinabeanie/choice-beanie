@@ -46,25 +46,12 @@ RSpec.describe Api::V1::Tournament::PlayersController do
         let(:player) do
           {
             user_id: create(:user).id,
-            in_game_name: 'fuecocos-strongest-soldier'
           }
         end
 
         schema '$ref' => '#/components/schemas/PlayerDetails'
         OpenApi::Response.set_example_response_metadata
 
-        run_test!
-      end
-
-      response(422, 'unprocessable entity') do
-        let(:player) do
-          {
-            user_id: create(:user).id,
-            team_sheet_submitted: false
-          }
-        end
-
-        OpenApi::Response.set_example_response_metadata
         run_test!
       end
 

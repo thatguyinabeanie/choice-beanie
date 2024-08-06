@@ -1,6 +1,12 @@
 FactoryBot.define do
   factory :pokemon_team, class: 'PokemonTeam' do
-    user { nil }
-    pokemon_sets { build_list(:pokemon_set, 6) }
+    user factory: :user
+    pokemon {[]}
+
+    trait :with_pokemon do
+      after(:create) do |pokemon_team|
+        create_list(:pokemon, 6, pokemon_team: pokemon_team)
+      end
+    end
   end
 end

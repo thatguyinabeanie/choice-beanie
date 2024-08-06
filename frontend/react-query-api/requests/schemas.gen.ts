@@ -352,7 +352,7 @@ export const $TournamentDetails = {
   ],
 } as const;
 
-export const $PokemonSet = {
+export const $Pokemon = {
   type: "object",
   properties: {
     id: {

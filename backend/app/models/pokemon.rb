@@ -1,6 +1,6 @@
-class PokemonSet < ApplicationRecord
-  self.table_name = 'pokemon_sets'
-  belongs_to :pokemon_team, class_name: 'PokemonTeam', inverse_of: :pokemon_sets
+class Pokemon < ApplicationRecord
+  self.table_name = 'pokemon'
+  belongs_to :pokemon_team, class_name: 'PokemonTeam', inverse_of: :pokemon
   validates :pokemon_team_id, presence: true
 
   validates :name, presence: true

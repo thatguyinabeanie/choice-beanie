@@ -1,6 +1,6 @@
 require_relative 'serializer_mixin'
 module Serializer
-  class PokemonSet < ActiveModel::Serializer
+  class Pokemon < ActiveModel::Serializer
     include SerializerMixin::Id
     attributes :nickname
     attributes :ability, :tera_type, :nature, :held_item

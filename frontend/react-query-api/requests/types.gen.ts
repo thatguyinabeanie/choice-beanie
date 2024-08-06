@@ -119,7 +119,7 @@ export type TournamentDetails = {
   open_team_sheets: boolean;
 };
 
-export type PokemonSet = {
+export type Pokemon = {
   id: number;
   name: string;
   nickname?: string | null;

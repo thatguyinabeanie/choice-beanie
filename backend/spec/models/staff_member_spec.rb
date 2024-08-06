@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Organization::StaffMember do
+RSpec.describe OrganizationStaffMember do
   describe 'associations' do
     it 'belongs to an organization' do
       association = described_class.reflect_on_association(:organization)

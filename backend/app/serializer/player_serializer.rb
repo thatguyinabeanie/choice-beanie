@@ -1,5 +1,5 @@
 require_relative 'user_serializer'
-require_relative 'pokemon_set_serializer'
+require_relative 'pokemon_serializer'
 
 module Serializer
   module PlayerMixin

@@ -19,8 +19,12 @@ module Phase
     validates :type, presence: true
     validates :tournament, presence: true
 
+    before_validation :set_defaults
+    before_validation :set_default_name, if: ->{ :name.nil?}
+
     def accept_players(players:)
-      self.players = players
+      num_rounds = Math.log2(players.count).ceil
+      update!(players: players, started_at: Time.current.utc, number_of_rounds: num_rounds)
     end
 
     def players_ready
@@ -45,6 +49,15 @@ module Phase
 
     def players_not_checked_in_or_no_team_sheet
       players_not_checked_in.where(team_sheet_submitted: false)
+    end
+
+    protected
+
+    def set_defaults
+      self.type = self.class.name if self.type.blank?
+      self.number_of_rounds ||= 5
+      self.criteria ||= 'Shrug'
+      self.name ||= self.class.name
     end
 
     private

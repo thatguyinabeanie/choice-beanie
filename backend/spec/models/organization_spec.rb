@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Organization::Organization do
+RSpec.describe Organization do
   describe 'validations' do
     # Ensure an organization instance exists for the uniqueness test
     subject(:organization) { create(:organization) }
@@ -19,7 +19,7 @@ RSpec.describe Organization::Organization do
     let(:organization) { create(:organization, owner: org_owner) }
 
     it { is_expected.to belong_to(:owner) }
-    it { is_expected.to have_many(:organization_staff_members).class_name('Organization::StaffMember').dependent(:destroy) }
+    it { is_expected.to have_many(:organization_staff_members).class_name('OrganizationStaffMember').dependent(:destroy) }
     it { is_expected.to have_many(:staff).through(:organization_staff_members).source(:user) }
     it { is_expected.to have_many(:tournaments).class_name('Tournament::Tournament').dependent(:destroy) }
 

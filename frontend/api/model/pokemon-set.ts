@@ -15,73 +15,73 @@
 /**
  *
  * @export
- * @interface PokemonSet
+ * @interface Pokemon
  */
-export interface PokemonSet {
+export interface Pokemon {
   /**
    *
    * @type {number}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   id: number;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   name: string;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   nickname?: string | null;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   ability: string;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   tera_type: string;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   nature: string;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   held_item: string | null;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   move1: string | null;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   move2: string | null;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   move3: string | null;
   /**
    *
    * @type {string}
-   * @memberof PokemonSet
+   * @memberof Pokemon
    */
   move4: string | null;
 }
