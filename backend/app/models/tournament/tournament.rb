@@ -51,7 +51,7 @@ module Tournament
       errors.add(:check_in_start_at, 'must be before start_at') unless check_in_start_at < start_at
     end
 
-    def start_tournament! # rubocop:disable Metrics/AbcSize
+    def start_tournament!
       cannot_start = 'Cannot start tournament.'
       raise "The tournament has no phases. #{cannot_start}" if phases.empty?
       raise "The tournament has no players. #{cannot_start}" if players.empty?

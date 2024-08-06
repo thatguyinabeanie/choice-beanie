@@ -83,19 +83,18 @@ tournaments = orgs.flat_map do |organization|
     end_at = Time.zone.today + 1.week
     game = format.game
 
-    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:,)
-
+    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:)
 
     Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
-      number_of_rounds: 5,
+      number_of_rounds: 5
     )
 
     tour.phases << Phase::SingleEliminationBracket.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
-      criteria: 'Top 8',
+      criteria: 'Top 8'
     )
 
     tour.save!

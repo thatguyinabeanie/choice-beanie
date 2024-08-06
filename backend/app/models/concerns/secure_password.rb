@@ -12,7 +12,7 @@ module SecurePassword
   SPECIAL_CHARACTERS = %w[@ $ ! % * ? & - , . < > # ^ ( ) _ + = { } | : ; ' " \\ / ~].freeze
   SPECIAL_CHAR_REGEX = /[#{Regexp.escape(SPECIAL_CHARACTERS.join)}]/
 
-  def self.generate_secure_password(max_length: MAX_CHARACTER_LENGTH) # rubocop:disable Metrics/AbcSize
+  def self.generate_secure_password(max_length: MAX_CHARACTER_LENGTH)
     min_length = 8
     raise ArgumentError, "max_length must be at least #{min_length}" if max_length < min_length
 

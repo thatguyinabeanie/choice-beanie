@@ -10,7 +10,7 @@ FactoryBot.define do
     players { [] }
 
     end_at { start_at + 1.day }
-    ended_at { nil}
+    ended_at { nil }
 
     late_registration { true }
     registration_start_at { start_at - 1.week }

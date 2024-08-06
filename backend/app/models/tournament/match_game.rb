@@ -18,7 +18,7 @@ module Tournament
 
     private
 
-    def reporter_role_validation # rubocop:disable Metrics/AbcSize
+    def reporter_role_validation
       return if reporter.nil?
       return if reporter == player_one.user || reporter == player_two.user
       return if reporter.staff_member_of?(match.phase.tournament.organization)
