@@ -1,13 +1,21 @@
 require 'rails_helper'
 
 # Define a temporary subclass of Phase::BasePhase for testing purposes
-class TestPhase < Phase::BasePhase
+class Phase::Test < Phase::BasePhase
   self.table_name = 'phases'
+  before_validation :set_defaults
+
+  def set_defaults
+    self.type = 'Phase::Test'
+    self.number_of_rounds ||= 5
+    self.criteria ||= 'this is a criteria'
+    self.name = 'BassFace'
+  end
 end
 
 RSpec.describe Phase::BasePhase do
   describe 'associations' do
-    subject { TestPhase.new }
+    subject { Phase::Test.new }
 
     it { is_expected.to have_many(:rounds).class_name('Tournament::Round').inverse_of(:phase).dependent(:destroy) }
     it { is_expected.to belong_to(:tournament).class_name('Tournament::Tournament') }
@@ -26,14 +34,14 @@ RSpec.describe Phase::BasePhase do
   end
 
   describe 'validations' do
-    subject { TestPhase.new }
+    subject { Phase::Test.new }
 
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_numericality_of(:best_of).is_greater_than(0).only_integer }
   end
 
   describe 'additional validation' do
-    subject(:phase) { TestPhase.new(best_of:, tournament:, name: 'BassFace', type: 'TestPhase') }
+    subject(:phase) { Phase::Test.new(best_of:, tournament:, name: 'BassFace', type: 'TestPhase') }
 
     let(:tournament) { create(:tournament) }
 
@@ -59,7 +67,8 @@ RSpec.describe Phase::BasePhase do
   end
 
   describe '#accept_players' do
-    let(:phase) { TestPhase.new }
+    let(:tournament){ create(:tournament) }
+    let(:phase) { Phase::Test.create(tournament: tournament) }
     let(:players) { create_list(:player, 5) }
 
     it 'sets the players' do

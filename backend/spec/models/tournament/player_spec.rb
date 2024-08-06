@@ -4,7 +4,7 @@ RSpec.describe Tournament::Player do
   describe 'associations' do
     it { is_expected.to belong_to(:user).class_name('User') }
     it { is_expected.to belong_to(:tournament).class_name('Tournament::Tournament').inverse_of(:players) }
-    it { is_expected.to belong_to(:pokemon_team).class_name('PokemonTeam').optional(true) }
+    it { is_expected.to belong_to(:pokemon_team).class_name('PokemonTeam').optional(true).inverse_of(:player) }
   end
 
   describe 'validations' do

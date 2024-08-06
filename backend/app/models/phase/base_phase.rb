@@ -20,7 +20,8 @@ module Phase
     validates :tournament, presence: true
 
     def accept_players(players:)
-      self.players = players
+      num_rounds = Math.log2(players.count).ceil
+      update!(players: players, started_at: Time.current.utc, number_of_rounds: num_rounds)
     end
 
     def players_ready

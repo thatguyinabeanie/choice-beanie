@@ -191,9 +191,9 @@ TOURNAMENT_DETAILS_SCHEMA = {
   ]
 }.freeze
 
-POKEMON_SET_SCHEMA = {
+POKEMON_SCHEMA = {
   type: :object,
-  title: 'Pokemon Set',
+  title: 'Pokemon',
   properties: ID_NAME_PROPERTIES.merge(
     nickname: { type: :string, nullable: true },
     ability: { type: :string },
@@ -239,11 +239,11 @@ PLAYER_DETAILS_SCHEMA = {
   title: 'Player Details',
   properties: PLAYER_SCHEMA[:properties].merge(
     {
-      # pokemon_sets: { type: :array, items: { '$ref' => '#/components/schemas/PokemonSet' } }
+      # pokemon: { type: :array, items: { '$ref' => '#/components/schemas/Pokemon' } }
       #
     }
   ),
-  # required: PLAYER_SCHEMA[:required] + %w[pokemon_sets]
+  # required: PLAYER_SCHEMA[:required] + %w[pokemon]
   required: PLAYER_SCHEMA[:required]
 }.freeze
 
@@ -352,7 +352,7 @@ RSpec.configure do |config|
           OrganizationDetails: ORGANIZATION_DETAILS_SCHEMA,
           Tournament: TOURNAMENT_SCHEMA,
           TournamentDetails: TOURNAMENT_DETAILS_SCHEMA,
-          PokemonSet: POKEMON_SET_SCHEMA,
+          Pokemon: POKEMON_SCHEMA,
           PlayerRequest: PLAYER_REQUEST,
           Player: PLAYER_SCHEMA,
           PlayerDetails: PLAYER_DETAILS_SCHEMA,

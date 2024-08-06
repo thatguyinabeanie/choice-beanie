@@ -110,7 +110,7 @@ users = (1..50).to_a.map { create_user }
 tournaments.flat_map do |tournament|
   users.sample(rand(1..10)).map do |user|
     pokemon_team = PokemonTeam.create(user:)
-    (1..6).to_a.map { PokemonSet.create(pokemon_team:) }
+    (1..6).to_a.map { Pokemon.create(pokemon_team:) }
 
     Tournament::Player.create!(user:, tournament:, in_game_name: Faker::Games::Pokemon.name, pokemon_team:)
   end

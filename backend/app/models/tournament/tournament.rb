@@ -29,7 +29,7 @@ module Tournament
     before_validation :set_defaults
 
     def ready_to_start?
-      return false if phases.empty? || players.empty? || players.count < MINIMUM_PLAYER_COUNT
+      return false if phases.empty? || players.empty? || players.checked_in_and_ready < MINIMUM_PLAYER_COUNT
 
       phases.order(order: :asc).first.valid?
     end
@@ -42,7 +42,7 @@ module Tournament
       cannot_start = 'Cannot start tournament.'
       raise "The tournament has no phases. #{cannot_start}" if phases.empty?
       raise "The tournament has no players. #{cannot_start}" if players.empty?
-      raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
+    raise "The tournament does not have the minimum required number of players. #{cannot_start}" if players.count < MINIMUM_PLAYER_COUNT
 
       update!(started_at: Time.current.utc)
 
@@ -58,16 +58,14 @@ module Tournament
       players.count < player_cap && check_registration_window
     end
 
-    def register_user!(user:)
-      raise 'User is already registered for this tournament.' if players.exists?(user_id: user.id)
-      raise 'Registration is closed.' unless registration_open?
-      players.create!(user: user)
-    end
-
-    def register_user(user:)
+    def register_user(user:, pokemon_team: nil)
       return false if players.exists?(user_id: user.id)
       return false unless registration_open?
-      players.create(user: user)
+      players.create(user: user, pokemon_team_id: pokemon_team&.id)
+    end
+
+    def unregister_user(user:)
+      players.find_by(user: user)&.destroy
     end
 
     def add_phase(phase:)
@@ -78,10 +76,6 @@ module Tournament
     def add_phase!(phase:)
       phases << phase
       save!
-    end
-
-    def players_checked_in_and_ready
-      players.checked_in_and_ready
     end
 
     private

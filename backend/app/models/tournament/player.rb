@@ -4,7 +4,7 @@ module Tournament
     self.table_name = 'players'
     belongs_to :user, class_name: 'User'
     belongs_to :tournament, class_name: 'Tournament::Tournament', inverse_of: :players
-    belongs_to :pokemon_team, class_name: 'PokemonTeam', optional: true
+    belongs_to :pokemon_team, class_name: 'PokemonTeam', inverse_of: :player, optional: true
 
     validates :user_id, presence: true
     validates :tournament_id, presence: true
@@ -13,6 +13,12 @@ module Tournament
     accepts_nested_attributes_for :pokemon_team
 
     delegate :username, to: :user
+
+    # def pokemon_team=(team)
+
+    #   raise 'You cannot submit more than 6 Pokemon.' if team.present? && team.pokemon.count > MAX_POKEMON_SUBMISSIONS
+    #   update!(pokemon_team: team)
+    # end
 
     def self.checked_in_and_ready
         where.not(pokemon_team_id: nil)
@@ -31,6 +37,10 @@ module Tournament
       raise 'Check in is closed for this tournament.' unless tournament.started_at.blank? || tournament.late_registration == true
 
       update!(checked_in_at: Time.current.utc)
+    end
+
+    def submit_team!(team:)
+      update!(pokemon_team: team)
     end
 
     def checked_in?

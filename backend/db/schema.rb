@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_05_234210) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_06_043252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -139,7 +139,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_05_234210) do
     t.index ["user_id"], name: "index_players_on_user_id"
   end
 
-  create_table "pokemon_sets", force: :cascade do |t|
+  create_table "pokemon", force: :cascade do |t|
     t.string "name"
     t.string "ability"
     t.string "tera_type"
@@ -153,7 +153,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_05_234210) do
     t.datetime "updated_at", null: false
     t.string "nickname"
     t.bigint "pokemon_team_id", null: false
-    t.index ["pokemon_team_id"], name: "index_pokemon_sets_on_pokemon_team_id"
+    t.index ["pokemon_team_id"], name: "index_pokemon_on_pokemon_team_id"
   end
 
   create_table "pokemon_teams", force: :cascade do |t|
@@ -263,7 +263,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_05_234210) do
   add_foreign_key "players", "pokemon_teams"
   add_foreign_key "players", "tournaments"
   add_foreign_key "players", "users"
-  add_foreign_key "pokemon_sets", "pokemon_teams"
+  add_foreign_key "pokemon", "pokemon_teams"
   add_foreign_key "pokemon_teams", "users"
   add_foreign_key "tournament_formats", "formats"
   add_foreign_key "tournament_formats", "tournaments"
