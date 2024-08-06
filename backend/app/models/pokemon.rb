@@ -9,4 +9,9 @@ class Pokemon < ApplicationRecord
   validates :nature, presence: true
 
   validates :held_item, presence: true
+
+  validates :move1, presence: true
+  validates :move2, presence: true
+  validates :move3, presence: true
+  validates :move4, presence: true
 end

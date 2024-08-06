@@ -7,11 +7,11 @@ RSpec.describe Pokemon do
 
   describe 'validations' do
     let(:user) { create(:user) }
-    let(:pokemon_team) { create(:pokemon_team, user:) }
+    let(:pokemon_team) { create(:pokemon_team, user: user) }
 
     subject {
       described_class.create(
-        pokemon_team: pokemon_team,
+        pokemon_team_id: pokemon_team.id,
         name: 'Pikachu',
         ability: 'Static',
         tera_type: 'Electric',
@@ -30,9 +30,9 @@ RSpec.describe Pokemon do
     it { is_expected.to validate_presence_of(:tera_type) }
     it { is_expected.to validate_presence_of(:nature) }
     it { is_expected.to validate_presence_of(:held_item) }
-    # it { is_expected.to validate_presence_of(:move1) }
-    # it { is_expected.to validate_presence_of(:move2) }
-    # it { is_expected.to validate_presence_of(:move3) }
-    # it { is_expected.to validate_presence_of(:move4) }
+    it { is_expected.to validate_presence_of(:move1) }
+    it { is_expected.to validate_presence_of(:move2) }
+    it { is_expected.to validate_presence_of(:move3) }
+    it { is_expected.to validate_presence_of(:move4) }
   end
 end
