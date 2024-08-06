@@ -28,10 +28,20 @@ module Tournament
     before_save :ready_to_start?, if: -> { saved_change_to_started_at?(from: nil) }
     before_validation :set_defaults
 
-    def ready_to_start?
-      return false if phases.empty? || players.empty? || players.checked_in_and_ready < MINIMUM_PLAYER_COUNT
+    def not_ready_reasons
+      reasons = []
+      reasons << "The tournament has no phases." if phases.empty?
+      reasons << "The tournament does not have the minimum required number of registered players that are checked in and submitted team sheets." if  players.empty? || players.count < MINIMUM_PLAYER_COUNT
+      reasons << "The tournament does not have any phases." if phases.empty?
+      reasons << "The tournament's first phase is not valid." unless !phases.empty? && phases.order(order: :asc).first.valid?
+      reasons
+    end
 
-      phases.order(order: :asc).first.valid?
+    def ready_to_start?(should_raise: false)
+      return true if not_ready_reasons.empty?
+
+      raise "The tournament is not ready to start. #{not_ready_reasons.join(' ')}" if should_raise
+      false
     end
 
     def check_in_start_at_before_start_at
