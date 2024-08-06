@@ -48,7 +48,7 @@ module Tournament
     end
 
     def check_in_start_at_before_start_at
-      errors.add(:check_in_start_at, 'must be before start_at') unless check_in_start_at < start_at
+      errors.add(:check_in_start_at, 'must be before start_at') if check_in_start_at >= start_at
     end
 
     def start_tournament!
@@ -92,7 +92,7 @@ module Tournament
 
       self.registration_start_at ||= start_at - 1.week
 
-      self.check_in_start_at ||= start_at - 1.hour
+      self.check_in_start_at ||= Time.current.utc if check_in_start_at.nil?
     end
   end
 end
