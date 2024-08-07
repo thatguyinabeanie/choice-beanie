@@ -3,7 +3,7 @@ class DropOrganizationStaffTable < ActiveRecord::Migration[7.1]
     drop_table :organization_staff
   end
 
-  def down # rubocop:disable Metrics/AbcSize
+  def down
     create_table :organization_staff do |t|
       Recreate the table structure here if you want to be able to roll back this migration
       # For example:

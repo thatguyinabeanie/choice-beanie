@@ -1,18 +1,20 @@
 require 'rails_helper'
 
 # Define a temporary subclass of Phase::BasePhase for testing purposes
-class Phase::Test < Phase::BasePhase
-  self.table_name = 'phases'
+module Phase
+  class Test < Phase::BasePhase
+    self.table_name = 'phases'
+  end
 end
 
 RSpec.describe Phase::BasePhase do
-    describe 'table name' do
-      it "is 'phases'" do
-        expect(described_class.table_name).to eq('phases')
-      end
+  describe 'table name' do
+    it "is 'phases'" do
+      expect(described_class.table_name).to eq('phases')
     end
+  end
 
-    describe 'abstract class' do
+  describe 'abstract class' do
     it 'is true' do
       expect(described_class.abstract_class).to be true
     end
@@ -27,7 +29,6 @@ RSpec.describe Phase::BasePhase do
 
   describe 'validations' do
     subject { Phase::Test.new(name: 'Test Phase', tournament: create(:tournament), number_of_rounds: 5) }
-
 
     # TODO: Uncomment and implement
     # it { is_expected.to validate_presence_of(:name) }
@@ -61,13 +62,12 @@ RSpec.describe Phase::BasePhase do
   end
 
   describe '#accept_players' do
-    let(:players) { create_list(:player, 5) }
-    let(:tournament){ create(:tournament) }
-    let(:phase) { Phase::Test.create(tournament: tournament, ) }
+    let(:tournament) { create(:tournament, :with_phases, :with_players_with_team, :with_players_checked_in, :with_players_with_team_and_checked_in) }
+    let(:phase) { tournament.phases.first }
 
     it 'sets the players' do
-      phase.accept_players(players:)
-      expect(phase.players).to match_array(players)
+      phase.accept_players(players: tournament.players)
+      expect(phase.players).to match_array(tournament.players.checked_in_and_ready)
     end
   end
 end

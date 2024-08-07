@@ -16,7 +16,7 @@ module Api
           render json: serialize_phase_details, status: :ok
         end
 
-        def create # rubocop:disable Metrics/AbcSize
+        def create
           klass = case params[:phase][:type]
                   when Phase::Swiss.to_s
                     Phase::Swiss

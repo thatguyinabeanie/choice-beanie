@@ -36,6 +36,7 @@ end
 def create_tournament(name:, organization:, format:, game:, start_at:, end_at:)
   Tournament::Tournament.find_or_create_by!(name:, organization:, format:, game:) do |tournament|
     tournament.start_at = start_at
+    tournament.check_in_start_at = start_at - 1.hour
     tournament.end_at = end_at
   end
 end
@@ -83,19 +84,18 @@ tournaments = orgs.flat_map do |organization|
     end_at = Time.zone.today + 1.week
     game = format.game
 
-    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:,)
-
+    tour = create_tournament(name:, organization:, format:, game:, start_at:, end_at:)
 
     Phase::Swiss.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Swiss Round",
       tournament: tour,
-      number_of_rounds: 5,
+      number_of_rounds: 5
     )
 
     tour.phases << Phase::SingleEliminationBracket.create!(
       name: "#{organization.name} #{format.name} Tournament #{index + 1} - Top Cut!",
       tournament: tour,
-      criteria: 'Top 8',
+      criteria: 'Top 8'
     )
 
     tour.save!

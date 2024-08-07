@@ -28,7 +28,7 @@ RSpec.describe Phase::Swiss do
   # end
 
   describe 'validations' do
-    subject { described_class.new(tournament: create(:tournament), number_of_rounds: 5) }
+    subject(:swiss_phase) { described_class.new(tournament: create(:tournament), number_of_rounds: 5) }
 
     # TODO: Uncomment and implement
     # it 'validates presence of name' do
@@ -38,10 +38,9 @@ RSpec.describe Phase::Swiss do
     # end
 
     it 'validates that :type is "Phase::Swiss"' do
-      subject.type = 'InvalidType'
-      subject.valid?
-      expect(subject.errors[:type]).to include('must be equal to Phase::Swiss')
+      swiss_phase.type = 'InvalidType'
+      swiss_phase.valid?
+      expect(swiss_phase.errors[:type]).to include('must be equal to Phase::Swiss')
     end
   end
-
 end

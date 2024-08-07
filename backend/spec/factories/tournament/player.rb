@@ -18,6 +18,6 @@ FactoryBot.define do
 
     factory :player_checked_in, traits: [:checked_in]
     factory :player_with_team, traits: [:with_team]
-    factory :player_with_team_and_checked_in, traits: [:with_team, :checked_in]
+    factory :player_with_team_and_checked_in, traits: %i[with_team checked_in]
   end
 end

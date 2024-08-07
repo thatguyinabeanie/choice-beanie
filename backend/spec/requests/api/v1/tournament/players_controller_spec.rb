@@ -45,7 +45,7 @@ RSpec.describe Api::V1::Tournament::PlayersController do
       response(201, 'created') do
         let(:player) do
           {
-            user_id: create(:user).id,
+            user_id: create(:user).id
           }
         end
 
