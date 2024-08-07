@@ -1,7 +1,9 @@
+import { Text } from "@/components/text";
+
 const Admin = () => {
   return (
     <div>
-      <h1>Admin Pages here</h1>
+      <Text variant="header" tag="h1">Admin Pages here</Text>
     </div>
   );
 };
