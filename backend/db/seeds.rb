@@ -36,6 +36,7 @@ end
 def create_tournament(name:, organization:, format:, game:, start_at:, end_at:)
   Tournament::Tournament.find_or_create_by!(name:, organization:, format:, game:) do |tournament|
     tournament.start_at = start_at
+    tournament.check_in_start_at = start_at - 1.hour
     tournament.end_at = end_at
   end
 end
