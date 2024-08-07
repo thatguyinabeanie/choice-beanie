@@ -5,47 +5,71 @@
       "server": "localhost",
       "driver": "PostgreSQL",
       "name": "fuecoco_db",
-      "connectString": "postgres://postgres:password@localhost:5432/fuecoco_db"
+      "connectString": "postgres://postgres:postgres@localhost:5432/fuecoco-db-development"
     },
     {
       "previewLimit": 50,
       "server": "localhost",
       "driver": "PostgreSQL",
       "name": "fuecoco_db",
-      "connectString": "postgres://postgres:password@db:5432/fuecoco_db"
+      "connectString": "postgres://postgres:postgres@db:5432/fuecoco-db-development"
     }
   ],
 
-  "terminal.integrated.suggest.enabled": true,
-  "testing.coverageToolbarEnabled": true,
-
-  "terminal.integrated.cursorBlinking": true,
-  "git.terminalGitEditor": true,
+  "editor.formatOnSave": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.defaultColorDecorators": true,
   "editor.inlayHints.padding": true,
+
+  "sonarlint.connectedMode.project": {
+    "connectionId": "thatguyinabeanie",
+    "projectKey": "thatguyinabeanie_battle-stadium"
+  },
+
+  "terminal.integrated.suggest.enabled": true,
+  "testing.coverageToolbarEnabled": true,
+  "terminal.integrated.cursorBlinking": true,
+  "git.terminalGitEditor": true,
 
   "testExplorer.codeLens": true,
   "testExplorer.gutterDecoration": true,
   "testExplorer.onStart": "none",
   "testExplorer.onReload": "none",
 
+  "npm.packageManager": "pnpm",
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
   // Don't forget to set the manager to custom when using this option
   "rubyLsp.rubyVersionManager": {
     "identifier": "custom"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "npm.packageManager": "pnpm",
+
   // Adding a custom Ruby bin folder to the PATH
   "rubyLsp.customRubyCommand": "(frum local || asdf current ruby || which ruby)",
-  "rubyLsp.useBundler": true,
-  "rubyLsp.diagnostics": true,
-  "rubyLsp.formatting": true,
-  "rubyLsp.hover": true,
-  "rubyLsp.completion": true,
-  "rubyLsp.codeActions": true,
-  "rubyLsp.symbols": true,
+  "rubyLsp.indexing": {
+    "excludedPatterns": [
+      "**/test/**.rb",
+      "frontend/**",
+      "./devcontainer/**",
+      ".github/**",
+      ".sonarlint/**",
+      "**/.turbo/**",
+      ".turbo/**",
+      ".vscode/**",
+      "**/node_modules/**",
+      "node_modules/**"
+    ],
+    "includedPatterns": ["**/bin/**"],
+    "excludedGems": ["rubocop", "rubocop-performance"],
+    "includedPatterns": ["rake"],
+    "excludedMagicComments": ["compiled:true"]
+  },
+
+  "rubyTestExplorer.rspecDirectory": "backend/spec",
+  "rubyTestExplorer.minitestDirectory": "backend/test",
+
   "cSpell.words": [
     "Anson",
     "clsx",
@@ -67,16 +91,12 @@
     "ossdata",
     "rdbg",
     "resourcemonitor",
+    "rswag",
     "rubocop",
     "Sasada",
     "sqltools",
     "thatguyinabeanie",
     "vscodeintellicode",
     "waderyan"
-  ],
-  "editor.formatOnSave": true,
-  "sonarlint.connectedMode.project": {
-    "connectionId": "thatguyinabeanie",
-    "projectKey": "thatguyinabeanie_battle-stadium"
-  }
+  ]
 }

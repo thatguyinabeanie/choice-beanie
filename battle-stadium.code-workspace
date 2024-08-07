@@ -1,16 +1,16 @@
 {
   "folders": [
     {
-      "name": "backend",
+      "name": "battle-stadium",
+      "path": ".",
+    },
+    {
+      "name": "Rails API Backend",
       "path": "backend",
     },
     {
-      "name": "frontend",
+      "name": "NextJS Frontend",
       "path": "frontend",
-    },
-    {
-      "name": "battle-stadium",
-      "path": ".",
     },
   ],
   "settings": {
