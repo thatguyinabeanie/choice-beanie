@@ -9,7 +9,6 @@
     "github.github-vscode-theme",
     "sonarsource.sonarlint-vscode",
     "vscode-icons-team.vscode-icons",
-    "postman.postman-for-vscode",
     "ms-vscode-remote.remote-containers",
     "github.vscode-github-actions",
     "github.codespaces",
@@ -20,6 +19,15 @@
     "mutantdino.resourcemonitor",
     "ms-vscode.test-adapter-converter",
     "hbenl.vscode-test-explorer",
-    "visualstudioexptteam.vscodeintellicode"
+    "visualstudioexptteam.vscodeintellicode",
+    "bradlc.vscode-tailwindcss",
+    "rangav.vscode-thunder-client",
+    "christian-kohler.path-intellisense",
+    "gruntfuggly.todo-tree",
+    "wix.vscode-import-cost",
+    "streetsidesoftware.code-spell-checker",
+    "aaron-bond.better-comments",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg"
   ]
 }
