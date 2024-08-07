@@ -57,7 +57,6 @@
         "mtxr.sqltools-driver-pg",
         "redhat.vscode-yaml",
         "waderyan.gitblame",
-        "Postman.postman-for-vscode",
         "DavidAnson.vscode-markdownlint",
         "GitHub.github-vscode-theme",
         "rubocop.vscode-rubocop",
@@ -67,7 +66,13 @@
         "vscode-icons-team.vscode-icons",
         "streetsidesoftware.code-spell-checker",
         "VisualStudioExptTeam.vscodeintellicode",
-        "Jacano.vscode-pnpm"
+        "Jacano.vscode-pnpm",
+        "bradlc.vscode-tailwindcss",
+        "rangav.vscode-thunder-client",
+        "christian-kohler.path-intellisense",
+        "Gruntfuggly.todo-tree",
+        "wix.vscode-import-cost",
+        "aaron-bond.better-comments"
       ],
       "settings": {
         "remote.containers.copyGitConfig": true,
