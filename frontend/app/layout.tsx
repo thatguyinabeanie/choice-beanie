@@ -6,7 +6,6 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import ChildrenProps from "@/types/childrenProps";
 
@@ -33,10 +32,7 @@ export default function RootLayout({ children }: Readonly<ChildrenProps>) {
     <html suppressHydrationWarning lang="en">
       <head />
       <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
+        className={clsx("min-h-screen bg-background font-sans antialiased")}
       >
         {/* <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}> */}
         <Providers>

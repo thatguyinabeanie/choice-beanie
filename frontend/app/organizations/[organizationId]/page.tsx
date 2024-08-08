@@ -14,14 +14,13 @@ const OrganizationDetailsPage = async ({
 
   try {
     organization = (await orgsApi.getOrganization(request)).data;
-
   } catch (error) {
     console.error("Failed to fetch organization details:", error);
 
     return <p>Failed to fetch organization</p>;
   }
 
-  return <OrganizationCard organization={ organization } />;
+  return <OrganizationCard className="size-auto" organization={organization} />;
 };
 
 export default OrganizationDetailsPage;

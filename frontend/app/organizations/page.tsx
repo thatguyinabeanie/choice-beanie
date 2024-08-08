@@ -13,17 +13,17 @@ export default async function OrganizationsPage() {
   return (
     <div>
       <h1 className={title()}>Organizations</h1>
-      <div className="container relative flex flex-row m-4 p-5 justify-evenly">
+      <div className="container relative flex flex-row">
         {organizations.map((organization) => (
-          <Link
-            key={organization.id}
-            href={`/organizations/${organization.id}`}
-          >
-            <OrganizationCard
-              key={organization.id}
-              organization={organization}
-            />
-          </Link>
+          <div key={organization.id} className="m-4">
+            <Link href={`/organizations/${organization.id}`}>
+              <OrganizationCard
+                key={organization.id}
+                className="cursor-pointer"
+                organization={organization}
+              />
+            </Link>
+          </div>
         ))}
       </div>
     </div>
