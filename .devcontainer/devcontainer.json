@@ -17,7 +17,7 @@
 
   "containerEnv": {
     "RAILS_ENV": "development",
-    "DEV_ENVIRONMENT": "devcontainer",
+    "HOST_ENVIRONMENT": "container",
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
