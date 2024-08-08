@@ -15,6 +15,12 @@
   // connected. This is typically a file mount in .devcontainer/docker-compose.yml
   "workspaceFolder": "/battle-stadium",
 
+  "containerEnv": {
+    "RAILS_ENV": "development",
+    "HOST_ENVIRONMENT": "container",
+    "DB_HOST": "db"
+  },
+
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [3000],
 

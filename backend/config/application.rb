@@ -1,19 +1,28 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'dotenv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load .env file in development and test environments
-Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
-ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
 
 module BattleStadium
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+
+    config.before_configuration do
+      env_file = ".env.docker-compose"
+      if File.exist?(env_file) && !Rails.env.production?
+        puts ("Loading #{env_file} environment variables")
+
+        Dotenv.load(env_file)
+
+        puts "DB_HOST: #{ENV['DB_HOST']}"
+      end
+    end
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

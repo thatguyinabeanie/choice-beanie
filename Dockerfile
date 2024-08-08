@@ -59,7 +59,7 @@ FROM base-image AS development
 ARG BATTLE_STADIUM=battle-stadium
 ARG USERNAME=vscode
 WORKDIR /$BATTLE_STADIUM/
-ENV DEV_ENVIRONMENT=devcontainer
+ENV HOST_ENVIRONMENT=container
 
 COPY backend .
 COPY frontend .

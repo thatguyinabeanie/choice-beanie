@@ -158,9 +158,6 @@ importers:
       autoprefixer:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.40)
-      babel-jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@babel/core@7.25.2)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
