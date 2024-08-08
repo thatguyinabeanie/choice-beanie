@@ -63,9 +63,7 @@ export const NavbarMain = () => {
           </Button>
         </NavbarItem>
 
-        <NavbarItem>
-          <NavbarMenuToggle />
-        </NavbarItem>
+        <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
