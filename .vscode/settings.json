@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.defaultColorDecorators": true,
   "editor.inlayHints.padding": true,
