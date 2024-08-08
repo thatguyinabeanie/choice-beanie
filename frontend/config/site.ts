@@ -11,28 +11,27 @@ export const siteConfig = {
     {
       label: "Tournaments",
       href: "/tournaments",
-    }
-
+    },
   ],
   navMenuItems: [
     {
+      label: "Profile",
+      href: "/profile",
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
       label: "Settings",
       href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
     },
   ],
   links: {
     github: "https://github.com/thatguyinabeanie/battle-stadium",
     twitter: "https://twitter.com/thatguyinabeani",
     docs: "https://nextui.org",
-    // discord: "https://discord.gg/9b6yyZKmH4",
+    discord: "https://discord.gg/9b6yyZKmH4",
     sponsor: "https://patreon.com/jrgarciadev",
   },
 };
