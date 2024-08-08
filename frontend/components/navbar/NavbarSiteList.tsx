@@ -1,7 +1,7 @@
 import { NavbarItem } from "@nextui-org/navbar";
 import clsx from "clsx";
 import { link as linkStyles } from "@nextui-org/theme";
-import NextLink from "next/link";
+import { Link as NextLink } from "@nextui-org/link";
 
 import { siteConfig } from "@/config/site";
 
