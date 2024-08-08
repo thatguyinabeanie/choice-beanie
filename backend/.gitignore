@@ -68,3 +68,4 @@ spec/examples.txt
 rails_api
 rails_api/tmp/*
 *.pdf
+.env.docker-compose

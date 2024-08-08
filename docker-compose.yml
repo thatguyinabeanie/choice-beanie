@@ -15,6 +15,7 @@ services:
   dev:
     environment:
       HOST_ENVIRONMENT: container
+      DB_HOST: db
     build:
       context: .
       cache_from:

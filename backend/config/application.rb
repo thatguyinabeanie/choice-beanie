@@ -7,15 +7,22 @@ require 'dotenv'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load .env file if it exists and the environment is not production
-env_file = ".env.development"
-Dotenv.load(env_file) if File.exist?(env_file) && !Rails.env.production?
-
 
 module BattleStadium
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
+
+    config.before_configuration do
+      env_file = ".env.docker-compose"
+      if File.exist?(env_file) && !Rails.env.production?
+        puts ("Loading #{env_file} environment variables")
+
+        Dotenv.load(env_file)
+
+        puts "DB_HOST: #{ENV['DB_HOST']}"
+      end
+    end
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
