@@ -33,7 +33,7 @@ const signedInMenuItems = () => {
 
 const notSignedInMenuItems = () => {
   return [
-    <DropdownItem key="signup">
+    <DropdownItem key="SignUp">
       <Link href="/signup">Sign Up</Link>
     </DropdownItem>,
     <DropdownItem key="login">
