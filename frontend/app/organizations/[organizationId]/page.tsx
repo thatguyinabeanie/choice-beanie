@@ -1,7 +1,6 @@
 // organizations/[organizationId]/page.tsx
-import { OrganizationDetails } from "@/api";
+import { OrganizationDetails, OrganizationsApi } from "@/api";
 import OrganizationCard from "@/components/organizations/OrganizationCard";
-import { OrganizationsApi } from "@/api";
 
 const OrganizationDetailsPage = async ({
   params,
