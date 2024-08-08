@@ -10,7 +10,7 @@ export const siteConfig = {
     },
     {
       label: "Organizations",
-      href: "organizations",
+      href: "/organizations",
     },
     {
       label: "Login",
