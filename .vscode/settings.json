@@ -1,21 +1,4 @@
 {
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "driver": "PostgreSQL",
-      "name": "fuecoco_db",
-      "connectString": "postgres://postgres:postgres@localhost:5432/fuecoco-db-development"
-    },
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "driver": "PostgreSQL",
-      "name": "fuecoco_db",
-      "connectString": "postgres://postgres:postgres@db:5432/fuecoco-db-development"
-    }
-  ],
-
   "editor.formatOnSave": true,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.defaultColorDecorators": true,
@@ -67,27 +50,33 @@
     "excludedMagicComments": ["compiled:true"]
   },
 
-  "rubyTestExplorer.rspecDirectory": "backend/spec",
+  "rubyTestExplorer.rspecDirectory": "./backend/spec",
   "rubyTestExplorer.minitestDirectory": "backend/test",
 
   "cSpell.words": [
+    "ALLOF",
     "Anson",
     "clsx",
+    "codegen",
     "connorshea",
     "dbaeumer",
     "devcontainer",
     "devcontainers",
     "esbenp",
     "Expt",
+    "fuecoco",
     "gitblame",
     "iliazeus",
     "Jacano",
     "Koichi",
+    "lucide",
+    "messageformat",
     "mikaello",
     "mtxr",
     "mutantdino",
     "nextjs",
     "nextui",
+    "nohe",
     "ossdata",
     "rdbg",
     "resourcemonitor",

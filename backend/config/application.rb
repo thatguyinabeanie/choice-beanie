@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 # Load .env file in development and test environments
 Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
-ENV['DB_HOST'] ||= ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
+ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
 
 module BattleStadium
   class Application < Rails::Application

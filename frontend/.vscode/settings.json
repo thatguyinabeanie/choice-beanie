@@ -1,3 +1,22 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": null,
+  "editor.formatOnSave": false,
+  "eslint.format.enable": true,
+  "cSpell.words": [
+    "ALLOF",
+    "clsx",
+    "codegen",
+    "listbox",
+    "lucide",
+    "messageformat",
+    "nextjs",
+    "nextui",
+    "nohe",
+    "openapi",
+    "openapitools",
+    "tailwindcss",
+    "tanstack",
+    "usehooks"
+  ]
 }

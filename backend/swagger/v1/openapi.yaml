@@ -822,6 +822,9 @@ components:
           type: integer
         name:
           type: string
+        description:
+          type: string
+          nullable: true
         owner:
           "$ref": "#/components/schemas/User"
       required:
@@ -836,10 +839,10 @@ components:
           type: integer
         name:
           type: string
-        owner:
-          "$ref": "#/components/schemas/UserDetails"
         description:
           type: string
+        owner:
+          "$ref": "#/components/schemas/UserDetails"
         updated_at:
           type: string
           format: date-time

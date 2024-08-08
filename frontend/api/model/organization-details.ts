@@ -36,16 +36,16 @@ export interface OrganizationDetails {
   name: string;
   /**
    *
-   * @type {UserDetails}
-   * @memberof OrganizationDetails
-   */
-  owner: UserDetails;
-  /**
-   *
    * @type {string}
    * @memberof OrganizationDetails
    */
   description: string;
+  /**
+   *
+   * @type {UserDetails}
+   * @memberof OrganizationDetails
+   */
+  owner: UserDetails;
   /**
    *
    * @type {string}

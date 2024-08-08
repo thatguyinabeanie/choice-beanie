@@ -132,6 +132,7 @@ ORGANIZATION_SCHEMA = {
   type: :object,
   title: 'Organization',
   properties: ID_NAME_PROPERTIES.merge(
+    description: { type: :string, nullable: true },
     owner: { '$ref' => '#/components/schemas/User' }
   ),
   required: ID_NAME_REQUIRED + %w[owner]
