@@ -12,7 +12,7 @@ jobs:
         working-directory: ./backend
     env:
       RAILS_ENV: test
-      DB_HOST: $${{ secrets.DB_HOST }}
+      DB_HOST: ${{ secrets.DB_HOST }}
       DB_PORT: ${{ secrets.DB_PORT }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -24,7 +24,7 @@ jobs:
         image: postgres:16.3
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: "${{ secrets.POSTGRES_PASSWORD }}"
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
