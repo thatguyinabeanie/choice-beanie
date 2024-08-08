@@ -1,0 +1,4 @@
+{
+  "rubyTestExplorer.rspecDirectory": "./spec",
+  "rubyTestExplorer.testFramework": "rspec"
+}

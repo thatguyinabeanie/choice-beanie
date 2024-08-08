@@ -1,46 +1,49 @@
 "use client";
 
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@nextui-org/react";
 import React from "react";
+import { Link } from "@nextui-org/link";
 
 import { title } from "@/components/primitives";
+import { Organization, OrganizationsApi } from "@/api";
+import OrganizationCard from "@/components/organizations/OrganizationCard";
 
+const useOrganizations = (): Organization[] => {
+  const [organizations, setOrganizations] = React.useState<Organization[]>([]);
 
-const useOrganizations = () => {
+  React.useEffect(() => {
+    const fetchOrganizations = async () => {
+      const orgsApi = new OrganizationsApi();
 
-  return [];
+      const organizations = (await orgsApi.listOrganizations()).data;
+
+      setOrganizations(organizations);
+    };
+
+    fetchOrganizations();
+  }, []);
+
+  return organizations;
 };
 
-export default function OrganizationsPage () {
+export default function OrganizationsPage() {
   const organizations = useOrganizations();
 
   return (
     <div>
-      <h1 className={ title() }>Organizations</h1>
-
-      <Table aria-label="Example table with dynamic content">
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>Name</TableColumn>
-          <TableColumn>Location</TableColumn>
-        </TableHeader>
-        <TableBody>
-          { organizations.map((org) => (
-            <TableRow key={ org.id }>
-              <TableCell>{ org.id }</TableCell>
-              <TableCell>{ org.name }</TableCell>
-              <TableCell>{ org.owner.username }</TableCell>
-            </TableRow>
-          )) }
-        </TableBody>
-      </Table>
+      <h1 className={title()}>Organizations</h1>
+      <div className="container relative flex flex-row m-4 p-5 justify-evenly">
+        {organizations.map((organization) => (
+          <Link
+            key={organization.id}
+            href={`/organizations/${organization.id}`}
+          >
+            <OrganizationCard
+              key={organization.id}
+              organization={organization}
+            />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

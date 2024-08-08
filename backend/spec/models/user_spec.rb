@@ -3,11 +3,11 @@ require_relative '../../app/models/concerns/secure_password'
 
 RSpec.describe User do
   describe 'validations' do
-    let(:first_name) { 'John' }
-    let(:last_name) { 'Doe' }
-    let(:pronouns) { 'he/him' }
-    let(:email) { 'fuecoco@example.com' }
-    let(:username) { 'fuecoco_number_1' }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:pronouns) { 'they/them' }
+    let(:email) { Faker::Internet.unique.email }
+    let(:username) { Faker::Internet.unique.username }
     let(:password) { SecurePassword.generate_secure_password }
     let(:password_confirmation) { password }
 

@@ -72,7 +72,9 @@
         "christian-kohler.path-intellisense",
         "Gruntfuggly.todo-tree",
         "wix.vscode-import-cost",
-        "aaron-bond.better-comments"
+        "aaron-bond.better-comments",
+        "dsznajder.es7-react-js-snippets",
+        "YoavBls.pretty-ts-errors"
       ],
       "settings": {
         "remote.containers.copyGitConfig": true,
