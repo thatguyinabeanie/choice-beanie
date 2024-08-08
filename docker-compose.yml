@@ -13,13 +13,12 @@ services:
 
   # BATTLE STADIUM RAILS APP CONTAINER
   dev:
-    image: thatguyinabeanie/battle-stadium:dev-latest
     environment:
-      DB_HOST: db
-      POSTGRES_DB: fuecoco-db-dev
-      DEV_ENVIRONMENT: devcontainer
+      HOST_ENVIRONMENT: container
     build:
       context: .
+      cache_from:
+        - thatguyinabeanie/battle-stadium:dev-latest
       target: development
       dockerfile: Dockerfile
       tags:

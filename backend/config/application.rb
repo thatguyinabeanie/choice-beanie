@@ -1,14 +1,16 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'dotenv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Load .env file in development and test environments
-Dotenv::Rails.load if Rails.env.local? || Rails.env.development? || Rails.env.test?
-ENV['DB_HOST'] = ENV.fetch('DEV_ENVIRONMENT', 'localhost') == 'devcontainer' ? 'db' : 'localhost'
+# Load .env file if it exists and the environment is not production
+env_file = ".env.development"
+Dotenv.load(env_file) if File.exist?(env_file) && !Rails.env.production?
+
 
 module BattleStadium
   class Application < Rails::Application
