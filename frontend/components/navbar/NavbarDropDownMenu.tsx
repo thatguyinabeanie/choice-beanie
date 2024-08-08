@@ -30,16 +30,22 @@ const signedInMenuItems = () => {
     </DropdownItem>,
   ];
 };
-const NavbarDropDownMenu = () => {
-  const isSignedIn = true;
 
-  const menuItems = isSignedIn ? (
-    signedInMenuItems()
-  ) : (
-    <DropdownItem>
+const notSignedInMenuItems = () => {
+  return [
+    <DropdownItem key="signup">
+      <Link href="/signup">Sign Up</Link>
+    </DropdownItem>,
+    <DropdownItem key="login">
       <Link href="/login">Log In</Link>
-    </DropdownItem>
-  );
+    </DropdownItem>,
+  ];
+};
+
+const NavbarDropDownMenu = () => {
+  const isSignedIn = false;
+
+  const menuItems = isSignedIn ? signedInMenuItems : notSignedInMenuItems;
 
   return (
     <Dropdown placement="bottom-end">
@@ -56,7 +62,7 @@ const NavbarDropDownMenu = () => {
       </DropdownTrigger>
 
       <DropdownMenu aria-label="Profile Actions" variant="flat">
-        {menuItems}
+        {menuItems()}
       </DropdownMenu>
     </Dropdown>
   );
