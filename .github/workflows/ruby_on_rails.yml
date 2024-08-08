@@ -12,11 +12,12 @@ jobs:
         working-directory: ./backend
     env:
       RAILS_ENV: test
-      HOST_ENVIRONMENT: ci
-      DB_PORT: 5432
+      DB_HOST: $${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
 
     services:
       postgres:
@@ -47,17 +48,8 @@ jobs:
         run: bundle check || bundle install
 
       - name: Prepare database
-        run: |
-          bundle exec rake db:create db:schema:load --trace
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          DB_HOST: localhost
-
+        run: bundle exec rake db:create db:schema:load --trace
       - name: Run RSpec tests
-        env:
-          DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
         run: bundle exec rspec
         # run: bundle exec rspec --format RspecJunitFormatter --out test-results/rspec/results.xml
 
