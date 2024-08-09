@@ -3,16 +3,16 @@ import { Input } from "@nextui-org/input";
 
 import { SearchIcon } from "@/components/icons";
 
-export function NavbarSearch () {
+export function NavbarSearch() {
   return (
     <Input
       aria-label="Search"
-      classNames={ {
+      classNames={{
         inputWrapper: "bg-default-100",
         input: "text-sm",
-      } }
+      }}
       endContent={
-        <Kbd className="hidden lg:inline-block" keys={ ["command"] }>
+        <Kbd className="hidden lg:inline-block" keys={["command"]}>
           K
         </Kbd>
       }
