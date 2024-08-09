@@ -1,42 +1,26 @@
 // organizations/[organizationId]/page.tsx
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-
-import { OrganizationsApi } from "@/api/api";
-import { Organization } from "@/api";
+import { OrganizationDetails, OrganizationsApi } from "@/api";
 import OrganizationCard from "@/components/organizations/OrganizationCard";
 
-const OrganizationDetailsPage = () => {
-  const { organizationId } = useParams();
+const OrganizationDetailsPage = async ({
+  params,
+}: {
+  params: { organizationId: string };
+}) => {
+  const orgsApi = new OrganizationsApi();
+  const request = { id: params.organizationId };
 
-  const [organization, setOrganization] = useState<Organization | null>(null);
+  let organization: OrganizationDetails | null = null;
 
-  useEffect(() => {
-    if (organizationId) {
-      const fetchOrganizationDetails = async () => {
-        const orgsApi = new OrganizationsApi();
-        const request = { id: organizationId as string };
+  try {
+    organization = (await orgsApi.getOrganization(request)).data;
+  } catch (error) {
+    console.error("Failed to fetch organization details:", error);
 
-        const org = (await orgsApi.getOrganization(request)).data;
-
-        setOrganization(org);
-      };
-
-      fetchOrganizationDetails();
-    }
-  }, [organizationId]);
-
-  if (!organization) {
-    return <p>Loading...</p>;
+    return <p>Failed to fetch organization</p>;
   }
 
-  return (
-    <div>
-      <OrganizationCard organization={organization} />
-    </div>
-  );
+  return <OrganizationCard className="size-auto" organization={organization} />;
 };
 
 export default OrganizationDetailsPage;
