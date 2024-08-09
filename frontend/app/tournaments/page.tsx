@@ -15,13 +15,9 @@ const columns = [
     label: "NAME",
   },
   {
-    key: "player_cap",
-    label: "PLAYER CAP",
-  }
-  // {
-  //   key: "organization.name",
-  //   label: "Organization",
-  // },
+    key: "organization.name",
+    label: "Organization",
+  },
 ];
 
 
@@ -35,7 +31,7 @@ const Tournaments = async () => {
     <div>
       <h1 className={title()}>Tournaments</h1>
 
-      <TournamentsTable columns={columns} tournaments={tournaments} />
+      <TournamentsTable columns={ columns } tournaments={ tournaments } />
     </div>
   );
 };

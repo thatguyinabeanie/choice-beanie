@@ -151,11 +151,19 @@ TOURNAMENT_SCHEMA = {
   title: 'Tournament',
   properties: ID_NAME_PROPERTIES.merge(
     player_cap: { type: :integer, nullable: true },
+    player_count: { type: :integer },
+    start_at: { type: :string, format: DATE_TIME_TYPE },
+    end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    registration_start_at: { type: :string, format: DATE_TIME_TYPE },
+    registration_end_at: { type: :string, format: DATE_TIME_TYPE },
+    late_registration: { type: :boolean },
     organization: { '$ref' => '#/components/schemas/Organization' },
     format: { '$ref' => '#/components/schemas/Format' },
     game: { '$ref' => '#/components/schemas/Game' }
   ),
-  required: ID_NAME_REQUIRED + %w[player_cap organization format game]
+  required: ID_NAME_REQUIRED + %w[player_cap organization format game start_at player_count registration_start_at registration_end_at late_registration]
 }.freeze
 
 
@@ -164,7 +172,7 @@ TOURNAMENT_DETAILS_SCHEMA = {
   title: 'Tournament Details',
   properties: TOURNAMENT_SCHEMA[:properties].merge(
     autostart: { type: :boolean },
-    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    start_at: { type: :string, format: DATE_TIME_TYPE },
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
@@ -198,6 +206,7 @@ TOURNAMENT_REQUEST = {
     game_id: { type: :integer },
     format_id: { type: :integer },
     autostart: { type: :boolean },
+    start_at: { type: :string, format: DATE_TIME_TYPE },
     player_cap: { type: :integer, nullable: true },
     registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
@@ -207,7 +216,7 @@ TOURNAMENT_REQUEST = {
     open_team_sheets: { type: :boolean },
     teamlists_required: { type: :boolean }
   },
-  required: %w[name game_id format_id autostart player_cap registration_start_at registration_end_at late_registration late_check_in check_in_start_at open_team_sheets teamlists_required]
+  required: %w[name game_id format_id autostart start_at player_cap registration_start_at registration_end_at late_registration late_check_in check_in_start_at open_team_sheets teamlists_required]
 }
 
 TOURNAMENT_POST_REQUEST = {
@@ -219,6 +228,7 @@ TOURNAMENT_POST_REQUEST = {
     game_id: { type: :integer },
     format_id: { type: :integer },
     autostart: { type: :boolean },
+    start_at: { type: :string, format: DATE_TIME_TYPE },
     player_cap: { type: :integer, nullable: true },
     registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },

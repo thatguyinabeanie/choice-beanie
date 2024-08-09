@@ -48,6 +48,54 @@ export interface TournamentDetails {
   player_cap: number | null;
   /**
    *
+   * @type {number}
+   * @memberof TournamentDetails
+   */
+  player_count: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  start_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  end_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  started_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  ended_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  registration_start_at: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  registration_end_at: string | null;
+  /**
+   *
+   * @type {boolean}
+   * @memberof TournamentDetails
+   */
+  late_registration: boolean;
+  /**
+   *
    * @type {Organization}
    * @memberof TournamentDetails
    */
@@ -72,30 +120,6 @@ export interface TournamentDetails {
   autostart: boolean;
   /**
    *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  start_at: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  end_at?: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  started_at?: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  ended_at?: string | null;
-  /**
-   *
    * @type {boolean}
    * @memberof TournamentDetails
    */
@@ -106,24 +130,6 @@ export interface TournamentDetails {
    * @memberof TournamentDetails
    */
   check_in_start_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof TournamentDetails
-   */
-  late_registration: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  registration_start_at: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  registration_end_at: string | null;
   /**
    *
    * @type {boolean}

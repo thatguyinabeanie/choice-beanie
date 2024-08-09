@@ -48,6 +48,54 @@ export interface Tournament {
   player_cap: number | null;
   /**
    *
+   * @type {number}
+   * @memberof Tournament
+   */
+  player_count: number;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  start_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  end_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  started_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  ended_at?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  registration_start_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Tournament
+   */
+  registration_end_at: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof Tournament
+   */
+  late_registration: boolean;
+  /**
+   *
    * @type {Organization}
    * @memberof Tournament
    */

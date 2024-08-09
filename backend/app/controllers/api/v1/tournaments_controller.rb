@@ -6,8 +6,11 @@ module Api
       before_action :set_tournament, only: %i[show update destroy]
 
       def index
-        @tournaments = ::Tournament::Tournament.where('start_at > ?', Time.now)
-                                              .or(::Tournament::Tournament.where('start_at <= ? ', Time.now).where(ended_at: nil))
+        @tournaments = ::Tournament::Tournament
+          .where('start_at > ?', Time.now)
+          .where('start_at <= ?', Time.now + 7.days)
+          .or(::Tournament::Tournament.where('start_at <= ? ', Time.now).where(ended_at: nil))
+          .order(start_at: :asc)
         render json: @tournaments, each_serializer: Serializer::Tournament, status: :ok
       end
 

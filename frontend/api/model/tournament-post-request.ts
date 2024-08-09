@@ -50,6 +50,12 @@ export interface TournamentPostRequest {
   autostart: boolean;
   /**
    *
+   * @type {string}
+   * @memberof TournamentPostRequest
+   */
+  start_at?: string;
+  /**
+   *
    * @type {number}
    * @memberof TournamentPostRequest
    */
