@@ -146,23 +146,29 @@ ORGANIZATION_DETAILS_SCHEMA = {
   required: ORGANIZATION_SCHEMA[:required]
 }.freeze
 
-TOURNAMENT_SCHEMA = {
-  type: :object,
-  title: 'Tournament',
-  properties: ID_NAME_PROPERTIES.merge(
-    player_cap: { type: :integer, nullable: true },
+
+TOURNAMENT_PROPERTIES = {
+  player_cap: { type: :integer, nullable: true },
     player_count: { type: :integer },
-    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     registration_start_at: { type: :string, format: DATE_TIME_TYPE },
     registration_end_at: { type: :string, format: DATE_TIME_TYPE },
     late_registration: { type: :boolean },
+
+}
+
+TOURNAMENT_SCHEMA = {
+  type: :object,
+  title: 'Tournament',
+  properties: ID_NAME_PROPERTIES.merge(
+    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     organization: { '$ref' => '#/components/schemas/Organization' },
     format: { '$ref' => '#/components/schemas/Format' },
     game: { '$ref' => '#/components/schemas/Game' }
-  ),
+
+  ).merge(TOURNAMENT_PROPERTIES),
   required: ID_NAME_REQUIRED + %w[player_cap organization format game start_at player_count registration_start_at registration_end_at late_registration]
 }.freeze
 
@@ -170,22 +176,16 @@ TOURNAMENT_SCHEMA = {
 TOURNAMENT_DETAILS_SCHEMA = {
   type: :object,
   title: 'Tournament Details',
-  properties: TOURNAMENT_SCHEMA[:properties].merge(
+  properties: ID_NAME_PROPERTIES.merge(TOURNAMENT_PROPERTIES).merge(
     autostart: { type: :boolean },
     start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-    started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-    ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-
     organization: { '$ref' => '#/components/schemas/Organization' },
-
+    format: { '$ref' => '#/components/schemas/Format' },
+    game: { '$ref' => '#/components/schemas/Game' }
     late_check_in: { type: :boolean },
     check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-
     late_registration: { type: :boolean },
-    registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-    registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
-
     teamlists_required: { type: :boolean },
     open_team_sheets: { type: :boolean }
   ),
@@ -200,9 +200,7 @@ TOURNAMENT_DETAILS_SCHEMA = {
 TOURNAMENT_REQUEST = {
   type: :object,
   title: 'Tournament Request',
-  properties: {
-    id: { type: :integer },
-    name: { type: :string },
+  properties: ID_NAME_PROPERTIES.merge({
     game_id: { type: :integer },
     format_id: { type: :integer },
     autostart: { type: :boolean },
@@ -215,7 +213,7 @@ TOURNAMENT_REQUEST = {
     check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     open_team_sheets: { type: :boolean },
     teamlists_required: { type: :boolean }
-  },
+  }),
   required: %w[name game_id format_id autostart start_at player_cap registration_start_at registration_end_at late_registration late_check_in check_in_start_at open_team_sheets teamlists_required]
 }
 

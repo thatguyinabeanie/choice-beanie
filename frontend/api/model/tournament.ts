@@ -42,6 +42,18 @@ export interface Tournament {
   name: string;
   /**
    *
+   * @type {string}
+   * @memberof Tournament
+   */
+  start_at: string | null;
+  /**
+   *
+   * @type {Organization}
+   * @memberof Tournament
+   */
+  organization: Organization;
+  /**
+   *
    * @type {number}
    * @memberof Tournament
    */
@@ -52,12 +64,6 @@ export interface Tournament {
    * @memberof Tournament
    */
   player_count: number;
-  /**
-   *
-   * @type {string}
-   * @memberof Tournament
-   */
-  start_at: string | null;
   /**
    *
    * @type {string}
@@ -94,12 +100,6 @@ export interface Tournament {
    * @memberof Tournament
    */
   late_registration: boolean;
-  /**
-   *
-   * @type {Organization}
-   * @memberof Tournament
-   */
-  organization: Organization;
   /**
    *
    * @type {Format}

@@ -843,15 +843,17 @@ components:
           type: integer
         name:
           type: string
+        start_at:
+          type: string
+          format: date-time
+          nullable: true
+        organization:
+          "$ref": "#/components/schemas/Organization"
         player_cap:
           type: integer
           nullable: true
         player_count:
           type: integer
-        start_at:
-          type: string
-          format: date-time
-          nullable: true
         end_at:
           type: string
           format: date-time
@@ -872,8 +874,6 @@ components:
           format: date-time
         late_registration:
           type: boolean
-        organization:
-          "$ref": "#/components/schemas/Organization"
         format:
           "$ref": "#/components/schemas/Format"
         game:
@@ -903,10 +903,6 @@ components:
           nullable: true
         player_count:
           type: integer
-        start_at:
-          type: string
-          format: date-time
-          nullable: true
         end_at:
           type: string
           format: date-time
@@ -922,21 +918,23 @@ components:
         registration_start_at:
           type: string
           format: date-time
-          nullable: true
         registration_end_at:
           type: string
           format: date-time
-          nullable: true
         late_registration:
           type: boolean
-        organization:
-          "$ref": "#/components/schemas/Organization"
         format:
           "$ref": "#/components/schemas/Format"
         game:
           "$ref": "#/components/schemas/Game"
         autostart:
           type: boolean
+        start_at:
+          type: string
+          format: date-time
+          nullable: true
+        organization:
+          "$ref": "#/components/schemas/Organization"
         late_check_in:
           type: boolean
         check_in_start_at:

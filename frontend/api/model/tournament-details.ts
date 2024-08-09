@@ -57,12 +57,6 @@ export interface TournamentDetails {
    * @type {string}
    * @memberof TournamentDetails
    */
-  start_at: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
   end_at?: string | null;
   /**
    *
@@ -81,25 +75,19 @@ export interface TournamentDetails {
    * @type {string}
    * @memberof TournamentDetails
    */
-  registration_start_at: string | null;
+  registration_start_at: string;
   /**
    *
    * @type {string}
    * @memberof TournamentDetails
    */
-  registration_end_at: string | null;
+  registration_end_at: string;
   /**
    *
    * @type {boolean}
    * @memberof TournamentDetails
    */
   late_registration: boolean;
-  /**
-   *
-   * @type {Organization}
-   * @memberof TournamentDetails
-   */
-  organization: Organization;
   /**
    *
    * @type {Format}
@@ -118,6 +106,18 @@ export interface TournamentDetails {
    * @memberof TournamentDetails
    */
   autostart: boolean;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  start_at: string | null;
+  /**
+   *
+   * @type {Organization}
+   * @memberof TournamentDetails
+   */
+  organization: Organization;
   /**
    *
    * @type {boolean}
