@@ -12,6 +12,16 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Format } from "./format";
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Game } from "./game";
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Organization } from "./organization";
+
 /**
  *
  * @export
@@ -38,16 +48,10 @@ export interface TournamentDetails {
   player_cap: number | null;
   /**
    *
-   * @type {boolean}
+   * @type {number}
    * @memberof TournamentDetails
    */
-  autostart: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  start_at: string | null;
+  player_count: number;
   /**
    *
    * @type {string}
@@ -68,6 +72,54 @@ export interface TournamentDetails {
   ended_at?: string | null;
   /**
    *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  registration_start_at: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  registration_end_at: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof TournamentDetails
+   */
+  late_registration: boolean;
+  /**
+   *
+   * @type {Format}
+   * @memberof TournamentDetails
+   */
+  format: Format;
+  /**
+   *
+   * @type {Game}
+   * @memberof TournamentDetails
+   */
+  game: Game;
+  /**
+   *
+   * @type {boolean}
+   * @memberof TournamentDetails
+   */
+  autostart: boolean;
+  /**
+   *
+   * @type {string}
+   * @memberof TournamentDetails
+   */
+  start_at: string | null;
+  /**
+   *
+   * @type {Organization}
+   * @memberof TournamentDetails
+   */
+  organization: Organization;
+  /**
+   *
    * @type {boolean}
    * @memberof TournamentDetails
    */
@@ -78,24 +130,6 @@ export interface TournamentDetails {
    * @memberof TournamentDetails
    */
   check_in_start_at: string | null;
-  /**
-   *
-   * @type {boolean}
-   * @memberof TournamentDetails
-   */
-  late_registration: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  registration_start_at: string | null;
-  /**
-   *
-   * @type {string}
-   * @memberof TournamentDetails
-   */
-  registration_end_at: string | null;
   /**
    *
    * @type {boolean}
