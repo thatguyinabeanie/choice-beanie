@@ -101,7 +101,7 @@ USER_DETAILS_SCHEMA = SIMPLE_USER_DETAILS_SCHEMA.deep_merge(
     type: :object,
     title: 'User Details',
     properties: ID_PROPERTY,
-    required: %w[id email first_name last_name] + SIMPLE_USER_DETAILS_SCHEMA[:required]
+    required: %w[id] + SIMPLE_USER_DETAILS_SCHEMA[:required]
   }
 ).freeze
 
@@ -132,37 +132,32 @@ ORGANIZATION_SCHEMA = {
   type: :object,
   title: 'Organization',
   properties: ID_NAME_PROPERTIES.merge(
-    description: { type: :string, nullable: true },
-    owner: { '$ref' => '#/components/schemas/User' }
+    owner: { '$ref' => '#/components/schemas/User' },
+    description: { type: :string, nullable: true }
   ),
-  required: ID_NAME_REQUIRED + %w[owner]
+  required: ID_NAME_REQUIRED + %w[owner description]
 }.freeze
 
 ORGANIZATION_DETAILS_SCHEMA = {
   type: :object,
   title: 'Organization Details',
 
-  properties: ORGANIZATION_SCHEMA[:properties].merge(
-    owner: { '$ref' => '#/components/schemas/UserDetails' },
-    description: { type: :string },
-    updated_at: { type: :string, format: DATE_TIME_TYPE },
-    created_at: { type: :string, format: DATE_TIME_TYPE }
-  ),
-  required: ORGANIZATION_SCHEMA[:required] + %w[description created_at updated_at]
+  properties: ORGANIZATION_SCHEMA[:properties],
+  required: ORGANIZATION_SCHEMA[:required]
 }.freeze
 
 TOURNAMENT_SCHEMA = {
   type: :object,
   title: 'Tournament',
   properties: ID_NAME_PROPERTIES.merge(
-    player_cap: { type: :integer, nullable: true }
-    # organization: { '$ref' => '#/components/schemas/Organization' },
-    # format: { '$ref' => '#/components/schemas/Format' },
-    # game: { '$ref' => '#/components/schemas/Game' }
+    player_cap: { type: :integer, nullable: true },
+    organization: { '$ref' => '#/components/schemas/Organization' },
+    format: { '$ref' => '#/components/schemas/Format' },
+    game: { '$ref' => '#/components/schemas/Game' }
   ),
-  # required: ID_NAME_REQUIRED + %w[player_cap organization format game]
-  required: ID_NAME_REQUIRED + %w[player_cap]
+  required: ID_NAME_REQUIRED + %w[player_cap organization format game]
 }.freeze
+
 
 TOURNAMENT_DETAILS_SCHEMA = {
   type: :object,
@@ -173,6 +168,8 @@ TOURNAMENT_DETAILS_SCHEMA = {
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+
+    organization: { '$ref' => '#/components/schemas/Organization' },
 
     late_check_in: { type: :boolean },
     check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
@@ -191,6 +188,49 @@ TOURNAMENT_DETAILS_SCHEMA = {
     late_registration registration_start_at registration_end_at
   ]
 }.freeze
+
+TOURNAMENT_REQUEST = {
+  type: :object,
+  title: 'Tournament Request',
+  properties: {
+    id: { type: :integer },
+    name: { type: :string },
+    game_id: { type: :integer },
+    format_id: { type: :integer },
+    autostart: { type: :boolean },
+    player_cap: { type: :integer, nullable: true },
+    registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    late_registration: { type: :boolean },
+    late_check_in: { type: :boolean },
+    check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    open_team_sheets: { type: :boolean },
+    teamlists_required: { type: :boolean }
+  },
+  required: %w[name game_id format_id autostart player_cap registration_start_at registration_end_at late_registration late_check_in check_in_start_at open_team_sheets teamlists_required]
+}
+
+TOURNAMENT_POST_REQUEST = {
+  type: :object,
+  title: 'Tournament Post Request',
+  properties: {
+    organization_id: { type: :integer },
+    name: { type: :string },
+    game_id: { type: :integer },
+    format_id: { type: :integer },
+    autostart: { type: :boolean },
+    player_cap: { type: :integer, nullable: true },
+    registration_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    registration_end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    late_registration: { type: :boolean },
+    late_check_in: { type: :boolean },
+    check_in_start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
+    open_team_sheets: { type: :boolean },
+    teamlists_required: { type: :boolean }
+  },
+  required: %w[organization_id name game_id format_id autostart player_cap registration_start_at registration_end_at late_registration late_check_in check_in_start_at open_team_sheets teamlists_required]
+}
+
 
 POKEMON_SCHEMA = {
   type: :object,
@@ -361,7 +401,9 @@ RSpec.configure do |config|
           Phase: PHASE_SCHEMA,
           PhaseDetails: PHASE_DETAILS_SCHEMA,
           GameRequest: GAME_REQUEST,
-          UserLoginRequest: USER_LOGIN_REQUEST
+          UserLoginRequest: USER_LOGIN_REQUEST,
+          TournamentRequest: TOURNAMENT_REQUEST,
+          TournamentPostRequest: TOURNAMENT_POST_REQUEST
         }
       }
     }

@@ -12,6 +12,16 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Format } from "./format";
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Game } from "./game";
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Organization } from "./organization";
+
 /**
  *
  * @export
@@ -36,6 +46,24 @@ export interface TournamentDetails {
    * @memberof TournamentDetails
    */
   player_cap: number | null;
+  /**
+   *
+   * @type {Organization}
+   * @memberof TournamentDetails
+   */
+  organization: Organization;
+  /**
+   *
+   * @type {Format}
+   * @memberof TournamentDetails
+   */
+  format: Format;
+  /**
+   *
+   * @type {Game}
+   * @memberof TournamentDetails
+   */
+  game: Game;
   /**
    *
    * @type {boolean}
