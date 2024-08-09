@@ -16,35 +16,35 @@ interface NavbarMenuItemProps {
 const secondaryColor = (index: number) =>
   index === siteConfig.navMenuItems.length - 1 ? "danger" : "foreground";
 
-function NavbarMenuItemComponent ({
+function NavbarMenuItemComponent({
   item,
   index,
 }: Readonly<NavbarMenuItemProps>) {
   return (
-    <NavbarMenuItem key={ `${item}-${index}` }>
+    <NavbarMenuItem key={`${item}-${index}`}>
       <Link
-        color={ index === 2 ? "primary" : secondaryColor(index) }
+        color={index === 2 ? "primary" : secondaryColor(index)}
         href="#"
         size="lg"
       >
-        { item.label }
+        {item.label}
       </Link>
     </NavbarMenuItem>
   );
 }
 
-function NavbarMenuComponent () {
+function NavbarMenuComponent() {
   return (
     <NavbarMenu>
       <NavbarSearch />
       <div className="mx-4 mt-2 flex flex-col gap-2">
-        { siteConfig.navMenuItems.map((item, index) => (
+        {siteConfig.navMenuItems.map((item, index) => (
           <NavbarMenuItemComponent
-            key={ `${item}-${index}` }
-            index={ index }
-            item={ item }
+            key={`${item}-${index}`}
+            index={index}
+            item={item}
           />
-        )) }
+        ))}
       </div>
     </NavbarMenu>
   );

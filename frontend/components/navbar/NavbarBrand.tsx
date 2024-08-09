@@ -8,7 +8,7 @@ export function NavbarBrandComponent () {
     <NavbarBrand as="li" className="gap-3 max-w-fit">
       <NextLink className="flex justify-start items-center gap-1" href="/">
         <Logo />
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-inherit">Battle Stadium</p>
       </NextLink>
     </NavbarBrand>
   );

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { UsersApi } from "@/openapi/api"; // Adjust the import based on your OpenAPI client setup
+import { UsersApi } from "@/api/api"; // Adjust the import based on your OpenAPI client setup
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -31,13 +31,15 @@ const Register = () => {
       const userApi = new UsersApi();
 
       await userApi.postUser({
-        username: formData.username,
-        pronouns: formData.pronouns,
-        email: formData.email,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        password: formData.password,
-        password_confirmation: formData.passwordConfirmation,
+        userPostRequest: {
+          username: formData.username,
+          pronouns: formData.pronouns,
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          password: formData.password,
+          password_confirmation: formData.passwordConfirmation,
+        },
       });
 
       router.push("/login");
@@ -47,48 +49,48 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={handleSubmit}>
       <input
         name="username"
         placeholder="Username"
         type="text"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="pronouns"
         placeholder="Pronouns"
         type="text"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="email"
         placeholder="Email"
         type="email"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="firstName"
         placeholder="First Name"
         type="text"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="lastName"
         placeholder="Last Name"
         type="text"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="password"
         placeholder="Password"
         type="password"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <input
         name="passwordConfirmation"
         placeholder="Password Confirmation"
         type="password"
-        onChange={ handleChange }
+        onChange={handleChange}
       />
       <button type="submit">Register</button>
     </form>
