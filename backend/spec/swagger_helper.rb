@@ -152,7 +152,7 @@ TOURNAMENT_SCHEMA = {
   properties: ID_NAME_PROPERTIES.merge(
     player_cap: { type: :integer, nullable: true },
     player_count: { type: :integer },
-    start_at: { type: :string, format: DATE_TIME_TYPE },
+    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
@@ -172,7 +172,7 @@ TOURNAMENT_DETAILS_SCHEMA = {
   title: 'Tournament Details',
   properties: TOURNAMENT_SCHEMA[:properties].merge(
     autostart: { type: :boolean },
-    start_at: { type: :string, format: DATE_TIME_TYPE },
+    start_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     end_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     started_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },
     ended_at: { type: :string, format: DATE_TIME_TYPE, nullable: true },

@@ -8,7 +8,7 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
-  Link,
+  Link
 } from "@nextui-org/react";
 import * as React from "react";
 
@@ -82,13 +82,7 @@ const renderCell: typeof getKeyValue = (row: Tournament, columnKey) => {
         </Link>
       );
     case "start_at":
-      return new Date(row.start_at).toLocaleString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      });
+      return row.start_at as string;
     case "name":
       return <Link href={`/tournaments/${row.id}`}>{row.name}</Link>;
     case "players":
@@ -103,6 +97,16 @@ const renderCell: typeof getKeyValue = (row: Tournament, columnKey) => {
 };
 
 const TournamentsTable = ({ tournaments }: TournamentsTableProps) => {
+  const [hydrated, setHydrated] = React.useState(false);
+
+  React.useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  if (!hydrated) {
+    return null; // or a loading spinner
+  }
+
   return (
     <Table isStriped aria-label="Example table with dynamic content">
       <TableHeader columns={columns}>

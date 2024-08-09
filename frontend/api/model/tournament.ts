@@ -57,7 +57,7 @@ export interface Tournament {
    * @type {string}
    * @memberof Tournament
    */
-  start_at: string;
+  start_at: string | null;
   /**
    *
    * @type {string}
